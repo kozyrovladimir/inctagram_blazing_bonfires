@@ -1,34 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Readme
 
-## Getting Started
+### Getting Started
 
-First, run the development server:
+Вы можете использовать любой пакетный менеджер.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+1. Клонировать репозиторий
+2. Установить зависимости `npm i`
+3. Инициализировать husky `npm run husky:install`
+4. Настроить конфигурацию редактора кода для работы с eslint и prettier (делал по этому [гайду](https://flashcards-docs.andrii.es/ru/lesson-1/chapter-1) из инкубатора)
+5. Запустить проект `npm run dev`
+6. При необходимости запустить storybook `npm run storybook`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Husky
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+На данный момент husky настроен на:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+* проверка корректности commit message (commitlint), можно почитать [тут](https://www.conventionalcommits.org/en/v1.0.0/).
 
-## Learn More
+### Качество кода (eslint, prettier)
 
-To learn more about Next.js, take a look at the following resources:
+Для проверки качества кода используется eslint и prettier настроенный по [гайду](https://flashcards-docs.andrii.es/ru/lesson-1/chapter-1) из инкубатора.
+В будущем возможно добавление проверки стилей (stylelint).
+   
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
