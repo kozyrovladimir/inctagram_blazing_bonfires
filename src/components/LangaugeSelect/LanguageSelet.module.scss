@@ -1,0 +1,21 @@
+.formControl {
+  background: black;
+  .select {
+    width: 163px;
+    height: 36px;
+    border: 1px solid white;
+    border-radius: 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    outline: none;
+    .menuItem {
+      .description {
+        margin-right: 10px;
+      }
+    }
+  }
+}
