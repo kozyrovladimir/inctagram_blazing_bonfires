@@ -29,7 +29,8 @@ export default function Input({
   search,
 }: Props) {
   const [passwordInvisible, setPasswordInvisible] = useState<boolean>(true)
-  const inputStyles = styles.input + ' ' + (error ? styles.erroredInput : '') + (search ? styles.inputSearch : '')
+  const inputStyles =
+    styles.input + ' ' + (error ? styles.erroredInput : '') + (search ? styles.inputSearch : '')
 
   return (
     <div className={styles.wrapper}>
@@ -59,5 +60,5 @@ export default function Input({
       )}
       {error && <p className={styles.error}>{error}</p>}
     </div>
-  );
+  )
 }
