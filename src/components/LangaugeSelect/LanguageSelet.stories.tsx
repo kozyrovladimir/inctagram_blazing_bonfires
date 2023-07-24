@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { LanguageSelect } from './LangaugeSelect';
+import { LanguageSelect } from './LangaugeSelect'
 
 const meta: Meta<typeof LanguageSelect> = {
   component: LanguageSelect,
