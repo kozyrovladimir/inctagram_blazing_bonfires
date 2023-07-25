@@ -1,93 +1,77 @@
 import * as React from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { blueGrey } from '@mui/material/colors'
-import FormControl from '@mui/material/FormControl'
-import MenuItem from '@mui/material/MenuItem'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Image from 'next/image'
 
 import enFlag from '../../public/languages/flagBritish.svg'
 import rusFlag from '../../public/languages/flagRus.svg'
+import arrowSvg from '../../public/select/arrowForSelect.svg'
 
 import s from './LanguageSelet.module.scss'
-
-const outerTheme = createTheme({
-  palette: {
-    primary: {
-      main: blueGrey[100],
-    },
-  },
-})
+import { OptionContent } from './OptionContent'
 
 export const LanguageSelect = () => {
-  const [language, setLanguage] = React.useState<string>('rus')
+  const refSelect = useRef<HTMLDivElement | null>(null)
+  const [isOpenSelect, setIsOpenSelect] = useState(false)
+  const [activeSelect, setActiveSelect] = useState<LanguagesType>('rus')
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setLanguage(event.target.value)
+  const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)
+  const changeLanguageHandler = (lang: LanguagesType) => {
+    setActiveSelect(lang)
+    openSelectHandler()
   }
 
+  const closeOpenMenus = (e: DocumentEventMap['mousedown']) => {
+    if (
+      refSelect.current &&
+      isOpenSelect &&
+      !refSelect.current!.contains(e.target as HTMLDivElement)
+    ) {
+      setIsOpenSelect(false)
+    }
+  }
+
+  useEffect(() => {
+    if (isOpenSelect) {
+      document.addEventListener('mousedown', closeOpenMenus)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', closeOpenMenus)
+    }
+  }, [isOpenSelect])
+
   return (
-    <ThemeProvider theme={outerTheme}>
-      <FormControl
-        size="small"
-        className={s.formControl}
-        sx={{
-          '& .MuiSelect-select': {
-            display: 'flex',
-            alignItems: 'center',
-          },
-        }}
-      >
-        <Select
-          inputProps={{
-            MenuProps: {
-              MenuListProps: {
-                sx: {
-                  backgroundColor: 'black',
-                  color: 'white',
-                  border: '1px solid white',
-                },
-              },
-            },
-          }}
-          sx={{
-            height: '2.5rem',
-            color: 'white',
-            '& .MuiSvgIcon-root': {
-              color: 'white',
-            },
-          }}
-          className={s.select}
-          labelId="languageSelectLabel"
-          id="languageSelectId"
-          value={language}
-          onChange={handleChange}
-        >
-          <MenuItem value={'rus'} className={s.menuItem}>
-            <Image
-              src={rusFlag}
-              alt={''}
-              width={20}
-              height={20}
-              style={{ marginRight: '10px' }}
-              priority
-            />
-            <span>Russian</span>
-          </MenuItem>
-          <MenuItem value={'en'} className={s.menuItem}>
-            <Image
-              src={enFlag}
-              alt={''}
-              width={20}
-              height={20}
-              style={{ marginRight: '10px' }}
-              priority
-            />
-            <span>English</span>
-          </MenuItem>
-        </Select>
-      </FormControl>
-    </ThemeProvider>
+    <div>
+      <div className={s.select} ref={refSelect}>
+        <div className={s.selectContent} onClick={openSelectHandler}>
+          {activeSelect === 'rus' && (
+            <OptionContent alt={'Rus'} flagImg={rusFlag} description={'Russian'} />
+          )}
+          {activeSelect === 'en' && (
+            <OptionContent alt={'En'} flagImg={enFlag} description={'English'} />
+          )}
+          <Image
+            src={arrowSvg}
+            alt={''}
+            className={s.arrowImg}
+            style={{ transform: isOpenSelect ? 'rotate(180deg)' : 'rotate(0)' }}
+          />
+        </div>
+        {isOpenSelect && (
+          <div className={s.optionList}>
+            <div className={s.option} onClick={() => changeLanguageHandler('rus')}>
+              <OptionContent alt={'Rus'} flagImg={rusFlag} description={'Russian'} />
+            </div>
+            <div className={s.option} onClick={() => changeLanguageHandler('en')}>
+              <OptionContent alt={'En'} flagImg={enFlag} description={'English'} />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
+
+//type
+type LanguagesType = 'rus' | 'en'
