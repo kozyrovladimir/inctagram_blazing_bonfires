@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import { Header } from '@/components/Header/Header'
+import { Logout } from '@/components/Logout/Logout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -45,6 +46,7 @@ export default function Home() {
             <Link href="/confirmed-email">confirmed-email</Link>
           </li>
         </ul>
+        <Logout />
       </main>
     </>
   )
