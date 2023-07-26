@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-
-import Input from './Input'
+import Input from 'src/shared/ui/Input/Input'
 
 const meta: Meta = {
   title: 'Example/Input',
@@ -16,7 +15,7 @@ type Story = StoryObj<typeof meta>
 
 export const DefaultInput: Story = {
   args: {
-    label: 'Default input',
+    label: 'Default Input',
     placeholder: 'Enter your username',
   },
 }
@@ -30,7 +29,7 @@ export const ErroredInput: Story = {
 
 export const PasswordInput: Story = {
   args: {
-    label: 'Password input',
+    label: 'Password Input',
     placeholder: 'Enter your password',
     password: true,
     value: '13421234',
@@ -39,7 +38,7 @@ export const PasswordInput: Story = {
 
 export const SearchInput: Story = {
   args: {
-    label: 'Search input',
+    label: 'Search Input',
     placeholder: 'What are you looking for?',
     search: true,
   },
