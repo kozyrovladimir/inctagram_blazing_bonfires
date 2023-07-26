@@ -1,0 +1,39 @@
+.header {
+  height: 60px;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  border-bottom: 1px solid #333333;
+  .logo {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 36px;
+  }
+  .option {
+    display: flex;
+    align-items: center;
+    .ball {
+      margin-right: 40px;
+      cursor: pointer;
+      display: flex;
+    }
+    .count {
+      height: 13px;
+      width: 13px;
+      font-size: 8px;
+      position: relative;
+      right: 13px;
+      background: red;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+
+
