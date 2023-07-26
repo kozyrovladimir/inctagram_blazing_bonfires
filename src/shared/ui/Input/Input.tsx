@@ -3,10 +3,11 @@
 import { useState } from 'react'
 
 import Image from 'next/image'
-import styles from 'src/shared/ui/Input/Input.module.scss'
 
-import eyeImg from '@/shared/assets/icons/eye.svg'
-import searchImg from '@/shared/assets/icons/search.svg'
+import eyeImg from '../../assets/icons/eye.svg'
+import searchImg from '../../assets/icons/search.svg'
+
+import styles from './Input.module.scss'
 
 type Props = {
   label: string
