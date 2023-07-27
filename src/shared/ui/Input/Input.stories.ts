@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>
 
 export const DefaultInput: Story = {
   args: {
-    label: 'Default Input',
+    label: 'Default input',
     placeholder: 'Enter your username',
   },
 }
@@ -30,17 +30,17 @@ export const ErroredInput: Story = {
 
 export const PasswordInput: Story = {
   args: {
-    label: 'Password Input',
+    label: 'Password input',
     placeholder: 'Enter your password',
-    password: true,
+    type: 'password',
     value: '13421234',
   },
 }
 
 export const SearchInput: Story = {
   args: {
-    label: 'Search Input',
+    label: 'Search input',
+    type: 'text',
     placeholder: 'What are you looking for?',
-    search: true,
   },
 }
