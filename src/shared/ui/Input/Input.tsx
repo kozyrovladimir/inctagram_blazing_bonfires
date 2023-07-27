@@ -1,13 +1,20 @@
-'use client'
-
 import { useState } from 'react'
 
 import Image from 'next/image'
 
-import eyeImg from '../../assets/icons/eye.svg'
-import searchImg from '../../assets/icons/search.svg'
+import { classNames, Mods } from '../../libs/classNames/classNames'
 
+import eyeImg from './../../assets/icons/eye.svg'
+import searchImg from './../../assets/icons/search.svg'
 import styles from './Input.module.scss'
+
+export enum InputType {
+  SEARCH = 'search',
+  EMAIL = 'email',
+  PASSWORD = 'password',
+  TEXT = 'text',
+  TEL = 'tel',
+}
 
 type Props = {
   label: string
@@ -15,38 +22,31 @@ type Props = {
   disabled?: boolean
   placeholder: string
   error?: string
-  password?: boolean
-  search: boolean
+  type: InputType
   callback: (value: string) => void
 }
 
-export default function Input({
-  label,
-  value,
-  placeholder,
-  error,
-  password,
-  callback,
-  search,
-}: Props) {
+export default function Input({ label, value, placeholder, error, type, callback }: Props) {
   const [passwordInvisible, setPasswordInvisible] = useState<boolean>(true)
-  const inputStyles =
-    styles.input + ' ' + (error ? styles.erroredInput : '') + (search ? styles.inputSearch : '')
+  const inputStyles = classNames(styles.input, {
+    [styles.erroredInput]: error,
+    [styles.inputSearch]: type === InputType.SEARCH,
+  } as Mods)
 
   return (
     <div className={styles.wrapper}>
       <label className={styles.label}>{label}</label>
-      {search && (
+      {type === InputType.SEARCH && (
         <Image src={searchImg} alt="search" width={15} height={15} className={styles.search} />
       )}
       <input
         className={inputStyles}
-        type={password && passwordInvisible ? 'password' : 'text'}
+        type={type === InputType.PASSWORD && passwordInvisible ? 'password' : 'text'}
         value={value}
         placeholder={placeholder}
         onChange={e => callback(e.currentTarget.value)}
       />
-      {password && (
+      {type === InputType.PASSWORD && (
         <>
           <Image
             src={eyeImg}
