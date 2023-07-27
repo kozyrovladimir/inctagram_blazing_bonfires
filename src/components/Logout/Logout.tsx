@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { useMutation } from '@tanstack/react-query'
 import Image from 'next/image'
 
 import closeImg from '../../public/logout/close.svg'
@@ -9,6 +10,19 @@ import { Button, ButtonSize, ButtonTheme } from '../../shared/ui/Button/Button'
 import style from './Logout.module.scss'
 
 export const Logout = () => {
+  const mutation = useMutation({
+    mutationFn: () => {
+      return fetch('https://inctagram-api.vercel.app/api/auth/logout', {
+        credentials: 'include',
+        method: 'POST',
+      })
+    },
+  })
+  const logoutApiHandler = () => {
+    mutation.mutate()
+    logoutHandler()
+  }
+
   const [isLogout, setIsLogout] = useState(false)
   const logoutHandler = () => {
     setIsLogout(!isLogout)
@@ -36,7 +50,7 @@ export const Logout = () => {
               <span className={style.userName}> “Epam@epam.com”</span>?
             </div>
             <div className={style.buttons}>
-              <div className={style.button}>
+              <div className={style.button} onClick={logoutApiHandler}>
                 <Button size={ButtonSize.SMALL} theme={ButtonTheme.CLEAR}>
                   Yes
                 </Button>
