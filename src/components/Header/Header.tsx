@@ -2,6 +2,7 @@
 import { useState } from 'react'
 
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
+import Link from 'next/link'
 
 import { LanguageSelect } from '../LangaugeSelect/LangaugeSelect'
 
@@ -11,8 +12,10 @@ export const Header = () => {
   const [count, setCounter] = useState(3)
 
   return (
-    <div className={s.header}>
-      <div className={s.logo}>Inctagram</div>
+    <header className={s.header}>
+      <Link href="/" className={s.logo}>
+        Inctagram
+      </Link>
       <div className={s.option}>
         <div className={s.ball}>
           <NotificationsNoneIcon />
@@ -22,6 +25,6 @@ export const Header = () => {
           <LanguageSelect />
         </div>
       </div>
-    </div>
+    </header>
   )
 }
