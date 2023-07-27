@@ -4,10 +4,9 @@ import Image from 'next/image'
 
 import closeImg from '../../public/logout/close.svg'
 import logoutImg from '../../public/logout/logout.svg'
+import { Button, ButtonSize, ButtonTheme } from '../../shared/ui/Button/Button'
 
 import style from './Logout.module.scss'
-
-import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 
 export const Logout = () => {
   const [isLogout, setIsLogout] = useState(false)
