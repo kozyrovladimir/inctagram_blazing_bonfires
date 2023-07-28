@@ -16,7 +16,8 @@ type Props = {
   placeholder: string
   error?: string
   password?: boolean
-  search: boolean
+  email?: boolean
+  search?: boolean
   callback: (value: string) => void
 }
 
@@ -27,6 +28,7 @@ export default function Input({
   error,
   password,
   callback,
+  email,
   search,
 }: Props) {
   const [passwordInvisible, setPasswordInvisible] = useState<boolean>(true)
@@ -41,7 +43,8 @@ export default function Input({
       )}
       <input
         className={inputStyles}
-        type={password && passwordInvisible ? 'password' : 'text'}
+        // eslint-disable-next-line no-nested-ternary
+        type={password && !passwordInvisible ? 'password' : email ? 'email' : 'text'}
         value={value}
         placeholder={placeholder}
         onChange={e => callback(e.currentTarget.value)}
@@ -56,7 +59,12 @@ export default function Input({
             className={styles.eye}
             onClick={() => setPasswordInvisible(!passwordInvisible)}
           />
-          {!passwordInvisible && <div className={styles.eyeCrossLine}></div>}
+          {!passwordInvisible && (
+            <div
+              className={styles.eyeCrossLine}
+              onClick={() => setPasswordInvisible(!passwordInvisible)}
+            ></div>
+          )}
         </>
       )}
       {error && <p className={styles.error}>{error}</p>}
