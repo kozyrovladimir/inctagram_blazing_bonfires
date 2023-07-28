@@ -2,7 +2,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 
-import { Header } from '@/components/Header/Header'
 import { Logout } from '@/components/Logout/Logout'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
 const inter = Inter({ subsets: ['latin'] })
@@ -14,7 +13,6 @@ function Home() {
     <>
       <QueryClientProvider client={queryClient}>
         <main>
-          <Header />
           <ul>
             <li>
               <Link href="/sign-in">sign-in</Link>
