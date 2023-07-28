@@ -7,7 +7,7 @@ FROM node:16.14.0 as builder
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
-RUN npm build:production
+RUN npm run build:production
 
 FROM node:16.14.0 as runner
 WORKDIR /app
