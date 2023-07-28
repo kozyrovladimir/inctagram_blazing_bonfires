@@ -10,39 +10,39 @@ import arrowSvg from '../../../../public/select/arrowForSelect.svg'
 import style from './LanguageSelect.module.scss'
 import { OptionContent } from './OptionContent'
 
-export enum ShortLangType {
+export enum ShortLangs {
   RU = 'Ru',
   EN = 'En',
 }
 
-export enum FullLangType {
+export enum FullLangs {
   RU = 'Russian',
   EN = 'English',
 }
 
-export enum FlagType {
+export enum Flags {
   RU = ruFlag,
   EN = enFlag,
 }
 
 type LangOptionType = {
-  shortLang: ShortLangType
-  fullLang: FullLangType
-  flag: FlagType
+  shortLang: ShortLangs
+  fullLang: FullLangs
+  flag: Flags
 }
 
 const langOptions: LangOptionType[] = [
-  { shortLang: ShortLangType.RU, fullLang: FullLangType.RU, flag: FlagType.RU },
-  { shortLang: ShortLangType.EN, fullLang: FullLangType.EN, flag: FlagType.EN },
+  { shortLang: ShortLangs.RU, fullLang: FullLangs.RU, flag: Flags.RU },
+  { shortLang: ShortLangs.EN, fullLang: FullLangs.EN, flag: Flags.EN },
 ]
 
 export const LanguageSelect = () => {
   const refSelect = useRef<HTMLDivElement | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState(false)
-  const [activeSelect, setActiveSelect] = useState<ShortLangType>(ShortLangType.RU)
+  const [activeSelect, setActiveSelect] = useState<ShortLangs>(ShortLangs.RU)
 
   const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)
-  const changeLanguageHandler = (lang: ShortLangType) => {
+  const changeLanguageHandler = (lang: ShortLangs) => {
     setActiveSelect(lang)
     openSelectHandler()
   }

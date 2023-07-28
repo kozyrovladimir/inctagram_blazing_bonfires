@@ -3,13 +3,13 @@ import * as React from 'react'
 
 import Image from 'next/image'
 
-import { ShortLangType, FlagType, FullLangType } from './LanguageSelect'
+import { ShortLangs, Flags, FullLangs } from './LanguageSelect'
 import style from './LanguageSelect.module.scss'
 
 type Props = {
-  alt: ShortLangType
-  flagImg: FlagType
-  description: FullLangType
+  alt: ShortLangs
+  flagImg: Flags
+  description: FullLangs
 }
 export const OptionContent: FC<Props> = ({ alt, description, flagImg }) => {
   return (
