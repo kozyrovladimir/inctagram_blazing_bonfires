@@ -1,3 +1,4 @@
+import { GetStaticProps } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
@@ -7,11 +8,15 @@ import { getLayout } from '../shared/layout/MainLayout/MainLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, 'common')),
-  },
-})
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
+}
 
 function Home() {
   const { t } = useTranslation('common')
