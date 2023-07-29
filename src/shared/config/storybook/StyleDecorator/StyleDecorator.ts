@@ -1,4 +1,4 @@
 import '../../../../styles/globals.scss'
-import { Story } from '@storybook/react'
+import { ReactNode } from 'react'
 
-export const StyleDecorator = (story: () => Story) => story()
+export const StyleDecorator = (story: () => ReactNode): ReactNode => story()
