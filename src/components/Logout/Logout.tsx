@@ -29,20 +29,24 @@ export const Logout = () => {
   }
 
   return (
-    <div className={style.logoutWrapper}>
-      <button className={style.logoutButton} onClick={logoutHandler}>
+    <>
+      <Button className={style.logoutButton} onClick={logoutHandler}>
         <Image src={logoutImg} alt={''} />
         <span className={style.description}>Logout</span>
-      </button>
+      </Button>
       {isLogout && (
         <div className={style.logoutWindowWrapper}>
           <div className={style.logoutWindow}>
             <div className={style.logoutHeader}>
               <div>Log Out</div>
               <div>
-                <button className={style.buttonClose} onClick={logoutHandler}>
+                <Button
+                  theme={ButtonTheme.CLEAR}
+                  className={style.buttonClose}
+                  onClick={logoutHandler}
+                >
                   <Image src={closeImg} alt={''} />
-                </button>
+                </Button>
               </div>
             </div>
             <div className={style.mainDescription}>
@@ -50,18 +54,22 @@ export const Logout = () => {
               <span className={style.userName}> “Epam@epam.com”</span>?
             </div>
             <div className={style.buttons}>
-              <div className={style.button} onClick={logoutApiHandler}>
-                <Button size={ButtonSize.SMALL} theme={ButtonTheme.CLEAR}>
+              <div className={style.button}>
+                <Button
+                  size={ButtonSize.SMALL}
+                  theme={ButtonTheme.CLEAR}
+                  onClick={logoutApiHandler}
+                >
                   Yes
                 </Button>
               </div>
-              <div onClick={logoutHandler}>
-                <Button size={ButtonSize.SMALL}>No</Button>
-              </div>
+              <Button size={ButtonSize.SMALL} onClick={logoutHandler}>
+                No
+              </Button>
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
