@@ -1,55 +1,69 @@
-'use client'
-
+/* eslint-disable no-nested-ternary */
 import { useState } from 'react'
 
 import Image from 'next/image'
 
-import eyeImg from '../../assets/icons/eye.svg'
-import searchImg from '../../assets/icons/search.svg'
+import { classNames, Mods } from '../../libs/classNames/classNames'
 
+import eyeImg from './../../assets/icons/eye.svg'
+import searchImg from './../../assets/icons/search.svg'
 import styles from './Input.module.scss'
 
+export enum InputType {
+  SEARCH = 'search',
+  EMAIL = 'email',
+  PASSWORD = 'password',
+  TEXT = 'text',
+  TEL = 'tel',
+}
+
 type Props = {
+  classNameWrap?: string
   label: string
   value: string
   disabled?: boolean
   placeholder: string
   error?: string
-  password?: boolean
-  email?: boolean
-  search?: boolean
+  type: InputType
   callback: (value: string) => void
 }
 
 export default function Input({
+  classNameWrap,
   label,
   value,
   placeholder,
   error,
-  password,
+  type,
   callback,
-  email,
-  search,
 }: Props) {
   const [passwordInvisible, setPasswordInvisible] = useState<boolean>(true)
-  const inputStyles =
-    styles.input + ' ' + (error ? styles.erroredInput : '') + (search ? styles.inputSearch : '')
+  const inputStyles = classNames(styles.input, {
+    [styles.erroredInput]: error,
+    [styles.inputSearch]: type === InputType.SEARCH,
+  } as Mods)
+  const inputStylesWrapper = classNames(styles.wrapper, {}, [classNameWrap ? classNameWrap : ''])
 
   return (
-    <div className={styles.wrapper}>
+    <div className={inputStylesWrapper}>
       <label className={styles.label}>{label}</label>
-      {search && (
+      {type === InputType.SEARCH && (
         <Image src={searchImg} alt="search" width={15} height={15} className={styles.search} />
       )}
       <input
         className={inputStyles}
-        // eslint-disable-next-line no-nested-ternary
-        type={password && !passwordInvisible ? 'password' : email ? 'email' : 'text'}
+        type={
+          type === InputType.PASSWORD && passwordInvisible
+            ? 'password'
+            : type === InputType.EMAIL
+            ? 'email'
+            : 'text'
+        }
         value={value}
         placeholder={placeholder}
         onChange={e => callback(e.currentTarget.value)}
       />
-      {password && (
+      {type === InputType.PASSWORD && (
         <>
           <Image
             src={eyeImg}
@@ -59,7 +73,7 @@ export default function Input({
             className={styles.eye}
             onClick={() => setPasswordInvisible(!passwordInvisible)}
           />
-          {!passwordInvisible && (
+          {passwordInvisible && (
             <div
               className={styles.eyeCrossLine}
               onClick={() => setPasswordInvisible(!passwordInvisible)}
