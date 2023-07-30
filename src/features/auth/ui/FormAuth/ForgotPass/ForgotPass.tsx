@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import styles from './ForgotPass.module.scss'
 
-import captchaIcon from '@/public/reCaptcha.svg'
+import captchaIcon from '@/public/reCaptchaIcon.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import Input, { InputType } from '@/shared/ui/Input/Input'
 
@@ -67,7 +67,7 @@ function ForgotPass() {
           </label>
           <div className={styles.capchaIcon}>
             <Image src={captchaIcon} alt={'captchaIcon'}></Image>
-            <p>reCAPTCHA</p>
+            <p>reCaptchaIcon</p>
             <span>Privacy - Terms</span>
           </div>
         </div>
