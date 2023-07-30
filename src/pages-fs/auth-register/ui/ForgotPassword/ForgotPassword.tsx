@@ -1,7 +1,7 @@
 import styles from './ForgotPassword.module.scss'
 
-import ForgotPass from '@/components/FormAuth/ForgotPass/ForgotPass'
-import FormAuth from '@/components/FormAuth/FormAuth'
+import ForgotPass from '@/features/auth/ui/FormAuth/ForgotPass/ForgotPass'
+import FormAuth from '@/features/auth/ui/FormAuth/FormAuth'
 
 export const ForgotPassword = () => {
   return (

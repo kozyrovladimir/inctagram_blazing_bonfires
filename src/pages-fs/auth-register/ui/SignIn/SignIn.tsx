@@ -2,14 +2,14 @@ import React from 'react'
 
 import styles from './SignIn.module.scss'
 
-import FormAuth, { FormOption } from '@/components/FormAuth/FormAuth'
-import SignEntry from '@/components/FormAuth/SignEntry/SignEntry'
+import FormAuth, { FormOption } from '@/features/auth/ui/FormAuth/FormAuth'
+import Sign from '@/features/auth/ui/FormAuth/Sign/Sign'
 
 export const SignIn = () => {
   return (
     <div className={styles.signInConatainer}>
       <FormAuth title="Sign In">
-        <SignEntry formOption={FormOption.SIGNIN} />
+        <Sign formOption={FormOption.SIGNIN} />
       </FormAuth>
     </div>
   )

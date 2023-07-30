@@ -1,7 +1,7 @@
 import styles from './CreateNewPassword.module.scss'
 
-import CreateNewPass from '@/components/FormAuth/CreateNewPass/CreateNewPass'
-import FormAuth from '@/components/FormAuth/FormAuth'
+import CreateNewPass from '@/features/auth/ui/FormAuth/CreateNewPass/CreateNewPass'
+import FormAuth from '@/features/auth/ui/FormAuth/FormAuth'
 
 export const CreateNewPassword = () => {
   return (

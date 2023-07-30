@@ -1,4 +1,4 @@
-import { EventHandler, MouseEventHandler, useState } from 'react'
+import { useState } from 'react'
 
 import Image from 'next/image'
 
@@ -15,7 +15,7 @@ interface IProps {
   formOption: FormOption
 }
 
-function SignEntry({ formOption }: IProps) {
+function Sign({ formOption }: IProps) {
   const [userName, setUserNAme] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -86,4 +86,4 @@ function SignEntry({ formOption }: IProps) {
   )
 }
 
-export default SignEntry
+export default Sign
