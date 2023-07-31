@@ -9,6 +9,8 @@ import { Button, ButtonSize, ButtonTheme } from '../../shared/ui/Button/Button'
 
 import style from './Logout.module.scss'
 
+import { ModalWindow } from '@/shared/modalWindow/ModalWindow'
+
 export const Logout = () => {
   const mutation = useMutation({
     mutationFn: () => {
@@ -35,40 +37,16 @@ export const Logout = () => {
         <span className={style.description}>Logout</span>
       </Button>
       {isLogout && (
-        <div className={style.logoutWindowWrapper}>
-          <div className={style.logoutWindow}>
-            <div className={style.logoutHeader}>
-              <div>Log Out</div>
-              <div>
-                <Button
-                  theme={ButtonTheme.CLEAR}
-                  className={style.buttonClose}
-                  onClick={logoutHandler}
-                >
-                  <Image src={closeImg} alt={''} />
-                </Button>
-              </div>
-            </div>
-            <div className={style.mainDescription}>
-              Are you really want to log out of your account
-              <span className={style.userName}> “Epam@epam.com”</span>?
-            </div>
-            <div className={style.buttons}>
-              <div className={style.button}>
-                <Button
-                  size={ButtonSize.SMALL}
-                  theme={ButtonTheme.CLEAR}
-                  onClick={logoutApiHandler}
-                >
-                  Yes
-                </Button>
-              </div>
-              <Button size={ButtonSize.SMALL} onClick={logoutHandler}>
-                No
-              </Button>
-            </div>
-          </div>
-        </div>
+        <ModalWindow
+          title={'Log Out'}
+          buttonSecond={'Yes'}
+          buttonFirst={'No'}
+          callBackCloseWindow={logoutHandler}
+          callBackApi={logoutApiHandler}
+        >
+          Are you really want to log out of your account
+          <span className={style.userName}> “Epam@epam.com”</span>?
+        </ModalWindow>
       )}
     </>
   )
