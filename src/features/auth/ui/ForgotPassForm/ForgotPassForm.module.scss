@@ -3,37 +3,27 @@
   gap: 1.5rem;
   flex-direction: column;
   align-items: center;
-  padding: 1.5rem;
-  width: 23.625rem;
-  background-color: #171717;
-  border: solid 1px #333333;
-  margin: 0 auto;
-  height: max-content;
+  width: 100%;
 }
 
-.socialIconContainer {
-  display: flex;
-  gap: 3.75rem;
-  justify-content: center;
-}
-.signInForgotText {
-  width: 100%;
-  text-align: right;
-  margin-top: 1.5rem;
-}
 .forgotHelpText {
   color: var(--color-light-1000);
+}
+.enterEmail {
+  margin-top: 0.875rem;
+}
+.forgotHelpText {
+  font-size: var(--font-size-s);
   margin-top: -1rem;
 }
-.signUpBtn {
-  margin-top: 1rem;
+.linkAgainText {
+  font-size: var(--font-size-s);
 }
-.helpText {
-  margin-top: -0.3rem;
+.sendLinkBtn {
+  margin-top: -0.4rem;
 }
 .oppositeBtn {
   border: none !important;
-  margin-top: -1rem;
 }
 .capchaContainer {
   display: flex;

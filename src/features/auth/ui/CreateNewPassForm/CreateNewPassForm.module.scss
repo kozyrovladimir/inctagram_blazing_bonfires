@@ -1,18 +1,22 @@
-.forgotHelpText {
+.formContainer {
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.createPassHelpText {
   color: var(--color-light-1000);
+  font-size: var(--font-size-s);
+    margin-top: -1rem;
 }
 .enterEmail {
   margin-top: 0.875rem;
 }
-.forgotHelpText {
-  font-size: var(--font-size-s);
-  margin-top: -1rem;
-}
-.linkAgainText {
-  font-size: var(--font-size-s);
-}
+
 .sendLinkBtn {
-  margin-top: -0.4rem;
+  margin: 1rem 0 0.75rem;
 }
 .oppositeBtn {
   border: none !important;
@@ -62,5 +66,3 @@
     line-height: 8px;
   }
 }
-
-

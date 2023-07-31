@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 import Image from 'next/image'
 
-import styles from './ForgotPass.module.scss'
+import styles from './ForgotPassForm.module.scss'
 
-import captchaIcon from '@/public/reCaptchaIcon.svg'
+import captchaIcon from '@/public/login/reCaptchaIcon.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import Input, { InputType } from '@/shared/ui/Input/Input'
 
@@ -19,7 +19,7 @@ function ForgotPass() {
   }
 
   return (
-    <>
+    <form className={styles.formContainer}>
       <Input
         classNameWrap={styles.enterEmail}
         label="Email"
@@ -28,7 +28,6 @@ function ForgotPass() {
         callback={curr => setEmail(curr)}
         value={email}
       />
-
       <p className={styles.forgotHelpText}>
         Enter your email address and we will send you further instructions
       </p>
@@ -37,7 +36,6 @@ function ForgotPass() {
           The link has been sent by email. If you don’t receive an email send link again
         </p>
       )}
-
       {!isSentPass && (
         <Button
           size={ButtonSize.STRETCHED}
@@ -72,7 +70,7 @@ function ForgotPass() {
           </div>
         </div>
       )}
-    </>
+    </form>
   )
 }
 
