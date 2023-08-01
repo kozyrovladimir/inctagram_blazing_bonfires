@@ -2,10 +2,10 @@ import React, { FC, ReactNode, useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 
-import style from './ModalWindow.module.scss'
+import closeImg from '../../public/logout/close.svg'
+import { Button, ButtonSize, ButtonTheme } from '../../shared/ui/Button/Button'
 
-import closeImg from '@/public/logout/close.svg'
-import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
+import style from './ModalWindow.module.scss'
 
 type Props = {
   title: string
