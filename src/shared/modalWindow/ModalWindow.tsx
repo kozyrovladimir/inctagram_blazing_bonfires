@@ -9,8 +9,8 @@ import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 
 type Props = {
   title: string
-  buttonFirst: string
-  buttonSecond?: string
+  mainButton: string
+  extraButton?: string
   callBackApi?: () => void
   callBackCloseWindow: () => void
   children: ReactNode
@@ -19,8 +19,8 @@ type Props = {
 export const ModalWindow: FC<Props> = ({
   children,
   title,
-  buttonFirst,
-  buttonSecond,
+  mainButton,
+  extraButton,
   callBackCloseWindow,
   callBackApi,
 }) => {
@@ -66,14 +66,14 @@ export const ModalWindow: FC<Props> = ({
         <div className={style.mainDescription}>{children}</div>
         <div className={style.buttons}>
           <div className={style.button}>
-            {buttonSecond && (
+            {extraButton && (
               <Button size={ButtonSize.SMALL} theme={ButtonTheme.CLEAR} onClick={callBackApi}>
-                {buttonSecond}
+                {extraButton}
               </Button>
             )}
           </div>
           <Button size={ButtonSize.SMALL} onClick={callBackCloseWindow}>
-            {buttonFirst}
+            {mainButton}
           </Button>
         </div>
       </div>

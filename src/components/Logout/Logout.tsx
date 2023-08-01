@@ -39,8 +39,8 @@ export const Logout = () => {
       {isLogout && (
         <ModalWindow
           title={'Log Out'}
-          buttonSecond={'Yes'}
-          buttonFirst={'No'}
+          extraButton={'Yes'}
+          mainButton={'No'}
           callBackCloseWindow={logoutHandler}
           callBackApi={logoutApiHandler}
         >
