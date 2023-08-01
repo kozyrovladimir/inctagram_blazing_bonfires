@@ -1,5 +1,6 @@
 :root {
-  --font-family-primary: 'Roboto', sans-serif;
+  --font-family-primary: 'Inter', sans-serif;
+  --font-family-secondary: 'Roboto', sans-serif;
 
   // line heights
   --line-height-s: 16px;
@@ -16,5 +17,6 @@
 
   // font weights
   --font-weight-regular: 400;
+  --font-weight-medium: 600;
   --font-weight-bold: 700;
 }

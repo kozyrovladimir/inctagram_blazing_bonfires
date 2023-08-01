@@ -1,10 +1,7 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 
-import { Header } from '@/components/Header/Header'
 import { Logout } from '@/components/Logout/Logout'
-import { LoginForm } from '@/features/auth/ui/LoginForm/LoginForm'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
 
 const inter = Inter({ subsets: ['latin'] })

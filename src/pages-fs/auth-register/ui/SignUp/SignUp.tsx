@@ -1,5 +1,12 @@
 import React from 'react'
 
+import SignUpForm from '@/features/auth/ui/SignUpForm/SignUpForm'
+import FormContainer from '@/shared/ui/FormContainer/FormContainer'
+
 export const SignUp = () => {
-  return <div>SignUp</div>
+  return (
+    <FormContainer title="Sign Up">
+      <SignUpForm />
+    </FormContainer>
+  )
 }

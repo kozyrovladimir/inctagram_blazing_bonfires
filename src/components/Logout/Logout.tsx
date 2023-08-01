@@ -9,6 +9,8 @@ import { Button, ButtonSize, ButtonTheme } from '../../shared/ui/Button/Button'
 
 import style from './Logout.module.scss'
 
+import { ModalWindow } from '@/shared/modalWindow/ModalWindow'
+
 export const Logout = () => {
   const mutation = useMutation({
     mutationFn: () => {
@@ -29,39 +31,23 @@ export const Logout = () => {
   }
 
   return (
-    <div className={style.logoutWrapper}>
-      <button className={style.logoutButton} onClick={logoutHandler}>
+    <>
+      <Button className={style.logoutButton} onClick={logoutHandler}>
         <Image src={logoutImg} alt={''} />
         <span className={style.description}>Logout</span>
-      </button>
+      </Button>
       {isLogout && (
-        <div className={style.logoutWindowWrapper}>
-          <div className={style.logoutWindow}>
-            <div className={style.logoutHeader}>
-              <div>Log Out</div>
-              <div>
-                <button className={style.buttonClose} onClick={logoutHandler}>
-                  <Image src={closeImg} alt={''} />
-                </button>
-              </div>
-            </div>
-            <div className={style.mainDescription}>
-              Are you really want to log out of your account
-              <span className={style.userName}> “Epam@epam.com”</span>?
-            </div>
-            <div className={style.buttons}>
-              <div className={style.button} onClick={logoutApiHandler}>
-                <Button size={ButtonSize.SMALL} theme={ButtonTheme.CLEAR}>
-                  Yes
-                </Button>
-              </div>
-              <div onClick={logoutHandler}>
-                <Button size={ButtonSize.SMALL}>No</Button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ModalWindow
+          title={'Log Out'}
+          extraButton={'Yes'}
+          mainButton={'No'}
+          callBackCloseWindow={logoutHandler}
+          callBackApi={logoutApiHandler}
+        >
+          Are you really want to log out of your account
+          <span className={style.userName}> “Epam@epam.com”</span>?
+        </ModalWindow>
       )}
-    </div>
+    </>
   )
 }

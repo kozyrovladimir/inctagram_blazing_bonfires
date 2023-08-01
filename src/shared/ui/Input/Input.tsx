@@ -17,6 +17,7 @@ export enum InputType {
 }
 
 type Props = {
+  classNameWrap?: string
   label: string
   value?: string
   disabled?: boolean
@@ -35,6 +36,7 @@ export const Input = forwardRef((props: Props, ref: ForwardedRef<HTMLInputElemen
     [styles.erroredInput]: error,
     [styles.inputSearch]: type === InputType.SEARCH,
   } as Mods)
+  const inputStylesWrapper = classNames(styles.wrapper, {}, [classNameWrap ? classNameWrap : ''])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(e)
@@ -42,7 +44,7 @@ export const Input = forwardRef((props: Props, ref: ForwardedRef<HTMLInputElemen
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={inputStylesWrapper}>
       <label className={styles.label}>{label}</label>
       {type === InputType.SEARCH && (
         <Image src={searchImg} alt="search" width={15} height={15} className={styles.search} />
@@ -50,7 +52,13 @@ export const Input = forwardRef((props: Props, ref: ForwardedRef<HTMLInputElemen
       <input
         ref={ref}
         className={inputStyles}
-        type={type === InputType.PASSWORD && passwordInvisible ? 'password' : 'text'}
+        type={
+          type === InputType.PASSWORD && passwordInvisible
+            ? 'password'
+            : type === InputType.EMAIL
+            ? 'email'
+            : 'text'
+        }
         value={value}
         placeholder={placeholder}
         onChange={handleChange}
@@ -65,7 +73,12 @@ export const Input = forwardRef((props: Props, ref: ForwardedRef<HTMLInputElemen
             className={styles.eye}
             onClick={() => setPasswordInvisible(!passwordInvisible)}
           />
-          {!passwordInvisible && <div className={styles.eyeCrossLine}></div>}
+          {passwordInvisible && (
+            <div
+              className={styles.eyeCrossLine}
+              onClick={() => setPasswordInvisible(!passwordInvisible)}
+            ></div>
+          )}
         </>
       )}
       {error && <p className={styles.error}>{error}</p>}
