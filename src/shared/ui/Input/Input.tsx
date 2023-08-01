@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ComponentPropsWithoutRef, ForwardedRef, forwardRef, useState } from 'react'
 
 import Image from 'next/image'
 
@@ -18,20 +18,28 @@ export enum InputType {
 
 type Props = {
   label: string
-  value: string
+  value?: string
   disabled?: boolean
   placeholder: string
   error?: string
   type: InputType
-  callback: (value: string) => void
-}
+  callback?: (value: string) => void
+} & ComponentPropsWithoutRef<'input'>
 
-export default function Input({ label, value, placeholder, error, type, callback }: Props) {
+export const Input = forwardRef((props: Props, ref: ForwardedRef<HTMLInputElement>) => {
+  const { label, value, placeholder, error, type, callback, onChange } = props
+
   const [passwordInvisible, setPasswordInvisible] = useState<boolean>(true)
+
   const inputStyles = classNames(styles.input, {
     [styles.erroredInput]: error,
     [styles.inputSearch]: type === InputType.SEARCH,
   } as Mods)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e)
+    callback?.(e.currentTarget.value)
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -40,11 +48,12 @@ export default function Input({ label, value, placeholder, error, type, callback
         <Image src={searchImg} alt="search" width={15} height={15} className={styles.search} />
       )}
       <input
+        ref={ref}
         className={inputStyles}
         type={type === InputType.PASSWORD && passwordInvisible ? 'password' : 'text'}
         value={value}
         placeholder={placeholder}
-        onChange={e => callback(e.currentTarget.value)}
+        onChange={handleChange}
       />
       {type === InputType.PASSWORD && (
         <>
@@ -62,4 +71,6 @@ export default function Input({ label, value, placeholder, error, type, callback
       {error && <p className={styles.error}>{error}</p>}
     </div>
   )
-}
+})
+
+export default Input
