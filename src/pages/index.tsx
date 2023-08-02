@@ -1,7 +1,9 @@
-=======
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { GetStaticProps } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Logout } from '@/components/Logout/Logout'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
@@ -9,11 +11,24 @@ const inter = Inter({ subsets: ['latin'] })
 
 const queryClient = new QueryClient()
 
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
+}
+
 function Home() {
+  const { t } = useTranslation('common')
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <main>
+          <div>{t('Description')}</div>
           <ul>
             <li>
               <Link href="/sign-in">sign-in</Link>
@@ -51,3 +66,5 @@ function Home() {
 }
 Home.getLayout = getLayout
 export default Home
+
+// test commit

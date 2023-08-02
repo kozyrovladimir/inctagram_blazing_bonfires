@@ -1,12 +1,5 @@
-import styles from './ForgotPassword.module.scss'
-
-import ForgotPassForm from '@/features/auth/ui/ForgotPassForm/ForgotPassForm'
-import FormContainer from '@/shared/ui/FormContainer/FormContainer'
+import React from 'react'
 
 export const ForgotPassword = () => {
-  return (
-    <FormContainer title="Forgot Password" className={styles.forgotPassContainer}>
-      <ForgotPassForm />
-    </FormContainer>
-  )
+  return <div>ForgotPassword</div>
 }

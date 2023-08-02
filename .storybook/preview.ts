@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react'
 
-import { StyleDecorator } from "../src/shared/config/storybook/StyleDecorator/StyleDecorator";
+import '../src/styles/globals.scss'
 
 const preview: Preview = {
   parameters: {
@@ -12,9 +12,6 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    StyleDecorator
-  ]
 };
 
 export default preview;

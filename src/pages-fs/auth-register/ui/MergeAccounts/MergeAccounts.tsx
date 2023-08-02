@@ -1,23 +1,5 @@
 import React from 'react'
 
-import Image from 'next/image'
-
-import styles from './MergeAccounts.module.scss'
-
-import broImage from '@/public/login/bro.svg'
-import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
-
 export const MergeAccounts = () => {
-  return (
-    <div className={styles.mergeAccContainer}>
-      <h3>Merge of Accounts</h3>
-      <p>
-        The user with email <b>Epam@epam.com</b> is already in the system. Could we merge this
-        accounts?
-      </p>
-      <Button theme={ButtonTheme.CLEAR}>Yes, merge</Button>
-      <Button theme={ButtonTheme.CLEAR}>No</Button>
-      <Image src={broImage} alt={'women login accaunt in her phone'} />
-    </div>
-  )
+  return <div>MergeAccounts</div>
 }
