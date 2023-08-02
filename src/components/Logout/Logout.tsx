@@ -5,11 +5,10 @@ import Image from 'next/image'
 
 import closeImg from '../../public/logout/close.svg'
 import logoutImg from '../../public/logout/logout.svg'
+import { ModalWindow } from '../../shared/modalWindow/ModalWindow'
 import { Button, ButtonSize, ButtonTheme } from '../../shared/ui/Button/Button'
 
 import style from './Logout.module.scss'
-
-import { ModalWindow } from '@/shared/modalWindow/ModalWindow'
 
 export const Logout = () => {
   const mutation = useMutation({
