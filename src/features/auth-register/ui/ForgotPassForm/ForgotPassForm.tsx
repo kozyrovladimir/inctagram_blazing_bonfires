@@ -55,7 +55,7 @@ function ForgotPass() {
       </Button>
       {!isSentPass && (
         <div className={styles.capchaContainer}>
-          <label>
+          <label className={styles.one}>
             <input
               type="checkbox"
               checked={isNotRobot}
