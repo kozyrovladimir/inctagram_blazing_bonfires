@@ -9,22 +9,28 @@
 .forgotHelpText {
   color: var(--color-light-1000);
 }
+
 .enterEmail {
   margin-top: 0.875rem;
 }
+
 .forgotHelpText {
   font-size: var(--font-size-s);
   margin-top: -1rem;
 }
+
 .linkAgainText {
   font-size: var(--font-size-s);
 }
+
 .sendLinkBtn {
   margin-top: -0.4rem;
 }
+
 .oppositeBtn {
   border: none !important;
 }
+
 .capchaContainer {
   display: flex;
   justify-content: space-between;
@@ -44,12 +50,14 @@
     margin-right: 1.2rem;
     transform: scale(1.5);
   }
+
   label {
     font-family: 'Roboto', sans-serif;
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-xs);
   }
 }
+
 .capchaIcon {
   display: flex;
   flex-direction: column;
@@ -63,6 +71,7 @@
     font-size: 8px;
     line-height: 10px;
   }
+
   span {
     font-family: 'Roboto', sans-serif;
     font-weight: var(--font-weight-medium);
@@ -70,5 +79,3 @@
     line-height: 8px;
   }
 }
-
-
