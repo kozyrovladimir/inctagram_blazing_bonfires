@@ -22,9 +22,6 @@ const schema = yup.object().shape({
   password: yup.string().required('Enter password'),
 })
 
-type Props = {
-  onSubmit: (data: LoginFormType) => void
-}
 
 function Sign() {
   const [passwordError, setPasswordError] = useState<string>('')

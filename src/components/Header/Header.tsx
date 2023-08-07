@@ -4,7 +4,7 @@ import { useState } from 'react'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import Link from 'next/link'
 
-import { LanguageSelect } from '../LangaugeSelect/LangaugeSelect'
+import { LanguageSelect } from '../../widgets/LangSwitcher'
 
 import s from './Header.module.scss'
 

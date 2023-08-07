@@ -1,11 +1,28 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Inter } from 'next/font/google'
+import { GetStaticProps } from 'next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
+import { Logout } from '@/components/Logout/Logout'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
-
 const inter = Inter({ subsets: ['latin'] })
 
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
+}
+
 function Home() {
+  const { t } = useTranslation('common')
+
   return (
     <>
       <main>
@@ -42,6 +59,5 @@ function Home() {
     </>
   )
 }
-
 Home.getLayout = getLayout
 export default Home
