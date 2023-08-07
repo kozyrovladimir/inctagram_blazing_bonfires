@@ -1,10 +1,17 @@
 import React from 'react'
 
-import { SignIn } from '@/pages-fs/auth-register/ui/SignIn/SignIn'
+import Sign from '@/features/auth-register/ui/SignInForm/Sign'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 
 const SignInPage = () => {
-  return <SignIn />
+  return (
+    <div>
+      <FormContainer title={'Sing in'}>
+        <Sign />
+      </FormContainer>
+    </div>
+  )
 }
 
 SignInPage.getLayout = getLayout
