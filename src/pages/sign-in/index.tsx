@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Sign from '@/features/auth/ui/SignInForm/Sign'
+import Sign from '@/features/auth-register/ui/SignInForm/Sign'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 
