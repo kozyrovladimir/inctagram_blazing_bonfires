@@ -1,0 +1,18 @@
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-bottom: 1px solid #000;
+  padding: 10px;
+
+  div {
+    text-decoration: none;
+    color: white;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 0.3s;
+
+    &:hover {
+      border-bottom-color: blue;
+    }
+  }
+}
