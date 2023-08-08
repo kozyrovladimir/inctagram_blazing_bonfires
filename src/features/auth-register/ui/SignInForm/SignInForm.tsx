@@ -7,7 +7,7 @@ import styles from './SignInForm.module.scss'
 import githubIcon from '@/public/socialIcons/github-icon.svg'
 import googleIcon from '@/public/socialIcons/google-icon.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
-import Input, { InputType } from '@/shared/ui/Input/Input'
+import { Input, InputType } from '@/shared/ui/Input/Input'
 
 function Sign() {
   const [userName, setUserNAme] = useState('')
