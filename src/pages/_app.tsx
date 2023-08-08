@@ -6,7 +6,7 @@ import { NextPage } from 'next/types'
 import { appWithTranslation } from 'next-i18next'
 import { Provider } from 'react-redux'
 
-import { store } from '@/pages/store'
+import { store } from '@/shared/store'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

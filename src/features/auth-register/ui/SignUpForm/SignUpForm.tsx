@@ -1,30 +1,27 @@
 import React, { useState } from 'react'
 
-import { DevTool } from '@hookform/devtools'
 import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import githubIcon from './../../../../public/socialIcons/github-icon.svg'
+import googleIcon from './../../../../public/socialIcons/google-icon.svg'
+import { useSignUpMutation } from './../../../../shared/api/auth.api'
+import { ModalWindow } from './../../../../shared/modalWindow/ModalWindow'
+import { SignUpType } from './../../../../shared/types/types'
+import { Button, ButtonSize, ButtonTheme } from './../../../../shared/ui/Button/Button'
+import { Checkbox } from './../../../../shared/ui/Checkbox/Checkbox'
 import Input, { InputType } from './../../../../shared/ui/Input/Input'
 import inputStyles from './../../../../shared/ui/Input/Input.module.scss'
 import styles from './SignUpForm.module.scss'
 
-import githubIcon from '@/public/socialIcons/github-icon.svg'
-import googleIcon from '@/public/socialIcons/google-icon.svg'
-import { useSignUpMutation } from '@/shared/api/auth.api'
-import { ModalWindow } from '@/shared/modalWindow/ModalWindow'
-import { SignUpType } from '@/shared/types/types'
-import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
-import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
-
 function SignUpForm() {
-  const [signUp, { isError, isLoading }] = useSignUpMutation()
+  const [signUp, { isLoading }] = useSignUpMutation()
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const callBackCloseWindow = () => setRegistrationSuccess(false)
 
   const {
     watch,
-    control,
     register,
     handleSubmit,
     setError,
@@ -161,7 +158,6 @@ function SignUpForm() {
         <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.SMALL}>
           Sign In
         </Button>
-        <DevTool control={control} />
       </form>
     </>
   )
