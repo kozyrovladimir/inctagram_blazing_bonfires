@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { LoginFormType, LoginResponseType } from '@/shared/api/auth.api.types'
-import { baseURL } from '@/shared/api/common.api'
+import { LoginFormType, LoginResponseType } from '../../shared/api/auth.api.types'
+import { baseURL } from '../../shared/api/common.api'
 
 export const authApi = createApi({
   reducerPath: 'authApi',

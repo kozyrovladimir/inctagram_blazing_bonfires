@@ -9,19 +9,17 @@ import * as yup from 'yup'
 
 import githubIcon from '../../../../public/socialIcons/github-icon.svg'
 import googleIcon from '../../../../public/socialIcons/google-icon.svg'
+import { useLoginMutation } from '../../../../shared/api/auth.api'
+import { LoginFormType } from '../../../../shared/api/auth.api.types'
 import { Button, ButtonSize } from '../../../../shared/ui/Button/Button'
 import { Input, InputType } from '../../../../shared/ui/Input/Input'
 
 import styles from './SignInForm.module.scss'
 
-import { useLoginMutation } from '@/shared/api/auth.api'
-import { LoginFormType } from '@/shared/api/auth.api.types'
-
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Enter email'),
   password: yup.string().required('Enter password'),
 })
-
 
 function Sign() {
   const [passwordError, setPasswordError] = useState<string>('')
