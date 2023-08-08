@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { ReduxStoreProviderDecorator } from '../../../../features/auth-register/ui/SignInForm/decorators/ReduxStoreProviderDecorator'
+
 import Sign from './Sign'
 
 const meta: Meta<typeof Sign> = {
@@ -9,6 +11,7 @@ const meta: Meta<typeof Sign> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  decorators: [ReduxStoreProviderDecorator],
 }
 
 export default meta
@@ -18,12 +21,5 @@ export const Default: Story = {
   args: {
     email: 'Enter email',
     password: 'Enter password',
-  },
-}
-
-export const Error: Story = {
-  args: {
-    email: 'Invalid email',
-    password: 'Enter your password',
   },
 }
