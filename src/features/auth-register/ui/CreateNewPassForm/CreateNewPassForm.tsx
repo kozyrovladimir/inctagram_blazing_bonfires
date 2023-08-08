@@ -3,7 +3,7 @@ import { useState } from 'react'
 import styles from './CreateNewPassForm.module.scss'
 
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
-import Input, { InputType } from '@/shared/ui/Input/Input'
+import { Input, InputType } from '@/shared/ui/Input/Input'
 
 function CreateNewPass() {
   const [passwordConfirm, setPasswordConfirm] = useState('')

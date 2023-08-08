@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
+import { Logout } from '@/features/logout/ui/Logout/Logout'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -53,6 +54,7 @@ function Home() {
             <Link href="/confirmed-email">confirmed-email</Link>
           </li>
         </ul>
+        <Logout />
       </main>
     </>
   )
