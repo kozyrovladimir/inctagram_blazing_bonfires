@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
 
-import DatePicker from 'react-datepicker'
+import DatePicker from 'react-multi-date-picker'
 
-import 'react-datepicker/dist/react-datepicker.css'
+import 'react-multi-date-picker/styles/backgrounds/bg-dark.css'
+import styles from './Calendar.module.scss'
 
-// CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+export default function Example() {
+  const [value, setValue] = useState(new Date())
 
-export const Example = () => {
-  const [startDate, setStartDate] = useState(new Date())
-
-  return <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+  return (
+    <DatePicker
+      inputClass={styles.customInput}
+      className="bg-dark"
+      containerClassName={styles.container}
+      value={value}
+      headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
+      arrow={false}
+      showOtherDays
+      format="DD.MM.YYYY"
+      placeholder="click to open"
+      onChange={setValue}
+    />
+  )
 }
