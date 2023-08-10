@@ -1,8 +1,16 @@
+import React from 'react'
+
+import { ProfileSetting } from '@/features/profile-setting/ProfileSetting'
+import styles from '@/features/profile-setting/ProfileSetting.module.scss'
 import { settingLayout } from '@/shared/layout/ProfileLayout/SettingLayout'
-import { Input, InputType } from '@/shared/ui/Input/Input'
+import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 
 function GeneralInformation() {
-  return <Input label={'User Name'} placeholder={'Enter'} type={InputType.TEXT} />
+  return (
+    <>
+      <ProfileSetting />
+    </>
+  )
 }
 
 GeneralInformation.getLayout = settingLayout
