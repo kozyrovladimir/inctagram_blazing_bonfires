@@ -4,6 +4,7 @@ import { ModalWindow } from './ModalWindow'
 
 const meta: Meta<typeof ModalWindow> = {
   component: ModalWindow,
+  title: 'Example/ModalWindow',
 }
 
 export default meta
