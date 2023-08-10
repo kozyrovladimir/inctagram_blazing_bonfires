@@ -3,7 +3,6 @@ import { ReactElement, ReactNode } from 'react'
 
 import type { AppProps } from 'next/app'
 import { NextPage } from 'next/types'
-import { appWithTranslation } from 'next-i18next'
 import { Provider } from 'react-redux'
 
 import { store } from '@/shared/store'
@@ -16,7 +15,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page)
 
   return getLayout(
@@ -25,5 +24,3 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
     </Provider>
   )
 }
-
-export default appWithTranslation(App)

@@ -3,8 +3,11 @@ import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { Logout } from '@/components/Logout/Logout'
+import { Logout } from '@/features/logout/ui/Logout/Logout'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+
+const inter = Inter({ subsets: ['latin'] })
+
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
@@ -22,7 +25,6 @@ function Home() {
   return (
     <>
       <main>
-        <div>{t('Description')}</div>
         <ul>
           <li>
             <Link href="/login">sign-in</Link>
@@ -51,14 +53,6 @@ function Home() {
           <li>
             <Link href="/confirmed-email">confirmed-email</Link>
           </li>
-          <li>
-            <Link href="/index">confirmed-email</Link>
-          </li>
-          {/*<li>*/}
-          {/*  <Link href={{ pathname: '/auth/registration-confirmation', query: { code } }}>*/}
-          {/*    registration-confirmation*/}
-          {/*  </Link>*/}
-          {/*</li>*/}
         </ul>
         <Logout />
       </main>
@@ -67,5 +61,3 @@ function Home() {
 }
 Home.getLayout = getLayout
 export default Home
-
-// test commit
