@@ -24,43 +24,44 @@ interface IProps {
 export default function Calendar() {
   const [value, setValue] = useState<Value>(new Date())
   const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+  const mapDays = (props: IProps) => {
+    const { date, today, selectedDate, currentMonth, isSameDate } = props
+
+    props.style = {
+      ...props.style,
+      margin: '36x',
+      fontSize: '1rem',
+    }
+
+    if (isSameDate(date, today))
+      props.style = {
+        ...props.style,
+        color: '#397df6',
+        backgroundColor: '#171717',
+        fontWeight: 'bold',
+        border: 'none',
+      }
+    if (isSameDate(date, selectedDate as DateObject))
+      props.style = {
+        ...props.style,
+        color: '#fff',
+        backgroundColor: '#397DF6',
+        fontWeight: 'bold',
+        border: '4px solid rgba(0,0,0,0.3)',
+        boxShadow: 'none',
+        left: '0',
+        right: '0',
+        top: '0',
+        bottom: '0',
+      }
+
+    return props
+  }
 
   return (
     <>
       <DatePicker
-        mapDays={(props: IProps) => {
-          const { date, today, selectedDate, currentMonth, isSameDate } = props
-
-          props.style = {
-            ...props.style,
-            margin: '36x',
-            fontSize: '1rem',
-          }
-
-          if (isSameDate(date, today))
-            props.style = {
-              ...props.style,
-              color: '#397df6',
-              backgroundColor: '#171717',
-              fontWeight: 'bold',
-              border: 'none',
-            }
-          if (isSameDate(date, selectedDate as DateObject))
-            props.style = {
-              ...props.style,
-              color: '#fff',
-              backgroundColor: '#397DF6',
-              fontWeight: 'bold',
-              border: '4px solid rgba(0,0,0,0.3)',
-              boxShadow: 'none',
-              left: '0',
-              right: '0',
-              top: '0',
-              bottom: '0',
-            }
-
-          return props
-        }}
+        mapDays={mapDays}
         // render={<InputIcon />}
         inputClass={styles.customInput}
         containerClassName={styles.container}
