@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Logout } from '@/features/logout/ui/Logout/Logout'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
-import Example from '@/widgets/LangSwitcher/ui/Calendar/Calendar'
+import Calendar from '@/widgets/LangSwitcher/ui/Calendar/Calendar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,7 +26,7 @@ function Home() {
   return (
     <>
       <main>
-        <Example />
+        <Calendar />
         <ul>
           <li>
             <Link href="/sign-in">sign-in</Link>

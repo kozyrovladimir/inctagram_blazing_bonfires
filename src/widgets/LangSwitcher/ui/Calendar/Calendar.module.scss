@@ -2,17 +2,19 @@
   border: 1px solid var(--color-dark-300);
   border-radius: 0.125rem;
   padding: 4px 12px;
-  background: rgba(0, 0, 0, 0);
-  height: 22px;
-}
-
-.container {
-  .rmdp-header-values {
-    font-weight: 600;
-  }
+  background-color: var(--color-dark-700)!important;
+  height: 2.25rem;
+  width: 10rem;
 }
 
 .customInput:focus {
   outline: none;
-  background-color: #171717;
+}
+
+.calendarIcon {
+  position: relative;
+  left: -34px;
+  top: 4px;
+  pointer-events: none;
+  cursor: pointer;
 }
