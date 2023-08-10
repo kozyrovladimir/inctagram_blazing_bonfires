@@ -1,5 +1,4 @@
-import { ComponentPropsWithoutRef, ForwardedRef, forwardRef, useState } from 'react'
-import { useState, forwardRef, Ref, ReactNode } from 'react'
+import { ComponentPropsWithoutRef, Ref, forwardRef, useState } from 'react'
 
 import Image from 'next/image'
 
@@ -29,22 +28,13 @@ type Props = {
   callback?: (value: string) => void
 } & ComponentPropsWithoutRef<'input'>
 
-export const Input = forwardRef<HTMLInputElement, Props>(
+const Input = forwardRef<HTMLInputElement, Props>(
   (
     { label, classNameWrap, value, placeholder, error, type, callback, onChange, ...restProps },
     ref
   ) => {
     const [passwordInvisible, setPasswordInvisible] = useState<boolean>(true)
 
-    const inputStyles = classNames(styles.input, {
-      [styles.erroredInput]: error,
-      [styles.inputSearch]: type === InputType.SEARCH,
-    } as Mods)
-    const inputStylesWrapper = classNames(styles.wrapper, {}, [classNameWrap ? classNameWrap : ''])
-
-    const Input = forwardRef<HTMLInputElement, Props>(
-  ({ classNameWrap, label, value, placeholder, error, type, callback, ...rest }: Props, ref) => {
-    const [passwordInvisible, setPasswordInvisible] = useState<boolean>(true)
     const inputStyles = classNames(styles.input, {
       [styles.erroredInput]: error,
       [styles.inputSearch]: type === InputType.SEARCH,
@@ -96,54 +86,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             )}
           </>
         )}
-        {error && <p className={styles.error}>{error}</p>}
-      </div>
-    )
-  }
-)
-    return (
-      <div>
-        <div className={inputStylesWrapper}>
-          <label className={styles.label}>{label}</label>
-          {type === InputType.SEARCH && (
-            <Image src={searchImg} alt="search" width={15} height={15} className={styles.search} />
-          )}
-          <input
-            // Привязываем ref к input
-            ref={ref}
-            className={inputStyles}
-            type={
-              // eslint-disable-next-line no-nested-ternary
-              type === InputType.PASSWORD && passwordInvisible
-                ? 'password'
-                : type === InputType.EMAIL
-                ? InputType.EMAIL
-                : InputType.TEXT
-            }
-            value={value}
-            placeholder={placeholder}
-            onChange={e => callback && callback(e.currentTarget.value)}
-            {...rest}
-          />
-          {type === InputType.PASSWORD && (
-            <>
-              <Image
-                src={eyeImg}
-                alt="eye"
-                width={24}
-                height={24}
-                className={styles.eye}
-                onClick={() => setPasswordInvisible(!passwordInvisible)}
-              />
-              {passwordInvisible && (
-                <div
-                  className={styles.eyeCrossLine}
-                  onClick={() => setPasswordInvisible(!passwordInvisible)}
-                ></div>
-              )}
-            </>
-          )}
-        </div>
         {error && <p className={styles.error}>{error}</p>}
       </div>
     )

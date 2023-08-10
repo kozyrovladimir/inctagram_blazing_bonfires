@@ -21,8 +21,6 @@ export const RegistrationConfirmation: FC = () => {
     }
   }, [code])
 
-  console.log(code)
-
   return (
     <div>
       <p>Congratulations! Your email has been confirmed</p>
