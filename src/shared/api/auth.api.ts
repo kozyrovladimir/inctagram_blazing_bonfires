@@ -11,14 +11,6 @@ import {
 } from './../../shared/api/auth.api.types'
 import { baseURL } from './../../shared/api/common.api'
 
-import {
-  LoginFormType,
-  LoginResponseType,
-  LogoutResponse,
-  SignUpType,
-  UserType,
-} from '@/shared/api/auth.api.types'
-
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
