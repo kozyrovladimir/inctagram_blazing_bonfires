@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { ReduxStoreProviderDecorator } from './decorators/ReduxStoreProviderDecorator'
+import { ReduxStoreProviderDecorator } from './../SignInForm/decorators/ReduxStoreProviderDecorator'
 import SignUpForm from './SignUpForm'
 
 const meta: Meta<typeof SignUpForm> = {
