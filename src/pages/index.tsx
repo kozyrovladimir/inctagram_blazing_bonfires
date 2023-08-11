@@ -1,15 +1,10 @@
 import { GetStaticProps } from 'next'
-import { Inter } from 'next/dist/compiled/@next/font/dist/google'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { Navbar } from '@/components/navbar/Navbar'
 import { Logout } from '@/features/logout/ui/Logout/Logout'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
-import Calendar from '@/widgets/LangSwitcher/ui/Calendar/Calendar'
-
-// const inter = Inter({ subsets: ['latin'] })
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
