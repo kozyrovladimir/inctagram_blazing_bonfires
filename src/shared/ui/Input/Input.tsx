@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ForwardedRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, Ref, forwardRef, useState } from 'react'
 
 import Image from 'next/image'
 
@@ -17,6 +17,7 @@ export enum InputType {
 }
 
 type Props = {
+  ref?: Ref<HTMLInputElement>
   classNameWrap?: string
   label: string
   value?: string
@@ -27,7 +28,7 @@ type Props = {
   callback?: (value: string) => void
 } & ComponentPropsWithoutRef<'input'>
 
-export const Input = forwardRef<HTMLInputElement, Props>(
+const Input = forwardRef<HTMLInputElement, Props>(
   (
     { label, classNameWrap, value, placeholder, error, type, callback, onChange, ...restProps },
     ref
@@ -90,3 +91,5 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     )
   }
 )
+
+export default Input
