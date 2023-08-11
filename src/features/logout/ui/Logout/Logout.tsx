@@ -34,10 +34,10 @@ export const Logout = () => {
           extraButton={'Yes'}
           mainButton={'No'}
           callBackCloseWindow={logoutHandler}
-          callBackApi={logoutApiHandler}
+          extraButtonCB={logoutApiHandler}
         >
           Are you really want to log out of your account
-          <span className={style.userName}> “Epam@epam.com”</span>?
+          <span className={style.userName}> “Epam@epam.com”</span> ?
         </ModalWindow>
       )}
     </>

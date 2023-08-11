@@ -12,7 +12,7 @@ import calendarIcon from '@/public/calendar/iconCalendar.svg'
 // eslint-disable-next-line import/order
 import Image from 'next/image'
 
-interface IProps {
+interface IPropsDatePiker {
   style: object
   date: DateObject
   today: DateObject
@@ -21,10 +21,14 @@ interface IProps {
   isSameDate(arg1: DateObject, arg2: DateObject): boolean
 }
 
-export default function Calendar() {
-  const [value, setValue] = useState<Value>(new Date())
+interface IProps {
+  classNameWrap: string
+}
+
+export default function Calendar({ classNameWrap }: IProps) {
+  const [value, setValue] = useState<Value>(new Date().setFullYear(new Date().getFullYear() - 12))
   const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
-  const mapDays = (props: IProps) => {
+  const mapDays = (props: IPropsDatePiker) => {
     const { date, today, selectedDate, currentMonth, isSameDate } = props
 
     props.style = {
@@ -59,10 +63,9 @@ export default function Calendar() {
   }
 
   return (
-    <>
+    <div className={classNameWrap}>
       <DatePicker
         mapDays={mapDays}
-        // render={<InputIcon />}
         inputClass={styles.customInput}
         containerClassName={styles.container}
         value={value}
@@ -78,6 +81,6 @@ export default function Calendar() {
         offsetY={-1}
       />
       <Image src={calendarIcon} alt="calendar" className={styles.calendarIcon} />
-    </>
+    </div>
   )
 }

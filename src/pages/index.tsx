@@ -1,14 +1,15 @@
 import { GetStaticProps } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter } from 'next/dist/compiled/@next/font/dist/google'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
+import { Navbar } from '@/components/navbar/Navbar'
 import { Logout } from '@/features/logout/ui/Logout/Logout'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
 import Calendar from '@/widgets/LangSwitcher/ui/Calendar/Calendar'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
@@ -26,10 +27,10 @@ function Home() {
   return (
     <>
       <main>
-        <Calendar />
+        <Navbar />
         <ul>
           <li>
-            <Link href="/sign-in">sign-in</Link>
+            <Link href="/login">sign-in</Link>
           </li>
           <li>
             <Link href="/sign-up">sign-up</Link>
@@ -53,7 +54,10 @@ function Home() {
             <Link href="/create-new-password">create-new-password</Link>
           </li>
           <li>
-            <Link href="/confirmed-email">confirmed-email</Link>
+            <Link href="/auth/confirmed-email">confirmed-email</Link>
+          </li>
+          <li>
+            <Link href="/profile">profile</Link>
           </li>
         </ul>
         <Logout />

@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { baseURL } from '../../shared/api/common.api'
+import { baseURL } from './../../shared/api/common.api'
+import { SignUpType, UserType } from './../../shared/types/types'
 
 import { LoginFormType, LoginResponseType, LogoutResponse } from '@/shared/api/auth.api.types'
 
@@ -21,14 +22,41 @@ export const authApi = createApi({
           }
         },
       }),
+      signUp: build.mutation<UserType, SignUpType>({
+        query: (data: UserType) => {
+          return {
+            method: 'POST',
+            url: 'auth/registration',
+            body: {
+              userName: data.userName,
+              email: data.email,
+              password: data.password,
+            },
+          }
+        },
+      }),
       logout: build.mutation<LogoutResponse, void>({
         query: () => ({
           method: 'POST',
           url: 'auth/logout',
         }),
       }),
+      verifyEmail: build.mutation<any, any>({
+        query: (confirmationCode: string) => {
+          console.log(confirmationCode)
+
+          return {
+            method: 'POST',
+            url: 'auth/registration-confirmation',
+            body: {
+              confirmationCode,
+            },
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useLoginMutation, useLogoutMutation } = authApi
+export const { useLoginMutation, useLogoutMutation, useSignUpMutation, useVerifyEmailMutation } =
+  authApi

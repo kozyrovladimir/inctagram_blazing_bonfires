@@ -6,6 +6,21 @@
   width: 100%;
 }
 
+.agreementContainer {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.agreementText {
+  color: var(--color-light-100);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+.agreementLink {
+  color: var(--color-info-300);
+}
+
 .socialIconContainer {
   display: flex;
   gap: 3.75rem;

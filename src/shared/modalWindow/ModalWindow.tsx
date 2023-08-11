@@ -9,25 +9,31 @@ import style from './ModalWindow.module.scss'
 
 type Props = {
   title: string
-  mainButton: string
+  mainButton?: string
   extraButton?: string
-  callBackApi?: () => void
+  styles?: {}
+  isShowButton?: boolean
+  mainButtonCB?: () => void
+  extraButtonCB?: () => void
   callBackCloseWindow: () => void
   children: ReactNode
 }
 
 export const ModalWindow: FC<Props> = ({
+  isShowButton = true,
+  styles,
   children,
   title,
   mainButton,
   extraButton,
   callBackCloseWindow,
-  callBackApi,
+  extraButtonCB,
+  mainButtonCB,
 }) => {
   const refModalWindow = useRef<HTMLDivElement | null>(null)
   const [isOpen, setIsOpen] = useState(true)
 
-  const closeOpenMenus = (e: DocumentEventMap['mousedown']) => {
+  const closeOpenMenu = (e: DocumentEventMap['mousedown']) => {
     if (
       refModalWindow.current &&
       isOpen &&
@@ -37,21 +43,28 @@ export const ModalWindow: FC<Props> = ({
       callBackCloseWindow()
     }
   }
+  const mainButtonHandler = () => {
+    mainButtonCB && mainButtonCB()
+    callBackCloseWindow()
+  }
+  const extraButtonHandler = () => {
+    extraButtonCB && extraButtonCB()
+  }
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener('mousedown', closeOpenMenus)
+      document.addEventListener('mousedown', closeOpenMenu)
     }
 
     return () => {
-      document.removeEventListener('mousedown', closeOpenMenus)
+      document.removeEventListener('mousedown', closeOpenMenu)
     }
   }, [isOpen])
 
   return (
-    <div className={style.logoutWindowWrapper}>
-      <div className={style.logoutWindow} ref={refModalWindow}>
-        <div className={style.logoutHeader}>
+    <div className={style.windowWrapper}>
+      <div style={styles ? styles : {}} className={style.mainWindow} ref={refModalWindow}>
+        <div className={style.header}>
           <div>{title}</div>
           <div>
             <Button
@@ -67,14 +80,20 @@ export const ModalWindow: FC<Props> = ({
         <div className={style.buttons}>
           <div className={style.button}>
             {extraButton && (
-              <Button size={ButtonSize.SMALL} theme={ButtonTheme.CLEAR} onClick={callBackApi}>
+              <Button
+                size={ButtonSize.SMALL}
+                theme={ButtonTheme.CLEAR}
+                onClick={extraButtonHandler}
+              >
                 {extraButton}
               </Button>
             )}
           </div>
-          <Button size={ButtonSize.SMALL} onClick={callBackCloseWindow}>
-            {mainButton}
-          </Button>
+          {isShowButton && (
+            <Button size={ButtonSize.SMALL} onClick={mainButtonHandler}>
+              {mainButton}
+            </Button>
+          )}
         </div>
       </div>
     </div>

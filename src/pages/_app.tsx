@@ -18,6 +18,8 @@ type AppPropsWithLayout = AppProps & {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page)
 
+  console.log('yest')
+
   return getLayout(
     <Provider store={store}>
       <Component {...pageProps} />
