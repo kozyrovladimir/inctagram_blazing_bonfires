@@ -1,0 +1,52 @@
+.profileSettingContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 728px;
+  margin: auto;
+}
+.photo {
+  margin-bottom: 25vh;
+}
+
+.aboutMeLabel {
+  margin-top: 20px;
+  display: flex;
+  color: var(--color-dark-300);
+  font-size: var(--font-size-m);
+}
+
+.aboutMeTextarea {
+  background: transparent;
+  border: 1px solid var(--color-dark-300);
+  padding: 10px;
+  resize: vertical;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.line {
+  width: 728px;
+  height: 1px;
+  background-color: var(--color-dark-300);
+  margin-top: 20px;
+}
+
+.buttonContainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 69%;
+}
+
+.button {
+  color: var(--color-light-900);
+  background-color: var(--color-info-900);
+}
