@@ -31,12 +31,18 @@ export type UserType = {
   password: string
 }
 
+// когда забыл пароль и жмешь на ссылку forgot password
 export type ForgotPasswordType = {
   email: string
   recaptcha: string
 }
-
+// когда по ссылке forgot password придумываешь новый пароль
 export type CreateNewPasswordFormType = {
-  passwordConfirmation: string
   password: string
+  passwordConfirmation: string
+}
+// то, что оправляется на бэк, после создания нового пароля
+export type RecoveryPasswordType = {
+  newPassword: string
+  recoveryCode: string
 }

@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { CircularProgress } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useCreateNewPasswordMutation } from './../../../../shared/api/auth.api'
-import { CreateNewPasswordFormType } from './../../../../shared/api/auth.api.types'
+import {
+  CreateNewPasswordFormType,
+  RecoveryPasswordType,
+} from './../../../../shared/api/auth.api.types'
 import { ModalWindow } from './../../../../shared/modalWindow/ModalWindow'
 import { Button, ButtonSize } from './../../../../shared/ui/Button/Button'
 import Input, { InputType } from './../../../../shared/ui/Input/Input'
@@ -15,6 +18,13 @@ function CreateNewPass() {
   const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation()
   const [newPassword, setNewPassword] = useState(false)
   const callBackCloseWindow = () => setNewPassword(false)
+  const [recoveryCode, setRecoveryCode] = useState('')
+
+  useEffect(() => {
+    const urlCode = window.location.search.split('=')[1]
+
+    setRecoveryCode(urlCode)
+  }, [])
 
   const {
     watch,
@@ -30,9 +40,11 @@ function CreateNewPass() {
       passwordConfirmation: '',
     },
   })
+
   const password = watch('password', '')
-  const onSubmit: SubmitHandler<string> = password => {
-    createNewPassword(password)
+
+  const onSubmit: SubmitHandler<RecoveryPasswordType> = ({ newPassword, recoveryCode }) => {
+    createNewPassword(newPassword, recoveryCode)
       .unwrap()
       .then(() => {
         reset()

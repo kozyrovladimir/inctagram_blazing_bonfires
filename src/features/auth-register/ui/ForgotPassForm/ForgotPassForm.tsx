@@ -18,6 +18,7 @@ import inputStyles from '@/shared/ui/Input/Input.module.scss'
 function ForgotPass() {
   const [isPasswordSent, setIsPasswordSent] = useState(false)
   const callBackCloseWindow = () => setIsPasswordSent(true)
+  const recaptcha = '6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ'
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
 
   const {
@@ -35,6 +36,8 @@ function ForgotPass() {
   })
 
   const onSubmit: SubmitHandler<ForgotPasswordType> = (data: ForgotPasswordType) => {
+    data.recaptcha = recaptcha
+    debugger
     forgotPassword(data)
       .unwrap()
       .then(() => {
@@ -107,7 +110,6 @@ function ForgotPass() {
                 minLength: 7,
               })}
               label={"I'm not a robot"}
-              value={''}
               error={errors.recaptcha && errors.recaptcha?.message}
             />
             <div className={styles.capchaIcon}>

@@ -7,6 +7,7 @@ import {
   LoginFormType,
   LoginResponseType,
   LogoutResponse,
+  RecoveryPasswordType,
 } from './../../shared/api/auth.api.types'
 import { baseURL } from './../../shared/api/common.api'
 
@@ -61,7 +62,7 @@ export const authApi = createApi({
         query: (data: ForgotPasswordType) => {
           return {
             method: 'POST',
-            url: 'auth/forgot-password',
+            url: 'auth/password-recovery',
             body: {
               email: data.email,
               recaptcha: data.recaptcha,
@@ -69,13 +70,14 @@ export const authApi = createApi({
           }
         },
       }),
-      createNewPassword: build.mutation<any, string>({
-        query: (password: string) => {
+      createNewPassword: build.mutation<UserType, RecoveryPasswordType>({
+        query: (data: RecoveryPasswordType) => {
           return {
             method: 'POST',
-            url: 'auth/create-new-password',
+            url: 'auth/new-password',
             body: {
-              password,
+              newPassword: data.newPassword,
+              recoveryCodd: data.recoveryCode,
             },
           }
         },
