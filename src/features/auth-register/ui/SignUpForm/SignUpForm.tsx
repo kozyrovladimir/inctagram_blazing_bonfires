@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
+import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import githubIcon from './../../../../public/socialIcons/github-icon.svg'
@@ -155,9 +156,11 @@ function SignUpForm() {
           Sign Up
         </Button>
         <p className={styles.helpText}>Do you have an account?</p>
-        <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.SMALL}>
-          Sign In
-        </Button>
+        <Link href={'/sign-in'}>
+          <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.SMALL}>
+            Sign In
+          </Button>
+        </Link>
       </form>
     </>
   )
