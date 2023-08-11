@@ -11,6 +11,14 @@ import {
 } from './../../shared/api/auth.api.types'
 import { baseURL } from './../../shared/api/common.api'
 
+import {
+  LoginFormType,
+  LoginResponseType,
+  LogoutResponse,
+  SignUpType,
+  UserType,
+} from '@/shared/api/auth.api.types'
+
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
@@ -49,6 +57,8 @@ export const authApi = createApi({
       }),
       verifyEmail: build.mutation<any, any>({
         query: (confirmationCode: string) => {
+          console.log(confirmationCode)
+
           return {
             method: 'POST',
             url: 'auth/registration-confirmation',
