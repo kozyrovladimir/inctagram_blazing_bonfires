@@ -27,7 +27,7 @@ function Home() {
       <main>
         <ul>
           <li>
-            <Link href="/login">sign-in</Link>
+            <Link href="/sign-in">sign-in</Link>
           </li>
           <li>
             <Link href="/sign-up">sign-up</Link>
@@ -51,7 +51,7 @@ function Home() {
             <Link href="/create-new-password">create-new-password</Link>
           </li>
           <li>
-            <Link href="/auth/confirmed-email">confirmed-email</Link>
+            <Link href="/auth/registration-confirmation">confirmed-email</Link>
           </li>
         </ul>
         <Logout />

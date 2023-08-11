@@ -9,7 +9,7 @@ import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
 
 export const ConfirmedEmail = () => {
   return (
-    <div className={styles.conirmedContainer}>
+    <div className={styles.confirmedContainer}>
       <h3>Congratulations!</h3>
       <p>Your email has been confirmed</p>
       <Button theme={ButtonTheme.FILLED}>Sign In</Button>
