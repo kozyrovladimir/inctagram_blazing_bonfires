@@ -27,7 +27,6 @@ function Home() {
   return (
     <>
       <main>
-        <Navbar />
         <ul>
           <li>
             <Link href="/login">sign-in</Link>
