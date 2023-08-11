@@ -7,13 +7,12 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import captchaIcon from './../../../../public/login/reCaptchaIcon.svg'
 import { useForgotPasswordMutation } from './../../../../shared/api/auth.api'
 import { ForgotPasswordType } from './../../../../shared/api/auth.api.types'
+import { ModalWindow } from './../../../../shared/modalWindow/ModalWindow'
 import { Button, ButtonSize, ButtonTheme } from './../../../../shared/ui/Button/Button'
 import { Checkbox } from './../../../../shared/ui/Checkbox/Checkbox'
 import Input, { InputType } from './../../../../shared/ui/Input/Input'
+import inputStyles from './../../../../shared/ui/Input/Input.module.scss'
 import styles from './ForgotPassForm.module.scss'
-
-import { ModalWindow } from '@/shared/modalWindow/ModalWindow'
-import inputStyles from '@/shared/ui/Input/Input.module.scss'
 
 function ForgotPass() {
   const [isPasswordSent, setIsPasswordSent] = useState(false)
