@@ -1,11 +1,18 @@
 import React from 'react'
 
-import { CreateNewPassword } from '@/pages-fs/auth-register'
-import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import styles from './CreateNewPassword.module.scss'
 
-const CreateNewPasswordPage = () => {
-  return <CreateNewPassword />
+import { CreateNewPassForm } from '@/features/auth-register'
+import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import FormContainer from '@/shared/ui/FormContainer/FormContainer'
+
+const CreateNewPassword = () => {
+  return (
+    <FormContainer title="Create New Password" className={styles.createNewPassContainer}>
+      <CreateNewPassForm />
+    </FormContainer>
+  )
 }
 
-CreateNewPasswordPage.getLayout = getLayout
-export default CreateNewPasswordPage
+CreateNewPassword.getLayout = getLayout
+export default CreateNewPassword
