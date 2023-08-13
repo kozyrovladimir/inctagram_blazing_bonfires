@@ -2,10 +2,10 @@ import React, { FC, ReactNode, useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 
-import closeImg from '../../public/logout/close.svg'
-import { Button, ButtonSize, ButtonTheme } from '../../shared/ui/Button/Button'
+import closeImg from '../../../../public/assets/icons/logout/close.svg'
+import { Button, ButtonSize, ButtonTheme } from '../Button/Button'
 
-import style from './ModalWindow.module.scss'
+import style from './Modal.module.scss'
 
 type Props = {
   title: string
@@ -19,7 +19,7 @@ type Props = {
   children: ReactNode
 }
 
-export const ModalWindow: FC<Props> = ({
+export const Modal: FC<Props> = ({
   isShowButton = true,
   styles,
   children,
