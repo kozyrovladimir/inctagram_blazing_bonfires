@@ -7,21 +7,21 @@ import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
-import githubIcon from '../../../../public/socialIcons/github-icon.svg'
-import googleIcon from '../../../../public/socialIcons/google-icon.svg'
-import { useLoginMutation } from '../../../../shared/api/auth.api'
-import { LoginFormType } from '../../../../shared/api/auth.api.types'
-import { Button, ButtonSize } from '../../../../shared/ui/Button/Button'
-import { Input, InputType } from '../../../../shared/ui/Input/Input'
+import githubIcon from '../../../../../public/assets/icons/socialIcons/github-icon.svg'
+import googleIcon from '../../../../../public/assets/icons/socialIcons/google-icon.svg'
+import { useLoginMutation, LoginFormType } from '../../../../shared/api'
 
 import styles from './SignInForm.module.scss'
+
+import { Button, ButtonSize } from '@/shared/ui/Button/Button'
+import { Input, InputType } from '@/shared/ui/Input/Input'
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Enter email'),
   password: yup.string().required('Enter password'),
 })
 
-function Sign() {
+export const Sign = () => {
   const [passwordError, setPasswordError] = useState<string>('')
   const [emailError, setEmailError] = useState<string>('')
   const [login, { isLoading, isError }] = useLoginMutation()
@@ -104,5 +104,3 @@ function Sign() {
     </form>
   )
 }
-
-export default Sign

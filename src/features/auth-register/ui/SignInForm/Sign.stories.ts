@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { ReduxStoreProviderDecorator } from '../../../../features/auth-register/ui/SignInForm/decorators/ReduxStoreProviderDecorator'
+import { Sign } from './Sign'
 
-import Sign from './Sign'
+import { ReduxStoreProviderDecorator } from '@/app/providers/StoreProvider'
 
 const meta: Meta<typeof Sign> = {
   title: 'Components/Sign',
