@@ -4,7 +4,7 @@ import { useState } from 'react'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import Link from 'next/link'
 
-import { LanguageSelect } from '../../widgets/LangSwitcher'
+import { LanguageSelect } from '../../../LangSwitcher'
 
 import s from './Header.module.scss'
 
@@ -13,7 +13,7 @@ export const Header = () => {
 
   return (
     <header className={s.header}>
-      <Link href="/" className={s.logo}>
+      <Link href="/src/pages" className={s.logo}>
         Inctagram
       </Link>
       <div className={s.option}>
