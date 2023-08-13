@@ -2,7 +2,7 @@ import React, { PropsWithChildren, ReactElement } from 'react'
 
 import { NextPage } from 'next'
 
-import ProfileLayout from '@/shared/layout/ProfileLayout/ProfileLayout'
+import ProfileLayout from './ProfileLayout'
 
 export const SettingLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (

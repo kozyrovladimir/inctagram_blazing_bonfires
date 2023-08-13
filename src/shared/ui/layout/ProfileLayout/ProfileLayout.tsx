@@ -2,8 +2,8 @@ import React, { PropsWithChildren } from 'react'
 
 import { NextPage } from 'next'
 
-import { Header } from '@/components/Header/Header'
-import { Navbar } from '@/components/navbar/Navbar'
+import { Header } from '../../../../widgets/Header/ui/Header/Header'
+import { Navbar } from '../../../../widgets/Navbar/ui/Navbar/Navbar'
 
 const ProfileLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
