@@ -2,21 +2,22 @@ import React, { ChangeEvent, FC, useState } from 'react'
 
 import Image from 'next/image'
 
-import notPhotoImg from '../../public/avatarProfile/notPhoto.png'
-import { ModalWindow } from '../../shared/modalWindow/ModalWindow'
-import { Button, ButtonSize } from '../../shared/ui/Button/Button'
+import notPhotoImg from '../../../../../public/assets/icons/avatarProfile/notPhoto.png'
 
-import style from './PhotoMW.module.scss'
+import style from './PhotoModal.module.scss'
+
+import { Button, ButtonSize } from '@/shared/ui/Button/Button'
+import { Modal } from '@/shared/ui/Modal/Modal'
 
 type Props = {
   closeWindow: () => void
 }
 
-export const PhotoMW: FC<Props> = ({ closeWindow }) => {
+export const PhotoModal: FC<Props> = ({ closeWindow }) => {
   const [photoProfile, setPhotoProfile] = useState<null | Blob | MediaSource>(null)
   const selectedPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
-      setPhotoProfile(e.target.files[0])
+      setPhotoProfile(e.target?.files[0])
     }
   }
   const openSelectHandler = () => {
@@ -27,7 +28,7 @@ export const PhotoMW: FC<Props> = ({ closeWindow }) => {
 
   return (
     <div>
-      <ModalWindow
+      <Modal
         title={'Add a Profile Photo'}
         callBackCloseWindow={closeWindow}
         styles={{ width: '492px', height: '564px' }}
@@ -70,7 +71,7 @@ export const PhotoMW: FC<Props> = ({ closeWindow }) => {
             </>
           )}
         </div>
-      </ModalWindow>
+      </Modal>
     </div>
   )
 }
