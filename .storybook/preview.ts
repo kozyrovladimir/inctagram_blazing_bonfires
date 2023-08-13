@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react'
-
-import '@/app/styles/index.scss'
+import { ApiDecorator } from "../src/shared/config/storybook/ApiDecorator/ApiDecorator";
+import { StyleDecorator } from "../src/shared/config/storybook/StyleDecorator/StyleDecorator";
 
 const preview: Preview = {
   parameters: {
@@ -12,6 +12,10 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    StyleDecorator,
+    ApiDecorator
+  ]
 };
 
 export default preview;
