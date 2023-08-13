@@ -9,10 +9,10 @@ import * as yup from 'yup'
 
 import githubIcon from '../../../../../public/assets/icons/socialIcons/github-icon.svg'
 import googleIcon from '../../../../../public/assets/icons/socialIcons/google-icon.svg'
-import { useLoginMutation, LoginFormType } from '../../../../shared/api'
 
 import styles from './SignInForm.module.scss'
 
+import { useLoginMutation, LoginFormType } from '@/shared/api'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 
