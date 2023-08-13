@@ -4,16 +4,18 @@ import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import githubIcon from './../../../../public/socialIcons/github-icon.svg'
-import googleIcon from './../../../../public/socialIcons/google-icon.svg'
-import { useSignUpMutation } from './../../../../shared/api/auth.api'
-import { ModalWindow } from './../../../../shared/modalWindow/ModalWindow'
-import { SignUpType } from './../../../../shared/types/types'
-import { Button, ButtonSize, ButtonTheme } from './../../../../shared/ui/Button/Button'
-import { Checkbox } from './../../../../shared/ui/Checkbox/Checkbox'
-import Input, { InputType } from './../../../../shared/ui/Input/Input'
-import inputStyles from './../../../../shared/ui/Input/Input.module.scss'
+import githubIcon from '../../../../../public/assets/icons/socialIcons/github-icon.svg'
+import googleIcon from '../../../../../public/assets/icons/socialIcons/google-icon.svg'
+
 import styles from './SignUpForm.module.scss'
+
+import { useSignUpMutation } from '@/shared/api'
+import { SignUpType } from '@/shared/types/types'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
+import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
+import { InputType, Input } from '@/shared/ui/Input/Input'
+import inputStyles from '@/shared/ui/Input/Input.module.scss'
+import { Modal } from '@/shared/ui/Modal/Modal'
 
 function SignUpForm() {
   const [signUp, { isLoading }] = useSignUpMutation()
@@ -64,13 +66,9 @@ function SignUpForm() {
   return (
     <>
       {registrationSuccess && (
-        <ModalWindow
-          title={'Email sent'}
-          mainButton={'OK'}
-          callBackCloseWindow={callBackCloseWindow}
-        >
+        <Modal title={'Email sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
           <p>We have sent a link to confirm your email</p>
-        </ModalWindow>
+        </Modal>
       )}
       {isLoading && <CircularProgress />}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
