@@ -1,8 +1,9 @@
 import React from 'react'
 
+import { ProfilePhoto } from '../ProfilePhoto/ProfilePhoto'
+
 import styles from './ProfileSetting.module.scss'
 
-import { ProfilePhoto } from '@/features/profile-setting/ProfilePhoto'
 import { Button } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 
