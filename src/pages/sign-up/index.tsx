@@ -1,11 +1,16 @@
 import React from 'react'
 
-import { SignUp } from '@/pages-fs/auth-register'
+import SignUpForm from '@/features/auth-register/ui/SignUpForm/SignUpForm'
 import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 
-const SignUpPage = () => {
-  return <SignUp />
+const SignUp = () => {
+  return (
+    <FormContainer title="Sign Up">
+      <SignUpForm />
+    </FormContainer>
+  )
 }
 
-SignUpPage.getLayout = getLayout
-export default SignUpPage
+SignUp.getLayout = getLayout
+export default SignUp
