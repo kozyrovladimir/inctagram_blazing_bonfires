@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import enFlag from '../../../../shared/assets/icons/britishFlag.svg'
-import ruFlag from '../../../../shared/assets/icons/russianFlag.svg'
-import arrow from '../../../../shared/assets/icons/selectArrow.svg'
+import enFlag from '../../../../../public/assets/icons/langSelect/britishFlag.svg'
+import ruFlag from '../../../../../public/assets/icons/langSelect/russianFlag.svg'
+import arrow from '../../../../../public/assets/icons/langSelect/selectArrow.svg'
 
 import style from './LanguageSelect.module.scss'
 import { OptionContent } from './OptionContent'
@@ -38,8 +38,8 @@ const langOptions: LangOptionType[] = [
 ]
 
 export const LanguageSelect = () => {
-  // const router = useRouter()
-  // const { pathname, asPath, query } = router
+  const router = useRouter()
+  const { pathname, asPath, query } = router
 
   const refSelect = useRef<HTMLDivElement | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState(false)
@@ -50,7 +50,7 @@ export const LanguageSelect = () => {
     setActiveSelect(lang)
     openSelectHandler()
 
-    // router.push({ pathname, query }, asPath, { locale: lang })
+    router.push({ pathname, query }, asPath, { locale: lang })
   }
 
   const closeOpenMenus = (e: DocumentEventMap['mousedown']) => {
