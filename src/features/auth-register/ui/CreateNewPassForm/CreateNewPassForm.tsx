@@ -5,7 +5,7 @@ import styles from './CreateNewPassForm.module.scss'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 
-function CreateNewPass() {
+export function CreateNewPassForm() {
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [passwordNew, setPasswordNew] = useState('')
 
@@ -34,5 +34,3 @@ function CreateNewPass() {
     </form>
   )
 }
-
-export default CreateNewPass
