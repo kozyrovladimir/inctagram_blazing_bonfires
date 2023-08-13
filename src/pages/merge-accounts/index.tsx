@@ -2,12 +2,11 @@ import React from 'react'
 
 import Image from 'next/image'
 
-import broImage from '../../../public/assets/icons/login/bro.svg'
-
 import styles from './MergeAccounts.module.scss'
 
-import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import broImage from '@/shared/assets/icons/login/bro.svg'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
+import { getLayout } from '@/shared/ui/layout/MainLayout/MainLayout'
 
 const MergeAccountsPage = () => {
   return (

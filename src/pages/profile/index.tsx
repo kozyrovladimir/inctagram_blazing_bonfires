@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 
-import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
+import { getLayout } from '@/shared/ui/layout/MainLayout/MainLayout'
 
 function Profile() {
   const router = useRouter()

@@ -2,10 +2,10 @@ import React from 'react'
 
 import Image from 'next/image'
 
-import noImage from '../../../../../public/assets/icons/image/no-image.svg'
-import { Button, ButtonSize, ButtonTheme } from '../../../../shared/ui/Button/Button'
-
 import styles from './ProfilePhoto.module.scss'
+
+import noImage from '@/shared/assets/icons/image/no-image.svg'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 
 export const ProfilePhoto = () => {
   return (

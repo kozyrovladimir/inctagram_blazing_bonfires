@@ -7,12 +7,11 @@ import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
-import githubIcon from '../../../../../public/assets/icons/socialIcons/github-icon.svg'
-import googleIcon from '../../../../../public/assets/icons/socialIcons/google-icon.svg'
-
 import styles from './SignInForm.module.scss'
 
 import { useLoginMutation, LoginFormType } from '@/shared/api'
+import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
+import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 

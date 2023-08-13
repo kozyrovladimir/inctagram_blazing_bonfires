@@ -4,12 +4,11 @@ import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import githubIcon from '../../../../../public/assets/icons/socialIcons/github-icon.svg'
-import googleIcon from '../../../../../public/assets/icons/socialIcons/google-icon.svg'
-
 import styles from './SignUpForm.module.scss'
 
 import { useSignUpMutation } from '@/shared/api'
+import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
+import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
 import { SignUpType } from '@/shared/types/types'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'

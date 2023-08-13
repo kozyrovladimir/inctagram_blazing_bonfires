@@ -2,8 +2,8 @@ import { ComponentPropsWithoutRef, Ref, forwardRef, useState } from 'react'
 
 import Image from 'next/image'
 
-import eyeImg from '../../../../public/assets/icons/input/eye.svg'
-import searchImg from '../../../../public/assets/icons/input/search.svg'
+import eyeImg from '../../assets/icons/input/eye.svg'
+import searchImg from '../../assets/icons/input/search.svg'
 import { classNames, Mods } from '../../libs/classNames/classNames'
 
 import styles from './Input.module.scss'

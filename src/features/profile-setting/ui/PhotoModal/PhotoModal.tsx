@@ -2,10 +2,9 @@ import React, { ChangeEvent, FC, useState } from 'react'
 
 import Image from 'next/image'
 
-import notPhotoImg from '../../../../../public/assets/icons/avatarProfile/notPhoto.png'
-
 import style from './PhotoModal.module.scss'
 
+import notPhotoImg from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import { Modal } from '@/shared/ui/Modal/Modal'
 

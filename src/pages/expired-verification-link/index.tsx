@@ -2,12 +2,11 @@ import React from 'react'
 
 import Image from 'next/image'
 
-import broResend from '../../../public/assets/icons/login/broResend.svg'
-import { Button, ButtonSize, ButtonTheme } from '../../shared/ui/Button/Button'
-
 import styles from './ExpiredVerificationLink.module.scss'
 
-import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import broResend from '@/shared/assets/icons/login/broResend.svg'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
+import { getLayout } from '@/shared/ui/layout/MainLayout/MainLayout'
 
 const ExpiredVerificationLinkPage = () => {
   return (

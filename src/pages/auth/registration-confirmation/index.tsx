@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 
-import { useVerifyEmailMutation } from '@/shared/api/auth.api'
-import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import { useVerifyEmailMutation } from '@/shared/api'
 import { Button } from '@/shared/ui/Button/Button'
+import { getLayout } from '@/shared/ui/layout/MainLayout/MainLayout'
 
 const RegistrationConfirmation = () => {
   const [code, setCode] = useState('')

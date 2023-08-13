@@ -2,7 +2,7 @@ import React, { FC, ReactNode, useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 
-import closeImg from '../../../../public/assets/icons/logout/close.svg'
+import closeImg from '../../assets/icons/logout/close.svg'
 import { Button, ButtonSize, ButtonTheme } from '../Button/Button'
 
 import style from './Modal.module.scss'

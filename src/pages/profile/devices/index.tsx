@@ -1,4 +1,4 @@
-import { settingLayout } from '@/shared/layout/ProfileLayout/SettingLayout'
+import { settingLayout } from '@/shared/ui/layout/ProfileLayout/SettingLayout'
 
 function Devices() {
   return <div>Devices</div>

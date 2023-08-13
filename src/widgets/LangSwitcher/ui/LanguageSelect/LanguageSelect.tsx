@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import enFlag from '../../../../../public/assets/icons/langSelect/britishFlag.svg'
-import ruFlag from '../../../../../public/assets/icons/langSelect/russianFlag.svg'
-import arrow from '../../../../../public/assets/icons/langSelect/selectArrow.svg'
-
 import style from './LanguageSelect.module.scss'
 import { OptionContent } from './OptionContent'
+
+import enFlag from '@/shared/assets/icons/langSelect/britishFlag.svg'
+import ruFlag from '@/shared/assets/icons/langSelect/russianFlag.svg'
+import arrow from '@/shared/assets/icons/langSelect/selectArrow.svg'
 
 export enum ShortLangs {
   RU = 'ru',

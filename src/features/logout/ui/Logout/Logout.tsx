@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 
 import Image from 'next/image'
 
-import logoutImg from '../../../../../public/assets/icons/logout/logout.svg'
-
 import style from './Logout.module.scss'
 
-import { useLogoutMutation } from '@/shared/api/auth.api'
+import { useLogoutMutation } from '@/shared/api'
+import logoutImg from '@/shared/assets/icons/logout/logout.svg'
 import { Button } from '@/shared/ui/Button/Button'
 import { Modal } from '@/shared/ui/Modal/Modal'
 

@@ -2,11 +2,10 @@ import { useState } from 'react'
 
 import Image from 'next/image'
 
-import githubIcon from '../../../../../public/assets/icons/socialIcons/github-icon.svg'
-import googleIcon from '../../../../../public/assets/icons/socialIcons/google-icon.svg'
-
 import styles from './SignInForm.module.scss'
 
+import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
+import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 
