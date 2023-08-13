@@ -1,4 +1,4 @@
-import '@/styles/globals.scss'
+import '@/app/styles/globals.scss'
 import { ReactElement, ReactNode } from 'react'
 
 import type { AppProps } from 'next/app'
@@ -17,8 +17,6 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page)
-
-  console.log('yest')
 
   return getLayout(
     <Provider store={store}>
