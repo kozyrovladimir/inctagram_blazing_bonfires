@@ -1,4 +1,4 @@
-import { settingLayout } from '@/shared/ui/layout/ProfileLayout/SettingLayout'
+import { settingLayout } from '@/widgets/layout/ProfileLayout/SettingLayout'
 
 function MyPayments() {
   return <div>MY Payments</div>

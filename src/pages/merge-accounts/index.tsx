@@ -6,7 +6,7 @@ import styles from './MergeAccounts.module.scss'
 
 import broImage from '@/shared/assets/icons/login/bro.svg'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
-import { getLayout } from '@/shared/ui/layout/MainLayout/MainLayout'
+import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const MergeAccountsPage = () => {
   return (

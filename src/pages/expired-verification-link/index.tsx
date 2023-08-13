@@ -6,7 +6,7 @@ import styles from './ExpiredVerificationLink.module.scss'
 
 import broResend from '@/shared/assets/icons/login/broResend.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
-import { getLayout } from '@/shared/ui/layout/MainLayout/MainLayout'
+import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const ExpiredVerificationLinkPage = () => {
   return (

@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react'
 
 import { NextPage } from 'next'
 
-import { Header } from '../../../../widgets/Header'
+import { Header } from '../../Header'
 
 const BaseLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (

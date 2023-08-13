@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { useVerifyEmailMutation } from '@/shared/api'
 import { Button } from '@/shared/ui/Button/Button'
-import { getLayout } from '@/shared/ui/layout/MainLayout/MainLayout'
+import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const RegistrationConfirmation = () => {
   const [code, setCode] = useState('')

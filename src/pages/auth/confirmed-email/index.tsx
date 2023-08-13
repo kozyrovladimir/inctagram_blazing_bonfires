@@ -6,7 +6,7 @@ import styles from './ConfirmedEmail.module.scss'
 
 import broConfirmImage from '@/shared/assets/icons/login/broCongratulations.svg'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
-import { getLayout } from '@/shared/ui/layout/MainLayout/MainLayout'
+import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const ConfirmedEmail = () => {
   return (

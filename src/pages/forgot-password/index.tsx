@@ -4,7 +4,7 @@ import styles from './ForgotPassword.module.scss'
 
 import ForgotPassForm from '@/features/auth-register/ui/ForgotPassForm/ForgotPassForm'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
-import { getLayout } from '@/shared/ui/layout/MainLayout/MainLayout'
+import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const ForgotPasswordPage = () => {
   return (
