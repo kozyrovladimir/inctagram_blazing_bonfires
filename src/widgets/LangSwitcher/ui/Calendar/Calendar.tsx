@@ -22,11 +22,13 @@ interface IPropsDatePiker {
 }
 
 interface IProps {
+  value: Value
+  onChange: (newValue: Value) => void
   classNameWrap: string
 }
 
-export default function Calendar({ classNameWrap }: IProps) {
-  const [value, setValue] = useState<Value>(new Date().setFullYear(new Date().getFullYear() - 12))
+export default function Calendar({ classNameWrap, value, onChange }: IProps) {
+  // const [value, setValue] = useState<Value>(new Date().setFullYear(new Date().getFullYear() - 12))
   const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
   const mapDays = (props: IPropsDatePiker) => {
     const { date, today, selectedDate, currentMonth, isSameDate } = props
@@ -76,7 +78,7 @@ export default function Calendar({ classNameWrap }: IProps) {
         showOtherDays
         format="DD.MM.YYYY"
         placeholder="00.00.00"
-        onChange={setValue}
+        onChange={onChange}
         weekStartDayIndex={1}
         offsetY={-1}
       />
