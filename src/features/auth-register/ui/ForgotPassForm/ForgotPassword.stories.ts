@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react'
 
 import { ReduxStoreProviderDecorator } from './../SignInForm/decorators/ReduxStoreProviderDecorator'
-import SignUpForm from './SignUpForm'
+import ForgotPass from './ForgotPassForm'
 
-const meta: Meta<typeof SignUpForm> = {
-  title: 'Components/SignUp',
-  component: SignUpForm,
+const meta: Meta<typeof ForgotPass> = {
+  title: 'Components/ForgotPassword',
+  component: ForgotPass,
   parameters: {
     layout: 'centered',
   },
@@ -14,7 +14,7 @@ const meta: Meta<typeof SignUpForm> = {
 }
 
 export default meta
-type Story = StoryObj<typeof SignUpForm>
+type Story = StoryObj<typeof ForgotPass>
 
 export const Default: Story = {
   args: {

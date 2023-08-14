@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 
 import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
+import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import githubIcon from './../../../../public/socialIcons/github-icon.svg'
 import googleIcon from './../../../../public/socialIcons/google-icon.svg'
 import { useSignUpMutation } from './../../../../shared/api/auth.api'
+import { SignUpType } from './../../../../shared/api/auth.api.types'
 import { ModalWindow } from './../../../../shared/modalWindow/ModalWindow'
-import { SignUpType } from './../../../../shared/types/types'
 import { Button, ButtonSize, ButtonTheme } from './../../../../shared/ui/Button/Button'
 import { Checkbox } from './../../../../shared/ui/Checkbox/Checkbox'
 import Input, { InputType } from './../../../../shared/ui/Input/Input'
@@ -155,9 +156,11 @@ function SignUpForm() {
           Sign Up
         </Button>
         <p className={styles.helpText}>Do you have an account?</p>
-        <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.SMALL}>
-          Sign In
-        </Button>
+        <Link href={'/sign-in'}>
+          <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.SMALL}>
+            Sign In
+          </Button>
+        </Link>
       </form>
     </>
   )

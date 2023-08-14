@@ -1,9 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+import {
+  SignUpType,
+  UserType,
+  ForgotPasswordType,
+  LoginFormType,
+  LoginResponseType,
+  LogoutResponse,
+  RecoveryPasswordType,
+} from './../../shared/api/auth.api.types'
 import { baseURL } from './../../shared/api/common.api'
-import { SignUpType, UserType } from './../../shared/types/types'
-
-import { LoginFormType, LoginResponseType, LogoutResponse } from '@/shared/api/auth.api.types'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -54,9 +60,39 @@ export const authApi = createApi({
           }
         },
       }),
+      forgotPassword: build.mutation<any, ForgotPasswordType>({
+        query: (data: ForgotPasswordType) => {
+          return {
+            method: 'POST',
+            url: 'auth/password-recovery',
+            body: {
+              email: data.email,
+              recaptcha: data.recaptcha,
+            },
+          }
+        },
+      }),
+      createNewPassword: build.mutation<UserType, RecoveryPasswordType>({
+        query: (data: RecoveryPasswordType) => {
+          return {
+            method: 'POST',
+            url: 'auth/new-password',
+            body: {
+              newPassword: data.newPassword,
+              recoveryCodd: data.recoveryCode,
+            },
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useLoginMutation, useLogoutMutation, useSignUpMutation, useVerifyEmailMutation } =
-  authApi
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useSignUpMutation,
+  useVerifyEmailMutation,
+  useForgotPasswordMutation,
+  useCreateNewPasswordMutation,
+} = authApi

@@ -1,4 +1,4 @@
-import { FC, forwardRef, ReactNode, Ref } from 'react'
+import { forwardRef, ReactNode, Ref } from 'react'
 
 import inputStyles from './../Input/Input.module.scss'
 import styles from './Checkbox.module.scss'
