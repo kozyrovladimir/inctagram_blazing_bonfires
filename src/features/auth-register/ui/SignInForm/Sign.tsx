@@ -12,7 +12,7 @@ import googleIcon from '../../../../public/socialIcons/google-icon.svg'
 import { useLoginMutation } from '../../../../shared/api/auth.api'
 import { LoginFormType } from '../../../../shared/api/auth.api.types'
 import { Button, ButtonSize } from '../../../../shared/ui/Button/Button'
-import Input, { InputType } from '../../../../shared/ui/Input/Input'
+import { Input, InputType } from '../../../../shared/ui/Input/Input'
 
 import styles from './SignInForm.module.scss'
 
