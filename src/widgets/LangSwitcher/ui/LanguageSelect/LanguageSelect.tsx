@@ -38,8 +38,8 @@ const langOptions: LangOptionType[] = [
 ]
 
 export const LanguageSelect = () => {
-  const router = useRouter()
-  const { pathname, asPath, query } = router
+  // const router = useRouter()
+  // const { pathname, asPath, query } = router
 
   const refSelect = useRef<HTMLDivElement | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState(false)
@@ -50,7 +50,7 @@ export const LanguageSelect = () => {
     setActiveSelect(lang)
     openSelectHandler()
 
-    router.push({ pathname, query }, asPath, { locale: lang })
+    // router.push({ pathname, query }, asPath, { locale: lang })
   }
 
   const closeOpenMenus = (e: DocumentEventMap['mousedown']) => {

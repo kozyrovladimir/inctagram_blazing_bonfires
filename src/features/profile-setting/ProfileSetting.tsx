@@ -4,8 +4,7 @@ import styles from './ProfileSetting.module.scss'
 
 import { ProfilePhoto } from '@/features/profile-setting/ProfilePhoto'
 import { Button } from '@/shared/ui/Button/Button'
-import Input, { InputType } from '@/shared/ui/Input/Input'
-import Calendar from '@/widgets/LangSwitcher/ui/Calendar/Calendar'
+import { Input, InputType } from '@/shared/ui/Input/Input'
 
 export const ProfileSetting = () => {
   return (
@@ -36,8 +35,8 @@ export const ProfileSetting = () => {
             style={{ marginBottom: '20px' }}
             classNameWrap={'myCustomLabel'}
           />
-          <div className={styles.labelDate}>Date of birthday</div>
-          <Calendar classNameWrap={styles.calendar} />
+          <div>Date of birthday</div>
+          <input type={'date'} style={{ marginBottom: '20px' }} />
           <Input
             label={'City'}
             placeholder={''}
