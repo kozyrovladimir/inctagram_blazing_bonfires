@@ -2,19 +2,19 @@ import React, { useState } from 'react'
 
 import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
-import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import githubIcon from './../../../../public/socialIcons/github-icon.svg'
-import googleIcon from './../../../../public/socialIcons/google-icon.svg'
-import { useSignUpMutation } from './../../../../shared/api/auth.api'
-import { SignUpType } from './../../../../shared/api/auth.api.types'
-import { ModalWindow } from './../../../../shared/modalWindow/ModalWindow'
-import { Button, ButtonSize, ButtonTheme } from './../../../../shared/ui/Button/Button'
-import { Checkbox } from './../../../../shared/ui/Checkbox/Checkbox'
-import Input, { InputType } from './../../../../shared/ui/Input/Input'
-import inputStyles from './../../../../shared/ui/Input/Input.module.scss'
 import styles from './SignUpForm.module.scss'
+
+import { useSignUpMutation } from '@/shared/api'
+import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
+import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
+import { SignUpType } from '@/shared/types/types'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
+import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
+import { InputType, Input } from '@/shared/ui/Input/Input'
+import inputStyles from '@/shared/ui/Input/Input.module.scss'
+import { Modal } from '@/shared/ui/Modal/Modal'
 
 function SignUpForm() {
   const [signUp, { isLoading }] = useSignUpMutation()
@@ -65,13 +65,9 @@ function SignUpForm() {
   return (
     <>
       {registrationSuccess && (
-        <ModalWindow
-          title={'Email sent'}
-          mainButton={'OK'}
-          callBackCloseWindow={callBackCloseWindow}
-        >
+        <Modal title={'Email sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
           <p>We have sent a link to confirm your email</p>
-        </ModalWindow>
+        </Modal>
       )}
       {isLoading && <CircularProgress />}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
@@ -156,11 +152,9 @@ function SignUpForm() {
           Sign Up
         </Button>
         <p className={styles.helpText}>Do you have an account?</p>
-        <Link href={'/sign-in'}>
-          <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.SMALL}>
-            Sign In
-          </Button>
-        </Link>
+        <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.SMALL}>
+          Sign In
+        </Button>
       </form>
     </>
   )

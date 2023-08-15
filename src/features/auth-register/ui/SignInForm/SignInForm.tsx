@@ -4,12 +4,12 @@ import Image from 'next/image'
 
 import styles from './SignInForm.module.scss'
 
-import githubIcon from '@/public/socialIcons/github-icon.svg'
-import googleIcon from '@/public/socialIcons/google-icon.svg'
+import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
+import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import Input, { InputType } from '@/shared/ui/Input/Input'
 
-function Sign() {
+export const SignInForm = () => {
   const [userName, setUserNAme] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -50,5 +50,3 @@ function Sign() {
     </form>
   )
 }
-
-export default Sign

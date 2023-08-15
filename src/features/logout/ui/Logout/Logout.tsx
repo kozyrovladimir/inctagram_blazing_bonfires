@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 
 import Image from 'next/image'
 
-import logoutImg from '../../../../public/logout/logout.svg'
-import { useLogoutMutation } from '../../../../shared/api/auth.api'
-import { ModalWindow } from '../../../../shared/modalWindow/ModalWindow'
-import { Button, ButtonSize, ButtonTheme } from '../../../../shared/ui/Button/Button'
-
 import style from './Logout.module.scss'
+
+import { useLogoutMutation } from '@/shared/api'
+import logoutImg from '@/shared/assets/icons/logout/logout.svg'
+import { Button } from '@/shared/ui/Button/Button'
+import { Modal } from '@/shared/ui/Modal/Modal'
 
 export const Logout = () => {
   const [logout, { isLoading }] = useLogoutMutation()
@@ -29,16 +29,16 @@ export const Logout = () => {
         <span className={style.description}>Logout</span>
       </Button>
       {isLogout && (
-        <ModalWindow
+        <Modal
           title={'Log Out'}
           extraButton={'Yes'}
           mainButton={'No'}
           callBackCloseWindow={logoutHandler}
-          callBackApi={logoutApiHandler}
+          extraButtonCB={logoutApiHandler}
         >
           Are you really want to log out of your account
-          <span className={style.userName}> “Epam@epam.com”</span>?
-        </ModalWindow>
+          <span className={style.userName}> “Epam@epam.com”</span> ?
+        </Modal>
       )}
     </>
   )

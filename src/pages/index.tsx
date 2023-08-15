@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Logout } from '@/features/logout/ui/Logout/Logout'
-import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -51,7 +51,7 @@ function Home() {
             <Link href="/create-new-password">create-new-password</Link>
           </li>
           <li>
-            <Link href="/auth/registration-confirmation">confirmed-email</Link>
+            <Link href="/auth/confirmed-email">confirmed-email</Link>
           </li>
           <li>
             <Link href="/auth/terms-of-service">terms of service</Link>
