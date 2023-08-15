@@ -16,7 +16,7 @@ const ExpiredVerificationLinkPage = () => {
       <Button theme={ButtonTheme.FILLED} size={ButtonSize.LARGE}>
         Resend verification link
       </Button>
-      <Image src={broResend} alt={'men wait and look on clock'} />
+      <Image src={broResend} alt={'man waits and looks at clock'} />
     </div>
   )
 }

@@ -1,33 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
+import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
+import styles from '@/pages/auth/confirmed-email/ConfirmedEmail.module.scss'
 import { useVerifyEmailMutation } from '@/shared/api'
-import { Button } from '@/shared/ui/Button/Button'
+import broConfirmImage from '@/shared/assets/icons/login/broCongratulations.svg'
+import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
 import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
-const RegistrationConfirmation = () => {
-  const [code, setCode] = useState('')
+export const RegistrationConfirmation = () => {
   const [verifyEmail] = useVerifyEmailMutation()
-
-  useEffect(() => {
-    const urlCode = window.location.search.split('=')[1]
-
-    setCode(urlCode)
-  }, [])
+  const router = useRouter()
+  const { query } = router
+  const { code } = query
 
   useEffect(() => {
     if (code) {
       verifyEmail(code)
+        .unwrap()
+        .catch(() => router.push('/expired-verification-link'))
     }
   }, [code])
 
   return (
-    <div>
-      <p>Congratulations! Your email has been confirmed</p>
-      <Link href={'/login'}>
-        <Button>Sign in</Button>
+    <div className={styles.confirmedContainer}>
+      <h3>Congratulations!</h3>
+      <p>Your email has been confirmed</p>
+      <Link href={'/sign-in'}>
+        <Button theme={ButtonTheme.FILLED}>Sign In</Button>
       </Link>
+      <Image src={broConfirmImage} alt={'women login account in her phone'} />
     </div>
   )
 }

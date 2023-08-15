@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
+import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './SignUpForm.module.scss'
@@ -148,7 +149,7 @@ function SignUpForm() {
             }
           />
         </div>
-        <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
+        <Button disabled={!!errors} className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
           Sign Up
         </Button>
         <p className={styles.helpText}>Do you have an account?</p>
