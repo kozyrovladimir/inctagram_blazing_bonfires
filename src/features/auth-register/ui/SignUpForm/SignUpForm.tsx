@@ -141,13 +141,13 @@ function SignUpForm() {
             label={
               <p className={styles.agreementText}>
                 I agree to the{' '}
-                <a href="#" className={styles.agreementLink}>
+                <Link href="/auth/terms-of-service" className={styles.agreementLink}>
                   Terms of Service
-                </a>{' '}
+                </Link>{' '}
                 and{' '}
-                <a href="#" className={styles.agreementLink}>
+                <Link href="/auth/privacy-policy" className={styles.agreementLink}>
                   Privacy Policy
-                </a>
+                </Link>
               </p>
             }
           />
