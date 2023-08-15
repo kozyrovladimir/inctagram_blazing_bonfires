@@ -53,6 +53,12 @@ function Home() {
           <li>
             <Link href="/auth/registration-confirmation">confirmed-email</Link>
           </li>
+          <li>
+            <Link href="/auth/terms-of-service">terms of service</Link>
+          </li>
+          <li>
+            <Link href="/auth/privacy-policy">privacy policy</Link>
+          </li>
         </ul>
         <Logout />
       </main>
