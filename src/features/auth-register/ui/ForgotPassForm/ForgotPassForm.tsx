@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import styles from './ForgotPassForm.module.scss'
 
-import captchaIcon from '@/public/login/reCaptchaIcon.svg'
+import captchaIcon from '@/shared/assets/icons/login/reCaptchaIcon.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 

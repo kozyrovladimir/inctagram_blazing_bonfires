@@ -1,9 +1,7 @@
 import React from 'react'
 
-import { SentEmail } from '@/pages-fs/auth-register'
-
 const SentEmailPage = () => {
-  return <SentEmail />
+  return <div>SentEmail</div>
 }
 
 export default SentEmailPage
