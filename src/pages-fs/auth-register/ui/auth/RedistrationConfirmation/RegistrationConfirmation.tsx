@@ -1,12 +1,9 @@
 import React, { FC, useEffect, useState } from 'react'
 
-import Image from 'next/image'
 import Link from 'next/link'
 
-import styles from '@/pages-fs/auth-register/ui/ConfirmedEmail/ConfirmedEmail.module.scss'
-import broConfirmImage from '@/public/login/broCongratulations.svg'
 import { useVerifyEmailMutation } from '@/shared/api/auth.api'
-import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
+import { Button } from '@/shared/ui/Button/Button'
 
 export const RegistrationConfirmation: FC = () => {
   const [code, setCode] = useState('')
@@ -25,13 +22,11 @@ export const RegistrationConfirmation: FC = () => {
   }, [code])
 
   return (
-    <div className={styles.confirmedContainer}>
-      <h3>Congratulations!</h3>
-      <p>Your email has been confirmed</p>
-      <Link href={'/sign-in'}>
-        <Button theme={ButtonTheme.FILLED}>Sign In</Button>
+    <div>
+      <p>Congratulations! Your email has been confirmed</p>
+      <Link href={'/login'}>
+        <Button>Sign in</Button>
       </Link>
-      <Image src={broConfirmImage} alt={'women login account in her phone'} />
     </div>
   )
 }
