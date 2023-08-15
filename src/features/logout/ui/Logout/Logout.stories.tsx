@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Provider } from 'react-redux'
 
-import { store } from '../../../../shared/store'
-
 import { Logout } from './Logout'
+
+import { store } from '@/app/providers/StoreProvider/model/store'
 
 const meta: Meta<typeof Logout> = {
   title: 'Components/Logout',

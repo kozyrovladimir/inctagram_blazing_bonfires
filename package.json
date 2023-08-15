@@ -20,14 +20,12 @@
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.14.1",
-    "@reduxjs/toolkit": "^1.9.5",
     "@mui/material": "^5.14.1",
-    "@next/swc-darwin-x64": "^13.4.12",
+    "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-query": "^5.0.0-beta.15",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
-    "axios": "^1.4.0",
     "@typescript-eslint/parser": "^6.2.1",
     "axios": "^1.4.0",
     "eslint": "8.45.0",
@@ -37,15 +35,13 @@
     "next-i18next": "^14.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-redux": "^8.1.1",
-    "redux": "^4.2.1",
-    "typescript": "5.1.6",
-    "yup": "^1.2.0",
     "react-hook-form": "^7.45.4",
     "react-i18next": "^13.0.3",
     "react-query": "^3.39.3",
     "react-redux": "^8.1.2",
-    "typescript": "5.1.6"
+    "redux": "^4.2.1",
+    "typescript": "5.1.6",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.9",
@@ -71,12 +67,13 @@
     "jest-environment-jsdom": "^29.6.2",
     "react-test-renderer": "^18.2.0",
     "sass": "^1.64.0",
-    "storybook": "^7.1.0"
+    "storybook": "^7.1.0",
+    "tsconfig-paths-webpack-plugin": "^4.1.0"
   },
   "optionalDependencies": {
-    "@next/swc-linux-x64-gnu": "canary",
-    "@next/swc-win32-x64-msvc": "canary",
+    "@next/swc-darwin-arm64": "canary",
     "@next/swc-darwin-x64": "canary",
-    "@next/swc-darwin-arm64": "canary"
+    "@next/swc-linux-x64-gnu": "canary",
+    "@next/swc-win32-x64-msvc": "canary"
   }
 }

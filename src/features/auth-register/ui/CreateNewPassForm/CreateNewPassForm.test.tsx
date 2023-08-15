@@ -4,13 +4,13 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
-import CreateNewPass from './CreateNewPassForm'
+import { CreateNewPassForm } from './CreateNewPassForm'
 
 describe('Create Password Form', () => {
   const onChange = jest.fn()
 
   it('render form', () => {
-    const { getByText } = render(<CreateNewPass />)
+    const { getByText } = render(<CreateNewPassForm />)
     const textInForm = getByText(/Your password must be between 6 and 20 characters/i)
     const button = screen.getByRole('button')
     const allInputPass = screen.getAllByPlaceholderText(/enter password/i)
@@ -21,7 +21,7 @@ describe('Create Password Form', () => {
   })
 
   it('start - empty, changed - fill', async () => {
-    render(<CreateNewPass />)
+    render(<CreateNewPassForm />)
     const allInputPass = screen.getAllByPlaceholderText(/enter password/i)
 
     expect(allInputPass[0]).toBeEmptyDOMElement()
