@@ -19,58 +19,53 @@ export const PhotoModal: FC<Props> = ({ closeWindow }) => {
       setPhotoProfile(e.target?.files[0])
     }
   }
-  const openSelectHandler = () => {
+  const openSelectHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
     document.getElementById('inputPhotoProfile')?.click()
   }
 
   const savePhotoHandler = () => {}
 
   return (
-    <div>
-      <Modal
-        title={'Add a Profile Photo'}
-        callBackCloseWindow={closeWindow}
-        styles={{ width: '492px', height: '564px' }}
-        isShowButton={false}
-      >
-        <div className={style.contentWrapper}>
-          {!photoProfile && (
-            <>
-              <div className={style.emptyContainer}>
-                <Image src={notPhotoImg} alt={''} />
-              </div>
-              <input
-                type={'file'}
-                onChange={selectedPhotoHandler}
-                id={'inputPhotoProfile'}
-                className={style.inputPhoto}
-              />
-              <Button onClick={openSelectHandler} className={style.buttonSelect}>
-                Select from Computer
-              </Button>
-            </>
-          )}
-          {photoProfile && (
-            <>
-              <Image
-                src={URL.createObjectURL(photoProfile)}
-                alt={''}
-                width={332}
-                height={340}
-                className={style.avatar}
-              />
+    <Modal
+      title={'Add a Profile Photo'}
+      callBackCloseWindow={closeWindow}
+      styles={{ width: '492px', height: '564px' }}
+      isShowButton={false}
+    >
+      <div className={style.contentWrapper}>
+        {!photoProfile && (
+          <>
+            <div className={style.emptyContainer}>
+              <Image src={notPhotoImg} alt={''} />
+            </div>
+            <input
+              type={'file'}
+              onChange={selectedPhotoHandler}
+              id={'inputPhotoProfile'}
+              className={style.inputPhoto}
+            />
+            <Button onClick={openSelectHandler} className={style.buttonSelect}>
+              Select from Computer
+            </Button>
+          </>
+        )}
+        {photoProfile && (
+          <>
+            <Image
+              src={URL.createObjectURL(photoProfile)}
+              alt={''}
+              width={332}
+              height={340}
+              className={style.avatar}
+            />
 
-              <Button
-                size={ButtonSize.SMALL}
-                className={style.buttonSave}
-                onClick={savePhotoHandler}
-              >
-                Save
-              </Button>
-            </>
-          )}
-        </div>
-      </Modal>
-    </div>
+            <Button size={ButtonSize.SMALL} className={style.buttonSave} onClick={savePhotoHandler}>
+              Save
+            </Button>
+          </>
+        )}
+      </div>
+    </Modal>
   )
 }
