@@ -4,6 +4,7 @@ import {
   LoginFormType,
   LoginResponseType,
   LogoutResponse,
+  NewPasswordType,
   PasswordRecoveryType,
   SignUpType,
   UserType,
@@ -58,13 +59,27 @@ export const authApi = createApi({
         },
       }),
       recoverPassword: build.mutation<any, PasswordRecoveryType>({
-        query: (email, recaptcha) => {
+        query: (data: PasswordRecoveryType) => {
           return {
             method: 'POST',
             url: 'auth/password-recovery',
             body: {
-              email,
-              recaptcha,
+              email: data.email,
+              recaptcha: data.recaptcha,
+            },
+          }
+        },
+      }),
+      createNewPassword: build.mutation<any, NewPasswordType>({
+        query: (data: NewPasswordType) => {
+          console.log(data)
+
+          return {
+            method: 'POST',
+            url: 'auth/new-password',
+            body: {
+              newPassword: data.newPassword,
+              recoveryCode: data.recoveryCode,
             },
           }
         },
@@ -79,4 +94,5 @@ export const {
   useSignUpMutation,
   useVerifyEmailMutation,
   useRecoverPasswordMutation,
+  useCreateNewPasswordMutation,
 } = authApi

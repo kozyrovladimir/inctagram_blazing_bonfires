@@ -35,3 +35,8 @@ export type PasswordRecoveryType = {
   email: string
   recaptcha: string
 }
+
+export type NewPasswordType = {
+  newPassword: string
+  recoveryCode: string
+}

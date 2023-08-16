@@ -14,6 +14,11 @@ import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
 
+type FormType = {
+  email: string
+  recaptcha: boolean
+}
+
 function ForgotPass() {
   const recaptcha = '6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ'
   const [isSentPass, setIsSentPass] = useState(false)
@@ -24,11 +29,11 @@ function ForgotPass() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<PasswordRecoveryType>({
+  } = useForm<FormType>({
     mode: 'onChange',
     defaultValues: {
       email: '',
-      recaptcha: recaptcha,
+      recaptcha: false,
     },
   })
 
