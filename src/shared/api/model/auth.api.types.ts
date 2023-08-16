@@ -16,3 +16,8 @@ export type LogoutResponse = {
   ]
   error: string | null
 }
+
+export type RequestNewVerificationLinkType = {
+  email: string
+  baseUrl: string
+}
