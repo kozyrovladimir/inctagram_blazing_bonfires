@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
+import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './SignUpForm.module.scss'
@@ -137,18 +138,18 @@ function SignUpForm() {
             label={
               <p className={styles.agreementText}>
                 I agree to the{' '}
-                <a href="#" className={styles.agreementLink}>
+                <Link href="/auth/terms-of-service" className={styles.agreementLink}>
                   Terms of Service
-                </a>{' '}
+                </Link>{' '}
                 and{' '}
-                <a href="#" className={styles.agreementLink}>
+                <Link href="/auth/privacy-policy" className={styles.agreementLink}>
                   Privacy Policy
-                </a>
+                </Link>
               </p>
             }
           />
         </div>
-        <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
+        <Button disabled={!!errors} className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
           Sign Up
         </Button>
         <p className={styles.helpText}>Do you have an account?</p>
