@@ -7,13 +7,12 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './SignUpForm.module.scss'
 
-import { useSignUpMutation } from '@/shared/api'
+import { SignUpType, useSignUpMutation } from '@/shared/api'
 import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
-import { SignUpType } from '@/shared/types/types'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
-import { InputType, Input } from '@/shared/ui/Input/Input'
+import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
@@ -149,13 +148,15 @@ function SignUpForm() {
             }
           />
         </div>
-        <Button disabled={!!errors} className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
+        <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
           Sign Up
         </Button>
         <p className={styles.helpText}>Do you have an account?</p>
-        <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.SMALL}>
-          Sign In
-        </Button>
+        <Link href={'/sign-in'}>
+          <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.SMALL}>
+            Sign In
+          </Button>
+        </Link>
       </form>
     </>
   )
