@@ -8,9 +8,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import styles from './SignUpForm.module.scss'
 
 import { useSignUpMutation } from '@/shared/api'
+import { SignUpType } from '@/shared/api/model/auth.api.types'
 import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
-import { SignUpType } from '@/shared/types/types'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import { InputType, Input } from '@/shared/ui/Input/Input'
@@ -149,7 +149,7 @@ function SignUpForm() {
             }
           />
         </div>
-        <Button disabled={!!errors} className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
+        <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
           Sign Up
         </Button>
         <p className={styles.helpText}>Do you have an account?</p>

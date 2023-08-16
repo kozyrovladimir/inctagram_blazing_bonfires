@@ -16,3 +16,22 @@ export type LogoutResponse = {
   ]
   error: string | null
 }
+
+export type SignUpType = {
+  userName: string
+  email: string
+  password: string
+  passwordConfirmation: string
+  agreement: boolean
+}
+
+export type UserType = {
+  userName: string
+  email: string
+  password: string
+}
+
+export type PasswordRecoveryType = {
+  email: string
+  recaptcha: string
+}

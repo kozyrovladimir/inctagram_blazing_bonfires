@@ -1,8 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { SignUpType, UserType } from '../../types/types'
-
-import { LoginFormType, LoginResponseType, LogoutResponse } from './auth.api.types'
+import {
+  LoginFormType,
+  LoginResponseType,
+  LogoutResponse,
+  PasswordRecoveryType,
+  SignUpType,
+  UserType,
+} from './auth.api.types'
 import { baseURL } from './common.api'
 
 export const authApi = createApi({
@@ -43,8 +48,6 @@ export const authApi = createApi({
       }),
       verifyEmail: build.mutation<any, any>({
         query: (confirmationCode: string) => {
-          console.log(confirmationCode)
-
           return {
             method: 'POST',
             url: 'auth/registration-confirmation',
@@ -54,9 +57,26 @@ export const authApi = createApi({
           }
         },
       }),
+      recoverPassword: build.mutation<any, PasswordRecoveryType>({
+        query: (email, recaptcha) => {
+          return {
+            method: 'POST',
+            url: 'auth/password-recovery',
+            body: {
+              email,
+              recaptcha,
+            },
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useLoginMutation, useLogoutMutation, useSignUpMutation, useVerifyEmailMutation } =
-  authApi
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useSignUpMutation,
+  useVerifyEmailMutation,
+  useRecoverPasswordMutation,
+} = authApi
