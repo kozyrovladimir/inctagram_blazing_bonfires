@@ -14,13 +14,17 @@ export const RegistrationConfirmation = () => {
   const [verifyEmail] = useVerifyEmailMutation()
   const router = useRouter()
   const { query } = router
-  const { code } = query
+  const { code, email } = query
 
   useEffect(() => {
     if (code) {
       verifyEmail(code)
         .unwrap()
-        .catch(() => router.push('/expired-verification-link'))
+        .then(() => {})
+        .catch(e => {
+          console.log(e)
+          router.push(`/auth/expired-verification-link?email=${email}`)
+        })
     }
   }, [code])
 

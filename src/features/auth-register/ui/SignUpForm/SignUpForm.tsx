@@ -16,6 +16,14 @@ import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
+type FormType = {
+  userName: string
+  email: string
+  password: string
+  passwordConfirmation: string
+  agreement: boolean
+}
+
 function SignUpForm() {
   const [signUp, { isLoading }] = useSignUpMutation()
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
@@ -28,7 +36,7 @@ function SignUpForm() {
     setError,
     formState: { errors },
     reset,
-  } = useForm<SignUpType>({
+  } = useForm<FormType>({
     mode: 'onChange',
     defaultValues: {
       userName: '',

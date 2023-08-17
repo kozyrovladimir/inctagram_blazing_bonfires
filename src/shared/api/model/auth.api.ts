@@ -6,10 +6,10 @@ import {
   LoginFormType,
   LoginResponseType,
   LogoutResponse,
-  RequestNewVerificationLinkType,
   SignUpType,
   UserType,
 } from '@/shared/api'
+import { ResendVerificationLinkType } from '@/shared/api/model/auth.api.types'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -58,7 +58,7 @@ export const authApi = createApi({
           }
         },
       }),
-      requestNewVerificationLink: build.mutation<string, RequestNewVerificationLinkType>({
+      resendVerificationLink: build.mutation<string, ResendVerificationLinkType>({
         query: ({ email, baseUrl }) => {
           return {
             method: 'POST',
@@ -79,5 +79,5 @@ export const {
   useLogoutMutation,
   useSignUpMutation,
   useVerifyEmailMutation,
-  useRequestNewVerificationLink,
+  useResendVerificationLinkMutation,
 } = authApi
