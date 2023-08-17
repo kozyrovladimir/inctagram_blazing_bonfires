@@ -3,7 +3,7 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
-import SignInForm from '@/features/auth-register/ui/SignInForm/SignInForm'
+import { SignInForm } from './SignInForm'
 
 describe('Sign In Form', () => {
   it('render form', () => {

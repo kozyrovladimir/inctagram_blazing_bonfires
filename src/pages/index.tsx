@@ -1,10 +1,13 @@
 import { GetStaticProps } from 'next'
+import { Inter } from 'next/dist/compiled/@next/font/dist/google'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Logout } from '@/features/logout/ui/Logout/Logout'
-import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
+
+// const inter = Inter({ subsets: ['latin'] })
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
@@ -24,7 +27,7 @@ function Home() {
       <main>
         <ul>
           <li>
-            <Link href="/login">sign-in</Link>
+            <Link href="/sign-in">sign-in</Link>
           </li>
           <li>
             <Link href="/sign-up">sign-up</Link>
@@ -42,7 +45,7 @@ function Home() {
             <Link href="/forgot-password">forgot-password</Link>
           </li>
           <li>
-            <Link href="/expired-verification-link">expired-verification-link</Link>
+            <Link href="/auth/expired-verification-link">expired-verification-link</Link>
           </li>
           <li>
             <Link href="/create-new-password">create-new-password</Link>
@@ -51,7 +54,10 @@ function Home() {
             <Link href="/auth/confirmed-email">confirmed-email</Link>
           </li>
           <li>
-            <Link href="/profile">profile</Link>
+            <Link href="/auth/terms-of-service">terms of service</Link>
+          </li>
+          <li>
+            <Link href="/auth/privacy-policy">privacy policy</Link>
           </li>
         </ul>
         <Logout />

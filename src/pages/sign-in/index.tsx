@@ -1,9 +1,8 @@
 import React from 'react'
 
-import Sign from '../../features/auth-register/ui/SignInForm/Sign'
-
-import { getLayout } from '@/shared/layout/MainLayout/MainLayout'
+import { Sign } from '@/features/auth-register'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
+import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const SignInPage = () => {
   return (
