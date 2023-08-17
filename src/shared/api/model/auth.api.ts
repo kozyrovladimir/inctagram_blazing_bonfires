@@ -11,6 +11,15 @@ import {
 } from './auth.api.types'
 import { baseURL } from './common.api'
 
+import {
+  LoginFormType,
+  LoginResponseType,
+  LogoutResponse,
+  SignUpType,
+  UserType,
+} from '@/shared/api'
+import { ResendVerificationLinkType } from '@/shared/api/model/auth.api.types'
+
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
@@ -72,14 +81,24 @@ export const authApi = createApi({
       }),
       createNewPassword: build.mutation<any, NewPasswordType>({
         query: (data: NewPasswordType) => {
-          console.log(data)
-
           return {
             method: 'POST',
             url: 'auth/new-password',
             body: {
               newPassword: data.newPassword,
               recoveryCode: data.recoveryCode,
+            },
+          }
+        },
+      }),
+      resendVerificationLink: build.mutation<string, ResendVerificationLinkType>({
+        query: ({ email, baseUrl }) => {
+          return {
+            method: 'POST',
+            url: 'auth/registration-email-resending',
+            body: {
+              email,
+              baseUrl,
             },
           }
         },
@@ -95,4 +114,5 @@ export const {
   useVerifyEmailMutation,
   useRecoverPasswordMutation,
   useCreateNewPasswordMutation,
+  useResendVerificationLinkMutation,
 } = authApi

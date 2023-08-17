@@ -40,3 +40,7 @@ export type NewPasswordType = {
   newPassword: string
   recoveryCode: string
 }
+export type ResendVerificationLinkType = {
+  email: string
+  baseUrl: string
+}
