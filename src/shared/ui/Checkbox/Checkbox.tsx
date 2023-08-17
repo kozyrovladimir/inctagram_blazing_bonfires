@@ -4,7 +4,7 @@ import inputStyles from './../Input/Input.module.scss'
 import styles from './Checkbox.module.scss'
 
 type Props = {
-  ref?: Ref<HTMLInputElement>
+  ref: Ref<HTMLInputElement>
   label: ReactNode
   value?: string
   disabled?: boolean
