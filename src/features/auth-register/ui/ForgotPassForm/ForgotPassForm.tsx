@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import * as yup from 'yup'
 
 import styles from './ForgotPassForm.module.scss'
 
@@ -14,19 +15,26 @@ import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
 
+const schema = yup.object({
+  email: yup.string().trim().email('invalid email').required('emailErrorMessage'),
+  recaptcha: yup.string().nonNullable().trim().required('Token is required'),
+})
+
 type FormType = {
   email: string
   recaptcha: boolean
 }
 
 function ForgotPass() {
-  const recaptcha = '6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ'
+  // const recaptcha = '6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ'
   const [isSentPass, setIsSentPass] = useState(false)
+  const [token, setToken] = useState<string>('')
   const [recoverPassword, { isLoading }] = useRecoverPasswordMutation()
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     reset,
   } = useForm<FormType>({
@@ -37,8 +45,13 @@ function ForgotPass() {
     },
   })
 
+  const handleChangeCaptcha = (value: string) => {
+    setToken(value)
+    setValue('recaptcha', value)
+  }
+
   const onSubmit: SubmitHandler<PasswordRecoveryType> = data => {
-    data.recaptcha = recaptcha
+    data.recaptcha = token
     console.log(data)
     recoverPassword(data)
       .unwrap()
