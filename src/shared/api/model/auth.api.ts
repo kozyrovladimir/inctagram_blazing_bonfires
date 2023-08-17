@@ -1,9 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { SignUpType, UserType } from '../../types/types'
-
-import { LoginFormType, LoginResponseType, LogoutResponse } from './auth.api.types'
 import { baseURL } from './common.api'
+
+import {
+  LoginFormType,
+  LoginResponseType,
+  LogoutResponse,
+  SignUpType,
+  UserType,
+} from '@/shared/api'
+import { ResendVerificationLinkType } from '@/shared/api/model/auth.api.types'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -43,8 +49,6 @@ export const authApi = createApi({
       }),
       verifyEmail: build.mutation<any, any>({
         query: (confirmationCode: string) => {
-          console.log(confirmationCode)
-
           return {
             method: 'POST',
             url: 'auth/registration-confirmation',
@@ -54,9 +58,26 @@ export const authApi = createApi({
           }
         },
       }),
+      resendVerificationLink: build.mutation<string, ResendVerificationLinkType>({
+        query: ({ email, baseUrl }) => {
+          return {
+            method: 'POST',
+            url: 'auth/registration-email-resending',
+            body: {
+              email,
+              baseUrl,
+            },
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useLoginMutation, useLogoutMutation, useSignUpMutation, useVerifyEmailMutation } =
-  authApi
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useSignUpMutation,
+  useVerifyEmailMutation,
+  useResendVerificationLinkMutation,
+} = authApi

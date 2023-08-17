@@ -16,3 +16,20 @@ export type LogoutResponse = {
   ]
   error: string | null
 }
+
+export type SignUpType = {
+  userName: string
+  email: string
+  password: string
+}
+
+export type UserType = {
+  userName: string
+  email: string
+  password: string
+}
+
+export type ResendVerificationLinkType = {
+  email: string
+  baseUrl: string
+}
