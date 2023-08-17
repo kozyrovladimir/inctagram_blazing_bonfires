@@ -19,7 +19,8 @@ export const PhotoModal: FC<Props> = ({ closeWindow }) => {
       setPhotoProfile(e.target?.files[0])
     }
   }
-  const openSelectHandler = () => {
+  const openSelectHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
     document.getElementById('inputPhotoProfile')?.click()
   }
 
