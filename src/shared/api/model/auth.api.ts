@@ -72,8 +72,6 @@ export const authApi = createApi({
       }),
       createNewPassword: build.mutation<any, NewPasswordType>({
         query: (data: NewPasswordType) => {
-          console.log(data)
-
           return {
             method: 'POST',
             url: 'auth/new-password',

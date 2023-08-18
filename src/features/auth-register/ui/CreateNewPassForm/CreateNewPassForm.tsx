@@ -23,7 +23,7 @@ export function CreateNewPassForm() {
 
   const router = useRouter()
   const { query } = router
-  const { recoveryCode } = query
+  const { code, email } = query
 
   const {
     watch,
@@ -43,12 +43,12 @@ export function CreateNewPassForm() {
   const password = watch('newPassword', '')
 
   const onSubmit: SubmitHandler<NewPasswordType> = data => {
-    data.recoveryCode = recoveryCode
+    data.recoveryCode = code
     createNewPassword(data)
       .unwrap()
       .then(() => {
         reset()
-        router.push()
+        router.push('/sign-in')
       })
       .catch(error => {
         if (error.data.messages[0].field === 'newPassword') {
