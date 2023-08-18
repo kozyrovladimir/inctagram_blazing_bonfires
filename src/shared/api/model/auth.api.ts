@@ -58,7 +58,7 @@ export const authApi = createApi({
           }
         },
       }),
-      resendVerificationLink: build.mutation<string, ResendVerificationLinkType>({
+      resendVerificationLink: build.mutation<any, ResendVerificationLinkType>({
         query: ({ email, baseUrl }) => {
           return {
             method: 'POST',

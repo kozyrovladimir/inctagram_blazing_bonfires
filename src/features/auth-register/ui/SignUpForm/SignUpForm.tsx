@@ -4,6 +4,7 @@ import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast, Toaster } from 'react-hot-toast'
 
 import styles from './SignUpForm.module.scss'
 
@@ -54,24 +55,14 @@ function SignUpForm() {
         reset()
         setRegistrationSuccess(true)
       })
-      .catch(error => {
-        if (error.data.messages[0].field === 'userName') {
-          setError('userName', {
-            type: 'manual',
-            message: error.data.messages[0].message,
-          })
-        }
-        if (error.data.messages[0].field === 'email') {
-          setError('email', {
-            type: 'manual',
-            message: error.data.messages[0].message,
-          })
-        }
-      })
+      // todo field name(back returns) !== userName and this shows an error in email field,
+      //  although the error occurred in name, ask support
+      .catch(error => toast.error(error.data.messages[0].message))
   }
 
   return (
     <>
+      <Toaster position="top-right" />
       {registrationSuccess && (
         <Modal title={'Email sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
           <p>We have sent a link to confirm your email</p>
@@ -86,7 +77,7 @@ function SignUpForm() {
         <Input
           {...register('userName', {
             required: 'Username field is required',
-            minLength: 7,
+            minLength: 3,
           })}
           type={InputType.TEXT}
           label="Username"
@@ -115,6 +106,14 @@ function SignUpForm() {
               value: /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
               message:
                 'Password must contain a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
+            },
+            minLength: {
+              value: 6,
+              message: 'Email must be at least 6 characters long',
+            },
+            maxLength: {
+              value: 30,
+              message: 'Email must not exceed 30 characters',
             },
           })}
           label="Password"
