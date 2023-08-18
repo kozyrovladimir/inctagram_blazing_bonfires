@@ -65,7 +65,7 @@ function SignUpForm() {
       <Toaster position="top-right" />
       {registrationSuccess && (
         <Modal title={'Email sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
-          <p>We have sent a link to confirm your email</p>
+          <p>We have sent a link to confirm your email </p>
         </Modal>
       )}
       {isLoading && <CircularProgress />}
