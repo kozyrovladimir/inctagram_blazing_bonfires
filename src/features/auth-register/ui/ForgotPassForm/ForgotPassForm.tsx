@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 import { CircularProgress } from '@mui/material'
-import Image from 'next/image'
 import Link from 'next/link'
+// eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -10,20 +10,12 @@ import styles from './ForgotPassForm.module.scss'
 
 import { useRecoverPasswordMutation } from '@/shared/api/model/auth.api'
 import { PasswordRecoveryType } from '@/shared/api/model/auth.api.types'
-import captchaIcon from '@/shared/assets/icons/login/reCaptchaIcon.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
-import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
-type FormType = {
-  email: string
-  recaptcha: string
-}
-
 function ForgotPass() {
-  // const recaptcha = '6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ' // replace to .env
   const [isSentPass, setIsSentPass] = useState(false)
   const [recoverPassword, { isLoading }] = useRecoverPasswordMutation()
   const callBackCloseWindow = () => setIsSentPass(false)
@@ -109,7 +101,7 @@ function ForgotPass() {
           </Button>
         </Link>
         <ReCAPTCHA
-          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
+          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ" // replace to .env
           onChange={onChangeRecaptchaHandler}
           theme={'dark'}
         />

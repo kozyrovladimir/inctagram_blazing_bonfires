@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import styles from './CreateNewPassForm.module.scss'
 
 import { useCreateNewPasswordMutation } from '@/shared/api/model/auth.api'
-import { NewPasswordType, SignUpType } from '@/shared/api/model/auth.api.types'
+import { NewPasswordType } from '@/shared/api/model/auth.api.types'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
@@ -19,11 +19,10 @@ type FormType = {
 
 export function CreateNewPassForm() {
   const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation()
-  const [newPasswordSuccess, setNewPasswordSuccess] = useState(false)
 
   const router = useRouter()
   const { query } = router
-  const { code, email } = query
+  const { code } = query
 
   const {
     watch,
