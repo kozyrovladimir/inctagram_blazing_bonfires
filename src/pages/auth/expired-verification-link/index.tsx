@@ -4,9 +4,10 @@ import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import styles from 'src/pages/auth/expired-verification-link/ExpiredVerificationLink.module.scss'
+import { toast, Toaster } from 'react-hot-toast'
 
-import { SignUpType } from '@/shared/api'
+import styles from './ExpiredVerificationLink.module.scss'
+
 import { useResendVerificationLinkMutation } from '@/shared/api/model/auth.api'
 import { ResendVerificationLinkType } from '@/shared/api/model/auth.api.types'
 import broResend from '@/shared/assets/icons/login/broResend.svg'
@@ -38,11 +39,12 @@ const ExpiredVerificationLinkPage = () => {
       .then(() => {
         setResendVerificationLinkSuccess(true)
       })
-      .catch(error => console.log(error))
+      .catch(error => toast.error(error.data.messages[0].message))
   }
 
   return (
     <>
+      <Toaster position="top-right" />
       {resendVerificationLinkSuccess && (
         <Modal title={'New link sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
           <p>We have sent a new link to your email</p>
