@@ -1,32 +1,33 @@
 import React, { useState } from 'react'
 
 import { CircularProgress } from '@mui/material'
-import Image from 'next/image'
+import Link from 'next/link'
+// eslint-disable-next-line import/no-named-as-default
+import ReCAPTCHA from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import captchaIcon from './../../../../public/login/reCaptchaIcon.svg'
-import { useForgotPasswordMutation } from './../../../../shared/api/auth.api'
-import { ForgotPasswordType } from './../../../../shared/api/auth.api.types'
-import { ModalWindow } from './../../../../shared/modalWindow/ModalWindow'
-import { Button, ButtonSize, ButtonTheme } from './../../../../shared/ui/Button/Button'
-import { Checkbox } from './../../../../shared/ui/Checkbox/Checkbox'
-import Input, { InputType } from './../../../../shared/ui/Input/Input'
-import inputStyles from './../../../../shared/ui/Input/Input.module.scss'
 import styles from './ForgotPassForm.module.scss'
 
+import { useRecoverPasswordMutation } from '@/shared/api/model/auth.api'
+import { PasswordRecoveryType } from '@/shared/api/model/auth.api.types'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
+import { Input, InputType } from '@/shared/ui/Input/Input'
+import inputStyles from '@/shared/ui/Input/Input.module.scss'
+import { Modal } from '@/shared/ui/Modal/Modal'
+
 function ForgotPass() {
-  const [isPasswordSent, setIsPasswordSent] = useState(false)
-  const callBackCloseWindow = () => setIsPasswordSent(true)
-  const recaptcha = '6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ'
-  const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
+  const [isSentPass, setIsSentPass] = useState(false)
+  const [recoverPassword, { isLoading }] = useRecoverPasswordMutation()
+  const callBackCloseWindow = () => setIsSentPass(false)
 
   const {
     register,
     handleSubmit,
+    setValue,
     setError,
     formState: { errors },
     reset,
-  } = useForm<ForgotPasswordType>({
+  } = useForm<PasswordRecoveryType>({
     mode: 'onChange',
     defaultValues: {
       email: '',
@@ -34,24 +35,20 @@ function ForgotPass() {
     },
   })
 
-  const onSubmit: SubmitHandler<ForgotPasswordType> = (data: ForgotPasswordType) => {
-    data.recaptcha = recaptcha
-    debugger
-    forgotPassword(data)
+  const onChangeRecaptchaHandler = (value: string) => {
+    setValue('recaptcha', value)
+  }
+
+  const onSubmit: SubmitHandler<PasswordRecoveryType> = data => {
+    recoverPassword(data)
       .unwrap()
       .then(() => {
         reset()
-        setIsPasswordSent(true)
+        setIsSentPass(true)
       })
       .catch(error => {
         if (error.data.messages[0].field === 'email') {
           setError('email', {
-            type: 'manual',
-            message: error.data.messages[0].message,
-          })
-        }
-        if (error.data.messages[0].field === 'recaptcha') {
-          setError('recaptcha', {
             type: 'manual',
             message: error.data.messages[0].message,
           })
@@ -80,44 +77,34 @@ function ForgotPass() {
         <p className={styles.forgotHelpText}>
           Enter your email address and we will send you further instructions
         </p>
-        {isPasswordSent && (
-          <>
-            <ModalWindow
-              title={'Email sent'}
-              mainButton={'OK'}
-              callBackCloseWindow={callBackCloseWindow}
-            >
-              <p>We have sent a link to confirm your email</p>
-            </ModalWindow>
-            <p className={styles.linkAgainText}>
-              The link has been sent by email. If you don’t receive an email send link again
-            </p>
-          </>
+        {isSentPass && (
+          <Modal
+            title={'Password sent'}
+            mainButton={'OK'}
+            callBackCloseWindow={callBackCloseWindow}
+          >
+            <p>The link has been sent by email. If you don’t receive an email send link again</p>
+          </Modal>
         )}
-
-        <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
-          {!isPasswordSent ? 'Send Link' : 'Send Again Again'}
-        </Button>
-        <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.MIDDLE}>
-          Back to Sign In
-        </Button>
-        {!isPasswordSent && (
-          <div className={styles.capchaContainer}>
-            <Checkbox
-              {...register('recaptcha', {
-                required: 'Recaptcha field is required',
-                minLength: 7,
-              })}
-              label={"I'm not a robot"}
-              error={errors.recaptcha && errors.recaptcha?.message}
-            />
-            <div className={styles.capchaIcon}>
-              <Image src={captchaIcon} alt={'captchaIcon'}></Image>
-              <p>reCaptchaIcon</p>
-              <span>Privacy - Terms</span>
-            </div>
-          </div>
+        {!isSentPass ? (
+          <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
+            Send Link
+          </Button>
+        ) : (
+          <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
+            Send Again
+          </Button>
         )}
+        <Link href={'/sign-in'}>
+          <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.MIDDLE}>
+            Back to Sign In
+          </Button>
+        </Link>
+        <ReCAPTCHA
+          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ" // replace to .env
+          onChange={onChangeRecaptchaHandler}
+          theme={'dark'}
+        />
       </form>
     </>
   )

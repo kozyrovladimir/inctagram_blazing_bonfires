@@ -3,9 +3,9 @@ import { FC } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import noImage from '../../public/image/no-image.svg'
-import { getLayout } from '../../shared/layout/MainLayout/MainLayout'
-import { Button, ButtonSize, ButtonTheme } from '../../shared/ui/Button/Button'
+import noImage from '../../shared/assets/icons/avatarProfile/notPhoto.png'
+import { Button } from '../../shared/ui/Button/Button'
+import { getLayout } from '../../widgets/layout/MainLayout/MainLayout'
 
 import style from './profile.module.scss'
 
@@ -56,14 +56,14 @@ function Profile() {
 }
 
 const testPhotos: string[] = [
-  noImage,
-  noImage,
-  noImage,
-  noImage,
-  noImage,
-  noImage,
-  noImage,
-  noImage,
+  noImage.src,
+  noImage.src,
+  noImage.src,
+  noImage.src,
+  noImage.src,
+  noImage.src,
+  noImage.src,
+  noImage.src,
 ]
 
 type PicturesProps = {

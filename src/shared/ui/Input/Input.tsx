@@ -2,10 +2,10 @@ import { ComponentPropsWithoutRef, Ref, forwardRef, useState } from 'react'
 
 import Image from 'next/image'
 
+import eyeImg from '../../assets/icons/input/eye.svg'
+import searchImg from '../../assets/icons/input/search.svg'
 import { classNames, Mods } from '../../libs/classNames/classNames'
 
-import eyeImg from './../../assets/icons/eye.svg'
-import searchImg from './../../assets/icons/search.svg'
 import styles from './Input.module.scss'
 
 export enum InputType {
@@ -28,7 +28,7 @@ type Props = {
   callback?: (value: string) => void
 } & ComponentPropsWithoutRef<'input'>
 
-const Input = forwardRef<HTMLInputElement, Props>(
+export const Input = forwardRef<HTMLInputElement, Props>(
   (
     { label, classNameWrap, value, placeholder, error, type, callback, onChange, ...restProps },
     ref
@@ -91,5 +91,3 @@ const Input = forwardRef<HTMLInputElement, Props>(
     )
   }
 )
-
-export default Input

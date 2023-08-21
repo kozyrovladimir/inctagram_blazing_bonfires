@@ -26,23 +26,21 @@ export type SignUpType = {
 }
 
 export type UserType = {
+  id?: number
   userName: string
-  email: string
-  password: string
-}
-
-// когда забыл пароль и жмешь на ссылку forgot password
-export type ForgotPasswordType = {
-  email: string
-  recaptcha: string
-}
-// когда по ссылке forgot password придумываешь новый пароль
-export type CreateNewPasswordFormType = {
-  password: string
-  passwordConfirmation: string
-}
-// то, что оправляется на бэк, после создания нового пароля
-export type RecoveryPasswordType = {
-  newPassword: string
-  recoveryCode: string
+  email?: string
+  password?: string
+  firstName?: string
+  lastName?: string
+  city?: string
+  dateOfBirth?: Date
+  aboutMe?: string
+  avatars?: [
+    {
+      url?: string
+      width: number
+      height: number
+      fileSize: number
+    },
+  ]
 }

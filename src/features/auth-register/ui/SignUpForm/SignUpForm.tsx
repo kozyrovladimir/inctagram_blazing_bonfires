@@ -4,17 +4,25 @@ import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast, Toaster } from 'react-hot-toast'
 
-import githubIcon from './../../../../public/socialIcons/github-icon.svg'
-import googleIcon from './../../../../public/socialIcons/google-icon.svg'
-import { useSignUpMutation } from './../../../../shared/api/auth.api'
-import { SignUpType } from './../../../../shared/api/auth.api.types'
-import { ModalWindow } from './../../../../shared/modalWindow/ModalWindow'
-import { Button, ButtonSize, ButtonTheme } from './../../../../shared/ui/Button/Button'
-import { Checkbox } from './../../../../shared/ui/Checkbox/Checkbox'
-import Input, { InputType } from './../../../../shared/ui/Input/Input'
-import inputStyles from './../../../../shared/ui/Input/Input.module.scss'
 import styles from './SignUpForm.module.scss'
+import { SignUpType, useSignUpMutation } from '@/shared/api'
+import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
+import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
+import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
+import { Input, InputType } from '@/shared/ui/Input/Input'
+import inputStyles from '@/shared/ui/Input/Input.module.scss'
+import { Modal } from '@/shared/ui/Modal/Modal'
+
+type FormType = {
+  userName: string
+  email: string
+  password: string
+  passwordConfirmation: string
+  agreement: boolean
+}
 
 function SignUpForm() {
   const [signUp, { isLoading }] = useSignUpMutation()
@@ -28,7 +36,7 @@ function SignUpForm() {
     setError,
     formState: { errors },
     reset,
-  } = useForm<SignUpType>({
+  } = useForm<FormType>({
     mode: 'onChange',
     defaultValues: {
       userName: '',
@@ -46,32 +54,18 @@ function SignUpForm() {
         reset()
         setRegistrationSuccess(true)
       })
-      .catch(error => {
-        if (error.data.messages[0].field === 'userName') {
-          setError('userName', {
-            type: 'manual',
-            message: error.data.messages[0].message,
-          })
-        }
-        if (error.data.messages[0].field === 'email') {
-          setError('email', {
-            type: 'manual',
-            message: error.data.messages[0].message,
-          })
-        }
-      })
+      // todo field name(back returns) !== userName and this shows an error in email field,
+      //  although the error occurred in name, ask support
+      .catch(error => toast.error(error.data.messages[0].message))
   }
 
   return (
     <>
+      <Toaster position="top-right" />
       {registrationSuccess && (
-        <ModalWindow
-          title={'Email sent'}
-          mainButton={'OK'}
-          callBackCloseWindow={callBackCloseWindow}
-        >
-          <p>We have sent a link to confirm your email</p>
-        </ModalWindow>
+        <Modal title={'Email sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
+          <p>We have sent a link to confirm your email </p>
+        </Modal>
       )}
       {isLoading && <CircularProgress />}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
@@ -82,7 +76,7 @@ function SignUpForm() {
         <Input
           {...register('userName', {
             required: 'Username field is required',
-            minLength: 7,
+            minLength: 3,
           })}
           type={InputType.TEXT}
           label="Username"
@@ -111,6 +105,14 @@ function SignUpForm() {
               value: /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
               message:
                 'Password must contain a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
+            },
+            minLength: {
+              value: 6,
+              message: 'Email must be at least 6 characters long',
+            },
+            maxLength: {
+              value: 30,
+              message: 'Email must not exceed 30 characters',
             },
           })}
           label="Password"
@@ -141,13 +143,13 @@ function SignUpForm() {
             label={
               <p className={styles.agreementText}>
                 I agree to the{' '}
-                <a href="#" className={styles.agreementLink}>
+                <Link href="/auth/terms-of-service" className={styles.agreementLink}>
                   Terms of Service
-                </a>{' '}
+                </Link>{' '}
                 and{' '}
-                <a href="#" className={styles.agreementLink}>
+                <Link href="/auth/privacy-policy" className={styles.agreementLink}>
                   Privacy Policy
-                </a>
+                </Link>
               </p>
             }
           />

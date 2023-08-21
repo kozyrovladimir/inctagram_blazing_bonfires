@@ -1,30 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { CircularProgress } from '@mui/material'
+import { useRouter } from 'next/router'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { useCreateNewPasswordMutation } from './../../../../shared/api/auth.api'
-import {
-  CreateNewPasswordFormType,
-  RecoveryPasswordType,
-} from './../../../../shared/api/auth.api.types'
-import { ModalWindow } from './../../../../shared/modalWindow/ModalWindow'
-import { Button, ButtonSize } from './../../../../shared/ui/Button/Button'
-import Input, { InputType } from './../../../../shared/ui/Input/Input'
-import inputStyles from './../../../../shared/ui/Input/Input.module.scss'
 import styles from './CreateNewPassForm.module.scss'
 
-function CreateNewPass() {
+import { useCreateNewPasswordMutation } from '@/shared/api/model/auth.api'
+import { NewPasswordType } from '@/shared/api/model/auth.api.types'
+import { Button, ButtonSize } from '@/shared/ui/Button/Button'
+import { Input, InputType } from '@/shared/ui/Input/Input'
+import inputStyles from '@/shared/ui/Input/Input.module.scss'
+
+type FormType = {
+  newPassword: string
+  newPasswordConfirmation: string
+}
+
+export function CreateNewPassForm() {
   const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation()
-  const [newPassword, setNewPassword] = useState(false)
-  const callBackCloseWindow = () => setNewPassword(false)
-  const [recoveryCode, setRecoveryCode] = useState('')
 
-  useEffect(() => {
-    const urlCode = window.location.search.split('=')[1]
-
-    setRecoveryCode(urlCode)
-  }, [])
+  const router = useRouter()
+  const { query } = router
+  const { code } = query
 
   const {
     watch,
@@ -33,32 +31,27 @@ function CreateNewPass() {
     setError,
     formState: { errors },
     reset,
-  } = useForm<CreateNewPasswordFormType>({
+  } = useForm<FormType>({
     mode: 'onChange',
     defaultValues: {
-      password: '',
-      passwordConfirmation: '',
+      newPassword: '',
+      newPasswordConfirmation: '',
     },
   })
 
-  const password = watch('password', '')
+  const password = watch('newPassword', '')
 
-  const onSubmit: SubmitHandler<RecoveryPasswordType> = ({ newPassword, recoveryCode }) => {
-    createNewPassword(newPassword, recoveryCode)
+  const onSubmit: SubmitHandler<NewPasswordType> = data => {
+    data.recoveryCode = code
+    createNewPassword(data)
       .unwrap()
       .then(() => {
         reset()
-        setNewPassword(true)
+        router.push('/sign-in')
       })
       .catch(error => {
-        if (error.data.messages[0].field === 'password') {
-          setError('password', {
-            type: 'manual',
-            message: error.data.messages[0].message,
-          })
-        }
-        if (error.data.messages[0].field === 'passwordConfirmation') {
-          setError('passwordConfirmation', {
+        if (error.data.messages[0].field === 'newPassword') {
+          setError('newPassword', {
             type: 'manual',
             message: error.data.messages[0].message,
           })
@@ -68,19 +61,10 @@ function CreateNewPass() {
 
   return (
     <>
-      {newPassword && (
-        <ModalWindow
-          title={'New password'}
-          mainButton={'OK'}
-          callBackCloseWindow={callBackCloseWindow}
-        >
-          <p>You`&apos;`ve created new password successfully</p>
-        </ModalWindow>
-      )}
       {isLoading && <CircularProgress />}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         <Input
-          {...register('password', {
+          {...register('newPassword', {
             required: 'Password field is required',
             pattern: {
               value: /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
@@ -92,10 +76,10 @@ function CreateNewPass() {
           type={InputType.PASSWORD}
           placeholder="Enter password"
           className={inputStyles.input}
-          error={errors.password && errors.password?.message}
+          error={errors.newPassword && errors.newPassword?.message}
         />
         <Input
-          {...register('passwordConfirmation', {
+          {...register('newPasswordConfirmation', {
             required: 'Confirm password field is required',
             validate: {
               value: (value: string) => value === password || 'Passwords do not match',
@@ -105,8 +89,12 @@ function CreateNewPass() {
           type={InputType.PASSWORD}
           placeholder="Enter password confirmation"
           className={inputStyles.input}
-          error={errors.passwordConfirmation && errors.passwordConfirmation?.message}
+          error={errors.newPasswordConfirmation && errors.newPasswordConfirmation?.message}
         />
+        <p className={styles.createPassHelpText}>
+          Your password must be between 6 and 20 characters
+        </p>
+
         <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
           Create new password
         </Button>
@@ -114,5 +102,3 @@ function CreateNewPass() {
     </>
   )
 }
-
-export default CreateNewPass

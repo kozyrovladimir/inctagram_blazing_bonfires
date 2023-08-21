@@ -5,8 +5,8 @@
 }
 .checkbox {
   appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background-repeat: no-repeat;
   background-position: center center;
   cursor: pointer;
@@ -17,5 +17,5 @@
   background-color: #fff;
 }
 .checkbox:checked {
-  background-image: url('./../../assets/icons/checked.svg');
+  background-image: url('../../assets/icons/checkbox/checked.svg');
 }
