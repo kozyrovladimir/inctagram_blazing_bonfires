@@ -45,7 +45,7 @@ function Home() {
             <Link href="/forgot-password">forgot-password</Link>
           </li>
           <li>
-            <Link href="/expired-verification-link">expired-verification-link</Link>
+            <Link href="/auth/expired-verification-link">expired-verification-link</Link>
           </li>
           <li>
             <Link href="/create-new-password">create-new-password</Link>

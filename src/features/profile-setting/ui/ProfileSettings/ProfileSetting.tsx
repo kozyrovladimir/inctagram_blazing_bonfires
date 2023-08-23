@@ -1,11 +1,8 @@
-import React from 'react'
-
-import { ProfilePhoto } from '../ProfilePhoto/ProfilePhoto'
-
 import styles from './ProfileSetting.module.scss'
 
+import { ProfilePhoto } from '@/features/profile-setting/ui/ProfilePhoto/ProfilePhoto'
 import { Button } from '@/shared/ui/Button/Button'
-import { Input, InputType } from '@/shared/ui/Input/Input'
+import Input, { InputType } from '@/shared/ui/Input/Input'
 import Calendar from '@/widgets/Calendar/ui/Calendar'
 
 export const ProfileSetting = () => {
@@ -37,7 +34,7 @@ export const ProfileSetting = () => {
             style={{ marginBottom: '20px' }}
             classNameWrap={'myCustomLabel'}
           />
-          <span className={styles.labelDateBirth}>Date of birthday</span>
+          <div className={styles.labelDate}>Date of birthday</div>
           <Calendar classNameWrap={styles.calendar} />
           <Input
             label={'City'}
