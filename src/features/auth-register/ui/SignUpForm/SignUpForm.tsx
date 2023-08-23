@@ -149,7 +149,7 @@ function SignUpForm() {
             }
           />
         </div>
-        <Button disabled={!!errors} className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
+        <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
           Sign Up
         </Button>
         <p className={styles.helpText}>Do you have an account?</p>

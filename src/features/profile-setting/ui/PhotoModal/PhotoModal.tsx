@@ -33,6 +33,7 @@ export const PhotoModal: FC<Props> = ({ closeWindow }) => {
         callBackCloseWindow={closeWindow}
         styles={{ width: '492px', height: '564px' }}
         isShowButton={false}
+        showButtons={true}
       >
         <div className={style.contentWrapper}>
           {!photoProfile && (
