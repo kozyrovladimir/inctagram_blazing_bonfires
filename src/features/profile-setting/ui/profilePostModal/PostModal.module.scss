@@ -1,0 +1,43 @@
+.contentWrapper {
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+
+  .modalWindow {
+    width: 1000px;
+    height: 600px;
+  }
+
+  .emptyContainer {
+    width: 222px;
+    height: 228px;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .inputPhoto {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  .buttonSelect {
+    margin-top: 30px;
+  }
+}
+.imageRatios {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.darkHeader {
+  background-color: var(--color-dark-300);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

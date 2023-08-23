@@ -1,0 +1,22 @@
+.filterPanelContainer {
+  display: flex;
+  margin-top: 380px;
+  .leftPanel {
+    display: flex;
+    margin-right: 300px;
+  }
+}
+
+.cyrcor {
+  bottom: 0;
+  cursor: grab;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  touch-action: none;
+  -webkit-user-select: none;
+  width: 100%;
+  z-index: 2;
+}
