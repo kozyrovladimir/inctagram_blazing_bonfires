@@ -15,7 +15,7 @@ import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
-function ForgotPass() {
+export function ForgotPass() {
   const [isSentPass, setIsSentPass] = useState(false)
   const [recoverPassword, { isLoading }] = useRecoverPasswordMutation()
   const callBackCloseWindow = () => setIsSentPass(false)
@@ -109,5 +109,3 @@ function ForgotPass() {
     </>
   )
 }
-
-export default ForgotPass
