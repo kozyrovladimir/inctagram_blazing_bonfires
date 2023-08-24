@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
-import Input, { InputType } from './Input'
+import { Input, InputType } from './Input'
 
 describe('Input component', () => {
   const onChange = jest.fn()

@@ -25,7 +25,7 @@ interface IProps {
   classNameWrap: string
 }
 
-export default function Calendar({ classNameWrap }: IProps) {
+export function Calendar({ classNameWrap }: IProps) {
   const minAge = new Date().setFullYear(new Date().getFullYear() - 12)
   const [value, setValue] = useState<Value>(minAge)
   const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
