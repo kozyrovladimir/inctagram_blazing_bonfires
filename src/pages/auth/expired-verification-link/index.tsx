@@ -8,8 +8,8 @@ import { toast, Toaster } from 'react-hot-toast'
 
 import styles from './ExpiredVerificationLink.module.scss'
 
-import { useResendVerificationLinkMutation } from '@/shared/api/model/auth.api'
-import { ResendVerificationLinkType } from '@/shared/api/model/auth.api.types'
+import { useResendVerificationLinkMutation } from '@/shared/api/auth/auth.api'
+import { ResendVerificationLinkType } from '@/shared/api/auth/auth.api.types'
 import broResend from '@/shared/assets/icons/login/broResend.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Modal } from '@/shared/ui/Modal/Modal'

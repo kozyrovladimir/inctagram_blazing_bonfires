@@ -6,8 +6,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './CreateNewPassForm.module.scss'
 
-import { useCreateNewPasswordMutation } from '@/shared/api/model/auth.api'
-import { NewPasswordType } from '@/shared/api/model/auth.api.types'
+import { useCreateNewPasswordMutation } from '@/shared/api/auth/auth.api'
+import { NewPasswordType } from '@/shared/api/auth/auth.api.types'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
