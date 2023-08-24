@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import ForgotPassForm from './ForgotPassForm'
+import { ForgotPass } from './ForgotPassForm'
 
-const meta: Meta<typeof ForgotPassForm> = {
+const meta: Meta<typeof ForgotPass> = {
   title: 'Components/ForgotPassword',
-  component: ForgotPassForm,
+  component: ForgotPass,
   parameters: {
     layout: 'centered',
   },
@@ -12,7 +12,7 @@ const meta: Meta<typeof ForgotPassForm> = {
 }
 
 export default meta
-type Story = StoryObj<typeof ForgotPassForm>
+type Story = StoryObj<typeof ForgotPass>
 
 export const Default: Story = {
   args: {
