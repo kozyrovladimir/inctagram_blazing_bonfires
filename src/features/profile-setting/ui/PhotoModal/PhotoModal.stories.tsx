@@ -10,6 +10,8 @@ const meta: Meta<typeof PhotoModal> = {
 export default meta
 type Story = StoryObj<typeof PhotoModal>
 
-export const MW1Button: Story = {
-  render: () => <PhotoModal closeWindow={() => '#'} />,
+export const PhotoModalButton: Story = {
+  args: {
+    closeWindow: () => '#',
+  },
 }
