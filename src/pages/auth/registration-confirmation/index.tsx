@@ -4,7 +4,7 @@ import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { useVerifyEmailMutation } from '@/shared/api'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 
 export const RegistrationConfirmation = () => {
   const [verifyEmail] = useVerifyEmailMutation()

@@ -1,11 +1,10 @@
 import { GetStaticProps } from 'next'
-import { Inter } from 'next/dist/compiled/@next/font/dist/google'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Logout } from '@/features/logout'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 
 // const inter = Inter({ subsets: ['latin'] })
 

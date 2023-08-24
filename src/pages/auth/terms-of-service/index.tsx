@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styles from '@/pages/auth/privacy-policy/PrivacyPolicy.module.scss'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 
 export const TermsOfServicePage = () => {
   return (

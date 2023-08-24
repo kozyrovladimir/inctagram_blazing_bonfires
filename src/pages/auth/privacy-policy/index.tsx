@@ -2,7 +2,7 @@ import React from 'react'
 
 import styles from './PrivacyPolicy.module.scss'
 
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 
 const PrivacyPolicyPage = () => {
   return (
