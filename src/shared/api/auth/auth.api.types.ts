@@ -25,12 +25,6 @@ export type SignUpType = {
   agreement: boolean
 }
 
-export type UserType = {
-  userName: string
-  email: string
-  password: string
-}
-
 export type PasswordRecoveryType = {
   email: string
   recaptcha: string
@@ -43,4 +37,24 @@ export type NewPasswordType = {
 export type ResendVerificationLinkType = {
   email: string
   baseUrl: string
+}
+
+export type UserType = {
+  id?: number
+  userName: string
+  email?: string
+  password?: string
+  firstName?: string
+  lastName?: string
+  city?: string
+  dateOfBirth?: Date
+  aboutMe?: string
+  avatars?: [
+    {
+      url?: string
+      width: number
+      height: number
+      fileSize: number
+    },
+  ]
 }
