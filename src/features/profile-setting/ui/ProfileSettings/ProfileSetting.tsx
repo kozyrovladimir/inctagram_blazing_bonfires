@@ -1,8 +1,10 @@
+import { Value } from 'react-multi-date-picker'
+
 import styles from './ProfileSetting.module.scss'
 
 import { ProfilePhoto } from '@/features/profile-setting/ui/ProfilePhoto/ProfilePhoto'
 import { Button } from '@/shared/ui/Button/Button'
-import Input, { InputType } from '@/shared/ui/Input/Input'
+import { Input, InputType } from '@/shared/ui/Input/Input'
 import Calendar from '@/widgets/Calendar/ui/Calendar'
 
 export const ProfileSetting = () => {
@@ -35,7 +37,13 @@ export const ProfileSetting = () => {
             classNameWrap={'myCustomLabel'}
           />
           <div className={styles.labelDate}>Date of birthday</div>
-          <Calendar classNameWrap={styles.calendar} />
+          <Calendar
+            classNameWrap={styles.calendar}
+            value={null}
+            onChange={function (newValue: Value): void {
+              throw new Error('Function not implemented.')
+            }}
+          />
           <Input
             label={'City'}
             placeholder={''}
