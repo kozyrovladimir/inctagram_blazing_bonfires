@@ -20,8 +20,8 @@ interface IPropsDatePiker {
 }
 
 interface IProps {
-  value: Value
-  onChange: (newValue: Value) => void
+  value?: Value
+  onChange?: (newValue: Value) => void
   classNameWrap: string
 }
 

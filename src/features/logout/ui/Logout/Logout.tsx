@@ -24,10 +24,10 @@ export const Logout = () => {
 
   return (
     <>
-      <Button className={style.logoutButton} onClick={logoutHandler}>
+      <button className={style.logoutButton} onClick={logoutHandler}>
         <Image src={logoutImg} alt={''} />
         <span className={style.description}>Logout</span>
-      </Button>
+      </button>
       {isLogout && (
         <Modal
           title={'Log Out'}

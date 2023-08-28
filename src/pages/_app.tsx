@@ -6,6 +6,7 @@ import { NextPage } from 'next/types'
 import { Provider } from 'react-redux'
 
 import { store } from '@/app/providers/StoreProvider'
+import { SideBar } from '@/widgets/SideBar/SideBar'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -20,7 +21,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return getLayout(
     <Provider store={store}>
-      <Component {...pageProps} />
+      <SideBar />
+      <div style={{ borderLeft: '1px solid #333333', marginLeft: '220px', minHeight: '100vh' }}>
+        <Component {...pageProps} />
+      </div>
     </Provider>
   )
 }
