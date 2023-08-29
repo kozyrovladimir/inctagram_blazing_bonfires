@@ -2,7 +2,7 @@ import React from 'react'
 
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm, FieldValues } from 'react-hook-form'
 
 import styles from './CreateNewPassForm.module.scss'
 
@@ -42,7 +42,10 @@ export function CreateNewPassForm() {
   const password = watch('newPassword', '')
 
   const onSubmit: SubmitHandler<NewPasswordType> = data => {
-    data.recoveryCode = code
+    if (!data) {
+      throw new Error('data is undefined')
+    }
+
     createNewPassword(data)
       .unwrap()
       .then(() => {

@@ -25,7 +25,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   )
 }
 
-export default props => {
+export default (props: AppProps) => {
   return (
     <StoreProvider>
       <App {...props} />

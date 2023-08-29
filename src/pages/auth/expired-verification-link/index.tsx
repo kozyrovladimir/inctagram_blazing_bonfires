@@ -22,7 +22,7 @@ const ExpiredVerificationLinkPage = () => {
 
   const router = useRouter()
   const { query } = router
-  const { email, baseUrl } = query
+  const { email, baseUrl } = query as ResendVerificationLinkType
 
   const { handleSubmit } = useForm<ResendVerificationLinkType>({
     mode: 'onChange',

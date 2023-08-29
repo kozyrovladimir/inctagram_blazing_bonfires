@@ -1,3 +1,6 @@
+import { PropsWithChildren } from 'react'
+
+import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 import { useMeQuery } from '../../api/services/auth/auth.api'
@@ -9,7 +12,7 @@ const emailConfirmationPaths = [
   '/auth/registration-confirmation',
 ]
 
-export const WithAuth = ({ children }) => {
+export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
 
   // check weather url contains private paths
@@ -17,7 +20,7 @@ export const WithAuth = ({ children }) => {
     return children
   }
 
-  const { data, error, isLoading, isError } = useMeQuery()
+  const { data, error, isLoading, isError } = useMeQuery({})
 
   if (isError) {
     // if to use router.push will be infinite rerenders. Instead of it needs to use window.history.pushState to prevent rerenders

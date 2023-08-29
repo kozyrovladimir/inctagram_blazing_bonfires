@@ -50,14 +50,23 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     if (!isExpirationTimeLongerThanCurrent) {
       const refreshResult = await baseQuery(`${baseURL}auth/update-tokens`, api, extraOptions)
 
-      if (refreshResult.data) {
-        localStorage.setItem('accessToken', refreshResult.data.accessToken)
+      if (
+        refreshResult.data &&
+        typeof refreshResult.data === 'object' &&
+        'accessToken' in refreshResult.data
+      ) {
+        localStorage.setItem('accessToken', refreshResult.data.accessToken as string)
       }
     }
   }
 
-  if (api.endpoint === 'login' && result.data) {
-    localStorage.setItem('accessToken', result.data.accessToken)
+  if (
+    api.endpoint === 'login' &&
+    result.data &&
+    typeof result.data === 'object' &&
+    'accessToken' in result.data
+  ) {
+    localStorage.setItem('accessToken', result.data.accessToken as string)
   }
 
   if (api.endpoint === 'logout') {

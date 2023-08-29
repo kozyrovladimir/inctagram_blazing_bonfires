@@ -35,7 +35,11 @@ export function ForgotPass() {
     },
   })
 
-  const onChangeRecaptchaHandler = (value: string) => {
+  const onChangeRecaptchaHandler = (value: string | null) => {
+    if (value === null) {
+      throw new Error('value === null')
+    }
+
     setValue('recaptcha', value)
   }
 
