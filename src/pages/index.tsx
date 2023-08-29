@@ -24,9 +24,6 @@ function Home() {
   return (
     <>
       <main>
-        {/*todo remove temp links*/}
-        <TempNavigationLinks />
-
         {/*todo remove temp centering wrapper, it's used only for decoration*/}
         <div
           style={{
@@ -38,6 +35,9 @@ function Home() {
         >
           <Logout />
         </div>
+
+        {/*todo remove temp links*/}
+        <TempNavigationLinks />
       </main>
     </>
   )
@@ -47,7 +47,19 @@ export default Home
 
 const TempNavigationLinks = () => {
   return (
-    <ul>
+    <ul
+      style={{
+        opacity: '0.5',
+        listStyleType: 'none',
+        position: 'relative',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 'fit-content',
+        marginTop: '120px',
+        paddingLeft: '0',
+      }}
+    >
+      !! only for development
       <li>
         <Link href="/sign-in">sign-in</Link>
       </li>
