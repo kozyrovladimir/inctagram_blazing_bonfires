@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 
-import { useMeQuery, useUpdateTokenMutation } from '../../api/auth/auth.api'
+import { useMeQuery } from '../../api/services/auth/auth.api'
 
 const publicPaths = ['/sign-in', '/sign-up']
 

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import style from './Logout.module.scss'
 
 import { useLogoutMutation } from '@/shared/api'
-import { useUpdateTokenMutation } from '@/shared/api/auth/auth.api'
+import { useUpdateTokenMutation } from '@/shared/api/services/auth/auth.api'
 import logoutImg from '@/shared/assets/icons/logout/logout.svg'
 import { Button } from '@/shared/ui/Button/Button'
 import { Modal } from '@/shared/ui/Modal/Modal'
