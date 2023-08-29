@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useMeQuery, useUpdateTokenMutation } from '../../api/auth/auth.api'
 
 const publicPaths = ['/sign-in', '/sign-up']
+
 const emailConfirmationPaths = [
   '/auth/expired-verification-link',
   '/auth/registration-confirmation',
@@ -11,6 +12,7 @@ const emailConfirmationPaths = [
 export const WithAuth = ({ children }) => {
   const router = useRouter()
 
+  // check weather url contains private paths
   if (emailConfirmationPaths.some(paths => paths === router.pathname)) {
     return children
   }
@@ -18,7 +20,10 @@ export const WithAuth = ({ children }) => {
   const { data, error, isLoading, isError } = useMeQuery()
 
   if (isError) {
-    router.push('/sign-in')
+    // if to use router.push will be infinite rerenders. Instead of it needs to use window.history.pushState to prevent rerenders
+    // router.push('/sign-in')
+
+    window.history.pushState({}, '', window.location.origin + '/sign-in')
   }
 
   return children
