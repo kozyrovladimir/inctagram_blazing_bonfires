@@ -14,8 +14,8 @@ import { Modal } from '@/shared/ui/Modal/Modal'
 export const Logout = () => {
   const router = useRouter()
 
-  const [logout, { isFetching }] = useLogoutMutation()
-  const { data: userData } = useMeQuery()
+  const [logout, { isLoading }] = useLogoutMutation()
+  const { data: userData } = useMeQuery({})
 
   const logoutApiHandler = () => {
     logout()
@@ -38,7 +38,7 @@ export const Logout = () => {
     setIsModalOpen(false)
   }
 
-  if (isFetching) {
+  if (isLoading) {
     return <CircularProgress />
   }
 
