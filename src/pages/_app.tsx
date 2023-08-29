@@ -4,6 +4,7 @@ import { ReactElement, ReactNode } from 'react'
 import type { AppProps } from 'next/app'
 import { NextPage } from 'next/types'
 
+import { WithAuth } from '@/shared/hoc/WithAuth/WithAuth'
 import { StoreProvider } from '@/shared/providers/StoreProvider'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -14,12 +15,20 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page)
 
   return getLayout(
-    <StoreProvider>
+    <WithAuth>
       <Component {...pageProps} />
+    </WithAuth>
+  )
+}
+
+export default props => {
+  return (
+    <StoreProvider>
+      <App {...props} />
     </StoreProvider>
   )
 }
