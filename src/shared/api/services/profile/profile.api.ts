@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { UserType } from '../auth/auth.api.types'
-import { baseURL } from '../common.api'
+import { baseURL } from '../baseUrl.api'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
