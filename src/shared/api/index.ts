@@ -4,6 +4,12 @@ export {
   useSignUpMutation,
   useLoginMutation,
   useVerifyEmailMutation,
+  useLazyMeQuery,
+  useMeQuery,
+  useCreateNewPasswordMutation,
+  useResendVerificationLinkMutation,
+  useRecoverPasswordMutation,
+  useUpdateTokenMutation,
 } from './services/auth/auth.api'
 
 export type {

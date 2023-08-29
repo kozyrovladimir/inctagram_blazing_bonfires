@@ -192,5 +192,6 @@ export const {
   useCreateNewPasswordMutation,
   useResendVerificationLinkMutation,
   useMeQuery,
+  useLazyMeQuery,
   useUpdateTokenMutation,
 } = authApi
