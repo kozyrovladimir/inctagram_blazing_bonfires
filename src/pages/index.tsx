@@ -24,45 +24,63 @@ function Home() {
   return (
     <>
       <main>
-        <ul>
-          <li>
-            <Link href="/sign-in">sign-in</Link>
-          </li>
-          <li>
-            <Link href="/sign-up">sign-up</Link>
-          </li>
-          <li>
-            <Link href="/sent-email">sent-email</Link>
-          </li>
-          <li>
-            <Link href="/merge-accounts">merge-accounts</Link>
-          </li>
-          <li>
-            <Link href="/invalid-verification-link">invalid-verification-link</Link>
-          </li>
-          <li>
-            <Link href="/forgot-password">forgot-password</Link>
-          </li>
-          <li>
-            <Link href="/auth/expired-verification-link">expired-verification-link</Link>
-          </li>
-          <li>
-            <Link href="/create-new-password">create-new-password</Link>
-          </li>
-          <li>
-            <Link href="/auth/confirmed-email">confirmed-email</Link>
-          </li>
-          <li>
-            <Link href="/auth/terms-of-service">terms of service</Link>
-          </li>
-          <li>
-            <Link href="/auth/privacy-policy">privacy policy</Link>
-          </li>
-        </ul>
-        <Logout />
+        {/*todo remove temp links*/}
+        <TempNavigationLinks />
+
+        {/*todo remove temp centering wrapper, it's used only for decoration*/}
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            paddingTop: '130px',
+          }}
+        >
+          <Logout />
+        </div>
       </main>
     </>
   )
 }
 Home.getLayout = getLayout
 export default Home
+
+const TempNavigationLinks = () => {
+  return (
+    <ul>
+      <li>
+        <Link href="/sign-in">sign-in</Link>
+      </li>
+      <li>
+        <Link href="/sign-up">sign-up</Link>
+      </li>
+      <li>
+        <Link href="/sent-email">sent-email</Link>
+      </li>
+      <li>
+        <Link href="/merge-accounts">merge-accounts</Link>
+      </li>
+      <li>
+        <Link href="/invalid-verification-link">invalid-verification-link</Link>
+      </li>
+      <li>
+        <Link href="/forgot-password">forgot-password</Link>
+      </li>
+      <li>
+        <Link href="/auth/expired-verification-link">expired-verification-link</Link>
+      </li>
+      <li>
+        <Link href="/create-new-password">create-new-password</Link>
+      </li>
+      <li>
+        <Link href="/auth/confirmed-email">confirmed-email</Link>
+      </li>
+      <li>
+        <Link href="/auth/terms-of-service">terms of service</Link>
+      </li>
+      <li>
+        <Link href="/auth/privacy-policy">privacy policy</Link>
+      </li>
+    </ul>
+  )
+}
