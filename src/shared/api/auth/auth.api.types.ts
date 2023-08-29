@@ -3,10 +3,10 @@ export type LoginFormType = {
   password: string
 }
 
-export type LoginResponseType = {
+export type LoginType = {
   accessToken: string
 }
-export type LogoutResponse = {
+export type LogoutType = {
   statusCode: string
   messages: [
     {
