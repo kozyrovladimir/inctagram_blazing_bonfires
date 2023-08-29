@@ -1,16 +1,14 @@
-import { FC } from 'react'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import noImage from '../../shared/assets/icons/avatarProfile/notPhoto.png'
-
-
 import { getLayout } from '../../widgets/layout/MainLayout/MainLayout'
 
 import style from './profile.module.scss'
 
+import ImageC from '@/features/profile-setting/ui/profilePostModal/ImageC'
 import { PostModal } from '@/features/profile-setting/ui/profilePostModal/PostModal'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 

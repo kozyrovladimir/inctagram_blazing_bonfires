@@ -1,0 +1,97 @@
+.actionBtns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 112px;
+  z-index: 1 !important;
+}
+
+//.aspectRatios {
+//  display: flex;
+//  background-color: red;
+//  align-items: center;
+//  z-index: 1 !important;
+//}
+//
+//.btn {
+//  padding: 8px 16px;
+//  background-color: #007bff;
+//  color: #fff;
+//  border: none;
+//  border-radius: 4px;
+//  cursor: pointer;
+//  transition: background-color 0.3s ease;
+//
+//  &:hover {
+//    background-color: #0056b3;
+//  }
+//
+//  &.btnOutline {
+//    background-color: transparent;
+//    color: #007bff;
+//    border: 1px solid #007bff;
+//    z-index: 3;
+//
+//    &:hover {
+//      background-color: rgba(0, 123, 255, 0.1);
+//    }
+//  }
+//}
+//
+//.buttonSize {
+//  margin-top: 300px;
+//}
+
+//.cropper {
+//  background-color: transparent !important;
+//  outline: none !important;
+//  box-shadow: none !important;
+//}
+//
+//.cropArea {
+//  box-shadow: none !important;
+//  border: none !important;
+//  transform: none !important;
+//  width: 0 !important;
+//  height: 0 !important;
+//}
+
+.croppedImage {
+  height: 600px;
+  width: auto;
+}
+
+.croppedImageContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+._coverImageHolder {
+  padding: 25px 40px;
+  background-color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.cropContainer {
+  height: 600px;
+  width: 600px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  position: absolute;
+  bottom: -15px;
+}
+.buttonSize {
+  margin-top: 400px;
+}
