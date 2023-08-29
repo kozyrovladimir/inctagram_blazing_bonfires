@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
@@ -13,7 +14,7 @@ import { Modal } from '@/shared/ui/Modal/Modal'
 export const Logout = () => {
   const router = useRouter()
 
-  const [logout] = useLogoutMutation()
+  const [logout, { isFetching }] = useLogoutMutation()
   const { data: userData } = useMeQuery()
 
   const logoutApiHandler = () => {
@@ -35,6 +36,10 @@ export const Logout = () => {
 
   const closeModal = () => {
     setIsModalOpen(false)
+  }
+
+  if (isFetching) {
+    return <CircularProgress />
   }
 
   return (
