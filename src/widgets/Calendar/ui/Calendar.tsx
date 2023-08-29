@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import Image from 'next/image'
 import DatePicker, { DateObject } from 'react-multi-date-picker'
-import 'react-multi-date-picker/styles/backgrounds/bg-dark.css'
 import type { Value } from 'react-multi-date-picker'
 import InputIcon from 'react-multi-date-picker/components/input_icon'
 
@@ -25,9 +24,9 @@ interface IProps {
   classNameWrap: string
 }
 
-export function Calendar({ classNameWrap }: IProps) {
-  const minAge = new Date().setFullYear(new Date().getFullYear() - 12)
-  const [value, setValue] = useState<Value>(minAge)
+export default function Calendar({ classNameWrap }: IProps) {
+  const maxAge = new Date().setFullYear(new Date().getFullYear() - 12)
+  const [value, setValue] = useState<Value>(maxAge)
   const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
   const mapDays = (props: IPropsDatePiker) => {
     const { date, today, selectedDate, currentMonth, isSameDate } = props
@@ -76,7 +75,7 @@ export function Calendar({ classNameWrap }: IProps) {
         arrow={false}
         showOtherDays
         format="DD.MM.YYYY"
-        minDate={minAge}
+        maxDate={maxAge}
         placeholder="00.00.00"
         onChange={setValue}
         weekStartDayIndex={0}
