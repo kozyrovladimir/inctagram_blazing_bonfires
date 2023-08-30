@@ -41,3 +41,11 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.crop {
+  width: 492px;
+  height: 492px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}

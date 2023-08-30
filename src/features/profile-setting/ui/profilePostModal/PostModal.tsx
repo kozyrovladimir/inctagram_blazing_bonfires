@@ -4,10 +4,10 @@ import Image from 'next/image'
 
 import style from '../profilePostModal/PostModal.module.scss'
 
-import { FilterPhoto } from '@/features/profile-setting/ui/profilePostModal/FilterPhoto'
+import ImageCropper from '@/features/profile-setting/ui/profilePostModal/ImageCropper'
+import { ModalComponent } from '@/features/profile-setting/ui/profilePostModal/ModalComponent'
 import notPhotoImg from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
-import { Modal } from '@/shared/ui/Modal/Modal'
 
 type Props = {
   closeWindow: () => void
@@ -36,19 +36,18 @@ export const PostModal: FC<Props> = ({ closeWindow }) => {
   const openDraftHandler = () => {}
 
   return (
-    <Modal
+    <ModalComponent
       title={isCropping ? 'Cropping' : 'Add photo'}
       callBackCloseWindow={closeWindow}
-      styles={{ width: '492px', height: '564px' }}
-      isShowButton={false}
-      headerClassName={style.darkHeader}
       showButtons={!showButtons}
     >
-      <div className={style.contentWrapper}>
+      <>
         {photoPost && isCropping ? (
-          <FilterPhoto photoPost={photoPost} />
+          <div className={style.crop}>
+            <ImageCropper image={URL.createObjectURL(photoPost)} objectFit={'cover'} />
+          </div>
         ) : (
-          <>
+          <div className={style.contentWrapper}>
             <div className={style.emptyContainer}>
               <Image src={notPhotoImg} alt={''} />
             </div>
@@ -73,9 +72,9 @@ export const PostModal: FC<Props> = ({ closeWindow }) => {
             >
               Open Draft
             </Button>
-          </>
+          </div>
         )}
-      </div>
-    </Modal>
+      </>
+    </ModalComponent>
   )
 }
