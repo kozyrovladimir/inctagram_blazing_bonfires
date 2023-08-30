@@ -22,7 +22,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return getLayout(
     <Provider store={store}>
       <SideBar />
-      <div style={{ borderLeft: '1px solid #333333', marginLeft: '220px', minHeight: '100vh' }}>
+      <div
+        style={{
+          borderLeft: '1px solid #333333',
+          marginLeft: '220px',
+          minHeight: '100vh',
+        }}
+      >
         <Component {...pageProps} />
       </div>
     </Provider>

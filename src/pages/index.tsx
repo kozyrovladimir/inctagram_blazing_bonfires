@@ -24,7 +24,7 @@ function Home() {
 
   return (
     <>
-      <main>
+      <main style={{ marginTop: '-16px' }}>
         <ul>
           <li>
             <Link href="/sign-in">sign-in</Link>
@@ -60,7 +60,6 @@ function Home() {
             <Link href="/auth/privacy-policy">privacy policy</Link>
           </li>
         </ul>
-        <Logout />
       </main>
     </>
   )
