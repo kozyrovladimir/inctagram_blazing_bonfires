@@ -46,6 +46,7 @@ Home.getLayout = getLayout
 export default Home
 
 const TempNavigationLinks = () => {
+
   return (
     <ul
       style={{
