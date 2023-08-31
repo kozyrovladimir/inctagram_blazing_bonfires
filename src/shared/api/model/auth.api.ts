@@ -8,17 +8,9 @@ import {
   PasswordRecoveryType,
   SignUpType,
   UserType,
+  ResendVerificationLinkType,
 } from './auth.api.types'
 import { baseURL } from './common.api'
-
-import {
-  LoginFormType,
-  LoginResponseType,
-  LogoutResponse,
-  SignUpType,
-  UserType,
-} from '@/shared/api'
-import { ResendVerificationLinkType } from '@/shared/api/model/auth.api.types'
 
 export const authApi = createApi({
   reducerPath: 'authApi',

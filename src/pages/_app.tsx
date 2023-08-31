@@ -1,6 +1,8 @@
 import '@/app/styles/globals.scss'
+
 import { ReactElement, ReactNode } from 'react'
 
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import type { AppProps } from 'next/app'
 import { NextPage } from 'next/types'
 import { Provider } from 'react-redux'
@@ -20,7 +22,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return getLayout(
     <Provider store={store}>
-      <Component {...pageProps} />
+      <GoogleOAuthProvider
+        clientId={'617342613759-f3kbvgm8l310fn40vh6qna2pv8u2uccr.apps.googleusercontent.com'}
+      >
+        <Component {...pageProps} />
+      </GoogleOAuthProvider>
     </Provider>
   )
 }

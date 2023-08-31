@@ -7,7 +7,7 @@ import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 const SignInPage = () => {
   return (
     <div>
-      <FormContainer title={'Sing in'}>
+      <FormContainer title={'Sign in'}>
         <Sign />
       </FormContainer>
     </div>

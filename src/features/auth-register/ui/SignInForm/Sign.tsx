@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useGoogleLogin } from '@react-oauth/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -23,7 +24,7 @@ const schema = yup.object().shape({
 export const Sign = () => {
   const [passwordError, setPasswordError] = useState<string>('')
   const [emailError, setEmailError] = useState<string>('')
-  const [login, { isLoading, isError }] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation()
   const router = useRouter()
   const {
     control,
@@ -56,50 +57,71 @@ export const Sign = () => {
       })
   }
 
+  const loginGoogle = useGoogleLogin({
+    onSuccess: credentialResponse => router.push('/profile'),
+    onError: () => console.log('Login Failed'),
+  })
+
+  const onGithubLogin = (): void => {
+    window.location.assign('https://inctagram.work/api/v1/auth/github/login')
+  }
+
   if (isLoading) {
     return <div>Loading...</div>
   }
 
   return (
-    <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+    <>
       <div className={styles.socialIconContainer}>
-        <Image src={googleIcon} alt="google icon" />
-        <Image src={githubIcon} alt="github icon" />
+        <Image
+          onClick={loginGoogle}
+          className={styles.socialIcon}
+          src={googleIcon}
+          alt="google icon"
+        />
+        <Image
+          onClick={onGithubLogin}
+          className={styles.socialIcon}
+          src={githubIcon}
+          alt="github icon"
+        />
       </div>
-      <Controller
-        name="email"
-        control={control}
-        render={({ field }) => (
-          <Input
-            label={'Email'}
-            type={InputType.EMAIL}
-            placeholder="Enter email"
-            error={errors.email?.message || (emailError as string)}
-            {...field}
-          />
-        )}
-      />
-      <Controller
-        name="password"
-        control={control}
-        render={({ field }) => (
-          <Input
-            label={'Password'}
-            type={InputType.PASSWORD}
-            placeholder="Enter password"
-            error={errors.password?.message || (passwordError as string)}
-            {...field}
-          />
-        )}
-      />
-      <Link href="/forgot-password" className={styles.signInForgotText}>
-        Forgot Password
-      </Link>
-      <Button size={ButtonSize.STRETCHED}>Sign In</Button>
-      <p className={styles.helpText}>Don’t have an account?</p>
-      <Link href="/sign-up" className={styles.link}>
-        <p className={styles.oppositeBtn}>Sign Up</p>
-      </Link>
-    </form>
+      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <Input
+              label={'Email'}
+              type={InputType.EMAIL}
+              placeholder="Enter email"
+              error={errors.email?.message || (emailError as string)}
+              {...field}
+            />
+          )}
+        />
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <Input
+              label={'Password'}
+              type={InputType.PASSWORD}
+              placeholder="Enter password"
+              error={errors.password?.message || (passwordError as string)}
+              {...field}
+            />
+          )}
+        />
+        <Link href="/forgot-password" className={styles.signInForgotText}>
+          Forgot Password
+        </Link>
+        <Button size={ButtonSize.STRETCHED}>Sign In</Button>
+        <p className={styles.helpText}>Don’t have an account?</p>
+        <Link href="/sign-up" className={styles.link}>
+          <p className={styles.oppositeBtn}>Sign Up</p>
+        </Link>
+      </form>
+    </>
   )
 }

@@ -44,3 +44,12 @@ export type ResendVerificationLinkType = {
   email: string
   baseUrl: string
 }
+
+export type GoogleLoginType = {
+  code: string
+}
+
+export type GoogleLoginResponseType = {
+  accessToken: string
+  email: string
+}
