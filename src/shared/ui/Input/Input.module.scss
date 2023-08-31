@@ -45,7 +45,7 @@
 .eye {
   position: absolute;
   left: calc(100% - 36px);
-  bottom: 7px;
+  top: 29px;
   cursor: pointer;
 }
 .eyeCrossLine {
@@ -57,7 +57,7 @@
   background-color: var(--color-light-100);
   transform: rotate(45deg);
   left: calc(100% - 36px);
-  bottom: 17px;
+  top: 39px;
   cursor: pointer;
 }
 .search {
