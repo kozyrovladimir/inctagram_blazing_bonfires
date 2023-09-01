@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 
 import { CircularProgress } from '@mui/material'
-import Image from 'next/image'
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
 
 import styles from './SignUpForm.module.scss'
+
+import { OAuth } from '@/features/auth-register/ui/OAuth/OAuth'
 import { SignUpType, useSignUpMutation } from '@/shared/api'
-import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
-import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import { Input, InputType } from '@/shared/ui/Input/Input'
@@ -33,7 +32,6 @@ function SignUpForm() {
     watch,
     register,
     handleSubmit,
-    setError,
     formState: { errors },
     reset,
   } = useForm<FormType>({
@@ -54,8 +52,6 @@ function SignUpForm() {
         reset()
         setRegistrationSuccess(true)
       })
-      // todo field name(back returns) !== userName and this shows an error in email field,
-      //  although the error occurred in name, ask support
       .catch(error => toast.error(error.data.messages[0].message))
   }
 
@@ -69,14 +65,12 @@ function SignUpForm() {
       )}
       {isLoading && <CircularProgress />}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
-        <div className={styles.socialIconContainer}>
-          <Image src={googleIcon} alt="google icon" />
-          <Image src={githubIcon} alt="github icon" />
-        </div>
+        <OAuth />
         <Input
           {...register('userName', {
             required: 'Username field is required',
             minLength: 3,
+            maxLength: 30,
           })}
           type={InputType.TEXT}
           label="Username"
@@ -108,11 +102,11 @@ function SignUpForm() {
             },
             minLength: {
               value: 6,
-              message: 'Email must be at least 6 characters long',
+              message: 'Password must be at least 6 characters long',
             },
             maxLength: {
               value: 30,
-              message: 'Email must not exceed 30 characters',
+              message: 'Password must not exceed 30 characters',
             },
           })}
           label="Password"

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import Link from 'next/link'
+import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
@@ -10,14 +10,18 @@ const ForgotPasswordPage = () => {
   const router = useRouter()
   const { accessToken } = router.query
 
-  if (accessToken) {
-    localStorage.setItem('accessToken', accessToken)
-  }
+  useEffect(() => {
+    if (accessToken) {
+      localStorage.setItem('accessToken', accessToken)
+      router.push('/profile')
+    } else {
+      router.push('/sign-in')
+    }
+  }, [accessToken])
 
   return (
-    <FormContainer title="GitHub">
-      <h4>You are logged in successfully</h4>
-      <Link href="/profile">profile</Link>
+    <FormContainer title="">
+      <CircularProgress />
     </FormContainer>
   )
 }

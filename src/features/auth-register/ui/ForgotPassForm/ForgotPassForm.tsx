@@ -101,7 +101,7 @@ function ForgotPass() {
           </Button>
         </Link>
         <ReCAPTCHA
-          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ" // replace to .env.local
+          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ" // replace to .env.production
           onChange={onChangeRecaptchaHandler}
           theme={'dark'}
         />
