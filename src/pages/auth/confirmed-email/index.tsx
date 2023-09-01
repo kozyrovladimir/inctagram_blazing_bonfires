@@ -6,8 +6,8 @@ import Link from 'next/link'
 import styles from './ConfirmedEmail.module.scss'
 
 import broConfirmImage from '@/shared/assets/icons/login/broCongratulations.svg'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const ConfirmedEmailPage = () => {
   return (
