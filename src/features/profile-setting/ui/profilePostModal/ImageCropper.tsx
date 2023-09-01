@@ -1,17 +1,17 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState } from "react";
 
-import Image from 'next/image'
-import Cropper from 'react-easy-crop'
+import Image from "next/image";
+import Cropper from "react-easy-crop";
 
-import style from './ImageCropper.module.scss'
+import style from "./ImageCropper.module.scss";
 
-import getCroppedImg from '@/features/profile-setting/ui/profilePostModal/GetCroppedImage'
-import { ModalButton } from '@/features/profile-setting/ui/profilePostModal/ModalButton'
-import { ZoomCrop } from '@/features/profile-setting/ui/profilePostModal/ZoomCrop'
-import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
-import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
-import noImage from '@/shared/assets/icons/image/no-image.svg'
-import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
+import getCroppedImg
+  from "@/features/profile-setting/ui/profilePostModal/GetCroppedImage";
+import { ModalButton } from "@/features/profile-setting/ui/profilePostModal/ModalButton";
+import maxmMin from "@/shared/assets/icons/filterPostPhoto/maximize-outline.svg";
+import sizePhoto from "@/shared/assets/icons/filterPostPhoto/size.svg";
+import noImage from "@/shared/assets/icons/image/no-image.svg";
+import { Button, ButtonSize, ButtonTheme } from "@/shared/ui/Button/Button";
 
 type ImageCropperProps = {
   image: string
@@ -115,39 +115,44 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ image, objectFit }) => {
           <>
             <div className={style.filterPanelContainer}>
               <div className={style.leftPanel}>
-                <Button
-                  theme={ButtonTheme.CLEAR}
-                  className={style.sizeButton}
-                  onClick={handleCropOpen}
-                >
-                  <Image src={sizePhoto} alt={''} />
-                </Button>
-                <Button
-                  theme={ButtonTheme.CLEAR}
-                  className={style.sizeButton}
-                  onClick={handleToggleZoomInput}
-                >
-                  <Image src={maxmMin} alt={''} />
-                </Button>
-                <div className={style.rightButton}>
-                  <Button theme={ButtonTheme.CLEAR} className={style.sizeButton}>
-                    <Image src={noImage} alt={''} style={{ width: '24px', height: '24px' }} />
+                <div className={style.buttonContainer}>
+                  {isModalOpen && <ModalButton onAspectRatioChange={handleAspectRatioClick} />}
+                  <Button
+                    theme={ButtonTheme.CLEAR}
+                    className={style.sizeButton}
+                    onClick={handleCropOpen}
+                  >
+                    <Image src={sizePhoto} alt={''} />
+                  </Button>
+                </div>
+                <div>
+                  {showZoomInput && (
+                    <div className={style.zoomInput}>
+                      <input
+                        type="range"
+                        min={1}
+                        max={3}
+                        step={0.1}
+                        value={zoom}
+                        onChange={handleZoomChange}
+                      />
+                    </div>
+                  )}
+                  <Button
+                    theme={ButtonTheme.CLEAR}
+                    className={style.sizeButton}
+                    onClick={handleToggleZoomInput}
+                  >
+                    <Image src={maxmMin} alt={''} />
                   </Button>
                 </div>
               </div>
+              <div className={style.rightButton}>
+                <Button theme={ButtonTheme.CLEAR} className={style.sizeButton}>
+                  <Image src={noImage} alt={''} style={{ width: '24px', height: '24px' }} />
+                </Button>
+              </div>
             </div>
-            {isModalOpen && <ModalButton onAspectRatioChange={handleAspectRatioClick} />}
-            {showZoomInput && (
-              <input
-                type="range"
-                min={1}
-                max={3}
-                step={0.1}
-                value={zoom}
-                onChange={handleZoomChange}
-                className={style.zoomInput}
-              />
-            )}
             {/*<button onClick={showCroppedImage}>Crop</button>*/}
           </>
         )}

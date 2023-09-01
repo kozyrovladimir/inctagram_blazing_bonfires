@@ -8,34 +8,26 @@
   }
 
   .filterPanelContainer {
+    width: 100%;
     display: flex;
     z-index: 1;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 190px;
+    bottom: 0;
     position: absolute;
+    padding: 12px;
 
     .leftPanel {
       display: flex;
-      justify-content: space-between;
-      padding: 10px;
       z-index: 0;
-    }
-
-    .leftPanel > * {
-      margin-right: 50px;
-      margin-left: 50px;
+      gap: 30px;
     }
 
     .rightButton {
     }
 
-    .rightButton > * {
-      margin-right: 50px;
-    }
-
     .sizeButton {
-      background-color: grey;
+      background-color:  #4c4c4c;
       border: none;
       width: 36px;
     }
@@ -43,16 +35,10 @@
 
   .zoomInput {
     position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 30px;
-    background-color: grey;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: -36px;
+    background-color: #4c4c4c;
+    padding: 10px;
+    border-radius: 2px;
   }
 }
 
@@ -69,4 +55,8 @@
 
 .cropperContainer {
   overflow: hidden;
+}
+
+.buttonContainer {
+  //position: relative;
 }
