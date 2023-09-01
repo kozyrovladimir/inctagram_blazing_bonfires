@@ -88,7 +88,6 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ image, objectFit }) => {
       style={{
         display: image === null || croppedImage !== null ? 'none' : 'block',
       }}
-      className={style.cropperContainer}
     >
       <Cropper
         image={image}
@@ -100,11 +99,9 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ image, objectFit }) => {
         onCropComplete={onCropComplete}
         onInteractionEnd={() => setIsModalOpen(false)}
         objectFit={isOriginal ? undefined : objectFit}
-        // classes={{
-        //   containerClassName: style.cropper,
-        //   mediaClassName: style.cropperMedia,
-        //   cropAreaClassName: style.cropArea,
-        // }}
+        classes={{
+          cropAreaClassName: style.cropArea,
+        }}
         // showGrid={false}
         // cropShape={'rect'}
       />
