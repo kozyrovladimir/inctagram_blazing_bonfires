@@ -4,6 +4,7 @@ import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { useVerifyEmailMutation } from '@/shared/api'
+import { Loader } from '@/shared/ui/Loader/Loader'
 import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 export const RegistrationConfirmation = () => {
@@ -23,7 +24,7 @@ export const RegistrationConfirmation = () => {
     }
   }, [code])
 
-  return <CircularProgress />
+  return <Loader />
 }
 
 RegistrationConfirmation.getLayout = getLayout

@@ -12,7 +12,9 @@ import styles from './SignInForm.module.scss'
 import { OAuth } from '@/features/auth-register/ui/OAuth/OAuth'
 import { useLoginMutation, LoginFormType } from '@/shared/api'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
+import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
+import { Loader } from '@/shared/ui/Loader/Loader'
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Enter email'),
@@ -55,50 +57,49 @@ export const Sign = () => {
       })
   }
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
   return (
     <>
       <Toaster position="top-right" />
-      <OAuth />
-      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label={'Email'}
-              type={InputType.EMAIL}
-              placeholder="Enter email"
-              error={errors.email?.message || (emailError as string)}
-              {...field}
-            />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label={'Password'}
-              type={InputType.PASSWORD}
-              placeholder="Enter password"
-              error={errors.password?.message || (passwordError as string)}
-              {...field}
-            />
-          )}
-        />
-        <Link href="/forgot-password" className={styles.signInForgotText}>
-          Forgot Password
-        </Link>
-        <Button size={ButtonSize.STRETCHED}>Sign In</Button>
-        <p className={styles.helpText}>Don’t have an account?</p>
-        <Link href="/sign-up" className={styles.link}>
-          <p className={styles.oppositeBtn}>Sign Up</p>
-        </Link>
-      </form>
+      {isLoading && <Loader />}
+      <FormContainer title={'Sign in'}>
+        <OAuth />
+        <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label={'Email'}
+                type={InputType.EMAIL}
+                placeholder="Enter email"
+                error={errors.email?.message || (emailError as string)}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label={'Password'}
+                type={InputType.PASSWORD}
+                placeholder="Enter password"
+                error={errors.password?.message || (passwordError as string)}
+                {...field}
+              />
+            )}
+          />
+          <Link href="/forgot-password" className={styles.signInForgotText}>
+            Forgot Password
+          </Link>
+          <Button size={ButtonSize.STRETCHED}>Sign In</Button>
+          <p className={styles.helpText}>Don’t have an account?</p>
+          <Link href="/sign-up" className={styles.link}>
+            <p className={styles.oppositeBtn}>Sign Up</p>
+          </Link>
+        </form>
+      </FormContainer>
     </>
   )
 }

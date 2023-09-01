@@ -3,7 +3,8 @@ import React, { useEffect } from 'react'
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import FormContainer from '@/shared/ui/FormContainer/FormContainer'
+import styles from './Github.module.scss'
+
 import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const ForgotPasswordPage = () => {
@@ -20,9 +21,9 @@ const ForgotPasswordPage = () => {
   }, [accessToken])
 
   return (
-    <FormContainer title="">
+    <div className={styles.loaderWrapper}>
       <CircularProgress />
-    </FormContainer>
+    </div>
   )
 }
 

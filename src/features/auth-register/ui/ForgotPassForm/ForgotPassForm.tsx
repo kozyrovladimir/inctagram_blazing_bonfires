@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import { CircularProgress } from '@mui/material'
 import Link from 'next/link'
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -13,6 +12,7 @@ import { PasswordRecoveryType } from '@/shared/api/model/auth.api.types'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
+import { Loader } from '@/shared/ui/Loader/Loader'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
 function ForgotPass() {
@@ -58,7 +58,7 @@ function ForgotPass() {
 
   return (
     <>
-      {isLoading && <CircularProgress />}
+      {isLoading && <Loader />}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         <Input
           {...register('email', {
