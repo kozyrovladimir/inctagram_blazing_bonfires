@@ -26,6 +26,7 @@ export type SignUpType = {
 }
 
 export type UserType = {
+  userId?: number
   userName: string
   email: string
   password: string

@@ -9,8 +9,9 @@ export {
   type LoginFormType,
   type LoginResponseType,
   type LogoutResponse,
-  type RequestNewVerificationLinkType,
+  type ResendVerificationLinkType,
   type SignUpType,
   type UserType,
 } from './model/auth.api.types'
+export { profileApi } from './profile.api'
 export { baseURL, instance } from './model/common.api'

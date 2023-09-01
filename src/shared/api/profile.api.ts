@@ -1,36 +1,59 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { baseURL } from './../../shared/api/common.api'
+import { LoginResponseType } from './model/auth.api.types'
 
-import { UserType } from '@/shared/api/auth.api.types'
+import { ProfileUserType, BaseUserType } from '@/shared/api/general.api.types'
+import { baseURL } from '@/shared/api/model/common.api'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
+  tagTypes: ['dataProfile'],
   endpoints: build => {
     return {
-      getProfile: build.mutation<UserType, number>({
+      getAuthMe: build.query<BaseUserType, void>({
+        query: () => {
+          return {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+            url: 'auth/me',
+          }
+        },
+      }),
+      getProfile: build.query<ProfileUserType, number | null>({
         query: id => {
           return {
             method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
             url: 'users/profile',
             params: { id },
           }
         },
+        providesTags: ['dataProfile'],
       }),
-      updateProfile: build.mutation<UserType, UserType>({
-        query: (data: UserType) => {
+      updateProfile: build.mutation<ProfileUserType, ProfileUserType>({
+        query: (data: ProfileUserType) => {
+          const { ...body } = data
+
           return {
             method: 'PUT',
             url: 'users/profile',
-            body: {
-              userName: data.userName, // userProfile.userName,
-              firstName: data.firstName,
-              lastName: data.lastName,
-              city: data.city,
-              dateOfBirth: data.dateOfBirth,
-              aboutMe: data.aboutMe,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
             },
+            body,
+          }
+        },
+        invalidatesTags: ['dataProfile'],
+      }),
+      updateTokens: build.mutation<LoginResponseType, void>({
+        query: () => {
+          return {
+            method: 'POST',
+            url: 'auth/update-tokens',
           }
         },
       }),
@@ -38,4 +61,9 @@ export const profileApi = createApi({
   },
 })
 
-export const { useGetProfileMutation, useUpdateProfileMutation } = profileApi
+export const {
+  useGetProfileQuery,
+  useGetAuthMeQuery,
+  useUpdateProfileMutation,
+  useUpdateTokensMutation,
+} = profileApi

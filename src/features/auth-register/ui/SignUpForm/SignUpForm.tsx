@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
 
 import styles from './SignUpForm.module.scss'
+
 import { SignUpType, useSignUpMutation } from '@/shared/api'
 import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
