@@ -4,6 +4,10 @@ import Image from 'next/image'
 
 import style from '../profilePostModal/PostModal.module.scss'
 
+import CropProvider, {
+  useImageCropContext,
+} from '@/features/profile-setting/ui/profilePostModal/CropProvider'
+import { readFile } from '@/features/profile-setting/ui/profilePostModal/GetCroppedImage'
 import ImageCropper from '@/features/profile-setting/ui/profilePostModal/ImageCropper'
 import { ModalComponent } from '@/features/profile-setting/ui/profilePostModal/ModalComponent'
 import notPhotoImg from '@/shared/assets/icons/avatarProfile/notPhoto.png'
@@ -17,12 +21,38 @@ export const PostModal: FC<Props> = ({ closeWindow }) => {
   const [photoPost, setPhotoPost] = useState<File | null>(null)
   const [isCropping, setIsCropping] = useState(false)
   const [showButtons, setShowButtons] = useState(false)
+  const { setImage, showCroppedImage } = useImageCropContext()
 
-  const selectedPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length) {
-      const file = e.target.files[0]
+  // const selectedPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files.length) {
+  //     const file = e.target.files[0]
+  //
+  //     setPhotoPost(file)
+  //     setIsCropping(true)
+  //     setShowButtons(true)
+  //   }
+  // }
+  // const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  //   const files = event.target.files
+  //
+  //   if (files && files.length > 0) {
+  //     const file = files[0]
+  //     const imageDataUrl = await readFile(file)
+  //
+  //     setImage(imageDataUrl)
+  //     setPhotoPost(file)
+  //     setIsCropping(true)
+  //     setShowButtons(true)
+  //   }
+  // }
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
+    const file = files && files[0]
 
-      setPhotoPost(file)
+    if (file) {
+      const imageDataUrl = await readFile(file)
+
+      setImage(imageDataUrl)
       setIsCropping(true)
       setShowButtons(true)
     }
@@ -42,9 +72,9 @@ export const PostModal: FC<Props> = ({ closeWindow }) => {
       showButtons={!showButtons}
     >
       <>
-        {photoPost && isCropping ? (
+        {isCropping ? (
           <div className={style.crop}>
-            <ImageCropper image={URL.createObjectURL(photoPost)} objectFit={'cover'} />
+            <ImageCropper objectFit={'cover'} />
           </div>
         ) : (
           <div className={style.contentWrapper}>
@@ -53,7 +83,7 @@ export const PostModal: FC<Props> = ({ closeWindow }) => {
             </div>
             <input
               type={'file'}
-              onChange={selectedPhotoHandler}
+              onChange={handleFileChange}
               id={'inputPhotoPost'}
               className={style.inputPhoto}
             />

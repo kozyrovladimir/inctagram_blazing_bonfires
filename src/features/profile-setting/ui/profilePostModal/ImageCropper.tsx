@@ -1,110 +1,64 @@
-import React, { useCallback, useState } from "react";
+import React from 'react'
 
-import Image from "next/image";
-import Cropper from "react-easy-crop";
+import Image from 'next/image'
+import Cropper from 'react-easy-crop'
 
-import style from "./ImageCropper.module.scss";
+import style from './ImageCropper.module.scss'
 
-import getCroppedImg
-  from "@/features/profile-setting/ui/profilePostModal/GetCroppedImage";
-import { ModalButton } from "@/features/profile-setting/ui/profilePostModal/ModalButton";
-import maxmMin from "@/shared/assets/icons/filterPostPhoto/maximize-outline.svg";
-import sizePhoto from "@/shared/assets/icons/filterPostPhoto/size.svg";
-import noImage from "@/shared/assets/icons/image/no-image.svg";
-import { Button, ButtonSize, ButtonTheme } from "@/shared/ui/Button/Button";
+import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/CropProvider'
+import { ModalButton } from '@/features/profile-setting/ui/profilePostModal/ModalButton'
+import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
+import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
+import noImage from '@/shared/assets/icons/image/no-image.svg'
+import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
 
 type ImageCropperProps = {
-  image: string
+  // image: string
   objectFit: 'cover'
 }
-
-type CropTYpe = {
-  width: number
-  height: number
-  x: number
-  y: number
-}
-const ImageCropper: React.FC<ImageCropperProps> = ({ image, objectFit }) => {
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [aspectRatio, setAspectRatio] = useState(1)
-  const [isOriginal, setIsOriginal] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<CropTYpe>({
-    x: 0,
-    y: 0,
-    height: 0,
-    width: 0,
-  })
-  const [croppedImage, setCroppedImage] = useState<string | null>(null)
-  const [isImageCropped, setIsImageCropped] = useState(false)
-  const [zoom, setZoom] = useState<number>(1)
-  const [showZoomInput, setShowZoomInput] = useState(false)
-  const [isNoImageOpen, setIsNoImageOpen] = useState(false)
-
-  const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: CropTYpe): void => {
-    setCroppedAreaPixels(croppedAreaPixels)
-  }, [])
-
-  const showCroppedImage = useCallback(async () => {
-    try {
-      const croppedImage = await getCroppedImg(image, croppedAreaPixels)
-
-      setCroppedImage(croppedImage)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [croppedAreaPixels, image])
-
-  const handleZoomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setZoom(parseFloat(event.target.value))
-  }
-
-  const handleAspectRatioClick = async (value: number) => {
-    if (value === 0) {
-      setIsOriginal(true)
-      setCroppedImage(null)
-    } else {
-      setIsOriginal(false)
-      setAspectRatio(value)
-    }
-  }
-
-  const onClose = useCallback((): void => {
-    setCroppedImage(null)
-  }, [])
-
-  const handleCropOpen = () => {
-    setIsModalOpen(!isModalOpen)
-    setShowZoomInput(false)
-  }
-
-  const handleToggleZoomInput = () => {
-    setShowZoomInput(!showZoomInput)
-    setIsModalOpen(false)
-  }
+const ImageCropper: React.FC<ImageCropperProps> = ({ objectFit }) => {
+  const {
+    croppedImage,
+    onCropComplete,
+    crop,
+    setCrop,
+    aspectRatio,
+    isOriginal,
+    zoom,
+    setZoom,
+    setIsModalOpen,
+    handleAspectRatioClick,
+    isModalOpen,
+    handleCropOpen,
+    showZoomInput,
+    handleZoomChange,
+    handleToggleZoomInput,
+    image,
+    showCroppedImage,
+  } = useImageCropContext()
 
   return (
-    <div
-      style={{
-        display: image === null || croppedImage !== null ? 'none' : 'block',
-      }}
-    >
-      <Cropper
-        image={image}
-        aspect={isOriginal ? undefined : aspectRatio}
-        crop={crop}
-        onCropChange={setCrop}
-        onZoomChange={setZoom}
-        zoom={zoom}
-        onCropComplete={onCropComplete}
-        onInteractionEnd={() => setIsModalOpen(false)}
-        objectFit={isOriginal ? undefined : objectFit}
-        classes={{
-          cropAreaClassName: style.cropArea,
+    <div>
+      <div
+        style={{
+          display: image === null || croppedImage !== null ? 'none' : 'block',
         }}
-        // showGrid={false}
-        // cropShape={'rect'}
-      />
+      >
+        <Cropper
+          image={image || undefined}
+          aspect={isOriginal ? undefined : aspectRatio}
+          crop={crop}
+          onCropChange={setCrop}
+          onZoomChange={setZoom}
+          zoom={zoom}
+          onCropComplete={onCropComplete}
+          onInteractionEnd={() => setIsModalOpen(false)}
+          objectFit={isOriginal ? undefined : objectFit}
+          classes={{
+            cropAreaClassName: style.cropArea,
+          }}
+        />
+      </div>
       <div className={style.croppedImageContainer}>
         {croppedImage ? (
           croppedImage && <img className={style.croppedImage} src={croppedImage} alt="cropped" />
@@ -150,7 +104,6 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ image, objectFit }) => {
                 </Button>
               </div>
             </div>
-            {/*<button onClick={showCroppedImage}>Crop</button>*/}
           </>
         )}
       </div>

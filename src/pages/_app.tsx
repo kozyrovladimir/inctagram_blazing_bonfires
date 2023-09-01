@@ -6,6 +6,7 @@ import { NextPage } from 'next/types'
 import { Provider } from 'react-redux'
 
 import { store } from '@/app/providers/StoreProvider'
+import CropProvider from '@/features/profile-setting/ui/profilePostModal/CropProvider'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -19,8 +20,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page)
 
   return getLayout(
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+    <CropProvider>
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
+    </CropProvider>
   )
 }

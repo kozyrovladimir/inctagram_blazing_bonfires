@@ -8,7 +8,6 @@ import { getLayout } from '../../widgets/layout/MainLayout/MainLayout'
 
 import style from './profile.module.scss'
 
-import ImageC from '@/features/profile-setting/ui/profilePostModal/ImageC'
 import { PostModal } from '@/features/profile-setting/ui/profilePostModal/PostModal'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 

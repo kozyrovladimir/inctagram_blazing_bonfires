@@ -4,18 +4,19 @@ import Image from 'next/image'
 
 import style from './ModalComponent.module.scss'
 
+import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/CropProvider'
 import backImg from '@/shared/assets/icons/arrow back/back.svg'
 import closeImg from '@/shared/assets/icons/logout/close.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 
-type BoxCardModalPropsType = {
+type Props = {
   title: string
   callBackCloseWindow: () => void
   reset?: () => void
   children: ReactNode
   showButtons?: boolean
 }
-export const ModalComponent: FC<BoxCardModalPropsType> = ({
+export const ModalComponent: FC<Props> = ({
   title,
   callBackCloseWindow,
   reset,
@@ -24,6 +25,8 @@ export const ModalComponent: FC<BoxCardModalPropsType> = ({
 }) => {
   const refModalWindow = useRef<HTMLDivElement | null>(null)
   const [isOpen, setIsOpen] = useState(true)
+
+  const { showCroppedImage } = useImageCropContext()
   const closeOpenMenu = (e: DocumentEventMap['mousedown']) => {
     if (
       refModalWindow.current &&
@@ -44,6 +47,9 @@ export const ModalComponent: FC<BoxCardModalPropsType> = ({
       document.removeEventListener('mousedown', closeOpenMenu)
     }
   }, [isOpen])
+  const onChangeHandler = async () => {
+    await showCroppedImage()
+  }
 
   return (
     <div className={style.windowWrapper}>
@@ -72,6 +78,7 @@ export const ModalComponent: FC<BoxCardModalPropsType> = ({
                     theme={ButtonTheme.CLEAR}
                     size={ButtonSize.SMALL}
                     className={style.buttonHeader}
+                    onClick={onChangeHandler}
                   >
                     {' '}
                     Next{' '}
@@ -82,7 +89,7 @@ export const ModalComponent: FC<BoxCardModalPropsType> = ({
           )}
         </div>
         <div className={style.line}></div>
-        <div className={style.form}> {children} </div>
+        <div className={style.form}>{children}</div>
       </div>
     </div>
   )
