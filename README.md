@@ -4,12 +4,12 @@
 
 Вы можете использовать любой пакетный менеджер. Ниже примеры с использованием npm.
 
-1. Клонировать репозиторий
-2. Установить зависимости `npm i`
-3. Инициализировать husky `npm run husky:install`
-4. Настроить конфигурацию редактора кода для работы с eslint и prettier (делал по этому [гайду](https://flashcards-docs.andrii.es/ru/lesson-1/chapter-1) из инкубатора)
-5. Запустить проект `npm run dev`
-6. При необходимости запустить storybook `npm run storybook`
+1. Клонировать репозиторий;
+2. Установить зависимости `npm i`;
+3. Инициализировать husky `npm run husky:install`;
+4. Настроить конфигурацию редактора кода для работы с eslint и prettier (делал по этому [гайду](https://flashcards-docs.andrii.es/ru/lesson-1/chapter-1) из инкубатора);
+5. Запустить проект `npm run dev`;
+6. При необходимости запустить storybook `npm run storybook`;
 
 ### Husky
 

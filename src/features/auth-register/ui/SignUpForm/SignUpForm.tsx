@@ -25,7 +25,7 @@ type FormType = {
   agreement: boolean
 }
 
-function SignUpForm() {
+export function SignUpForm() {
   const [signUp, { isLoading }] = useSignUpMutation()
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const callBackCloseWindow = () => setRegistrationSuccess(false)
@@ -168,5 +168,3 @@ function SignUpForm() {
     </>
   )
 }
-
-export default SignUpForm

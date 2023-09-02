@@ -3,10 +3,10 @@ export type LoginFormType = {
   password: string
 }
 
-export type LoginResponseType = {
+export type LoginType = {
   accessToken: string
 }
-export type LogoutResponse = {
+export type LogoutType = {
   statusCode: string
   messages: [
     {
@@ -25,13 +25,6 @@ export type SignUpType = {
   agreement: boolean
 }
 
-export type UserType = {
-  userId?: number
-  userName: string
-  email: string
-  password: string
-}
-
 export type PasswordRecoveryType = {
   email: string
   recaptcha: string
@@ -39,9 +32,29 @@ export type PasswordRecoveryType = {
 
 export type NewPasswordType = {
   newPassword: string
-  recoveryCode: string
+  recoveryCode?: string
 }
 export type ResendVerificationLinkType = {
   email: string
   baseUrl: string
+}
+
+export type UserType = {
+  id?: number
+  userName: string
+  email?: string
+  password?: string
+  firstName?: string
+  lastName?: string
+  city?: string
+  dateOfBirth?: Date
+  aboutMe?: string
+  avatars?: [
+    {
+      url?: string
+      width: number
+      height: number
+      fileSize: number
+    },
+  ]
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import jwt from 'jwt-decode'
 import router from 'next/router'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -9,21 +8,15 @@ import * as yup from 'yup'
 import styles from './ProfileSetting.module.scss'
 
 import { ProfilePhoto } from '@/features/profile-setting/ui/ProfilePhoto/ProfilePhoto'
-import { ProfileUserType } from '@/shared/api/general.api.types'
-import { LoginFormType, LoginResponseType } from '@/shared/api/model/auth.api.types'
-import {
-  useGetProfileQuery,
-  useGetAuthMeQuery,
-  useUpdateTokensMutation,
-  useUpdateProfileMutation,
-} from '@/shared/api/profile.api'
+import { useGetProfileQuery, useUpdateProfileMutation, useMeQuery } from '@/shared/api'
+import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import { AppErrors } from '@/shared/common/errors'
 import { Button } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import Calendar from '@/widgets/Calendar/ui/Calendar'
 
 export const ProfileSetting = () => {
-  const { data, isError, isLoading } = useGetAuthMeQuery()
+  const { data, isError, isLoading } = useMeQuery({})
 
   const {
     data: profileData,
@@ -39,24 +32,6 @@ export const ProfileSetting = () => {
       isLoading: isLoadingUpdateProfileData,
     },
   ] = useUpdateProfileMutation()
-
-  // const [tokenUpdate, { data: updateToken }] = useUpdateTokensMutation()
-
-  // const checkToken = () => {
-  //   const token = localStorage.getItem('accessToken') as string
-  //   const tokenFinish = Number((jwt(token) as any).exp as string) * 1000
-  //   const nowDate = Date.now()
-
-  //   console.log(new Date(tokenFinish))
-  //   console.log(new Date(nowDate))
-  //   if (tokenFinish <= nowDate) {
-  //     tokenUpdate()
-  //       .unwrap()
-  //       .then((res: LoginResponseType) => {
-  //         localStorage.setItem('accessToken', res.accessToken)
-  //         console.log(res)
-  //       })
-  //   }
 
   const profileSchema = yup.object().shape({
     userName: yup
@@ -129,10 +104,6 @@ export const ProfileSetting = () => {
     //     }
     //   })
   }
-
-  // useEffect(() => {
-  //   checkToken()
-  // }, [])
 
   useEffect(() => {
     reset(profileData)
@@ -240,7 +211,9 @@ export const ProfileSetting = () => {
             <div className={styles.line}></div>
           </div>
           <div className={styles.buttonContainer}>
-            <Button type="submit" /*  className={styles.button} */>Save Changes</Button>
+            <Button type="submit" className={styles.button}>
+              Save Changes
+            </Button>
           </div>
         </form>
       )}

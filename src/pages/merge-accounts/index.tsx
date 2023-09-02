@@ -5,8 +5,8 @@ import Image from 'next/image'
 import styles from './MergeAccounts.module.scss'
 
 import broImage from '@/shared/assets/icons/login/bro.svg'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const MergeAccountsPage = () => {
   return (

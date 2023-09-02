@@ -4,14 +4,29 @@ export {
   useSignUpMutation,
   useLoginMutation,
   useVerifyEmailMutation,
-} from './model/auth.api'
+  useLazyMeQuery,
+  useMeQuery,
+  useCreateNewPasswordMutation,
+  useResendVerificationLinkMutation,
+  useRecoverPasswordMutation,
+  useUpdateTokenMutation,
+} from './services/auth/auth.api'
+
+export type {
+  LoginFormType,
+  LoginType,
+  LogoutType,
+  SignUpType,
+  UserType,
+  ResendVerificationLinkType,
+  PasswordRecoveryType,
+  NewPasswordType,
+} from './services/auth/auth.api.types'
+
 export {
-  type LoginFormType,
-  type LoginResponseType,
-  type LogoutResponse,
-  type ResendVerificationLinkType,
-  type SignUpType,
-  type UserType,
-} from './model/auth.api.types'
-export { profileApi } from './profile.api'
-export { baseURL, instance } from './model/common.api'
+  profileApi,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from './services/profile/profile.api'
+
+export { baseURL } from './services/baseUrl.api'

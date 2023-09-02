@@ -6,7 +6,7 @@ import type { Value } from 'react-multi-date-picker'
 
 import styles from './Calendar.module.scss'
 
-import { ProfileUserType } from '@/shared/api/general.api.types'
+import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import calendarIcon from '@/shared/assets/icons/icons/iconCalendar.svg'
 
 interface IProps {

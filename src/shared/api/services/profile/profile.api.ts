@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { LoginResponseType } from './model/auth.api.types'
+import { baseURL } from '../baseUrl.api'
 
-import { ProfileUserType, BaseUserType } from '@/shared/api/general.api.types'
-import { baseURL } from '@/shared/api/model/common.api'
+import { BaseUserType, ProfileUserType } from './profile.api.types'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
@@ -49,21 +48,8 @@ export const profileApi = createApi({
         },
         invalidatesTags: ['dataProfile'],
       }),
-      updateTokens: build.mutation<LoginResponseType, void>({
-        query: () => {
-          return {
-            method: 'POST',
-            url: 'auth/update-tokens',
-          }
-        },
-      }),
     }
   },
 })
 
-export const {
-  useGetProfileQuery,
-  useGetAuthMeQuery,
-  useUpdateProfileMutation,
-  useUpdateTokensMutation,
-} = profileApi
+export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi
