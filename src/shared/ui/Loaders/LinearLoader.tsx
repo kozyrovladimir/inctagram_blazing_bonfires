@@ -4,7 +4,7 @@ import { LinearProgress } from '@mui/material'
 
 import styles from './Loader.module.scss'
 
-export const Loader = () => {
+export const LinearLoader = () => {
   return (
     <div className={styles.loaderWrapper}>
       <LinearProgress />

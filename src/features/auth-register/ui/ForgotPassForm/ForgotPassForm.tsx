@@ -12,7 +12,7 @@ import { PasswordRecoveryType } from '@/shared/api/model/auth.api.types'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
-import { Loader } from '@/shared/ui/Loader/Loader'
+import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
 function ForgotPass() {
@@ -58,7 +58,7 @@ function ForgotPass() {
 
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading && <LinearLoader />}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         <Input
           {...register('email', {

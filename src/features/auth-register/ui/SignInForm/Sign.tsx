@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
-import { Toaster } from 'react-hot-toast'
+import { toast, Toaster } from 'react-hot-toast'
 import * as yup from 'yup'
 
 import styles from './SignInForm.module.scss'
@@ -14,7 +14,7 @@ import { useLoginMutation, LoginFormType } from '@/shared/api'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
-import { Loader } from '@/shared/ui/Loader/Loader'
+import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Enter email'),
@@ -41,7 +41,7 @@ export const Sign = () => {
   const onSubmit = (args: LoginFormType) => {
     login(args)
       .unwrap()
-      .then(() => router.push('/'))
+      .then(() => router.push('/profile'))
       .catch(error => {
         if (error && error.data) {
           const { statusCode } = error.data
@@ -52,7 +52,7 @@ export const Sign = () => {
             setEmailError('This email address is not registered. Please register')
           }
         } else {
-          alert('Network error')
+          toast.error('Network error')
         }
       })
   }
@@ -60,7 +60,7 @@ export const Sign = () => {
   return (
     <>
       <Toaster position="top-right" />
-      {isLoading && <Loader />}
+      {isLoading && <LinearLoader />}
       <FormContainer title={'Sign in'}>
         <OAuth />
         <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>

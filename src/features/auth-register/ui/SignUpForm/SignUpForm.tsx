@@ -13,7 +13,7 @@ import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
-import { Loader } from '@/shared/ui/Loader/Loader'
+import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
 type FormType = {
@@ -59,7 +59,7 @@ function SignUpForm() {
   return (
     <>
       <Toaster position="top-right" />
-      {isLoading && <Loader />}
+      {isLoading && <LinearLoader />}
       {registrationSuccess && (
         <Modal title={'Email sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
           <p>We have sent a link to confirm your email </p>

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 
 import styles from './Github.module.scss'
 
+import { CircularLoader } from '@/shared/ui/Loaders/CircularLoader'
 import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const ForgotPasswordPage = () => {
@@ -22,7 +23,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <div className={styles.loaderWrapper}>
-      <CircularProgress />
+      <CircularLoader />
     </div>
   )
 }
