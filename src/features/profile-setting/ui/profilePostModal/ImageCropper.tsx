@@ -10,6 +10,7 @@ import { ModalButton } from '@/features/profile-setting/ui/profilePostModal/Moda
 import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
 import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
+import { classNames } from '@/shared/libs/classNames/classNames'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
 
 type ImageCropperProps = {
@@ -37,6 +38,13 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ objectFit }) => {
     showCroppedImage,
   } = useImageCropContext()
 
+  const imageClasses = classNames(style.croppedImage, {
+    [style.imageFullWidth]: aspectRatio >= 1,
+    [style.imageFullHeight]: aspectRatio < 1,
+  })
+
+  // debugger
+
   return (
     <div>
       <div
@@ -61,7 +69,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ objectFit }) => {
       </div>
       <div className={style.croppedImageContainer}>
         {croppedImage ? (
-          croppedImage && <img className={style.croppedImage} src={croppedImage} alt="cropped" />
+          croppedImage && <img className={imageClasses} src={croppedImage} alt="cropped" />
         ) : (
           <>
             <div className={style.filterPanelContainer}>

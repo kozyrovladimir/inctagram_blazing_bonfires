@@ -2,9 +2,14 @@
   display: flex;
 
   .croppedImage {
-    height: fit-content;
-    width: auto;
-    z-index: 0;
+  }
+
+  .imageFullWidth {
+    width: 492px;
+  }
+
+  .imageFullHeight {
+    height: 492px;
   }
 
   .filterPanelContainer {
@@ -16,6 +21,7 @@
     bottom: 0;
     position: absolute;
     padding: 12px;
+    left: 0;
 
     .leftPanel {
       display: flex;
