@@ -34,7 +34,6 @@ export const ImageCropper: React.FC<Props> = ({ objectFit }) => {
     handleZoomChange,
     handleToggleZoomInput,
     image,
-    showCroppedImage,
     originalAspectRatio,
   } = useImageCropContext()
 
