@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
-import getCroppedImg from '@/features/profile-setting/ui/profilePostModal/GetCroppedImage'
+import { getCroppedImg } from '@/features/profile-setting/ui/profilePostModal/cropper/GetCroppedImage'
 
 type CropType = {
   width: number
@@ -96,20 +96,6 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     }
   }, [image, croppedAreaPixels])
 
-  // const showCroppedImage = async () => {
-  //   if (image && croppedAreaPixels) {
-  //     const croppedImage = await getCroppedImg(image, croppedAreaPixels)
-  //
-  //     if (croppedImage) {
-  //       const imageFile = new File([croppedImage.file], `img-${Date.now()}.png`, {
-  //         type: 'image/png',
-  //       })
-  //
-  //       return imageFile
-  //     }
-  //   }
-  // }
-
   const handleAspectRatioClick = useCallback((value: number) => {
     if (value === 0) {
       setIsOriginal(true)
@@ -186,4 +172,3 @@ export const useImageCropContext = (): CropContextType => {
   return context
 }
 export default CropProvider
-

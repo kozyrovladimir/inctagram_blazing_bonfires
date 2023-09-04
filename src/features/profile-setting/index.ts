@@ -1,3 +1,7 @@
 export { PhotoModal } from './ui/PhotoModal/PhotoModal'
 export { ProfilePhoto } from './ui/ProfilePhoto/ProfilePhoto'
 export { ProfileSetting } from './ui/ProfileSettings/ProfileSetting'
+export { PostModal } from './ui/profilePostModal/PostModal'
+export { ModalComponent } from './ui/profilePostModal/modal/modalComponent/ModalComponent'
+export { ModalButton } from './ui/profilePostModal/modal/modalButton/ModalButton'
+export { ImageCropper } from './ui/profilePostModal/cropper/ImageCropper'

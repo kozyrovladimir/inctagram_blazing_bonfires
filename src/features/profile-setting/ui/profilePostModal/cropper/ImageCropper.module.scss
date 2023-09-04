@@ -33,7 +33,7 @@
     }
 
     .sizeButton {
-      background-color:  #4c4c4c;
+      background-color: #4c4c4c;
       border: none;
       width: 36px;
     }
@@ -50,4 +50,5 @@
 
 .cropArea {
   color: #313131 !important;
+  transition: all 0.3s ease !important;
 }

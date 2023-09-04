@@ -5,14 +5,18 @@ import Cropper from 'react-easy-crop'
 
 import style from './ImageCropper.module.scss'
 
-import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/CropProvider'
-import { ModalButton } from '@/features/profile-setting/ui/profilePostModal/ModalButton'
+import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/cropper/CropProvider'
+import { ModalButton } from '@/features/profile-setting/ui/profilePostModal/modal/modalButton/ModalButton'
 import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
 import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { classNames } from '@/shared/libs/classNames/classNames'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
-const ImageCropper: React.FC = () => {
+
+type Props = {
+  objectFit: 'cover'
+}
+export const ImageCropper: React.FC<Props> = ({ objectFit }) => {
   const {
     croppedImage,
     onCropComplete,
@@ -55,6 +59,8 @@ const ImageCropper: React.FC = () => {
           zoom={zoom}
           onCropComplete={onCropComplete}
           onInteractionEnd={() => setIsModalOpen(false)}
+          objectFit={isOriginal ? undefined : objectFit}
+          showGrid={false}
           classes={{
             cropAreaClassName: style.cropArea,
           }}
@@ -111,5 +117,3 @@ const ImageCropper: React.FC = () => {
     </div>
   )
 }
-
-export default ImageCropper

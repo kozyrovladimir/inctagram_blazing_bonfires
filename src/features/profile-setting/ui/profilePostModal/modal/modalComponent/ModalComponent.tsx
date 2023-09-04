@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import style from './ModalComponent.module.scss'
 
-import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/CropProvider'
+import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/cropper/CropProvider'
 import backImg from '@/shared/assets/icons/arrow back/back.svg'
 import closeImg from '@/shared/assets/icons/logout/close.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
@@ -19,7 +19,6 @@ type Props = {
 export const ModalComponent: FC<Props> = ({
   title,
   callBackCloseWindow,
-  reset,
   children,
   showButtons,
 }) => {

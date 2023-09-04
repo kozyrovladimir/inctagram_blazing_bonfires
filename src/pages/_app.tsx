@@ -6,7 +6,7 @@ import { NextPage } from 'next/types'
 import { Provider } from 'react-redux'
 
 import { store } from '@/app/providers/StoreProvider'
-import CropProvider from '@/features/profile-setting/ui/profilePostModal/CropProvider'
+import CropProvider from '@/features/profile-setting/ui/profilePostModal/cropper/CropProvider'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

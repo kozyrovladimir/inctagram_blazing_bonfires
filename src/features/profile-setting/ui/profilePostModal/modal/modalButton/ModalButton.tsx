@@ -2,10 +2,10 @@ import React, { FC } from 'react'
 
 import Image from 'next/image'
 
-import image16 from '../../../../shared/assets/icons/filterPostPhoto/16_9.svg'
-import image1 from '../../../../shared/assets/icons/filterPostPhoto/1_1.svg'
-import image4 from '../../../../shared/assets/icons/filterPostPhoto/4_5.svg'
-import originImage from '../../../../shared/assets/icons/filterPostPhoto/origin.svg'
+import image16 from '../../../../../../shared/assets/icons/filterPostPhoto/16_9.svg'
+import image1 from '../../../../../../shared/assets/icons/filterPostPhoto/1_1.svg'
+import image4 from '../../../../../../shared/assets/icons/filterPostPhoto/4_5.svg'
+import originImage from '../../../../../../shared/assets/icons/filterPostPhoto/origin.svg'
 
 import style from './ModalButton.module.scss'
 
