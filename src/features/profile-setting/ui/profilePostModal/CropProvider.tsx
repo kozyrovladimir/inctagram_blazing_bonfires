@@ -42,6 +42,8 @@ type CropContextType = {
   handleZoomChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   showZoomInput: boolean
   setShowZoomInput: React.Dispatch<React.SetStateAction<boolean>>
+  setOriginalAspectRatio: React.Dispatch<React.SetStateAction<number>>
+  originalAspectRatio: number
 }
 
 export const CropContext = createContext<CropContextType | undefined>(undefined)
@@ -52,7 +54,8 @@ type Props = {
 
 const CropProvider: React.FC<Props> = ({ children }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [aspectRatio, setAspectRatio] = useState(1)
+  const [originalAspectRatio, setOriginalAspectRatio] = useState(1)
+  const [aspectRatio, setAspectRatio] = useState(originalAspectRatio)
   const [isOriginal, setIsOriginal] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isImageCropped, setIsImageCropped] = useState(false)
@@ -164,6 +167,8 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setShowZoomInput,
         showZoomInput,
         showCroppedImage,
+        setOriginalAspectRatio,
+        originalAspectRatio,
       }}
     >
       {children}
@@ -181,3 +186,4 @@ export const useImageCropContext = (): CropContextType => {
   return context
 }
 export default CropProvider
+

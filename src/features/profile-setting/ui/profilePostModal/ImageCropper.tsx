@@ -12,12 +12,7 @@ import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { classNames } from '@/shared/libs/classNames/classNames'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
-
-type ImageCropperProps = {
-  // image: string
-  objectFit: 'cover'
-}
-const ImageCropper: React.FC<ImageCropperProps> = ({ objectFit }) => {
+const ImageCropper: React.FC = () => {
   const {
     croppedImage,
     onCropComplete,
@@ -36,14 +31,13 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ objectFit }) => {
     handleToggleZoomInput,
     image,
     showCroppedImage,
+    originalAspectRatio,
   } = useImageCropContext()
 
   const imageClasses = classNames(style.croppedImage, {
     [style.imageFullWidth]: aspectRatio >= 1,
     [style.imageFullHeight]: aspectRatio < 1,
   })
-
-  // debugger
 
   return (
     <div>
@@ -54,14 +48,13 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ objectFit }) => {
       >
         <Cropper
           image={image || undefined}
-          aspect={isOriginal ? undefined : aspectRatio}
+          aspect={isOriginal ? originalAspectRatio : aspectRatio}
           crop={crop}
           onCropChange={setCrop}
           onZoomChange={setZoom}
           zoom={zoom}
           onCropComplete={onCropComplete}
           onInteractionEnd={() => setIsModalOpen(false)}
-          objectFit={isOriginal ? undefined : objectFit}
           classes={{
             cropAreaClassName: style.cropArea,
           }}
