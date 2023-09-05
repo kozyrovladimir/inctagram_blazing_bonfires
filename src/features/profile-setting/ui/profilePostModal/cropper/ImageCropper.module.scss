@@ -12,33 +12,6 @@
     height: 492px;
   }
 
-  .filterPanelContainer {
-    width: 100%;
-    display: flex;
-    z-index: 1;
-    flex-direction: row;
-    justify-content: space-between;
-    bottom: 0;
-    position: absolute;
-    padding: 12px;
-    left: 0;
-
-    .leftPanel {
-      display: flex;
-      z-index: 0;
-      gap: 30px;
-    }
-
-    .rightButton {
-    }
-
-    .sizeButton {
-      background-color: #4c4c4c;
-      border: none;
-      width: 36px;
-    }
-  }
-
   .zoomInput {
     position: absolute;
     top: -36px;

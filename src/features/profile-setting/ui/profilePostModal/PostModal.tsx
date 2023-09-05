@@ -4,10 +4,9 @@ import NextImage from 'next/image'
 
 import style from '../profilePostModal/PostModal.module.scss'
 
+import { ImageCropper, ModalComponent } from '@/features/profile-setting'
 import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/cropper/CropProvider'
 import { readFile } from '@/features/profile-setting/ui/profilePostModal/cropper/GetCroppedImage'
-import { ImageCropper } from '@/features/profile-setting/ui/profilePostModal/cropper/ImageCropper'
-import { ModalComponent } from '@/features/profile-setting/ui/profilePostModal/modal/modalComponent/ModalComponent'
 import notPhotoImg from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 

@@ -8,7 +8,8 @@ import { getLayout } from '../../widgets/layout/MainLayout/MainLayout'
 
 import style from './profile.module.scss'
 
-import { PostModal } from '@/features/profile-setting/ui/profilePostModal/PostModal'
+import { PostModal } from '@/features/profile-setting'
+import { SwiperSlider } from '@/features/profile-setting/ui/profilePostModal/slider/Swiper'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 
 function Profile() {
