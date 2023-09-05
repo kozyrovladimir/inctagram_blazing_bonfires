@@ -6,17 +6,17 @@ export type ProfileUserType = {
   firstName?: string
   lastName?: string
   city?: string
-  dateOfBirth?: string
+  dateOfBirth?: Date
   aboutMe?: string
-  avatars?: [
-    {
-      url?: string
-      width: number
-      height: number
-      fileSize: number
-    },
-  ]
+  avatars: AvatarsType
 }
+
+export type AvatarsType = {
+  url?: string
+  width: number
+  height: number
+  fileSize: number
+}[]
 
 export type BaseUserType = {
   userId: number

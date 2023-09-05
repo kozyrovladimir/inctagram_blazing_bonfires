@@ -31,6 +31,7 @@
     "eslint-config-next": "13.4.11",
     "i18next": "^23.4.1",
     "jwt-decode": "^3.1.2",
+    "moment": "^2.29.4",
     "next": "13.4.11",
     "next-i18next": "^14.0.0",
     "react": "18.2.0",

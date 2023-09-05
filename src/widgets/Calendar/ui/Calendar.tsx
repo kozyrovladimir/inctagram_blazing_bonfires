@@ -1,7 +1,7 @@
 import React, { useState, forwardRef } from 'react'
 
 import Image from 'next/image'
-import DatePicker from 'react-multi-date-picker'
+import DatePicker, { DateObject } from 'react-multi-date-picker'
 import type { Value } from 'react-multi-date-picker'
 
 import styles from './Calendar.module.scss'
@@ -15,9 +15,9 @@ interface IProps {
   classNameWrap: string
 }
 
-function Calendar({ classNameWrap, data, outsideOnChange }: IProps) {
-  const minAge = new Date().setFullYear(new Date().getFullYear())
-  const defaultValue = data?.dateOfBirth ? new Date(data?.dateOfBirth as string) : minAge
+export const Calendar = ({ classNameWrap, data, outsideOnChange }: IProps) => {
+  const minAge = new Date().setFullYear(new Date().getFullYear() - 12)
+  const defaultValue = data?.dateOfBirth ? new Date(data?.dateOfBirth) : new Date(minAge)
   const [value, setValue] = useState<Value | undefined>(defaultValue)
   const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 
@@ -32,9 +32,9 @@ function Calendar({ classNameWrap, data, outsideOnChange }: IProps) {
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
         arrow={false}
         showOtherDays
-        format="DD.MM.YYYY"
+        format="MM.DD.YYYY"
         maxDate={minAge}
-        placeholder="00.00.00"
+        placeholder="Enter date of birth"
         onChange={date => {
           setValue(date)
           outsideOnChange(date)
@@ -46,5 +46,3 @@ function Calendar({ classNameWrap, data, outsideOnChange }: IProps) {
     </div>
   )
 }
-
-export default forwardRef(Calendar)
