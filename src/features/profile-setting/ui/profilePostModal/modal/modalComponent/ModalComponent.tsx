@@ -69,7 +69,13 @@ export const ModalComponent: FC<Props> = ({
             </div>
           ) : (
             <div className={style.title}>
-              <Image src={backImg} alt={''} style={{ cursor: 'pointer' }} />
+              <Button
+                size={ButtonSize.SMALL}
+                className={style.buttonHeader}
+                theme={ButtonTheme.CLEAR}
+              >
+                <Image src={backImg} alt={''} style={{ cursor: 'pointer' }} />
+              </Button>
               <div>{title}</div>
               <div>
                 <div className={style.backButton}>
