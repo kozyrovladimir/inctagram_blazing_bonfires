@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Image from 'next/image'
+import { SwiperSlide } from 'swiper/react'
 
 import style from './ButtonFilterPanel.module.scss'
 
 import { ModalButton } from '@/features/profile-setting'
 import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/cropper/CropProvider'
+import { SwiperSlider } from '@/features/profile-setting/ui/profilePostModal/slider/SwiperSlider'
 import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
 import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
 
 export const ButtonFilterPanel = () => {
+  const [showSlider, setShowSlider] = useState(false)
   const {
     zoom,
     handleAspectRatioClick,
@@ -21,6 +24,10 @@ export const ButtonFilterPanel = () => {
     handleZoomChange,
     handleToggleZoomInput,
   } = useImageCropContext()
+
+  const handlerShowSlider = () => {
+    setShowSlider(!showSlider)
+  }
 
   return (
     <div className={style.filterPanelContainer}>
@@ -54,10 +61,11 @@ export const ButtonFilterPanel = () => {
         </div>
       </div>
       <div className={style.rightButton}>
-        <Button theme={ButtonTheme.CLEAR} className={style.sizeButton}>
+        <Button theme={ButtonTheme.CLEAR} className={style.sizeButton} onClick={handlerShowSlider}>
           <Image src={noImage} alt={''} style={{ width: '24px', height: '24px' }} />
         </Button>
       </div>
+      {showSlider && <SwiperSlider />}
     </div>
   )
 }

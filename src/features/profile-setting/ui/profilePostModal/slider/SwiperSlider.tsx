@@ -15,7 +15,6 @@ interface Photo {
   id: string
   url: string
 }
-
 export const SwiperSlider: React.FC = () => {
   const [photos, setPhotos] = useState<Photo[]>([])
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null)
