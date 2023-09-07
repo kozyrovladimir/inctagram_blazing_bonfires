@@ -62,8 +62,25 @@ export const profileApi = createApi({
         },
         invalidatesTags: ['dataProfile'],
       }),
+      deleteAvatar: build.mutation<void, void>({
+        query: () => {
+          return {
+            method: 'DELETE',
+            url: 'users/profile/avatar',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+          }
+        },
+        invalidatesTags: ['dataProfile'],
+      }),
     }
   },
 })
 
-export const { useGetProfileQuery, useUpdateProfileMutation, useUpdateAvatarMutation } = profileApi
+export const {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+  useUpdateAvatarMutation,
+  useDeleteAvatarMutation,
+} = profileApi

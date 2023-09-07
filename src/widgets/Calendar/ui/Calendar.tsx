@@ -16,9 +16,9 @@ interface IProps {
 }
 
 export const Calendar = ({ classNameWrap, data, outsideOnChange }: IProps) => {
-  const minAge = new Date().setFullYear(new Date().getFullYear() - 12)
-  const defaultValue = data?.dateOfBirth ? new Date(data?.dateOfBirth) : new Date(minAge)
-  const [value, setValue] = useState<Value | undefined>(defaultValue)
+  // const minAge = new Date().setFullYear(new Date().getFullYear() - 13)
+  // const defaultValue = data?.dateOfBirth ? new Date(data?.dateOfBirth) : new Date(minAge)
+  const [value, setValue] = useState<Value | undefined>(new Date())
   const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 
   return (
@@ -33,7 +33,7 @@ export const Calendar = ({ classNameWrap, data, outsideOnChange }: IProps) => {
         arrow={false}
         showOtherDays
         format="MM.DD.YYYY"
-        maxDate={minAge}
+        // maxDate={minAge}
         placeholder="Enter date of birth"
         onChange={date => {
           setValue(date)

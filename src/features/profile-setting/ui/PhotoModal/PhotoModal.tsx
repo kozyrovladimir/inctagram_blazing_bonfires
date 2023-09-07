@@ -1,6 +1,8 @@
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { ChangeEvent, FC, useRef, useState } from 'react'
 
+import Slider from '@mui/material/Slider'
 import Image from 'next/image'
+import AvatarEditor from 'react-avatar-editor'
 
 import styles from './PhotoModal.module.scss'
 
@@ -16,6 +18,9 @@ type Props = {
 export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
   const [photoProfile, setPhotoProfile] = useState<null | Blob | MediaSource>(null)
   const [uploadError, setUploadError] = useState('')
+  const cropRef = useRef<null | any>(null)
+  const [slideValue, setSlideValue] = useState(10)
+
   const selectedPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       const maxSize = 1 * 1024 * 1024
@@ -28,14 +33,24 @@ export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
       } else setPhotoProfile(e.target?.files[0])
     }
   }
+
   const openSelectHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     document.getElementById('inputPhotoProfile')?.click()
   }
 
-  const savePhotoHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const savePhotoHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    savePhoto(photoProfile)
+    if (cropRef) {
+      const dataUrl = cropRef.current.getImage().toDataURL()
+      const result = await fetch(dataUrl)
+      const blob = await result.blob()
+
+      setPhotoProfile(blob)
+      savePhoto(blob)
+    } else {
+      savePhoto(photoProfile)
+    }
     closeWindow()
   }
 
@@ -68,12 +83,29 @@ export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
           )}
           {photoProfile && (
             <>
-              <Image
-                src={URL.createObjectURL(photoProfile)}
-                alt={''}
-                width={332}
-                height={340}
-                className={styles.avatar}
+              <AvatarEditor
+                ref={cropRef}
+                image={URL.createObjectURL(photoProfile)}
+                width={250}
+                height={250}
+                border={50}
+                borderRadius={150}
+                color={[0, 0, 0, 0.72]}
+                scale={slideValue / 10}
+                rotate={0}
+              />
+              <Slider
+                min={5}
+                max={50}
+                sx={{
+                  margin: '0.5rem auto',
+                  width: '80%',
+                  color: '#2f68cc',
+                }}
+                size="small"
+                defaultValue={slideValue}
+                value={slideValue}
+                onChange={(e: Event, value: number | number[]) => setSlideValue(value as number)}
               />
 
               <Button

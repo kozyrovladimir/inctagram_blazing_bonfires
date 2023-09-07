@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
@@ -12,9 +13,10 @@ import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 type Props = {
   outsideOnChange: (photo: Blob) => void
   photoFromServer: AvatarsType
+  deleteAvatar: (data: boolean) => void
 }
 
-export const ProfilePhoto = ({ outsideOnChange, photoFromServer }: Props) => {
+export const ProfilePhoto = ({ outsideOnChange, photoFromServer, deleteAvatar }: Props) => {
   const [open, setOpen] = useState(false)
   const [photo, setPhoto] = useState<null | Blob | MediaSource>(null)
   const [photoServer, setPhotoServer] = useState<null | AvatarsType>(null)
@@ -23,41 +25,58 @@ export const ProfilePhoto = ({ outsideOnChange, photoFromServer }: Props) => {
     event.preventDefault()
     setOpen(true)
   }
+  const deletePhoto = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    setPhoto(null)
+    setPhotoServer(null)
+    deleteAvatar(true)
+  }
+  const savePhoto = (photo: Blob | MediaSource | null) => {
+    // setPhotoServer(null)
+    // deleteAvatar(false)
+    setPhoto(photo)
 
-  useEffect(() => setPhotoServer(photoFromServer), [photoFromServer])
+    photo && outsideOnChange(photo as Blob)
+  }
+
+  useEffect(() => {
+    setPhotoServer(photoFromServer)
+  }, [photoFromServer])
+
+  const photoSRC =
+    (photo && URL.createObjectURL(photo as Blob)) ||
+    (photoServer?.length && (photoServer[0].url as string)) ||
+    noImage
 
   return (
     <>
       <div className={styles.photoContainer}>
-        {(photo || photoServer) && (
-          <Image
-            src={photoServer ? (photoServer[0].url as string) : URL.createObjectURL(photo as Blob)}
-            width={200}
-            priority={true}
-            height={250}
-            alt="avatar"
-          />
-        )}
-        {!(photo || photoServer) && <Image src={noImage} alt="no photo" width={48} height={48} />}
+        <Image
+          src={photoSRC}
+          width={192}
+          priority={true}
+          height={192}
+          alt="avatar"
+          property="true"
+        />
       </div>
       <Button
         size={ButtonSize.MIDDLE}
         theme={ButtonTheme.CLEAR}
-        className={styles.button}
+        className={styles.AddPhotoBtn}
         onClick={openModal}
       >
         Add a Profile Photo
       </Button>
-      {open && (
-        <PhotoModal
-          savePhoto={data => {
-            setPhoto(data)
-            setPhotoServer(null)
-            data && outsideOnChange(data as Blob)
-          }}
-          closeWindow={() => setOpen(false)}
-        />
-      )}
+      <Button
+        size={ButtonSize.MIDDLE}
+        theme={ButtonTheme.CLEAR}
+        className={styles.DelPhotoBtn}
+        onClick={deletePhoto}
+      >
+        Delete a Profile Photo
+      </Button>
+      {open && <PhotoModal savePhoto={savePhoto} closeWindow={() => setOpen(false)} />}
     </>
   )
 }

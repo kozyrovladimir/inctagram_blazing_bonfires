@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react'
 import * as React from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/fetchBaseQuery'
 import router from 'next/router'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -10,7 +12,10 @@ import styles from './ProfileSetting.module.scss'
 
 import { ProfilePhoto } from '@/features/profile-setting/ui/ProfilePhoto/ProfilePhoto'
 import { useGetProfileQuery, useUpdateProfileMutation, useMeQuery } from '@/shared/api'
-import { useUpdateAvatarMutation } from '@/shared/api/services/profile/profile.api'
+import {
+  useDeleteAvatarMutation,
+  useUpdateAvatarMutation,
+} from '@/shared/api/services/profile/profile.api'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import { AppErrors } from '@/shared/common/errors'
 import { Button } from '@/shared/ui/Button/Button'
@@ -18,7 +23,7 @@ import { Input, InputType } from '@/shared/ui/Input/Input'
 import { Calendar } from '@/widgets/Calendar/ui/Calendar'
 
 export const ProfileSetting = () => {
-  const { data, isError, isLoading } = useMeQuery({})
+  const { data, isError, error, isLoading } = useMeQuery({})
 
   const {
     data: profileData,
@@ -28,10 +33,12 @@ export const ProfileSetting = () => {
 
   const [updateProfile, {}] = useUpdateProfileMutation()
 
-  const [updateAvatar, { data: avatar, isError: isErrorAvatar, isLoading: isLoadingAvatar }] =
-    useUpdateAvatarMutation()
+  const [updateAvatar, { isLoading: isLoadingAvatar }] = useUpdateAvatarMutation()
+
+  const [deleteAvatar, {}] = useDeleteAvatarMutation()
 
   const [photo, setPhoto] = useState<Blob | null>(null)
+  const [isDeleteAvatar, setIsDeleteAvatar] = useState(false)
 
   const profileSchema = yup.object().shape({
     userName: yup
@@ -88,8 +95,17 @@ export const ProfileSetting = () => {
   const onSubmit = (data: ProfileUserType) => {
     updateProfile(data)
       .unwrap()
-      .then(res => {
-        router.push('/profile')
+      .then(() => {
+        if (photo) {
+          const formData = new FormData()
+
+          formData.set('file', photo as Blob)
+
+          updateAvatar(formData)
+        }
+        if (isDeleteAvatar) {
+          deleteAvatar()
+        }
       })
       .catch(error => {
         if (error && error.data) {
@@ -102,13 +118,17 @@ export const ProfileSetting = () => {
           alert('Network error')
         }
       })
+  }
 
-    if (photo) {
-      const formData = new FormData()
+  if (isError) {
+    const { status } = error as FetchBaseQueryError
 
-      formData.set('file', photo as Blob)
+    if (status === 401) {
+      console.log('You are not authorized, please enter in your account')
 
-      updateAvatar(formData)
+      return <h2>You are not authorized, please enter in your account</h2>
+    } else {
+      return <h2>Network error. Sorry, offline mode isn&apos;t ready</h2>
     }
   }
 
@@ -116,8 +136,11 @@ export const ProfileSetting = () => {
 
   return (
     <>
-      {(isLoading || isLoadingProfileData) && <h2>Loading...</h2>}
-      {(isError || isErrorProfileData) && <h2>Sorry, offline mode isn`&apos;`t ready</h2>}
+      {(isLoading || isLoadingProfileData || isLoadingAvatar) && <h2>Loading...</h2>}
+      {/* {isLoading && <h2>Loading...</h2>}
+      {isLoadingProfileData && <h2>Loading...</h2>}
+      {isLoadingAvatar && <h2>Loading...</h2>} */}
+
       {profileData && (
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <div className={styles.profileSettingContainer}>
@@ -132,6 +155,9 @@ export const ProfileSetting = () => {
                     }}
                     photoFromServer={value}
                     {...args}
+                    deleteAvatar={data => {
+                      setIsDeleteAvatar(data)
+                    }}
                   />
                 )}
               />

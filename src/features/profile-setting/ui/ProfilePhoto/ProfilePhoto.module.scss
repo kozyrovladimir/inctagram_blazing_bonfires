@@ -1,12 +1,19 @@
-.avatarContainer {
+.photoContainer {
   width: 192px;
   height: 192px;
   background-color: var(--color-dark-700);
   border-radius: 50%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
 }
-.button {
+.AddPhotoBtn {
   margin-top: 20px;
+}
+.DelPhotoBtn {
+  margin-top: 20px;
+  border: solid red;
+  color: red;
 }

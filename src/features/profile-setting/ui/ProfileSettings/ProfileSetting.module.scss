@@ -1,7 +1,7 @@
 .profileSettingContainer {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   width: 728px;
   margin: auto;
@@ -13,7 +13,7 @@
   }
 }
 .photo {
-  margin-bottom: 25vh;
+  margin-top: 1.5rem;
 }
 
 
