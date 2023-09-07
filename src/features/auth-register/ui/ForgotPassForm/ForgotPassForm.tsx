@@ -8,14 +8,14 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './ForgotPassForm.module.scss'
 
-import { useRecoverPasswordMutation } from '@/shared/api/model/auth.api'
-import { PasswordRecoveryType } from '@/shared/api/model/auth.api.types'
+import { useRecoverPasswordMutation } from '@/shared/api/services/auth/auth.api'
+import { PasswordRecoveryType } from '@/shared/api/services/auth/auth.api.types'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
-function ForgotPass() {
+export function ForgotPass() {
   const [isSentPass, setIsSentPass] = useState(false)
   const [recoverPassword, { isLoading }] = useRecoverPasswordMutation()
   const callBackCloseWindow = () => setIsSentPass(false)
@@ -35,7 +35,11 @@ function ForgotPass() {
     },
   })
 
-  const onChangeRecaptchaHandler = (value: string) => {
+  const onChangeRecaptchaHandler = (value: string | null) => {
+    if (value === null) {
+      throw new Error('value === null')
+    }
+
     setValue('recaptcha', value)
   }
 
@@ -109,5 +113,3 @@ function ForgotPass() {
     </>
   )
 }
-
-export default ForgotPass

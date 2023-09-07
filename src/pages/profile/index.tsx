@@ -4,8 +4,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import noImage from '../../shared/assets/icons/avatarProfile/notPhoto.png'
+import { getLayout } from '../../shared/layouts/MainLayout/MainLayout'
 import { Button } from '../../shared/ui/Button/Button'
-import { getLayout } from '../../widgets/layout/MainLayout/MainLayout'
 
 import style from './profile.module.scss'
 

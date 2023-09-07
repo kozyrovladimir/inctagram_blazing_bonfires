@@ -2,12 +2,12 @@ import React from 'react'
 
 import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm, FieldValues } from 'react-hook-form'
 
 import styles from './CreateNewPassForm.module.scss'
 
-import { useCreateNewPasswordMutation } from '@/shared/api/model/auth.api'
-import { NewPasswordType } from '@/shared/api/model/auth.api.types'
+import { useCreateNewPasswordMutation } from '@/shared/api/services/auth/auth.api'
+import { NewPasswordType } from '@/shared/api/services/auth/auth.api.types'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
@@ -42,7 +42,10 @@ export function CreateNewPassForm() {
   const password = watch('newPassword', '')
 
   const onSubmit: SubmitHandler<NewPasswordType> = data => {
-    data.recoveryCode = code
+    if (!data) {
+      throw new Error('data is undefined')
+    }
+
     createNewPassword(data)
       .unwrap()
       .then(() => {

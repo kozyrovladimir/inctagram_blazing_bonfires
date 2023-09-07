@@ -2,14 +2,14 @@ import React from 'react'
 
 import styles from './ForgotPassword.module.scss'
 
-import ForgotPassForm from '@/features/auth-register/ui/ForgotPassForm/ForgotPassForm'
+import { ForgotPass } from '@/features/auth-register/ui/ForgotPassForm/ForgotPassForm'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const ForgotPasswordPage = () => {
   return (
     <FormContainer title="Forgot Password" className={styles.forgotPassContainer}>
-      <ForgotPassForm />
+      <ForgotPass />
     </FormContainer>
   )
 }

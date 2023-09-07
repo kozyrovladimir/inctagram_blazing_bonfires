@@ -24,7 +24,7 @@ interface IProps {
   classNameWrap: string
 }
 
-export default function Calendar({ classNameWrap }: IProps) {
+export function Calendar({ classNameWrap }: IProps) {
   const maxAge = new Date().setFullYear(new Date().getFullYear() - 12)
   const [value, setValue] = useState<Value>(maxAge)
   const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']

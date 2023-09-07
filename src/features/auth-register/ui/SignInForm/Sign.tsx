@@ -9,7 +9,7 @@ import * as yup from 'yup'
 
 import styles from './SignInForm.module.scss'
 
-import { useLoginMutation, LoginFormType } from '@/shared/api'
+import { LoginFormType, useLoginMutation } from '@/shared/api'
 import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
@@ -23,7 +23,7 @@ const schema = yup.object().shape({
 export const Sign = () => {
   const [passwordError, setPasswordError] = useState<string>('')
   const [emailError, setEmailError] = useState<string>('')
-  const [login, { isLoading, isError }] = useLoginMutation()
+  const [login, { isLoading, isError, data }] = useLoginMutation()
   const router = useRouter()
   const {
     control,
@@ -37,10 +37,13 @@ export const Sign = () => {
       password: '',
     },
   })
+
   const onSubmit = (args: LoginFormType) => {
     login(args)
       .unwrap()
-      .then(() => router.push('/'))
+      .then(res => {
+        router.replace('/')
+      })
       .catch(error => {
         if (error && error.data) {
           const { statusCode } = error.data
