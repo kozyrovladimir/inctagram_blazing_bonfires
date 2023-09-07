@@ -33,6 +33,7 @@ function SignUpForm() {
     watch,
     register,
     handleSubmit,
+    setError,
     formState: { errors },
     reset,
   } = useForm<FormType>({

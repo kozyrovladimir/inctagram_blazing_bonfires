@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ProfileSetting } from '@/features/profile-setting'
-import { settingLayout } from '@/widgets/layout/ProfileLayout/SettingLayout'
+import { settingLayout } from '@/shared/layouts/ProfileLayout/SettingLayout'
 
 function GeneralInformation() {
   return (

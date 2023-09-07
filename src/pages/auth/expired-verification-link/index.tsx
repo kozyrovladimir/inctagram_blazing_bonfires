@@ -7,13 +7,13 @@ import { toast, Toaster } from 'react-hot-toast'
 
 import styles from './ExpiredVerificationLink.module.scss'
 
-import { useResendVerificationLinkMutation } from '@/shared/api/model/auth.api'
-import { ResendVerificationLinkType } from '@/shared/api/model/auth.api.types'
+import { useResendVerificationLinkMutation } from '@/shared/api/services/auth/auth.api'
+import { ResendVerificationLinkType } from '@/shared/api/services/auth/auth.api.types'
 import broResend from '@/shared/assets/icons/login/broResend.svg'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
 import { Modal } from '@/shared/ui/Modal/Modal'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const ExpiredVerificationLinkPage = () => {
   const [resendNewVerificationLink, { isLoading }] = useResendVerificationLinkMutation()
@@ -22,7 +22,7 @@ const ExpiredVerificationLinkPage = () => {
 
   const router = useRouter()
   const { query } = router
-  const { email, baseUrl } = query
+  const { email, baseUrl } = query as ResendVerificationLinkType
 
   const { handleSubmit } = useForm<ResendVerificationLinkType>({
     mode: 'onChange',

@@ -18,11 +18,11 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>(
         <div className={styles.checkboxWrapper}>
           <input
             value={value}
-            ref={ref}
             type={'checkbox'}
             className={styles.checkbox}
             disabled={disabled}
             {...rest}
+            ref={ref}
           />
           <label htmlFor="#">{label}</label>
         </div>

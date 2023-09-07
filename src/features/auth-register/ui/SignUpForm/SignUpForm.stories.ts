@@ -1,8 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import SignUpForm from './SignUpForm'
-
-import { ReduxStoreProviderDecorator } from '@/app/providers/StoreProvider'
+import { SignUpForm } from './SignUpForm'
 
 const meta: Meta<typeof SignUpForm> = {
   title: 'Components/SignUp',
@@ -11,7 +9,6 @@ const meta: Meta<typeof SignUpForm> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  decorators: [ReduxStoreProviderDecorator],
 }
 
 export default meta

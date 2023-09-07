@@ -6,7 +6,6 @@
   align-items: center;
   padding-top: 30px;
 
-
   .modalWindow {
     width: 1000px;
     height: 600px;
@@ -33,7 +32,6 @@
   .avatar {
     object-fit: cover;
     mask-image: radial-gradient(circle, black 67%, rgba(0, 0, 0, 0.2) 50%);
-
   }
 
   .buttonSave {
@@ -41,6 +39,4 @@
     margin-top: 30px;
     margin-right: 20px;
   }
-
 }
-

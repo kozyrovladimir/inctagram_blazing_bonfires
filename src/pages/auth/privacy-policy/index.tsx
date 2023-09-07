@@ -6,7 +6,7 @@ import Link from 'next/link'
 import styles from './PrivacyPolicy.module.scss'
 
 import backIcon from '@/shared/assets/icons/icons/arrowBackIcon.svg'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 
 const PrivacyPolicyPage = () => {
   return (

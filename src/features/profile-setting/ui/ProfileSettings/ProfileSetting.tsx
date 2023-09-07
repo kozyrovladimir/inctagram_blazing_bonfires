@@ -5,7 +5,7 @@ import styles from './ProfileSetting.module.scss'
 import { ProfilePhoto } from '@/features/profile-setting/ui/ProfilePhoto/ProfilePhoto'
 import { Button } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
-import Calendar from '@/widgets/Calendar/ui/Calendar'
+import { Calendar } from '@/widgets/Calendar/ui/Calendar'
 
 export const ProfileSetting = () => {
   return (

@@ -1,15 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { baseURL } from '@/shared/api'
-import { UserType } from '@/shared/api/auth.api.types'
+import { UserType } from '../auth/auth.api.types'
+import { baseURL } from '../baseUrl.api'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://inctagram.work/api/v1/', credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
   endpoints: build => {
     return {
-      getProfile: build.query<UserType, number>({
-        query: id => `users/profile/${id}`,
+      getProfile: build.mutation<UserType, number>({
+        query: id => {
+          return {
+            method: 'GET',
+            url: 'users/profile',
+            params: { id },
+          }
+        },
       }),
       updateProfile: build.mutation<UserType, UserType>({
         query: (data: UserType) => {
@@ -31,4 +37,4 @@ export const profileApi = createApi({
   },
 })
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi
+export const { useGetProfileMutation, useUpdateProfileMutation } = profileApi

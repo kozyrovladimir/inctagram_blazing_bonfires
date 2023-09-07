@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
-import ForgotPass from './ForgotPassForm'
+import { ForgotPass } from './ForgotPassForm'
 
 describe('Forgot Password Form', () => {
   const onChange = jest.fn()

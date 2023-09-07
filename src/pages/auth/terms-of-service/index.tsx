@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import styles from '@/pages/auth/privacy-policy/PrivacyPolicy.module.scss'
 import backIcon from '@/shared/assets/icons/icons/arrowBackIcon.svg'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 
 export const TermsOfServicePage = () => {
   return (
