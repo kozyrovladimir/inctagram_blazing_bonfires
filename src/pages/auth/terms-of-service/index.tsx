@@ -1,19 +1,11 @@
 import React from 'react'
 
-import Image from 'next/image'
-import Link from 'next/link'
-
 import styles from '@/pages/auth/privacy-policy/PrivacyPolicy.module.scss'
-import backIcon from '@/shared/assets/icons/icons/arrowBackIcon.svg'
 import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 
 export const TermsOfServicePage = () => {
   return (
     <div className={styles.container}>
-      <Link href={'/sign-up'} className={styles.backContainer}>
-        <Image src={backIcon} />
-        <p>Back to sign up</p>
-      </Link>
       <p className={styles.articleHeader}>Terms of service</p>
       <div className={styles.articleContainer}>
         <p className={styles.articleText}>

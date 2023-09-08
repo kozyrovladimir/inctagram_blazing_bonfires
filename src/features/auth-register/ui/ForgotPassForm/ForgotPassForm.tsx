@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { CircularProgress } from '@mui/material'
 import Link from 'next/link'
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -12,7 +13,6 @@ import { PasswordRecoveryType } from '@/shared/api/services/auth/auth.api.types'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
-import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
 export function ForgotPass() {
@@ -62,7 +62,7 @@ export function ForgotPass() {
 
   return (
     <>
-      {isLoading && <LinearLoader />}
+      {isLoading && <CircularProgress />}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
         <Input
           {...register('email', {
@@ -105,7 +105,7 @@ export function ForgotPass() {
           </Button>
         </Link>
         <ReCAPTCHA
-          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ" // replace to .env.production
+          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ" // replace to .env
           onChange={onChangeRecaptchaHandler}
           theme={'dark'}
         />
