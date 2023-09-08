@@ -1,8 +1,6 @@
 import '../shared/styles/globals.scss'
-
 import { ReactElement, ReactNode } from 'react'
 
-import { GoogleOAuthProvider } from '@react-oauth/google'
 import type { AppProps } from 'next/app'
 import { NextPage } from 'next/types'
 
@@ -30,11 +28,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
 export default (props: AppProps) => {
   return (
     <StoreProvider>
-      <GoogleOAuthProvider
-        clientId={'617342613759-f3kbvgm8l310fn40vh6qna2pv8u2uccr.apps.googleusercontent.com'}
-      >
-        <Component {...pageProps} />
-      </GoogleOAuthProvider>
+      <App {...props} />
     </StoreProvider>
   )
 }

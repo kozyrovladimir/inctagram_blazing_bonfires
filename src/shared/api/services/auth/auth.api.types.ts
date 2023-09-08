@@ -32,7 +32,7 @@ export type PasswordRecoveryType = {
 
 export type NewPasswordType = {
   newPassword: string
-  recoveryCode: string
+  recoveryCode?: string
 }
 export type ResendVerificationLinkType = {
   email: string
@@ -57,13 +57,4 @@ export type UserType = {
       fileSize: number
     },
   ]
-}
-
-export type GoogleLoginType = {
-  code: string
-}
-
-export type GoogleLoginResponseType = {
-  accessToken: string
-  email: string
 }
