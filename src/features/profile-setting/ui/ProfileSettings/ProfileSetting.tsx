@@ -4,7 +4,6 @@ import * as React from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/fetchBaseQuery'
-import router from 'next/router'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -35,7 +34,7 @@ export const ProfileSetting = () => {
 
   const [updateAvatar, { isLoading: isLoadingAvatar }] = useUpdateAvatarMutation()
 
-  const [deleteAvatar, {}] = useDeleteAvatarMutation()
+  const [deleteAvatar, { isLoading: isLoadingDeleteAvatar }] = useDeleteAvatarMutation()
 
   const [photo, setPhoto] = useState<Blob | null>(null)
   const [isDeleteAvatar, setIsDeleteAvatar] = useState(false)
@@ -64,7 +63,6 @@ export const ProfileSetting = () => {
       .matches(/^([A-ZА-Я])+([a-zа-я]{1,30})$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
     dateOfBirth: yup.date(),
     aboutMe: yup.string().max(200, AppErrors.MAX_200_CHARACTERS),
-    avatars: yup.array(),
   })
 
   const {
@@ -84,7 +82,6 @@ export const ProfileSetting = () => {
       city: profileData?.city ?? '',
       dateOfBirth: profileData?.dateOfBirth ?? undefined,
       aboutMe: profileData?.aboutMe ?? '',
-      avatars: profileData?.avatars ?? undefined,
     },
   })
 
@@ -96,15 +93,15 @@ export const ProfileSetting = () => {
     updateProfile(data)
       .unwrap()
       .then(() => {
+        if (isDeleteAvatar) {
+          deleteAvatar()
+        }
         if (photo) {
           const formData = new FormData()
 
           formData.set('file', photo as Blob)
 
           updateAvatar(formData)
-        }
-        if (isDeleteAvatar) {
-          deleteAvatar()
         }
       })
       .catch(error => {
@@ -136,10 +133,9 @@ export const ProfileSetting = () => {
 
   return (
     <>
-      {(isLoading || isLoadingProfileData || isLoadingAvatar) && <h2>Loading...</h2>}
-      {/* {isLoading && <h2>Loading...</h2>}
-      {isLoadingProfileData && <h2>Loading...</h2>}
-      {isLoadingAvatar && <h2>Loading...</h2>} */}
+      {(isLoading || isLoadingProfileData || isLoadingAvatar || isLoadingDeleteAvatar) && (
+        <h2>Loading...</h2>
+      )}
 
       {profileData && (
         <form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -148,16 +144,16 @@ export const ProfileSetting = () => {
               <Controller
                 name="avatars"
                 control={control}
-                render={({ field: { value, ref, ...args } }) => (
+                render={({ field: { ref, ...args } }) => (
                   <ProfilePhoto
                     outsideOnChange={data => {
                       setPhoto(data as Blob)
                     }}
-                    photoFromServer={value}
-                    {...args}
                     deleteAvatar={data => {
                       setIsDeleteAvatar(data)
                     }}
+                    photoFromServer={profileData?.avatars}
+                    {...args}
                   />
                 )}
               />

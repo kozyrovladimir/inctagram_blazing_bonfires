@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
@@ -17,36 +16,29 @@ type Props = {
 }
 
 export const ProfilePhoto = ({ outsideOnChange, photoFromServer, deleteAvatar }: Props) => {
+  const photoDefaultSRC = (photoFromServer?.length && (photoFromServer[0].url as string)) || noImage
+
   const [open, setOpen] = useState(false)
-  const [photo, setPhoto] = useState<null | Blob | MediaSource>(null)
-  const [photoServer, setPhotoServer] = useState<null | AvatarsType>(null)
+  const [photoSRC, setphotoSRC] = useState<string>(photoDefaultSRC)
 
   const openModal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
+
     setOpen(true)
   }
-  const deletePhoto = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    setPhoto(null)
-    setPhotoServer(null)
-    deleteAvatar(true)
-  }
-  const savePhoto = (photo: Blob | MediaSource | null) => {
-    // setPhotoServer(null)
-    // deleteAvatar(false)
-    setPhoto(photo)
 
+  const savePhoto = (photo: Blob | MediaSource | null) => {
+    setphotoSRC(URL.createObjectURL(photo as Blob))
+    deleteAvatar(false)
     photo && outsideOnChange(photo as Blob)
   }
 
-  useEffect(() => {
-    setPhotoServer(photoFromServer)
-  }, [photoFromServer])
+  const deletePhoto = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
 
-  const photoSRC =
-    (photo && URL.createObjectURL(photo as Blob)) ||
-    (photoServer?.length && (photoServer[0].url as string)) ||
-    noImage
+    setphotoSRC(noImage)
+    deleteAvatar(true)
+  }
 
   return (
     <>
