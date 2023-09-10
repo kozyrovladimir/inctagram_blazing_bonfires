@@ -25,7 +25,6 @@ export const Sign = () => {
   const [passwordError, setPasswordError] = useState<string>('')
   const [emailError, setEmailError] = useState<string>('')
   const [login, { isLoading }] = useLoginMutation()
-  const [login, { isLoading, isError, data }] = useLoginMutation()
   const router = useRouter()
   const {
     control,

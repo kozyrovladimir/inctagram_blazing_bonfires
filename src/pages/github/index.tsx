@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 
-import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import styles from './Github.module.scss'
 
+import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import { CircularLoader } from '@/shared/ui/Loaders/CircularLoader'
-import { getLayout } from '@/widgets/layout/MainLayout/MainLayout'
 
 const ForgotPasswordPage = () => {
   const router = useRouter()

@@ -33,7 +33,7 @@ export default (props: AppProps) => {
       <GoogleOAuthProvider
         clientId={'617342613759-f3kbvgm8l310fn40vh6qna2pv8u2uccr.apps.googleusercontent.com'}
       >
-        <Component {...pageProps} />
+        <App {...props} />
       </GoogleOAuthProvider>
     </StoreProvider>
   )
