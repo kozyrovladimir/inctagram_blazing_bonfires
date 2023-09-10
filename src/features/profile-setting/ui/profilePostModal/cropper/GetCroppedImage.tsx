@@ -22,7 +22,6 @@ export function getRadianAngle(degreeValue: number): number {
 }
 
 export interface CropResult {
-  file: Blob
   url: string
 }
 
@@ -75,10 +74,10 @@ export const getCroppedImg = async (
 
   ctx.putImageData(data, 0, 0)
 
-  return new Promise<CropResult>((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     canvas.toBlob(file => {
       if (file) {
-        resolve({ file, url: URL.createObjectURL(file) })
+        resolve({ url: URL.createObjectURL(file) })
       } else {
         reject(new Error('Failed to create Blob.'))
       }

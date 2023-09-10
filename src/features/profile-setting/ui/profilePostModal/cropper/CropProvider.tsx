@@ -1,6 +1,7 @@
 import React, { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 import { getCroppedImg } from '@/features/profile-setting/ui/profilePostModal/cropper/GetCroppedImage'
+import { Photo } from '@/features/profile-setting/ui/profilePostModal/slider/SwiperSlider'
 
 type CropType = {
   width: number
@@ -44,6 +45,14 @@ type CropContextType = {
   setShowZoomInput: React.Dispatch<React.SetStateAction<boolean>>
   setOriginalAspectRatio: React.Dispatch<React.SetStateAction<number>>
   originalAspectRatio: number
+  selectedPhoto: Photo | null
+  setSelectedPhoto: (photo: Photo | null) => void
+  photos: Photo[]
+  setThumbsSwiper: React.Dispatch<React.SetStateAction<any>>
+  setPhotos: React.Dispatch<React.SetStateAction<Photo[]>>
+  thumbsSwiper: any
+  isSliderOpen: boolean
+  setIsSliderOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const CropContext = createContext<CropContextType | undefined>(undefined)
@@ -69,6 +78,10 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   const [croppedImage, setCroppedImage] = useState<string | null>(null)
   const [zoom, setZoom] = useState<number>(1)
   const [showZoomInput, setShowZoomInput] = useState(false)
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
+  const [photos, setPhotos] = useState<Photo[]>([])
+  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null)
+  const [isSliderOpen, setIsSliderOpen] = useState(false)
 
   const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: CropType) => {
     setCroppedAreaPixels(croppedAreaPixels)
@@ -155,6 +168,14 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         showCroppedImage,
         setOriginalAspectRatio,
         originalAspectRatio,
+        selectedPhoto,
+        setSelectedPhoto,
+        photos,
+        setPhotos,
+        setThumbsSwiper,
+        thumbsSwiper,
+        isSliderOpen,
+        setIsSliderOpen,
       }}
     >
       {children}

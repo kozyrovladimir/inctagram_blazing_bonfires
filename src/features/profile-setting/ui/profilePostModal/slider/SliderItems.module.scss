@@ -1,0 +1,12 @@
+.sliderItems {
+  :global(.swiper-wrapper) {
+    display: flex;
+    background-color: grey;
+  }
+}
+.expanded {
+}
+.swiper2 {
+  width: 300px;
+  height: 300px;
+}

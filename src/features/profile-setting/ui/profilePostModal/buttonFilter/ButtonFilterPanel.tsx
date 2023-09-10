@@ -1,20 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Image from 'next/image'
-import { SwiperSlide } from 'swiper/react'
 
 import style from './ButtonFilterPanel.module.scss'
 
 import { ModalButton } from '@/features/profile-setting'
 import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/cropper/CropProvider'
-import { SwiperSlider } from '@/features/profile-setting/ui/profilePostModal/slider/SwiperSlider'
+import { SliderItems } from '@/features/profile-setting/ui/profilePostModal/slider/SliderItems'
 import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
 import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
 
 export const ButtonFilterPanel = () => {
-  const [showSlider, setShowSlider] = useState(false)
   const {
     zoom,
     handleAspectRatioClick,
@@ -23,10 +21,15 @@ export const ButtonFilterPanel = () => {
     showZoomInput,
     handleZoomChange,
     handleToggleZoomInput,
+    photos,
+    setPhotos,
+    setThumbsSwiper,
+    isSliderOpen,
+    setIsSliderOpen,
   } = useImageCropContext()
 
   const handlerShowSlider = () => {
-    setShowSlider(!showSlider)
+    setIsSliderOpen(!isSliderOpen)
   }
 
   return (
@@ -62,10 +65,18 @@ export const ButtonFilterPanel = () => {
       </div>
       <div className={style.rightButton}>
         <Button theme={ButtonTheme.CLEAR} className={style.sizeButton} onClick={handlerShowSlider}>
-          <Image src={noImage} alt={''} style={{ width: '24px', height: '24px' }} />
+          <Image
+            src={noImage}
+            alt={''}
+            style={{ width: '24px', height: '24px', display: 'flex', flexDirection: 'column' }}
+          />
         </Button>
       </div>
-      {showSlider && <SwiperSlider />}
+      {isSliderOpen && photos.length > 0 && (
+        <div className={style.slider}>
+          <SliderItems photos={photos} setThumbsSwiper={setThumbsSwiper} setPhotos={setPhotos} />
+        </div>
+      )}
     </div>
   )
 }

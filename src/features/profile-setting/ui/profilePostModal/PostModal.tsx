@@ -7,6 +7,7 @@ import style from '../profilePostModal/PostModal.module.scss'
 import { ImageCropper, ModalComponent } from '@/features/profile-setting'
 import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/cropper/CropProvider'
 import { readFile } from '@/features/profile-setting/ui/profilePostModal/cropper/GetCroppedImage'
+import { SwiperSlider } from '@/features/profile-setting/ui/profilePostModal/slider/SwiperSlider'
 import notPhotoImg from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 
@@ -17,7 +18,9 @@ type Props = {
 export const PostModal: FC<Props> = ({ closeWindow }) => {
   const [isCropping, setIsCropping] = useState(false)
   const [showButtons, setShowButtons] = useState(false)
-  const { setImage, setOriginalAspectRatio } = useImageCropContext()
+
+  const { setImage, setOriginalAspectRatio, photos, thumbsSwiper, setPhotos } =
+    useImageCropContext()
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -37,6 +40,7 @@ export const PostModal: FC<Props> = ({ closeWindow }) => {
         setImage(imageDataUrl)
         setIsCropping(true)
         setShowButtons(true)
+        setPhotos([{ url: imageDataUrl }, ...photos])
       }
     }
   }
@@ -55,11 +59,17 @@ export const PostModal: FC<Props> = ({ closeWindow }) => {
       showButtons={!showButtons}
     >
       <>
-        {isCropping ? (
+        {photos.length > 1 && (
+          <div className={style.sliderWrapper}>
+            <SwiperSlider photos={photos} thumbsSwiper={thumbsSwiper} />
+          </div>
+        )}
+        {isCropping && (
           <div className={style.crop}>
             <ImageCropper objectFit={'cover'} />
           </div>
-        ) : (
+        )}
+        {!isCropping && (
           <div className={style.contentWrapper}>
             <div className={style.emptyContainer}>
               <NextImage src={notPhotoImg} alt={''} />

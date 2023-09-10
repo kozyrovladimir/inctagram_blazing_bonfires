@@ -7,22 +7,23 @@ import 'swiper/scss'
 import 'swiper/scss/free-mode'
 import 'swiper/scss/navigation'
 import 'swiper/scss/thumbs'
+import 'swiper/scss/pagination'
+import 'swiper/scss/keyboard'
 import style from './Swiper.module.scss'
 
-import { SliderItems } from '@/features/profile-setting/ui/profilePostModal/slider/SliderItems'
-
-interface Photo {
-  id: string
+export type Photo = {
   url: string
 }
-export const SwiperSlider: React.FC = () => {
-  const [photos, setPhotos] = useState<Photo[]>([])
-  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null)
 
+type Props = {
+  photos: Photo[]
+  thumbsSwiper: any
+}
+export const SwiperSlider: React.FC<Props> = ({ thumbsSwiper, photos }) => {
   return (
     <div>
       <Swiper
-        spaceBetween={10}
+        spaceBetween={300}
         navigation
         freeMode={true}
         thumbs={{ swiper: thumbsSwiper }}
@@ -35,13 +36,12 @@ export const SwiperSlider: React.FC = () => {
         modules={[Navigation, Thumbs, Keyboard, Pagination, FreeMode]}
         className={style.swiper1}
       >
-        {photos.map(photo => (
-          <SwiperSlide key={photo.id}>
-            <img src={photo.url} alt={`Slide ${photo.id}`} />
+        {photos?.map((photo, index) => (
+          <SwiperSlide key={index}>
+            <img src={photo.url} alt={`Slide ${index}`} width={'494px'} height={'494px'} />
           </SwiperSlide>
         ))}
       </Swiper>
-      <SliderItems photos={photos} setThumbsSwiper={setThumbsSwiper} setPhotos={setPhotos} />
     </div>
   )
 }
