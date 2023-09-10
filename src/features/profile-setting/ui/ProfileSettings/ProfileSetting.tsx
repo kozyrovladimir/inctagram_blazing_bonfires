@@ -138,9 +138,9 @@ export const ProfileSetting = () => {
       )}
 
       {profileData && (
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <div className={styles.profileSettingContainer}>
-            <div className={styles.photo}>
+        <form className={styles.container} onSubmit={handleSubmit(onSubmit, onError)}>
+          <div className={styles.content}>
+            <div className={styles.photoContent}>
               <Controller
                 name="avatars"
                 control={control}
@@ -159,7 +159,7 @@ export const ProfileSetting = () => {
               />
             </div>
 
-            <div>
+            <div className={styles.textFieldsContent}>
               <Controller
                 name="userName"
                 control={control}
@@ -232,35 +232,33 @@ export const ProfileSetting = () => {
                   />
                 )}
               />
-              <label className={styles.aboutMeLabel}>About me</label>
-              <Controller
-                name="aboutMe"
-                control={control}
-                render={({ field }) => (
-                  <textarea
-                    rows={4}
-                    cols={50}
-                    placeholder=" "
-                    className={styles.aboutMeTextarea}
-                    {...field}
-                  />
+              <div className={styles.textareaContent}>
+                <label className={styles.aboutMeLabel}>About me</label>
+                <Controller
+                  name="aboutMe"
+                  control={control}
+                  render={({ field }) => (
+                    <textarea
+                      rows={4}
+                      cols={50}
+                      placeholder=" "
+                      className={styles.aboutMeTextarea}
+                      {...field}
+                    />
+                  )}
+                />
+                {errors && (
+                  <p className={styles.error}>
+                    {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
+                  </p>
                 )}
-              />
-              {errors && (
-                <p className={styles.error}>
-                  {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
-                </p>
-              )}
+              </div>
             </div>
           </div>
           <div className={styles.footer}>
             <div className={styles.line}></div>
           </div>
-          <div className={styles.buttonContainer}>
-            <Button type="submit" className={styles.button}>
-              Save Changes
-            </Button>
-          </div>
+          <Button className={styles.button}>Save Changes</Button>
         </form>
       )}
     </>

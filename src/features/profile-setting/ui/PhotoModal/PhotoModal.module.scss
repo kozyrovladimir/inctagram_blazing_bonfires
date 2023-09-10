@@ -11,9 +11,10 @@
   }
 
   .emptyContainer {
+    margin-top: 3rem;
     width: 222px;
     height: 228px;
-    background: black;
+    background: var(--color-dark-800);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,6 +27,7 @@
 
   .buttonSelect {
     margin-top: 60px;
+    width: 222px;
   }
 
   .avatar {

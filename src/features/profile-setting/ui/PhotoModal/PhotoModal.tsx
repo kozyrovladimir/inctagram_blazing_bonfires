@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { ChangeEvent, FC, useRef, useState } from 'react'
 
 import Slider from '@mui/material/Slider'
@@ -7,6 +8,7 @@ import AvatarEditor from 'react-avatar-editor'
 import styles from './PhotoModal.module.scss'
 
 import notPhotoImg from '@/shared/assets/icons/avatarProfile/notPhoto.png'
+import { resizerImage } from '@/shared/libs/resizerImage/resizerImage'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
@@ -22,15 +24,17 @@ export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
   const [slideValue, setSlideValue] = useState(10)
 
   const selectedPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length) {
-      const maxSize = 1 * 1024 * 1024
+    const maxSizeForBack = 10 * 1024 * 1024
 
-      if (e.target.files[0].size > maxSize) {
-        setUploadError('File is too big! Choose another photo less than 1Mb')
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      if (file.size > maxSizeForBack) {
         e.preventDefault()
+        setUploadError('File is too big! Choose another photo less than 10Mb')
 
         return
-      } else setPhotoProfile(e.target?.files[0])
+      } else setPhotoProfile(file)
     }
   }
 
@@ -41,15 +45,21 @@ export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
 
   const savePhotoHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    if (cropRef) {
-      const dataUrl = cropRef.current.getImage().toDataURL()
-      const result = await fetch(dataUrl)
-      const blob = await result.blob()
+    try {
+      if (cropRef) {
+        const dataUrl = cropRef.current.getImage().toDataURL()
+        const result = await fetch(dataUrl)
+        const blob = await result.blob()
+        const file = new File([blob], 'image')
+        const image = await resizerImage(file)
 
-      setPhotoProfile(blob)
-      savePhoto(blob)
-    } else {
-      savePhoto(photoProfile)
+        setPhotoProfile(image as File)
+        savePhoto(image as File)
+      } else {
+        savePhoto(photoProfile)
+      }
+    } catch (err) {
+      console.log(err)
     }
     closeWindow()
   }
@@ -86,9 +96,9 @@ export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
               <AvatarEditor
                 ref={cropRef}
                 image={URL.createObjectURL(photoProfile)}
-                width={250}
-                height={250}
-                border={50}
+                width={316}
+                height={316}
+                border={8}
                 borderRadius={150}
                 color={[0, 0, 0, 0.72]}
                 scale={slideValue / 10}
