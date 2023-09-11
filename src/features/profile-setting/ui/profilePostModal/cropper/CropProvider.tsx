@@ -10,14 +10,14 @@ type CropType = {
   y: number
 }
 
-type Crop2Type = {
+type CropImageType = {
   x: number
   y: number
 }
 
 type CropContextType = {
-  crop: Crop2Type
-  setCrop: React.Dispatch<React.SetStateAction<Crop2Type>>
+  crop: CropImageType
+  setCrop: React.Dispatch<React.SetStateAction<CropImageType>>
   aspectRatio: number
   setAspectRatio: React.Dispatch<React.SetStateAction<number>>
   isOriginal: boolean
