@@ -18,6 +18,7 @@ import {
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import { AppErrors } from '@/shared/common/errors'
 import { Button } from '@/shared/ui/Button/Button'
+import { CircularProgressLoader } from '@/shared/ui/CircularProgressLoader/CircularProgressLoader'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import { Calendar } from '@/widgets/Calendar/ui/Calendar'
 
@@ -134,7 +135,7 @@ export const ProfileSetting = () => {
   return (
     <>
       {(isLoading || isLoadingProfileData || isLoadingAvatar || isLoadingDeleteAvatar) && (
-        <h2>Loading...</h2>
+        <CircularProgressLoader />
       )}
 
       {profileData && (
