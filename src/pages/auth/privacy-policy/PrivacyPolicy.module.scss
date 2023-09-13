@@ -1,6 +1,16 @@
 .container {
   width: 100%;
   padding: 70px 161px;
+  position: relative;
+}
+
+.backContainer {
+  position: absolute;
+  left: 64px;
+  top: 24px;
+  display: flex;
+  gap: 12px;
+  text-decoration: none;
 }
 
 .articleContainer {

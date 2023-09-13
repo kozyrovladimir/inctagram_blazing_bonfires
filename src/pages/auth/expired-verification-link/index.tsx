@@ -12,8 +12,8 @@ import { ResendVerificationLinkType } from '@/shared/api/services/auth/auth.api.
 import broResend from '@/shared/assets/icons/login/broResend.svg'
 import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
+import { CircularLoader } from '@/shared/ui/Loaders/CircularLoader'
 import { Modal } from '@/shared/ui/Modal/Modal'
-import {CircularLoader} from "@/shared/ui/Loaders/CircularLoader"
 
 const ExpiredVerificationLinkPage = () => {
   const [resendNewVerificationLink, { isLoading }] = useResendVerificationLinkMutation()

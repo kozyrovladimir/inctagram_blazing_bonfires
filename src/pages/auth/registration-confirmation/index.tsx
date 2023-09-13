@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 
-import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { useVerifyEmailMutation } from '@/shared/api'
 import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
-import { CircularProgressLoader } from '@/shared/ui/CircularProgressLoader/CircularProgressLoader'
+import { CircularLoader } from '@/shared/ui/Loaders/CircularLoader'
 
 export const RegistrationConfirmation = () => {
   const [verifyEmail] = useVerifyEmailMutation()
@@ -24,7 +23,7 @@ export const RegistrationConfirmation = () => {
     }
   }, [code])
 
-  return <CircularProgressLoader />
+  return <CircularLoader />
 }
 
 RegistrationConfirmation.getLayout = getLayout

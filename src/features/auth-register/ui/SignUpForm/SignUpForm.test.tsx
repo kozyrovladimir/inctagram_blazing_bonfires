@@ -5,7 +5,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { SignUpForm } from '@/features/auth-register'
 
-describe('Sign Un Form', () => {
+describe('SignInForm Un Form', () => {
   it('render form', () => {
     render(<SignUpForm />)
     const textInForm = screen.getByText(/Do you have an account?/i)
