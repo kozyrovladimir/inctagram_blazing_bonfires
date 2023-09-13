@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -12,7 +13,6 @@ import { ResendVerificationLinkType } from '@/shared/api/services/auth/auth.api.
 import broResend from '@/shared/assets/icons/login/broResend.svg'
 import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
-import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
 const ExpiredVerificationLinkPage = () => {
@@ -50,7 +50,7 @@ const ExpiredVerificationLinkPage = () => {
           <p>We have sent a new link to your email</p>
         </Modal>
       )}
-      {isLoading && <LinearLoader />}
+      {isLoading && <CircularProgress />}
       <div className={styles.expiredContainer}>
         <h3>Email verification link expired</h3>
         <p>
