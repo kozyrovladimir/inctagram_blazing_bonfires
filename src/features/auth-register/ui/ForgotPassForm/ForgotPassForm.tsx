@@ -84,7 +84,7 @@ export function ForgotPass() {
         {isSentPass && (
           <Modal
             title={'Password sent'}
-            mainButton={'OK'}
+            mainButton={' OK '}
             callBackCloseWindow={callBackCloseWindow}
           >
             <p>The link has been sent by email. If you don’t receive an email send link again</p>

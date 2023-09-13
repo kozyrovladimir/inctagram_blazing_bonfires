@@ -1,5 +1,4 @@
 import '../shared/styles/globals.scss'
-
 import { ReactElement, ReactNode } from 'react'
 
 import { GoogleOAuthProvider } from '@react-oauth/google'
