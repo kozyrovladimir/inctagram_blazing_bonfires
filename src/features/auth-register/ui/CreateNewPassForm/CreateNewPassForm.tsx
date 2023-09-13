@@ -33,7 +33,7 @@ export function CreateNewPassForm() {
     formState: { errors },
     reset,
   } = useForm<FormType>({
-    mode: 'onChange',
+    mode: 'onTouched',
     defaultValues: {
       newPassword: '',
       newPasswordConfirmation: '',
@@ -45,6 +45,8 @@ export function CreateNewPassForm() {
   const onSubmit: SubmitHandler<NewPasswordType> = data => {
     if (!data) {
       throw new Error('data is undefined')
+    } else {
+      data.recoveryCode = code
     }
 
     createNewPassword(data)
