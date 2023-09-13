@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SignUpForm } from '@/features/auth-register/ui/SignUpForm/SignUpForm'
+import { SignUpForm } from '@/features/auth-register'
 import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 
