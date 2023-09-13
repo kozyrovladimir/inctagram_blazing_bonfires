@@ -25,8 +25,8 @@ export type {
 
 export {
   profileApi,
+  useGetProfileQuery,
   useUpdateProfileMutation,
-  useGetProfileMutation,
 } from './services/profile/profile.api'
 
 export { baseURL } from './services/baseUrl.api'

@@ -1,35 +1,75 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 
 import styles from './ProfilePhoto.module.scss'
 
 import { PhotoModal } from '@/features/profile-setting'
+import { AvatarsType } from '@/shared/api/services/profile/profile.api.types'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
+import { RoundRedBtn } from '@/shared/ui/roundRedBtn/roundRedBtn'
 
-export const ProfilePhoto = () => {
+type Props = {
+  outsideOnChange: (photo: Blob) => void
+  photoFromServer: AvatarsType
+  deleteAvatar: (data: boolean) => void
+}
+
+export const ProfilePhoto = ({ outsideOnChange, photoFromServer, deleteAvatar }: Props) => {
+  const isPhotoFromServer = photoFromServer?.length > 0
+  const photoDefaultSRC = (isPhotoFromServer && (photoFromServer[0].url as string)) || noImage
+
   const [open, setOpen] = useState(false)
+  const [photoSRC, setphotoSRC] = useState<string>(photoDefaultSRC)
+  const [isDeleteBtn, setIsDeleteBtn] = useState<boolean>(isPhotoFromServer)
 
   const openModal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     setOpen(true)
   }
 
+  const savePhoto = (photo: Blob | MediaSource | null) => {
+    setphotoSRC(URL.createObjectURL(photo as Blob))
+    deleteAvatar(false)
+    setIsDeleteBtn(true)
+    photo && outsideOnChange(photo as Blob)
+  }
+
+  const deletePhoto = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    setphotoSRC(noImage)
+    deleteAvatar(true)
+    setIsDeleteBtn(false)
+  }
+
   return (
-    <>
+    <div className={styles.container}>
+      {isDeleteBtn && (
+        <div className={styles.delPhotoBtn}>
+          <RoundRedBtn onClick={deletePhoto} />
+        </div>
+      )}
       <div className={styles.photoContainer}>
-        <Image src={noImage} alt="no photo" width={48} height={48} />
+        <Image
+          src={photoSRC}
+          width={photoSRC === noImage ? 48 : 192}
+          priority={true}
+          height={photoSRC === noImage ? 48 : 192}
+          alt="avatar"
+          property="true"
+        />
       </div>
       <Button
         size={ButtonSize.MIDDLE}
         theme={ButtonTheme.CLEAR}
-        className={styles.button}
+        className={styles.AddPhotoBtn}
         onClick={openModal}
       >
         Add a Profile Photo
       </Button>
-      {open && <PhotoModal closeWindow={() => setOpen(false)} />}
-    </>
+
+      {open && <PhotoModal savePhoto={savePhoto} closeWindow={() => setOpen(false)} />}
+    </div>
   )
 }

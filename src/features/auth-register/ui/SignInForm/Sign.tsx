@@ -39,6 +39,8 @@ export const Sign = () => {
   })
 
   const onSubmit = (args: LoginFormType) => {
+    console.log(args)
+
     login(args)
       .unwrap()
       .then(res => {
