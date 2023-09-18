@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -34,6 +34,7 @@ export const SignUpForm = () => {
     register,
     handleSubmit,
     setError,
+    getValues,
     formState: { errors },
     reset,
   } = useForm<FormType>({
@@ -56,6 +57,14 @@ export const SignUpForm = () => {
       })
       .catch(error => toast.error(error.data.messages[0].message))
   }
+
+  const isFillField = getValues([
+    'userName',
+    'email',
+    'password',
+    'passwordConfirmation',
+    'agreement',
+  ]).every(e => !!e)
 
   return (
     <>
@@ -158,7 +167,11 @@ export const SignUpForm = () => {
               }
             />
           </div>
-          <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
+          <Button
+            className={isFillField ? styles.signUpBtn : styles.signUpBtnDisable}
+            // className={styles.signUpBtnDisable}
+            size={ButtonSize.STRETCHED}
+          >
             Sign Up
           </Button>
           <p className={styles.helpText}>Do you have an account?</p>
