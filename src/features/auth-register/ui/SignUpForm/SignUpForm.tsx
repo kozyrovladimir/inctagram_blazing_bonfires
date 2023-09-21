@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 
+import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
+import * as yup from 'yup'
 
 import styles from './SignUpForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/OAuth/OAuth'
 import { SignUpType, useSignUpMutation } from '@/shared/api'
+import { AppErrors } from '@/shared/common/errors'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
@@ -29,6 +32,34 @@ export const SignUpForm = () => {
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const callBackCloseWindow = () => setRegistrationSuccess(false)
 
+  const singUpSchema = yup.object().shape({
+    userName: yup
+      .string()
+      .min(6, AppErrors.MIN_6_CHARACTERS)
+      .max(20, AppErrors.MAX_30_CHARACTERS)
+      .matches(/^[0-9A-Za-z_-]$/, AppErrors.USERNAME_VALIDATION_ERROR_TEXT)
+      .required(AppErrors.REQUIRED_FIELD),
+    email: yup
+      .string()
+      .min(2, AppErrors.MIN_2_CHARACTERS)
+      .matches(
+        /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]+.)+([a-zA-Z])$/,
+        AppErrors.EMAIL_VALIDATION_ERROR_TEXT
+      )
+      .required(AppErrors.REQUIRED_FIELD),
+    password: yup
+      .string()
+      .min(6, AppErrors.MIN_6_CHARACTERS)
+      .max(20, AppErrors.MAX_20_CHARACTERS)
+      .matches(
+        /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
+        AppErrors.PASSWORD_VALIDATION_ERROR_TEXT
+      )
+      .required(AppErrors.REQUIRED_FIELD),
+    passwordConfirmation: yup.string().required(AppErrors.REQUIRED_FIELD),
+    agreement: yup.string().required(AppErrors.REQUIRED_FIELD),
+  })
+
   const {
     watch,
     register,
@@ -36,8 +67,9 @@ export const SignUpForm = () => {
     setError,
     formState: { errors },
     reset,
-  } = useForm<FormType>({
+  } = useForm<FormType | any>({
     mode: 'onTouched',
+    resolver: yupResolver(singUpSchema),
     defaultValues: {
       userName: '',
       email: '',
@@ -67,65 +99,37 @@ export const SignUpForm = () => {
         </Modal>
       )}
       <FormContainer title="Sign Up">
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer} noValidate>
           <OAuth />
           <Input
-            {...register('userName', {
-              required: 'Username field is required',
-              pattern: {
-                value: /^[0-9A-Za-z_-]{6,30}$/,
-                message: 'Username must be between 6 and 30 characters',
-              },
-            })}
+            {...register('userName')}
             type={InputType.TEXT}
             label="Username"
             placeholder="Enter name"
             className={inputStyles.input}
-            error={errors.userName && errors.userName?.message}
+            error={(errors as FieldErrors<FormType>)?.userName?.message}
             disabled={isLoading}
           />
           <Input
-            {...register('email', {
-              required: 'Email field is required',
-              pattern: {
-                value: /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]+.)+([a-zA-Z]{2,})$/,
-                message: 'Email must contain A-Z, a-z , @',
-              },
-            })}
+            {...register('email')}
             label="Email"
             type={InputType.EMAIL}
             placeholder="Enter email"
             className={inputStyles.input}
-            error={errors.email && errors.email?.message}
+            error={(errors as FieldErrors<FormType>)?.email?.message}
             disabled={isLoading}
           />
           <Input
-            {...register('password', {
-              required: 'Password field is required',
-              pattern: {
-                value: /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
-                message:
-                  'Password must contain a-z, A-Z, 0-9 ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
-              },
-              minLength: {
-                value: 6,
-                message: 'Password must be at least 6 characters long',
-              },
-              maxLength: {
-                value: 20,
-                message: 'Password must not exceed 20 characters',
-              },
-            })}
+            {...register('password')}
             label="Password"
             type={InputType.PASSWORD}
             placeholder="Enter password"
             className={inputStyles.input}
-            error={errors.password && errors.password?.message}
+            error={(errors as FieldErrors<FormType>)?.password?.message}
             disabled={isLoading}
           />
           <Input
             {...register('passwordConfirmation', {
-              required: 'Confirm password field is required',
               validate: {
                 value: (value: string) => value === password || 'Passwords do not match',
               },
@@ -134,7 +138,7 @@ export const SignUpForm = () => {
             type={InputType.PASSWORD}
             placeholder="Enter password confirmation"
             className={inputStyles.input}
-            error={errors.passwordConfirmation && errors.passwordConfirmation?.message}
+            error={(errors as FieldErrors<FormType>)?.passwordConfirmation?.message}
             disabled={isLoading}
           />
           <div className={styles.agreementContainer}>
@@ -142,7 +146,7 @@ export const SignUpForm = () => {
               {...register('agreement', {
                 required: 'Agreement checkbox is required',
               })}
-              error={errors.agreement && errors.agreement?.message}
+              error={(errors as FieldErrors<FormType>)?.agreement?.message}
               disabled={isLoading}
               label={
                 <p className={styles.agreementText}>
@@ -176,5 +180,3 @@ export const SignUpForm = () => {
     </>
   )
 }
-
-// export default SignUpForm

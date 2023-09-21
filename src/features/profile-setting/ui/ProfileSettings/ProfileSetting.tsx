@@ -45,7 +45,7 @@ export const ProfileSetting = () => {
       .string()
       .min(6, AppErrors.MIN_6_CHARACTERS)
       .max(20, AppErrors.MAX_30_CHARACTERS)
-      .matches(/^([a-zA-Z])+([a-zA-Z0-9]{5,30})$/, AppErrors.START_LATTER_WITHOUT_SPECIAL)
+      .matches(/^[0-9A-Za-z_-]{6,30}$/, AppErrors.USERNAME_VALIDATION_ERROR_TEXT)
       .required(AppErrors.REQUIRED_FIELD),
     firstName: yup
       .string()
