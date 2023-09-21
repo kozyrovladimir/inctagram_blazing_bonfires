@@ -32,7 +32,7 @@ export const SignUpForm = () => {
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const callBackCloseWindow = () => setRegistrationSuccess(false)
 
-  const singUpSchema = yup.object().shape({
+  const schema = yup.object().shape({
     userName: yup
       .string()
       .min(6, AppErrors.MIN_6_CHARACTERS)
@@ -42,10 +42,7 @@ export const SignUpForm = () => {
     email: yup
       .string()
       .min(2, AppErrors.MIN_2_CHARACTERS)
-      .matches(
-        /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]+.)+([a-zA-Z])$/,
-        AppErrors.EMAIL_VALIDATION_ERROR_TEXT
-      )
+      .email(AppErrors.EMAIL_VALIDATION_ERROR_TEXT)
       .required(AppErrors.REQUIRED_FIELD),
     password: yup
       .string()
@@ -69,7 +66,7 @@ export const SignUpForm = () => {
     reset,
   } = useForm<FormType | any>({
     mode: 'onTouched',
-    resolver: yupResolver(singUpSchema),
+    resolver: yupResolver(schema),
     defaultValues: {
       userName: '',
       email: '',

@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
 
+import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import * as yup from 'yup'
 
 import styles from './ForgotPassForm.module.scss'
 
 import { useRecoverPasswordMutation } from '@/shared/api/services/auth/auth.api'
 import { PasswordRecoveryType } from '@/shared/api/services/auth/auth.api.types'
+import { AppErrors } from '@/shared/common/errors'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
@@ -21,6 +24,14 @@ export function ForgotPass() {
   const [recoverPassword, { isLoading }] = useRecoverPasswordMutation()
   const callBackCloseWindow = () => setIsSentPass(false)
 
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email(AppErrors.EMAIL_VALIDATION_ERROR_TEXT)
+      .required(AppErrors.REQUIRED_FIELD),
+    recaptcha: yup.string().required(),
+  })
+
   const {
     register,
     handleSubmit,
@@ -30,6 +41,7 @@ export function ForgotPass() {
     reset,
   } = useForm<PasswordRecoveryType>({
     mode: 'onChange',
+    resolver: yupResolver(schema),
     defaultValues: {
       email: '',
       recaptcha: '',
@@ -67,13 +79,7 @@ export function ForgotPass() {
       <FormContainer title={'Forgot password'}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
           <Input
-            {...register('email', {
-              required: 'Email field is required',
-              pattern: {
-                value: /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]+.)+([a-zA-Z]{2,})$/,
-                message: 'Email must contain A-Z, a-z , @',
-              },
-            })}
+            {...register('email')}
             label="Email"
             type={InputType.EMAIL}
             placeholder="Enter email"
@@ -102,7 +108,11 @@ export function ForgotPass() {
             </Button>
           )}
           <Link href={'/sign-in'}>
-            <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.MIDDLE}>
+            <Button
+              className={styles.oppositeBtn}
+              theme={ButtonTheme.CLEAR}
+              size={ButtonSize.MIDDLE}
+            >
               Back to Sign In
             </Button>
           </Link>
@@ -110,6 +120,7 @@ export function ForgotPass() {
             sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ" // replace to .env.production
             onChange={onChangeRecaptchaHandler}
             theme={'dark'}
+            aria-required
           />
         </form>
       </FormContainer>
