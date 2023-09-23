@@ -49,7 +49,7 @@ export function ForgotPass() {
       })
       .catch(error => {
         if (error) {
-          toast.error(error.data.error + ', probably you forgot reCaptcha ')
+          toast.error(error.data.error)
         }
       })
   }
