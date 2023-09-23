@@ -19,7 +19,6 @@ import { Modal } from '@/shared/ui/Modal/Modal'
 
 export function ForgotPass() {
   const [isSentPass, setIsSentPass] = useState(false)
-  const [err, setErr] = useState('')
   const [recoverPassword, { isLoading }] = useRecoverPasswordMutation()
   const callBackCloseWindow = () => setIsSentPass(false)
 
@@ -37,8 +36,7 @@ export function ForgotPass() {
     },
   })
 
-  const onChangeRecaptchaHandler = (value: string | null) => {
-    debugger
+  const onChangeRecaptchaHandler = (value: string) => {
     setValue('recaptcha', value)
   }
 
@@ -111,7 +109,6 @@ export function ForgotPass() {
             onChange={onChangeRecaptchaHandler}
             theme={'dark'}
           />
-          {err}
         </form>
       </FormContainer>
     </>
