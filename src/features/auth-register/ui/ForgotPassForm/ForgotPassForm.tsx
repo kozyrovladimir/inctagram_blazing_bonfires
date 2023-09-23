@@ -4,6 +4,7 @@ import Link from 'next/link'
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast, Toaster } from 'react-hot-toast'
 
 import styles from './ForgotPassForm.module.scss'
 
@@ -18,6 +19,7 @@ import { Modal } from '@/shared/ui/Modal/Modal'
 
 export function ForgotPass() {
   const [isSentPass, setIsSentPass] = useState(false)
+  const [err, setErr] = useState('')
   const [recoverPassword, { isLoading }] = useRecoverPasswordMutation()
   const callBackCloseWindow = () => setIsSentPass(false)
 
@@ -25,7 +27,6 @@ export function ForgotPass() {
     register,
     handleSubmit,
     setValue,
-    setError,
     formState: { errors },
     reset,
   } = useForm<PasswordRecoveryType>({
@@ -37,10 +38,7 @@ export function ForgotPass() {
   })
 
   const onChangeRecaptchaHandler = (value: string | null) => {
-    if (value === null) {
-      throw new Error('value === null')
-    }
-
+    debugger
     setValue('recaptcha', value)
   }
 
@@ -52,17 +50,15 @@ export function ForgotPass() {
         setIsSentPass(true)
       })
       .catch(error => {
-        if (error.data.messages[0].field === 'email') {
-          setError('email', {
-            type: 'manual',
-            message: error.data.messages[0].message,
-          })
+        if (error) {
+          toast.error(error.data.error + ', probably you forgot reCaptcha')
         }
       })
   }
 
   return (
     <>
+      <Toaster position="top-right" />
       {isLoading && <LinearLoader />}
       <FormContainer title={'Forgot password'}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
@@ -102,7 +98,11 @@ export function ForgotPass() {
             </Button>
           )}
           <Link href={'/sign-in'}>
-            <Button className={styles.oppositeBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.MIDDLE}>
+            <Button
+              className={styles.oppositeBtn}
+              theme={ButtonTheme.CLEAR}
+              size={ButtonSize.MIDDLE}
+            >
               Back to Sign In
             </Button>
           </Link>
@@ -111,6 +111,7 @@ export function ForgotPass() {
             onChange={onChangeRecaptchaHandler}
             theme={'dark'}
           />
+          {err}
         </form>
       </FormContainer>
     </>
