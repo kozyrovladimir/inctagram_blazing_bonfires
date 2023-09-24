@@ -31,7 +31,10 @@ type FormType = {
 }
 
 export const SignUpForm = () => {
-  const { t } = useTranslation('common')
+  const {
+    t,
+    i18n: { t: tRoot },
+  } = useTranslation('common', { keyPrefix: 'Auth' })
 
   const [signUp, { isLoading }] = useSignUpMutation()
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
@@ -96,37 +99,36 @@ export const SignUpForm = () => {
       <Toaster position="top-right" />
       {isLoading && <LinearLoader />}
       {registrationSuccess && (
-        <Modal title={'Email sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
-          <p>We have sent a link to confirm your email </p>
+        <Modal title={t('EmailSent')} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
+          <p>{t('LinkConfirmYourEmail')} </p>
         </Modal>
       )}
-      <FormContainer title="Sign Up">
+      <FormContainer title={t('SignUp')}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer} noValidate>
-          <p>{t('Description')}</p>
           <OAuth />
           <Input
             {...register('userName')}
             type={InputType.TEXT}
-            label="Username"
-            placeholder="Enter name"
+            label={t('UserName')}
+            placeholder={t('EnterName')}
             className={inputStyles.input}
             error={(errors as FieldErrors<FormType>)?.userName?.message}
             disabled={isLoading}
           />
           <Input
             {...register('email')}
-            label="Email"
+            label={t('Email')}
+            placeholder={t('EnterEmail')}
             type={InputType.EMAIL}
-            placeholder="Enter email"
             className={inputStyles.input}
             error={(errors as FieldErrors<FormType>)?.email?.message}
             disabled={isLoading}
           />
           <Input
             {...register('password')}
-            label="Password"
+            label={t('Password')}
+            placeholder={t('EnterPassword')}
             type={InputType.PASSWORD}
-            placeholder="Enter password"
             className={inputStyles.input}
             error={(errors as FieldErrors<FormType>)?.password?.message}
             disabled={isLoading}
@@ -137,9 +139,9 @@ export const SignUpForm = () => {
                 value: (value: string) => value === password || 'Passwords do not match',
               },
             })}
-            label="Password confirmation"
+            label={t('PasswordConfirmation')}
+            placeholder={t('EnterPasswordConfirmation')}
             type={InputType.PASSWORD}
-            placeholder="Enter password confirmation"
             className={inputStyles.input}
             error={(errors as FieldErrors<FormType>)?.passwordConfirmation?.message}
             disabled={isLoading}
@@ -153,29 +155,29 @@ export const SignUpForm = () => {
               disabled={isLoading}
               label={
                 <p className={styles.agreementText}>
-                  I agree to the{' '}
+                  {t('AgreeToThe') + ' '}
                   <Link href="/auth/terms-of-service" className={styles.agreementLink}>
-                    Terms of Service
-                  </Link>{' '}
-                  and{' '}
+                    {t('TermsOfService')}
+                  </Link>
+                  {' ' + tRoot('and') + ' '}
                   <Link href="/auth/privacy-policy" className={styles.agreementLink}>
-                    Privacy Policy
+                    {t('PrivacyPolicy')}
                   </Link>
                 </p>
               }
             />
           </div>
           <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
-            Sign Up
+            {t('SignUp')}
           </Button>
-          <p className={styles.helpText}>Do you have an account?</p>
+          <p className={styles.helpText}>{t('HaveAccount?')}</p>
           <Link href={'/sign-in'}>
             <Button
               className={styles.oppositeBtn}
               theme={ButtonTheme.CLEAR}
               size={ButtonSize.SMALL}
             >
-              Sign In
+              {t('SignIn')}
             </Button>
           </Link>
         </form>

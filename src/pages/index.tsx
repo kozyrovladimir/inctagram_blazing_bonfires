@@ -19,12 +19,11 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 }
 
 function Home() {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation()
 
   return (
     <>
       <main>
-        <p>{t('Description')}</p>
         {/*todo remove temp centering wrapper, it's used only for decoration*/}
         <div
           style={{

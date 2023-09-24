@@ -5,7 +5,26 @@
   "AddProfilePhoto": "Add a Profile Photo",
   "SelectFromComputer": "Select from Computer",
   "ProfileSetting": "Profile Setting",
+  "and": "and",
 
+  "Auth": {
+    "SignUp": "Sign Up",
+    "SignIn": "Sign In",
+    "LinkConfirmYourEmail": "We have sent a link to confirm your email",
+    "EmailSent": "Email sent",
+    "UserName": "Username",
+    "EnterName": "Enter name",
+    "Email": "Email",
+    "EnterEmail": "Enter email",
+    "Password": "Password",
+    "EnterPassword": "Enter password",
+    "PasswordConfirmation": "Password confirmation",
+    "EnterPasswordConfirmation": "Enter password confirmation",
+    "AgreeToThe": "I agree to the",
+    "TermsOfService": "Terms of Service",
+    "PrivacyPolicy": "Privacy Policy",
+    "HaveAccount?": "Do you have an account?"
+  },
   "Navbar": {
     "GeneralInformation": "General information",
     "Devices": "Devices",

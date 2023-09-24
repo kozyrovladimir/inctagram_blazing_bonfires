@@ -5,7 +5,26 @@
   "AddProfilePhoto": "Добавть фотографию",
   "SelectFromComputer": "Выбрать на устройстве",
   "ProfileSetting": "Настройки профиля",
+  "and": "и",
 
+  "Auth": {
+    "SignUp": "Регистрация",
+    "SignIn": "Вход",
+    "LinkConfirmYourEmail": "Мы отправили ссылку для подтверждения вашего адреса электронной почты",
+    "EmailSent": "Email sent",
+    "UserName": "Пользователь",
+    "EnterName": "Введите имя профиля",
+    "Email": "Эл.почта",
+    "EnterEmail": "Введите эл.почту",
+    "Password": "Пароль",
+    "EnterPassword": "Введите пароль",
+    "PasswordConfirmation": "Подтвердите пароль",
+    "EnterPasswordConfirmation": "Введите пароль",
+    "AgreeToThe": "Я согласен с",
+    "TermsOfService": "Условиями предоставления услуг",
+    "PrivacyPolicy": "Политикой конфиденциальности",
+    "HaveAccount?": "У вас есть учетная запись?"
+  },
   "Navbar": {
     "GeneralInformation": "Информация",
     "Devices": "Устройства",
