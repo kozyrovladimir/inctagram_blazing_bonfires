@@ -1,5 +1,22 @@
 {
   "Description": "Описание",
+  "Save": "Сохранить",
+  "SaveChanges": "Сохранить",
+  "AddProfilePhoto": "Добавть фотографию",
+  "SelectFromComputer": "Выбрать на устройстве",
+  "ProfileSetting": "Настройки профиля",
+
+  "Navbar": {
+    "GeneralInformation": "Информация",
+    "Devices": "Устройства",
+    "AccountManagement": "Управление",
+    "MyPayments": "Платежи"
+  },
+  "Profile": {
+    "Following": "Подписки",
+    "Followers": "Подписчики",
+    "Publications": "Публикации"
+  },
   "ProfileSettings": {
     "UserName": "Пользователь",
     "FirstName": "Имя",
@@ -26,7 +43,7 @@
     "Tu": "Вт",
     "We": "Ср",
     "Th": "Чт",
-    "Fr":"Пт",
+    "Fr": "Пт",
     "Sa": "Сб"
   }
 }

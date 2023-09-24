@@ -2,10 +2,14 @@ import React from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 import styles from './Navbar.module.scss'
 
+import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
+
 export const Navbar = () => {
+  const { t } = useTranslation('common', { keyPrefix: 'Navbar' })
   const router = useRouter()
 
   return (
@@ -16,12 +20,12 @@ export const Navbar = () => {
             router.pathname === '/profile/general-information' ? styles['current-page'] : ''
           }
         >
-          General information
+          {t('GeneralInformation')}
         </div>
       </Link>
       <Link href="/profile/devices">
         <div className={router.pathname === '/profile/devices' ? styles['current-page'] : ''}>
-          Devices
+          {t('Devices')}
         </div>
       </Link>
       <Link href="/profile/account-management">
@@ -30,12 +34,12 @@ export const Navbar = () => {
             router.pathname === '/profile/account-management' ? styles['current-page'] : ''
           }
         >
-          Account Management
+          {t('AccountManagement')}
         </div>
       </Link>
       <Link href="/profile/my-payments">
         <div className={router.pathname === '/profile/my-payments' ? styles['current-page'] : ''}>
-          My payments
+          {t('MyPayments')}
         </div>
       </Link>
     </nav>

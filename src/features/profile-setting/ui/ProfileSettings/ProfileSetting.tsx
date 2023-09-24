@@ -24,7 +24,10 @@ import { Input, InputType } from '@/shared/ui/Input/Input'
 import { Calendar } from '@/widgets/Calendar/ui/Calendar'
 
 export const ProfileSetting = () => {
-  const { t } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
+  const {
+    t,
+    i18n: { t: tRoot },
+  } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
 
   const { data, isError, error, isLoading } = useMeQuery({})
 
@@ -262,7 +265,7 @@ export const ProfileSetting = () => {
           <div className={styles.footer}>
             <div className={styles.line}></div>
           </div>
-          <Button className={styles.button}>Save Changes</Button>
+          <Button className={styles.button}>{tRoot('SaveChanges')}</Button>
         </form>
       )}
     </>

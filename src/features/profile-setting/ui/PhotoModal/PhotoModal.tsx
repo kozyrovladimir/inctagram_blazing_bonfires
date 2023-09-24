@@ -3,6 +3,7 @@ import React, { ChangeEvent, FC, useRef, useState } from 'react'
 
 import Slider from '@mui/material/Slider'
 import Image from 'next/image'
+import { useTranslation } from 'next-i18next'
 import AvatarEditor from 'react-avatar-editor'
 
 import styles from './PhotoModal.module.scss'
@@ -18,6 +19,7 @@ type Props = {
 }
 
 export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
+  const { t } = useTranslation()
   const [photoProfile, setPhotoProfile] = useState<null | Blob | MediaSource>(null)
   const [uploadError, setUploadError] = useState('')
   const cropRef = useRef<null | any>(null)
@@ -67,7 +69,7 @@ export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
   return (
     <div>
       <Modal
-        title={'Add a Profile Photo'}
+        title={t('AddProfilePhoto')}
         callBackCloseWindow={closeWindow}
         styles={{ width: '492px', height: '564px' }}
         isShowButton={false}
@@ -87,7 +89,7 @@ export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
               />
               <p className={styles.error}>{uploadError}</p>
               <Button onClick={openSelectHandler} className={styles.buttonSelect}>
-                Select from Computer
+                {t('SelectFromComputer')}
               </Button>
             </>
           )}
@@ -123,7 +125,7 @@ export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
                 className={styles.buttonSave}
                 onClick={savePhotoHandler}
               >
-                Save
+                {t('Save')}
               </Button>
             </>
           )}

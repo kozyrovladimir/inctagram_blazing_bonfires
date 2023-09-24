@@ -13,6 +13,8 @@ import { Button } from '../../shared/ui/Button/Button'
 
 import style from './profile.module.scss'
 
+import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
+
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
 
@@ -24,12 +26,14 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 }
 
 function Profile() {
-  const { t } = useTranslation('common')
+  const {
+    t,
+    i18n: { t: tRoot, language },
+  } = useTranslation('common', { keyPrefix: 'Profile' })
   const router = useRouter()
 
   return (
     <div className={style.rootContainer}>
-      <p>{t('Description')}</p>
       <div className={style.headerContainer}>
         <div className={style.avatarContainer}>
           <Image src={noImage} alt={'avatar'} width={48} height={48} />
@@ -39,20 +43,21 @@ function Profile() {
             <div>URLProfile</div>
             <Button
               className={style.buttonProfileSetting}
+              style={language === ShortLangs.RU ? { fontSize: '0.875rem' } : undefined}
               onClick={() => router.push('profile/general-information')}
             >
-              Profile Setting{' '}
+              {tRoot('ProfileSetting')}
             </Button>
           </div>
           <div className={style.subscribersContainer}>
             <div>
-              <span className={style.countSubscribers}>2128</span> <br /> Following
+              <span className={style.countSubscribers}>2128</span> <br /> {t('Following')}
             </div>
             <div>
-              <span className={style.countSubscribers}>2128</span> <br /> Followers
+              <span className={style.countSubscribers}>2128</span> <br /> {t('Followers')}
             </div>
             <div>
-              <span className={style.countSubscribers}>2128</span> <br /> Publications
+              <span className={style.countSubscribers}>2128</span> <br /> {t('Publications')}
             </div>
           </div>
           <div className={style.description}>
