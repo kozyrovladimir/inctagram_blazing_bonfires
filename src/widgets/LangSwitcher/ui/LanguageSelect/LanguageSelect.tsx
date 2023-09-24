@@ -17,7 +17,7 @@ export enum ShortLangs {
 }
 
 export enum FullLangs {
-  RU = 'Russian',
+  RU = 'Русский',
   EN = 'English',
 }
 
@@ -38,12 +38,18 @@ const langOptions: LangOptionType[] = [
 ]
 
 export const LanguageSelect = () => {
+  useEffect(() => {
+    localStorage.getItem('lang') === null
+      ? localStorage.setItem('lang', ShortLangs.EN)
+      : setActiveSelect(localStorage.getItem('lang') as ShortLangs)
+  }, [])
+
   const router = useRouter()
   const { pathname, asPath, query } = router
 
   const refSelect = useRef<HTMLDivElement | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState(false)
-  const [activeSelect, setActiveSelect] = useState<ShortLangs>(ShortLangs.EN)
+  const [activeSelect, setActiveSelect] = useState<ShortLangs | null>(null)
 
   const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)
   const changeLanguageHandler = (lang: ShortLangs) => {
@@ -78,19 +84,20 @@ export const LanguageSelect = () => {
 
   return (
     <div className={style.select} ref={refSelect}>
-      <div className={style.selectContent} onClick={openSelectHandler}>
-        <OptionContent alt={shortLang} flagImg={flag} description={fullLang} />
-        <Image
-          src={arrow}
-          alt={''}
-          className={style.arrowImg}
-          style={{ transform: isOpenSelect ? 'rotate(180deg)' : 'rotate(0)' }}
-        />
-      </div>
+      {activeSelect && (
+        <div className={style.selectContent} onClick={openSelectHandler}>
+          <OptionContent alt={shortLang} flagImg={flag} description={fullLang} />
+          <Image
+            src={arrow}
+            alt={''}
+            className={style.arrowImg}
+            style={{ transform: isOpenSelect ? 'rotate(180deg)' : 'rotate(0)' }}
+          />
+        </div>
+      )}
       {isOpenSelect && (
         <div className={style.optionList}>
           {langOptions.map(el => (
-            // eslint-disable-next-line react/jsx-key
             <div
               key={el.shortLang}
               className={style.option}

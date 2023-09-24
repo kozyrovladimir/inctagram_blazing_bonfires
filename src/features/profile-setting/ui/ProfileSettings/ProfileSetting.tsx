@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/fetchBaseQuery'
+import { useTranslation } from 'next-i18next'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -23,6 +24,8 @@ import { Input, InputType } from '@/shared/ui/Input/Input'
 import { Calendar } from '@/widgets/Calendar/ui/Calendar'
 
 export const ProfileSetting = () => {
+  const { t } = useTranslation('common')
+
   const { data, isError, error, isLoading } = useMeQuery({})
 
   const {
@@ -45,23 +48,23 @@ export const ProfileSetting = () => {
       .string()
       .min(6, AppErrors.MIN_6_CHARACTERS)
       .max(20, AppErrors.MAX_30_CHARACTERS)
-      .matches(/^[0-9A-Za-z_-]{6,30}$/, AppErrors.USERNAME_VALIDATION_ERROR_TEXT)
+      .matches(/^[0-9A-Za-z_-]$/, AppErrors.USERNAME_VALIDATION_ERROR_TEXT)
       .required(AppErrors.REQUIRED_FIELD),
     firstName: yup
       .string()
       .min(1, AppErrors.MIN_1_CHARACTERS)
       .max(50, AppErrors.MAX_50_CHARACTERS)
-      .matches(/^([A-ZА-Я])+([a-zа-я]{0,50})$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
+      .matches(/^([A-ZА-Я])+([a-zа-я])$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
     lastName: yup
       .string()
       .min(1, AppErrors.MIN_1_CHARACTERS)
       .max(50, AppErrors.MAX_50_CHARACTERS)
-      .matches(/^([A-ZА-Я])+([a-zа-я]{0,50})$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
+      .matches(/^([A-ZА-Я])+([a-zа-я])$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
     city: yup
       .string()
       .min(2, AppErrors.MIN_2_CHARACTERS)
       .max(30, AppErrors.MAX_30_CHARACTERS)
-      .matches(/^([A-ZА-Я])+([a-zа-я]{1,30})$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
+      .matches(/^([A-ZА-Я])+([a-zа-я])$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
     dateOfBirth: yup.date(),
     aboutMe: yup.string().max(200, AppErrors.MAX_200_CHARACTERS),
   })
@@ -140,6 +143,7 @@ export const ProfileSetting = () => {
 
       {profileData && (
         <form className={styles.container} onSubmit={handleSubmit(onSubmit, onError)}>
+          <p>{t('Description')}</p>
           <div className={styles.content}>
             <div className={styles.photoContent}>
               <Controller
@@ -166,7 +170,7 @@ export const ProfileSetting = () => {
                 control={control}
                 render={({ field }) => (
                   <Input
-                    label={'Username'}
+                    label={t('Description')}
                     type={InputType.TEXT}
                     placeholder="Enter your user-name"
                     error={(errors as FieldErrors<ProfileUserType>).userName?.message}

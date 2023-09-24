@@ -1,20 +1,35 @@
 import { FC } from 'react'
 
+import { GetStaticProps } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import noImage from '../../shared/assets/icons/avatarProfile/notPhoto.png'
 import { getLayout } from '../../shared/layouts/MainLayout/MainLayout'
 import { Button } from '../../shared/ui/Button/Button'
 
 import style from './profile.module.scss'
-import Link from "next/link"
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
+}
 
 function Profile() {
+  const { t } = useTranslation('common')
   const router = useRouter()
 
   return (
     <div className={style.rootContainer}>
+      <p>{t('Description')}</p>
       <div className={style.headerContainer}>
         <div className={style.avatarContainer}>
           <Image src={noImage} alt={'avatar'} width={48} height={48} />

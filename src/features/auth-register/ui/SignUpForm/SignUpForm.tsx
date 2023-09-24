@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import { GetStaticProps } from 'next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
 import * as yup from 'yup'
@@ -28,6 +31,8 @@ type FormType = {
 }
 
 export const SignUpForm = () => {
+  const { t } = useTranslation('common')
+
   const [signUp, { isLoading }] = useSignUpMutation()
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const callBackCloseWindow = () => setRegistrationSuccess(false)
@@ -97,6 +102,7 @@ export const SignUpForm = () => {
       )}
       <FormContainer title="Sign Up">
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer} noValidate>
+          <p>{t('Description')}</p>
           <OAuth />
           <Input
             {...register('userName')}

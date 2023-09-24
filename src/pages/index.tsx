@@ -24,6 +24,7 @@ function Home() {
   return (
     <>
       <main>
+        <p>{t('Description')}</p>
         {/*todo remove temp centering wrapper, it's used only for decoration*/}
         <div
           style={{
