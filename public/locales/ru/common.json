@@ -1,3 +1,32 @@
 {
-  "Description": "Описание"
+  "Description": "Описание",
+  "ProfileSettings": {
+    "UserName": "Пользователь",
+    "FirstName": "Имя",
+    "LastName": "Фамилия",
+    "DateBirthday": "Дата рождения",
+    "City": "Город",
+    "AboutMe": "Обо мне"
+  },
+  "Calendar": {
+    "January": "Январь",
+    "February": "Февраль",
+    "March": "Март",
+    "April": "Апрель",
+    "May": "Май",
+    "June": "Июнь",
+    "July": "Июль",
+    "August": "Август",
+    "September": "Сентябрь",
+    "October": "Октябрь",
+    "November": "Ноябрь",
+    "December": "Декабрь",
+    "Su": "Вс",
+    "Mo": "Пн",
+    "Tu": "Вт",
+    "We": "Ср",
+    "Th": "Чт",
+    "Fr":"Пт",
+    "Sa": "Сб"
+  }
 }

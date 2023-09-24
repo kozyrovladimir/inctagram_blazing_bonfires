@@ -24,7 +24,7 @@ import { Input, InputType } from '@/shared/ui/Input/Input'
 import { Calendar } from '@/widgets/Calendar/ui/Calendar'
 
 export const ProfileSetting = () => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
 
   const { data, isError, error, isLoading } = useMeQuery({})
 
@@ -143,7 +143,6 @@ export const ProfileSetting = () => {
 
       {profileData && (
         <form className={styles.container} onSubmit={handleSubmit(onSubmit, onError)}>
-          <p>{t('Description')}</p>
           <div className={styles.content}>
             <div className={styles.photoContent}>
               <Controller
@@ -170,7 +169,7 @@ export const ProfileSetting = () => {
                 control={control}
                 render={({ field }) => (
                   <Input
-                    label={t('Description')}
+                    label={t('UserName')}
                     type={InputType.TEXT}
                     placeholder="Enter your user-name"
                     error={(errors as FieldErrors<ProfileUserType>).userName?.message}
@@ -184,7 +183,7 @@ export const ProfileSetting = () => {
                 control={control}
                 render={({ field }) => (
                   <Input
-                    label={'First Name'}
+                    label={t('FirstName')}
                     placeholder={''}
                     type={InputType.TEXT}
                     error={(errors as FieldErrors<ProfileUserType>).firstName?.message}
@@ -198,7 +197,7 @@ export const ProfileSetting = () => {
                 control={control}
                 render={({ field }) => (
                   <Input
-                    label={'Last Name'}
+                    label={t('LastName')}
                     placeholder={''}
                     type={InputType.TEXT}
                     error={(errors as FieldErrors<ProfileUserType>).lastName?.message}
@@ -207,7 +206,7 @@ export const ProfileSetting = () => {
                   />
                 )}
               />
-              <label className={styles.labelDate}>Date of birthday</label>
+              <label className={styles.labelDate}>{t('DateBirthday')}</label>
               <Controller
                 name="dateOfBirth"
                 control={control}
@@ -228,7 +227,7 @@ export const ProfileSetting = () => {
                 control={control}
                 render={({ field }) => (
                   <Input
-                    label={'City'}
+                    label={t('City')}
                     placeholder={''}
                     error={(errors as FieldErrors<ProfileUserType>).city?.message}
                     type={InputType.TEXT}
@@ -238,7 +237,7 @@ export const ProfileSetting = () => {
                 )}
               />
               <div className={styles.textareaContent}>
-                <label className={styles.aboutMeLabel}>About me</label>
+                <label className={styles.aboutMeLabel}>{t('AboutMe')}</label>
                 <Controller
                   name="aboutMe"
                   control={control}

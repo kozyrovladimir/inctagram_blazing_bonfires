@@ -54,8 +54,8 @@ export const LanguageSelect = () => {
   const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)
   const changeLanguageHandler = (lang: ShortLangs) => {
     setActiveSelect(lang)
+    localStorage.setItem('lang', lang)
     openSelectHandler()
-
     router.push({ pathname, query }, asPath, { locale: lang })
   }
 
