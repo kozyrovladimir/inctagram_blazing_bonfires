@@ -4,7 +4,6 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
 
   .modalWindow {
     width: 1000px;
@@ -12,9 +11,10 @@
   }
 
   .emptyContainer {
+    margin-top: 3rem;
     width: 222px;
     height: 228px;
-    background: black;
+    background: var(--color-dark-800);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,6 +27,7 @@
 
   .buttonSelect {
     margin-top: 60px;
+    width: 222px;
   }
 
   .avatar {
@@ -36,7 +37,12 @@
 
   .buttonSave {
     align-self: end;
-    margin-top: 30px;
     margin-right: 20px;
+  }
+
+  .error {
+    font-size: 16px;
+    color: var(--color-danger-500);
+    line-height: 24px;
   }
 }

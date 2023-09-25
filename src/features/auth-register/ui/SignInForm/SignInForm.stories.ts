@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Sign } from './Sign'
+import { SignInForm } from '@/features/auth-register'
 
-const meta: Meta<typeof Sign> = {
-  title: 'Components/Sign',
-  component: Sign,
+const meta: Meta<typeof SignInForm> = {
+  title: 'Components/SignInForm',
+  component: SignInForm,
   parameters: {
     layout: 'centered',
   },
@@ -12,7 +12,7 @@ const meta: Meta<typeof Sign> = {
 }
 
 export default meta
-type Story = StoryObj<typeof Sign>
+type Story = StoryObj<typeof SignInForm>
 
 export const Default: Story = {
   args: {

@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { SubmitHandler, useForm, FieldValues } from 'react-hook-form'
 
@@ -9,8 +8,10 @@ import styles from './CreateNewPassForm.module.scss'
 import { useCreateNewPasswordMutation } from '@/shared/api/services/auth/auth.api'
 import { NewPasswordType } from '@/shared/api/services/auth/auth.api.types'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
+import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import inputStyles from '@/shared/ui/Input/Input.module.scss'
+import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
 
 type FormType = {
   newPassword: string
@@ -32,7 +33,7 @@ export function CreateNewPassForm() {
     formState: { errors },
     reset,
   } = useForm<FormType>({
-    mode: 'onChange',
+    mode: 'onTouched',
     defaultValues: {
       newPassword: '',
       newPasswordConfirmation: '',
@@ -44,6 +45,8 @@ export function CreateNewPassForm() {
   const onSubmit: SubmitHandler<NewPasswordType> = data => {
     if (!data) {
       throw new Error('data is undefined')
+    } else {
+      data.recoveryCode = code
     }
 
     createNewPassword(data)
@@ -64,44 +67,46 @@ export function CreateNewPassForm() {
 
   return (
     <>
-      {isLoading && <CircularProgress />}
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
-        <Input
-          {...register('newPassword', {
-            required: 'Password field is required',
-            pattern: {
-              value: /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
-              message:
-                'Password must contain a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
-            },
-          })}
-          label="Password"
-          type={InputType.PASSWORD}
-          placeholder="Enter password"
-          className={inputStyles.input}
-          error={errors.newPassword && errors.newPassword?.message}
-        />
-        <Input
-          {...register('newPasswordConfirmation', {
-            required: 'Confirm password field is required',
-            validate: {
-              value: (value: string) => value === password || 'Passwords do not match',
-            },
-          })}
-          label="Password confirmation"
-          type={InputType.PASSWORD}
-          placeholder="Enter password confirmation"
-          className={inputStyles.input}
-          error={errors.newPasswordConfirmation && errors.newPasswordConfirmation?.message}
-        />
-        <p className={styles.createPassHelpText}>
-          Your password must be between 6 and 20 characters
-        </p>
+      {isLoading && <LinearLoader />}
+      <FormContainer title="Create New Password">
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
+          <Input
+            {...register('newPassword', {
+              required: 'Password field is required',
+              pattern: {
+                value: /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
+                message:
+                  'Password must contain a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
+              },
+            })}
+            label="Password"
+            type={InputType.PASSWORD}
+            placeholder="Enter password"
+            className={inputStyles.input}
+            error={errors.newPassword && errors.newPassword?.message}
+          />
+          <Input
+            {...register('newPasswordConfirmation', {
+              required: 'Confirm password field is required',
+              validate: {
+                value: (value: string) => value === password || 'Passwords do not match',
+              },
+            })}
+            label="Password confirmation"
+            type={InputType.PASSWORD}
+            placeholder="Enter password confirmation"
+            className={inputStyles.input}
+            error={errors.newPasswordConfirmation && errors.newPasswordConfirmation?.message}
+          />
+          <p className={styles.createPassHelpText}>
+            Your password must be between 6 and 20 characters
+          </p>
 
-        <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
-          Create new password
-        </Button>
-      </form>
+          <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
+            Create new password
+          </Button>
+        </form>
+      </FormContainer>
     </>
   )
 }

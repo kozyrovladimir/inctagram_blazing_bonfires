@@ -8,6 +8,7 @@ import { getLayout } from '../../shared/layouts/MainLayout/MainLayout'
 import { Button } from '../../shared/ui/Button/Button'
 
 import style from './profile.module.scss'
+import Link from "next/link"
 
 function Profile() {
   const router = useRouter()
@@ -68,13 +69,15 @@ const testPhotos: string[] = [
   noImage.src,
 ]
 
-type PicturesProps = {
+type PostsProps = {
   url: string
 }
-const Pictures: FC<PicturesProps> = ({ url }) => {
+const Posts: FC<PostsProps> = ({ url }) => {
   return (
     <div className={style.photoWrapper}>
-      <Image src={url} alt={'photo'} width={234} height={228} />
+      <Link href={'/profile/post'}>
+        <Image src={url} alt={'photo'} width={234} height={228} />
+      </Link>
     </div>
   )
 }
