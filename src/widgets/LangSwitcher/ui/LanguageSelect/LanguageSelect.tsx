@@ -43,15 +43,21 @@ export const LanguageSelect = () => {
 
   const refSelect = useRef<HTMLDivElement | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState(false)
-  const [activeSelect, setActiveSelect] = useState<ShortLangs | null>(null)
+  const [activeSelect, setActiveSelect] = useState<ShortLangs | string | null>(null)
 
   useEffect(() => {
     const langFromLocal = localStorage.getItem('lang')
 
+    const defaultLang = window.navigator.language.slice(0, 2)
+
     if (langFromLocal) {
       setActiveSelect(localStorage.getItem('lang') as ShortLangs)
       router.push({ pathname, query }, asPath, { locale: langFromLocal })
-    } else localStorage.setItem('lang', ShortLangs.EN)
+    } else {
+      setActiveSelect(defaultLang)
+      localStorage.setItem('lang', defaultLang)
+      router.push({ pathname, query }, asPath, { locale: defaultLang })
+    }
   }, [])
 
   const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)

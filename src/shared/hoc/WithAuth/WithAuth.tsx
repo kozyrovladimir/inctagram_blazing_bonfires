@@ -13,7 +13,6 @@ const publicPaths = [
   '/auth/registration-confirmation',
   '/auth/privacy-policy',
   '/auth/terms-of-service',
-  '/forgot-password',
 ]
 
 // const emailConfirmationPaths = [
