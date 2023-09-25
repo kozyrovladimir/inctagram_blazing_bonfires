@@ -23,7 +23,7 @@ function Home() {
 
   return (
     <>
-      <main>
+      <main style={{ marginTop: '-16px' }}>
         {/*todo remove temp centering wrapper, it's used only for decoration*/}
         <div
           style={{
