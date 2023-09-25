@@ -11,7 +11,7 @@ export const TermsOfServicePage = () => {
   return (
     <div className={styles.container}>
       <Link href={'/sign-up'} className={styles.backContainer}>
-        <Image src={backIcon} />
+        <Image src={backIcon} alt={'icon row back'} />
         <p>Back to sign up</p>
       </Link>
       <p className={styles.articleHeader}>Terms of service</p>

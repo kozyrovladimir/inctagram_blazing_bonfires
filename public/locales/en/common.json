@@ -5,8 +5,13 @@
   "AddProfilePhoto": "Add a Profile Photo",
   "SelectFromComputer": "Select from Computer",
   "ProfileSetting": "Profile Setting",
-  "and": "and",
+  "And": "and",
 
+  "Error": {
+    "PasswordIncorrect": "The password is incorrect. Try again please ",
+    "EmailNotRegidtred": "This email address is not registered. Please register",
+    "NetworkError": "Network error"
+  },
   "Auth": {
     "SignUp": "Sign Up",
     "SignIn": "Sign In",
@@ -23,7 +28,9 @@
     "AgreeToThe": "I agree to the",
     "TermsOfService": "Terms of Service",
     "PrivacyPolicy": "Privacy Policy",
-    "HaveAccount?": "Do you have an account?"
+    "HaveAccount?": "Do you have an account?",
+    "DontHaveAccount?": "Don’t have an account?",
+    "ForgotPassword": "Forgot Password"
   },
   "Navbar": {
     "GeneralInformation": "General information",

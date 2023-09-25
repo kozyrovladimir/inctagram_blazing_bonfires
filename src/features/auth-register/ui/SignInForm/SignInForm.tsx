@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { Controller, useForm } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
 import * as yup from 'yup'
@@ -26,6 +27,9 @@ const schema = yup.object().shape({
 })
 
 export const SignInForm = () => {
+  const { t } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
+
   const [passwordError, setPasswordError] = useState<string>('')
   const [emailError, setEmailError] = useState<string>('')
   const [login, { isLoading }] = useLoginMutation()
@@ -52,12 +56,12 @@ export const SignInForm = () => {
           const { statusCode } = error.data
 
           if (statusCode === 400) {
-            setPasswordError('The password is incorrect. Try again please ')
+            setPasswordError(tError('PasswordIncorrect'))
           } else if (statusCode === 401) {
-            setEmailError('This email address is not registered. Please register')
+            setEmailError(tError('EmailNotRegidtred'))
           }
         } else {
-          toast.error('Network error')
+          toast.error(tError('NetworkError'))
         }
       })
   }
@@ -66,7 +70,7 @@ export const SignInForm = () => {
     <>
       <Toaster position="top-right" />
       {isLoading && <LinearLoader />}
-      <FormContainer title={'Sign In'}>
+      <FormContainer title={t('SignIn')}>
         <OAuth />
         <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
@@ -74,9 +78,9 @@ export const SignInForm = () => {
             control={control}
             render={({ field }) => (
               <Input
-                label={'Email'}
+                label={t('Email')}
                 type={InputType.EMAIL}
-                placeholder="Enter email"
+                placeholder={t('EnterEmail')}
                 error={errors.email?.message || (emailError as string)}
                 {...field}
               />
@@ -87,21 +91,21 @@ export const SignInForm = () => {
             control={control}
             render={({ field }) => (
               <Input
-                label={'Password'}
+                label={t('Password')}
                 type={InputType.PASSWORD}
-                placeholder="Enter password"
+                placeholder={t('EnterPassword')}
                 error={errors.password?.message || (passwordError as string)}
                 {...field}
               />
             )}
           />
           <Link href="/forgot-password" className={styles.signInForgotText}>
-            Forgot Password
+            {t('ForgotPassword')}
           </Link>
-          <Button size={ButtonSize.STRETCHED}>Sign In</Button>
-          <p className={styles.helpText}>Don’t have an account?</p>
+          <Button size={ButtonSize.STRETCHED}>{t('SignIn')}</Button>
+          <p className={styles.helpText}>{t('DontHaveAccount?')}</p>
           <Link href="/sign-up" className={styles.link}>
-            <p className={styles.oppositeBtn}>Sign Up</p>
+            <p className={styles.oppositeBtn}>{t('SignUp')}</p>
           </Link>
         </form>
       </FormContainer>

@@ -159,7 +159,7 @@ export const SignUpForm = () => {
                   <Link href="/auth/terms-of-service" className={styles.agreementLink}>
                     {t('TermsOfService')}
                   </Link>
-                  {' ' + tRoot('and') + ' '}
+                  {' ' + tRoot('And') + ' '}
                   <Link href="/auth/privacy-policy" className={styles.agreementLink}>
                     {t('PrivacyPolicy')}
                   </Link>

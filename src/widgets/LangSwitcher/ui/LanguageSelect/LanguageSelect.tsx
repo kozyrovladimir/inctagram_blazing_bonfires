@@ -38,12 +38,6 @@ const langOptions: LangOptionType[] = [
 ]
 
 export const LanguageSelect = () => {
-  useEffect(() => {
-    localStorage.getItem('lang') === null
-      ? localStorage.setItem('lang', ShortLangs.EN)
-      : setActiveSelect(localStorage.getItem('lang') as ShortLangs)
-  }, [])
-
   const router = useRouter()
   const { pathname, asPath, query } = router
 
@@ -51,11 +45,21 @@ export const LanguageSelect = () => {
   const [isOpenSelect, setIsOpenSelect] = useState(false)
   const [activeSelect, setActiveSelect] = useState<ShortLangs | null>(null)
 
+  useEffect(() => {
+    const langFromLocal = localStorage.getItem('lang')
+
+    if (langFromLocal) {
+      setActiveSelect(localStorage.getItem('lang') as ShortLangs)
+      router.push({ pathname, query }, asPath, { locale: langFromLocal })
+    } else localStorage.setItem('lang', ShortLangs.EN)
+  }, [])
+
   const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)
   const changeLanguageHandler = (lang: ShortLangs) => {
     setActiveSelect(lang)
     localStorage.setItem('lang', lang)
     openSelectHandler()
+
     router.push({ pathname, query }, asPath, { locale: lang })
   }
 

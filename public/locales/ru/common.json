@@ -5,7 +5,13 @@
   "AddProfilePhoto": "Добавть фотографию",
   "SelectFromComputer": "Выбрать на устройстве",
   "ProfileSetting": "Настройки профиля",
-  "and": "и",
+  "And": "и",
+
+  "Error": {
+    "PasswordIncorrect": "The password is incorrect. Try again please ",
+    "EmailNotRegidtred": "This email address is not registered. Please register",
+    "NetworkError": "Network error"
+  },
 
   "Auth": {
     "SignUp": "Регистрация",
@@ -23,7 +29,9 @@
     "AgreeToThe": "Я согласен с",
     "TermsOfService": "Условиями предоставления услуг",
     "PrivacyPolicy": "Политикой конфиденциальности",
-    "HaveAccount?": "У вас есть учетная запись?"
+    "HaveAccount?": "У вас есть учетная запись?",
+    "DontHaveAccount?": "Нет учетной записи?",
+    "ForgotPassword": "Забыли пароль"
   },
   "Navbar": {
     "GeneralInformation": "Информация",
