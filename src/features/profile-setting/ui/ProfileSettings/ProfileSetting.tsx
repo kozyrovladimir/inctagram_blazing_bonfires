@@ -28,6 +28,7 @@ export const ProfileSetting = () => {
     t,
     i18n: { t: tRoot },
   } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
 
   const { data, isError, error, isLoading } = useMeQuery({})
 
@@ -49,27 +50,27 @@ export const ProfileSetting = () => {
   const profileSchema = yup.object().shape({
     userName: yup
       .string()
-      .min(6, AppErrors.MIN_6_CHARACTERS)
-      .max(20, AppErrors.MAX_30_CHARACTERS)
-      .matches(/^[0-9A-Za-z_-]$/, AppErrors.USERNAME_VALIDATION_ERROR_TEXT)
-      .required(AppErrors.REQUIRED_FIELD),
+      .min(6, tError('MinCharactrers6'))
+      .max(20, tError('MaxCharactrers30'))
+      .matches(/^[0-9A-Za-z_-]$/, tError('UserNameValidationError'))
+      .required(tError('RequiredField')),
     firstName: yup
       .string()
-      .min(1, AppErrors.MIN_1_CHARACTERS)
-      .max(50, AppErrors.MAX_50_CHARACTERS)
-      .matches(/^([A-ZА-Я])+([a-zа-я])$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
+      .min(1, tError('MinCharactrers1'))
+      .max(50, tError('MaxCharactrers50'))
+      .matches(/^([A-ZА-Я])+([a-zа-я])$/, tError('SrartLatterNotSpecial')),
     lastName: yup
       .string()
-      .min(1, AppErrors.MIN_1_CHARACTERS)
-      .max(50, AppErrors.MAX_50_CHARACTERS)
-      .matches(/^([A-ZА-Я])+([a-zа-я])$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
+      .min(1, tError('MinCharactrers1'))
+      .max(50, tError('MaxCharactrers50'))
+      .matches(/^([A-ZА-Я])+([a-zа-я])$/, tError('SrartLatterNotSpecial')),
     city: yup
       .string()
-      .min(2, AppErrors.MIN_2_CHARACTERS)
-      .max(30, AppErrors.MAX_30_CHARACTERS)
-      .matches(/^([A-ZА-Я])+([a-zа-я])$/, AppErrors.START_LATTER_WITHOUT_SPECIAL),
+      .min(2, tError('MinCharactrers2'))
+      .max(30, tError('MaxCharactrers30'))
+      .matches(/^([A-ZА-Я])+([a-zа-я])$/, tError('SrartLatterNotSpecial')),
     dateOfBirth: yup.date(),
-    aboutMe: yup.string().max(200, AppErrors.MAX_200_CHARACTERS),
+    aboutMe: yup.string().max(200, tError('MaxCharactrers200')),
   })
 
   const {

@@ -8,12 +8,7 @@ import { useMeQuery } from '../../api/services/auth/auth.api'
 
 import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
 
-const publicPaths = [
-  '/auth/expired-verification-link',
-  '/auth/registration-confirmation',
-  '/auth/privacy-policy',
-  '/auth/terms-of-service',
-]
+const publicPaths = ['/auth/privacy-policy', '/auth/terms-of-service']
 
 // const emailConfirmationPaths = [
 // '/auth/expired-verification-link',
@@ -40,7 +35,7 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
 
     let pageUnautorization = '/sign-in'
 
-    switch (router.pathname) {
+    switch (pathname) {
       case '/sign-up':
         pageUnautorization = '/sign-up'
         break
@@ -52,6 +47,12 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
         break
       case '/auth/privacy-policy':
         pageUnautorization = '/auth/privacy-policy'
+        break
+      case '/auth/confirmed-email':
+        pageUnautorization = '/auth/confirmed-email'
+        break
+      case '/auth/expired-verification-link':
+        pageUnautorization = '/auth/expired-verification-link'
         break
     }
     const newUrl =

@@ -2,6 +2,7 @@ import React from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { SubmitHandler, useForm, FieldValues } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -9,7 +10,6 @@ import styles from './CreateNewPassForm.module.scss'
 
 import { useCreateNewPasswordMutation } from '@/shared/api/services/auth/auth.api'
 import { NewPasswordType } from '@/shared/api/services/auth/auth.api.types'
-import { AppErrors } from '@/shared/common/errors'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
@@ -23,6 +23,8 @@ type FormType = {
 
 export function CreateNewPassForm() {
   const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation()
+  const { t } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
 
   const router = useRouter()
   const { query } = router
@@ -31,14 +33,11 @@ export function CreateNewPassForm() {
   const schema = yup.object().shape({
     newPassword: yup
       .string()
-      .min(6, AppErrors.MIN_6_CHARACTERS)
-      .max(20, AppErrors.MAX_20_CHARACTERS)
-      .matches(
-        /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
-        AppErrors.PASSWORD_VALIDATION_ERROR_TEXT
-      )
-      .required(AppErrors.REQUIRED_FIELD),
-    newPasswordConfirmation: yup.string().required(AppErrors.REQUIRED_FIELD),
+      .min(6, tError('MinCharactrers6'))
+      .max(20, tError('MaxCharactrers20'))
+      .matches(/^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/, tError('PasswordValidationError'))
+      .required(tError('RequiredField')),
+    newPasswordConfirmation: yup.string().required(tError('RequiredField')),
   })
 
   const {
@@ -85,34 +84,32 @@ export function CreateNewPassForm() {
   return (
     <>
       {isLoading && <LinearLoader />}
-      <FormContainer title="Create New Password">
+      <FormContainer title={t('CreateNewPassword')}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
           <Input
             {...register('newPassword')}
-            label="Password"
+            label={t('Password')}
             type={InputType.PASSWORD}
-            placeholder="Enter password"
+            placeholder={t('EnterPassword')}
             className={inputStyles.input}
             error={errors.newPassword && errors.newPassword?.message}
           />
           <Input
             {...register('newPasswordConfirmation', {
               validate: {
-                value: (value: string) => value === password || 'Passwords do not match',
+                value: (value: string) => value === password || t('PasswordDoNotmatch'),
               },
             })}
-            label="Password confirmation"
+            label={t('PasswordConfirmation')}
             type={InputType.PASSWORD}
-            placeholder="Enter password confirmation"
+            placeholder={t('EnterPasswordConfirmation')}
             className={inputStyles.input}
             error={errors.newPasswordConfirmation && errors.newPasswordConfirmation?.message}
           />
-          <p className={styles.createPassHelpText}>
-            Your password must be between 6 and 20 characters
-          </p>
+          <p className={styles.createPassHelpText}>{tError('PasswordMin6Max20')}</p>
 
           <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
-            Create new password
+            {t('CreateNewPassword')}
           </Button>
         </form>
       </FormContainer>

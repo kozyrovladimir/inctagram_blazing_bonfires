@@ -17,18 +17,16 @@ import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
-
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email(AppErrors.EMAIL_VALIDATION_ERROR_TEXT)
-    .required(AppErrors.REQUIRED_FIELD),
-  password: yup.string().required(AppErrors.REQUIRED_FIELD),
-})
+import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
 
 export const SignInForm = () => {
-  const { t } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t, i18n } = useTranslation('common', { keyPrefix: 'Auth' })
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
+
+  const schema = yup.object().shape({
+    email: yup.string().email(tError('EmailValidationError')).required(tError('RequiredField')),
+    password: yup.string().required(tError('RequiredField')),
+  })
 
   const [passwordError, setPasswordError] = useState<string>('')
   const [emailError, setEmailError] = useState<string>('')

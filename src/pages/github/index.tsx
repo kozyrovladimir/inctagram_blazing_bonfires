@@ -26,9 +26,9 @@ const ForgotPasswordPage = () => {
   useEffect(() => {
     if (accessToken) {
       localStorage.setItem('accessToken', accessToken as string)
-      router.push('/profile')
+      router.push(`/profile`)
     } else {
-      router.push('/sign-in')
+      router.push(`/sign-in`)
     }
   }, [accessToken])
 

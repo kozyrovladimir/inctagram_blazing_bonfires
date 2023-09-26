@@ -1,8 +1,9 @@
+/* eslint-disable import/no-named-as-default */
 import React, { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
-// eslint-disable-next-line import/no-named-as-default
+import { useTranslation } from 'next-i18next'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -11,7 +12,6 @@ import styles from './ForgotPassForm.module.scss'
 
 import { useRecoverPasswordMutation } from '@/shared/api/services/auth/auth.api'
 import { PasswordRecoveryType } from '@/shared/api/services/auth/auth.api.types'
-import { AppErrors } from '@/shared/common/errors'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
@@ -20,15 +20,15 @@ import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
 export function ForgotPass() {
+  const { t } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
+
   const [isSentPass, setIsSentPass] = useState(false)
   const [recoverPassword, { isLoading }] = useRecoverPasswordMutation()
   const callBackCloseWindow = () => setIsSentPass(false)
 
   const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email(AppErrors.EMAIL_VALIDATION_ERROR_TEXT)
-      .required(AppErrors.REQUIRED_FIELD),
+    email: yup.string().email(tError('EmailValidationError')).required(tError('RequiredField')),
     recaptcha: yup.string().required(),
   })
 
@@ -76,35 +76,33 @@ export function ForgotPass() {
   return (
     <>
       {isLoading && <LinearLoader />}
-      <FormContainer title={'Forgot password'}>
+      <FormContainer title={t('ForgotPassword')}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
           <Input
             {...register('email')}
-            label="Email"
+            label={t('Email')}
             type={InputType.EMAIL}
-            placeholder="Enter email"
+            placeholder={t('EnterEmail')}
             className={inputStyles.input}
             error={errors.email && errors.email?.message}
           />
-          <p className={styles.forgotHelpText}>
-            Enter your email address and we will send you further instructions
-          </p>
+          <p className={styles.forgotHelpText}>{t('EnterEmailForGetInstruction')}</p>
           {isSentPass && (
             <Modal
-              title={'Password sent'}
+              title={t('PasswordSent')}
               mainButton={' OK '}
               callBackCloseWindow={callBackCloseWindow}
             >
-              <p>The link has been sent by email. If you don’t receive an email send link again</p>
+              <p>{t('LinkHasBeenSent')}</p>
             </Modal>
           )}
           {!isSentPass ? (
             <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
-              Send Link
+              {t('SendLink')}
             </Button>
           ) : (
             <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
-              Send Again
+              {t('SendAgain')}
             </Button>
           )}
           <Link href={'/sign-in'}>
@@ -113,7 +111,7 @@ export function ForgotPass() {
               theme={ButtonTheme.CLEAR}
               size={ButtonSize.MIDDLE}
             >
-              Back to Sign In
+              {t('BackToSignIn')}
             </Button>
           </Link>
           <ReCAPTCHA

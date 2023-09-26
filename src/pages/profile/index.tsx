@@ -44,7 +44,7 @@ function Profile() {
             <Button
               className={style.buttonProfileSetting}
               style={language === ShortLangs.RU ? { fontSize: '0.875rem' } : undefined}
-              onClick={() => router.push('profile/general-information')}
+              onClick={() => router.push(`profile/general-information`)}
             >
               {tRoot('ProfileSetting')}
             </Button>
@@ -91,9 +91,13 @@ type PostsProps = {
   url: string
 }
 const Posts: FC<PostsProps> = ({ url }) => {
+  const {
+    i18n: { language },
+  } = useTranslation()
+
   return (
     <div className={style.photoWrapper}>
-      <Link href={'/profile/post'}>
+      <Link href={`${language === ShortLangs.RU ? '/ru' : ''}/profile/post`}>
         <Image src={url} alt={'photo'} width={234} height={228} />
       </Link>
     </div>

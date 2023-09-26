@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 
+import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
 
@@ -14,8 +17,21 @@ import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { CircularLoader } from '@/shared/ui/Loaders/CircularLoader'
 import { Modal } from '@/shared/ui/Modal/Modal'
+import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
+}
 
 const ExpiredVerificationLinkPage = () => {
+  const { t, i18n } = useTranslation('common', { keyPrefix: 'Auth' })
+
   const [resendNewVerificationLink, { isLoading }] = useResendVerificationLinkMutation()
   const [resendVerificationLinkSuccess, setResendVerificationLinkSuccess] = useState(false)
   const callBackCloseWindow = () => setResendVerificationLinkSuccess(false)
@@ -46,19 +62,23 @@ const ExpiredVerificationLinkPage = () => {
     <>
       <Toaster position="top-right" />
       {resendVerificationLinkSuccess && (
-        <Modal title={'New link sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
-          <p>We have sent a new link to your email</p>
+        <Modal title={t('NewLinkSent')} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
+          <p>{t('NewLinkHaveSentEmail')}</p>
         </Modal>
       )}
       {isLoading && <CircularLoader />}
       <div className={styles.expiredContainer}>
-        <h3>Email verification link expired</h3>
-        <p>
-          Looks like the verification link has expired. Not to worry, we can send the link again
-        </p>
+        <h3
+          style={
+            i18n.language === ShortLangs.RU ? { marginBottom: '0', fontSize: '1rem' } : undefined
+          }
+        >
+          {t('EmailVerificationExpired')}
+        </h3>
+        <p>{t('LookLikeVerification')}</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Button theme={ButtonTheme.FILLED} size={ButtonSize.LARGE}>
-            Resend verification link
+            {t('ResendVerificationLink')}
           </Button>
         </form>
         <Image src={broResend} alt={'man waits and looks at clock'} />

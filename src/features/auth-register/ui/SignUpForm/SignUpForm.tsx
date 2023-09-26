@@ -35,6 +35,7 @@ export const SignUpForm = () => {
     t,
     i18n: { t: tRoot },
   } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
 
   const [signUp, { isLoading }] = useSignUpMutation()
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
@@ -43,26 +44,23 @@ export const SignUpForm = () => {
   const schema = yup.object().shape({
     userName: yup
       .string()
-      .min(6, AppErrors.MIN_6_CHARACTERS)
-      .max(20, AppErrors.MAX_30_CHARACTERS)
-      .matches(/^[0-9A-Za-z_-]$/, AppErrors.USERNAME_VALIDATION_ERROR_TEXT)
-      .required(AppErrors.REQUIRED_FIELD),
+      .min(6, tError('MinCharactrers6'))
+      .max(20, tError('MaxCharactrers30'))
+      .matches(/^[0-9A-Za-z_-]$/, tError('UserNameValidationError'))
+      .required(tError('RequiredField')),
     email: yup
       .string()
-      .min(2, AppErrors.MIN_2_CHARACTERS)
-      .email(AppErrors.EMAIL_VALIDATION_ERROR_TEXT)
-      .required(AppErrors.REQUIRED_FIELD),
+      .min(2, tError('MinCharactrers2'))
+      .email(tError('EmailValidationError'))
+      .required(tError('RequiredField')),
     password: yup
       .string()
-      .min(6, AppErrors.MIN_6_CHARACTERS)
-      .max(20, AppErrors.MAX_20_CHARACTERS)
-      .matches(
-        /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
-        AppErrors.PASSWORD_VALIDATION_ERROR_TEXT
-      )
-      .required(AppErrors.REQUIRED_FIELD),
-    passwordConfirmation: yup.string().required(AppErrors.REQUIRED_FIELD),
-    agreement: yup.string().required(AppErrors.REQUIRED_FIELD),
+      .min(6, tError('MinCharactrers6'))
+      .max(20, tError('MaxCharactrers20'))
+      .matches(/^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/, tError('PasswordValidationError'))
+      .required(tError('RequiredField')),
+    passwordConfirmation: yup.string().required(tError('RequiredField')),
+    agreement: yup.string().required(tError('RequiredField')),
   })
 
   const {
