@@ -60,17 +60,12 @@ function Profile() {
               <span className={style.countSubscribers}>2128</span> <br /> {t('Publications')}
             </div>
           </div>
-          <div className={style.description}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </div>
         </div>
-      </div>
-      <div className={style.photosContainer}>
-        {testPhotos.map((photo, i) => (
-          <Posts key={i} url={photo} />
-        ))}
+        <div className={style.photosContainer}>
+          {/* {testPhotos.map((photo, i) => (
+            <Pictures key={i} url={photo} />
+          ))} */}
+        </div>
       </div>
     </div>
   )
@@ -91,13 +86,9 @@ type PostsProps = {
   url: string
 }
 const Posts: FC<PostsProps> = ({ url }) => {
-  const {
-    i18n: { language },
-  } = useTranslation()
-
   return (
     <div className={style.photoWrapper}>
-      <Link href={`${language === ShortLangs.RU ? '/ru' : ''}/profile/post`}>
+      <Link href={`/profile/post`}>
         <Image src={url} alt={'photo'} width={234} height={228} />
       </Link>
     </div>

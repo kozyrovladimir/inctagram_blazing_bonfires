@@ -48,7 +48,9 @@ export const LanguageSelect = () => {
   useEffect(() => {
     const langFromLocal = localStorage.getItem('lang')
 
-    const defaultLang = window.navigator.language.slice(0, 2)
+    const browserLang = window.navigator.language.slice(0, 2)
+    const defaultLang =
+      browserLang === (ShortLangs.RU || ShortLangs.EN) ? browserLang : ShortLangs.EN
 
     if (langFromLocal) {
       setActiveSelect(localStorage.getItem('lang') as ShortLangs)

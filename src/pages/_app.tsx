@@ -6,6 +6,8 @@ import type { AppProps } from 'next/app'
 import { NextPage } from 'next/types'
 import { appWithTranslation } from 'next-i18next'
 
+import { store } from '@/app/providers/StoreProvider'
+import { SideBar } from '@/widgets/SideBar/SideBar'
 import { WithAuth } from '@/shared/hoc/WithAuth/WithAuth'
 import { StoreProvider } from '@/shared/providers/StoreProvider'
 
@@ -22,7 +24,16 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return getLayout(
     <WithAuth>
-      <Component {...pageProps} />
+      <SideBar />
+      <div
+        style={{
+          borderLeft: '1px solid #333333',
+          marginLeft: '220px',
+          minHeight: '100vh',
+        }}
+      >
+        <Component {...pageProps} />
+      </div>
     </WithAuth>
   )
 }

@@ -1,4 +1,11 @@
 {
+  "Home": "Главная",
+  "Create": "Создать",
+  "MyProfile": "Профиль",
+  "Messenger": "Сообщения",
+  "Search": "Поиск",
+  "Statistics": "Статискиа",
+  "Favorites": "Избранное",
   "Description": "Описание",
   "Save": "Сохранить",
   "SaveChanges": "Сохранить",

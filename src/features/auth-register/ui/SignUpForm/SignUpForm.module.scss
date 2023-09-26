@@ -30,7 +30,17 @@
 
 .signUpBtn {
   margin-top: 1rem;
+  &:hover {
+    background-color: var(--color-info-700);
+  }
 }
+
+.signUpBtnDisable {
+  cursor: default;
+  margin-top: 1rem;
+  background-color: var(--color-info-100);
+}
+
 .helpText {
   margin-top: -0.3rem;
 }

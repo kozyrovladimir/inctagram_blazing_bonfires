@@ -1,4 +1,11 @@
 {
+  "Home": "Home",
+  "Create": "Create",
+  "MyProfile": "My Profile",
+  "Messenger": "Messenger",
+  "Search": "Search",
+  "Statistics": "Statistics",
+  "Favorites": "Favorites",
   "Description": "Description",
   "Save": "Save",
   "SaveChanges": "Save Changes",
@@ -72,6 +79,7 @@
     "AccountManagement": "Account Management",
     "MyPayments": "My payments"
   },
+
   "Profile": {
     "Following": "Following",
     "Followers": "Followers",

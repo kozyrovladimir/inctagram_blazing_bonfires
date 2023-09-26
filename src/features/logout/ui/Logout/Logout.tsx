@@ -49,7 +49,7 @@ export const Logout = () => {
 
   return (
     <>
-      <Button className={style.logoutButton} onClick={openModal} theme={ButtonTheme.FILLED}>
+      <Button className={style.logoutButton} onClick={logoutApiHandler}>
         <Image src={logoutImg} alt={''} />
         <span className={style.description}>{t('LogOut')}</span>
       </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { GetStaticProps } from 'next'
@@ -68,6 +68,7 @@ export const SignUpForm = () => {
     register,
     handleSubmit,
     setError,
+    getValues,
     formState: { errors },
     reset,
   } = useForm<FormType | any>({
@@ -91,6 +92,14 @@ export const SignUpForm = () => {
       })
       .catch(error => toast.error(error.data.messages[0].message))
   }
+
+  const isFillField = getValues([
+    'userName',
+    'email',
+    'password',
+    'passwordConfirmation',
+    'agreement',
+  ]).every(e => !!e)
 
   return (
     <>
