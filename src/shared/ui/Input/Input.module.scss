@@ -38,7 +38,8 @@
   border-color: var(--color-info-500);
 }
 .error {
-  font-size: 16px;
+  position: absolute;
+  font-size: var(--font-size-s);
   color: var(--color-danger-500);
   line-height: 24px;
 }

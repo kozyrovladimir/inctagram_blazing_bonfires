@@ -44,11 +44,11 @@ export const Logout = () => {
 
   return (
     <>
-      <Button className={style.logoutButton} onClick={openModal} theme={ButtonTheme.FILLED}>
+      <button className={style.logoutButton} onClick={logoutHandler}>
         <Image src={logoutImg} alt={''} />
         <span className={style.description}>Logout</span>
-      </Button>
-      {isModalOpen && (
+      </button>
+      {isLogout && (
         <Modal
           title={'Log Out'}
           extraButton={'Yes'}
