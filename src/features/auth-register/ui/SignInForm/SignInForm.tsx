@@ -11,14 +11,18 @@ import styles from './SignInForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/OAuth/OAuth'
 import { useLoginMutation, LoginFormType } from '@/shared/api'
+import { AppErrors } from '@/shared/common/errors'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
 
 const schema = yup.object().shape({
-  email: yup.string().email('Invalid email').required('Enter email'),
-  password: yup.string().required('Enter password'),
+  email: yup
+    .string()
+    .email(AppErrors.EMAIL_VALIDATION_ERROR_TEXT)
+    .required(AppErrors.REQUIRED_FIELD),
+  password: yup.string().required(AppErrors.REQUIRED_FIELD),
 })
 
 export const SignInForm = () => {
@@ -64,7 +68,7 @@ export const SignInForm = () => {
       {isLoading && <LinearLoader />}
       <FormContainer title={'Sign In'}>
         <OAuth />
-        <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             name="email"
             control={control}

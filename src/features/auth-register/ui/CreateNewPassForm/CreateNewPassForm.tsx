@@ -1,12 +1,15 @@
 import React from 'react'
 
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
 import { SubmitHandler, useForm, FieldValues } from 'react-hook-form'
+import * as yup from 'yup'
 
 import styles from './CreateNewPassForm.module.scss'
 
 import { useCreateNewPasswordMutation } from '@/shared/api/services/auth/auth.api'
 import { NewPasswordType } from '@/shared/api/services/auth/auth.api.types'
+import { AppErrors } from '@/shared/common/errors'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
@@ -25,6 +28,19 @@ export function CreateNewPassForm() {
   const { query } = router
   const { code } = query
 
+  const schema = yup.object().shape({
+    newPassword: yup
+      .string()
+      .min(6, AppErrors.MIN_6_CHARACTERS)
+      .max(20, AppErrors.MAX_20_CHARACTERS)
+      .matches(
+        /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
+        AppErrors.PASSWORD_VALIDATION_ERROR_TEXT
+      )
+      .required(AppErrors.REQUIRED_FIELD),
+    newPasswordConfirmation: yup.string().required(AppErrors.REQUIRED_FIELD),
+  })
+
   const {
     watch,
     register,
@@ -34,6 +50,7 @@ export function CreateNewPassForm() {
     reset,
   } = useForm<FormType>({
     mode: 'onTouched',
+    resolver: yupResolver(schema),
     defaultValues: {
       newPassword: '',
       newPasswordConfirmation: '',
@@ -71,14 +88,7 @@ export function CreateNewPassForm() {
       <FormContainer title="Create New Password">
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
           <Input
-            {...register('newPassword', {
-              required: 'Password field is required',
-              pattern: {
-                value: /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
-                message:
-                  'Password must contain a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
-              },
-            })}
+            {...register('newPassword')}
             label="Password"
             type={InputType.PASSWORD}
             placeholder="Enter password"
@@ -87,7 +97,6 @@ export function CreateNewPassForm() {
           />
           <Input
             {...register('newPasswordConfirmation', {
-              required: 'Confirm password field is required',
               validate: {
                 value: (value: string) => value === password || 'Passwords do not match',
               },
