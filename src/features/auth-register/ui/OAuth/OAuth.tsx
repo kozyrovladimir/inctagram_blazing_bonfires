@@ -3,6 +3,7 @@ import React from 'react'
 import { useGoogleLogin } from '@react-oauth/google'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { toast } from 'react-hot-toast'
 
 import styles from '@/features/auth-register/ui/OAuth/OAuth.module.scss'
@@ -10,11 +11,12 @@ import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
 
 export const OAuth = () => {
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
   const router = useRouter()
 
   const loginGoogle = useGoogleLogin({
     onSuccess: () => router.push('/profile'),
-    onError: () => toast.error('Something went wrong'),
+    onError: () => toast.error(tError('SomethingWentWrong')),
     flow: 'auth-code',
   })
 

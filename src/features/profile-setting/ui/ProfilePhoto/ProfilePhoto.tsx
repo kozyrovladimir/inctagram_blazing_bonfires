@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
+import { useTranslation } from 'next-i18next'
 
 import styles from './ProfilePhoto.module.scss'
 
@@ -17,6 +18,7 @@ type Props = {
 }
 
 export const ProfilePhoto = ({ outsideOnChange, photoFromServer, deleteAvatar }: Props) => {
+  const { t } = useTranslation()
   const isPhotoFromServer = photoFromServer?.length > 0
   const photoDefaultSRC = (isPhotoFromServer && (photoFromServer[0].url as string)) || noImage
 
@@ -66,7 +68,7 @@ export const ProfilePhoto = ({ outsideOnChange, photoFromServer, deleteAvatar }:
         className={styles.AddPhotoBtn}
         onClick={openModal}
       >
-        Add a Profile Photo
+        {t('AddProfilePhoto')}
       </Button>
 
       {open && <PhotoModal savePhoto={savePhoto} closeWindow={() => setOpen(false)} />}

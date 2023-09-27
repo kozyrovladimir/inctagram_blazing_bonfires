@@ -2,6 +2,7 @@ import React from 'react'
 
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 import { Logout } from '../../features/logout/ui/Logout/Logout'
 import createImage from '../../shared/assets/icons/sideBar/create.svg'
@@ -15,6 +16,7 @@ import statisticsImage from '../../shared/assets/icons/sideBar/statistics.svg'
 import style from './SideBar.module.scss'
 
 export const SideBar = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
 
   return (
@@ -25,11 +27,11 @@ export const SideBar = () => {
         onClick={() => router.push('/')}
       >
         <Image src={homeImage} alt={''} />
-        Home
+        {t('Home')}
       </div>
       <div className={style.linkWrapper}>
         <Image src={createImage} alt={''} />
-        Create
+        {t('Create')}
       </div>
       <div
         style={router.pathname === '/profile' ? { color: '#397DF6' } : {}}
@@ -37,23 +39,23 @@ export const SideBar = () => {
         onClick={() => router.push('/profile')}
       >
         <Image src={myProfileImage} alt={''} />
-        My Profile
+        {t('MyProfile')}
       </div>
       <div className={style.linkWrapper}>
         <Image src={messengerImage} alt={''} />
-        Messenger
+        {t('Messenger')}
       </div>
       <div className={style.linkWrapper}>
         <Image src={searchImage} alt={''} />
-        Search
+        {t('Search')}
       </div>
       <div className={style.linkWrapper}>
         <Image src={statisticsImage} alt={''} />
-        Statistics
+        {t('Statistics')}
       </div>
       <div className={style.linkWrapper}>
         <Image src={favoritesImage} alt={''} />
-        Favorites
+        {t('Favorites')}
       </div>
       <div className={style.linkWrapper}>
         <Logout />

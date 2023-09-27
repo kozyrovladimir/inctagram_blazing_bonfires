@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 }
 
 function Home() {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation()
 
   return (
     <>

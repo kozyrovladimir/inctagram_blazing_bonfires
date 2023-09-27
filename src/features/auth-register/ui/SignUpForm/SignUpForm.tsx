@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import { GetStaticProps } from 'next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
 import * as yup from 'yup'
@@ -28,6 +31,12 @@ type FormType = {
 }
 
 export const SignUpForm = () => {
+  const {
+    t,
+    i18n: { t: tRoot },
+  } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
+
   const [signUp, { isLoading }] = useSignUpMutation()
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const callBackCloseWindow = () => setRegistrationSuccess(false)
@@ -35,26 +44,23 @@ export const SignUpForm = () => {
   const schema = yup.object().shape({
     userName: yup
       .string()
-      .min(6, AppErrors.MIN_6_CHARACTERS)
-      .max(20, AppErrors.MAX_30_CHARACTERS)
-      .matches(/^[0-9A-Za-z_-]$/, AppErrors.USERNAME_VALIDATION_ERROR_TEXT)
-      .required(AppErrors.REQUIRED_FIELD),
+      .min(6, tError('MinCharactrers6'))
+      .max(20, tError('MaxCharactrers30'))
+      .matches(/^[0-9A-Za-z_-]$/, tError('UserNameValidationError'))
+      .required(tError('RequiredField')),
     email: yup
       .string()
-      .min(2, AppErrors.MIN_2_CHARACTERS)
-      .email(AppErrors.EMAIL_VALIDATION_ERROR_TEXT)
-      .required(AppErrors.REQUIRED_FIELD),
+      .min(2, tError('MinCharactrers2'))
+      .email(tError('EmailValidationError'))
+      .required(tError('RequiredField')),
     password: yup
       .string()
-      .min(6, AppErrors.MIN_6_CHARACTERS)
-      .max(20, AppErrors.MAX_20_CHARACTERS)
-      .matches(
-        /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/,
-        AppErrors.PASSWORD_VALIDATION_ERROR_TEXT
-      )
-      .required(AppErrors.REQUIRED_FIELD),
-    passwordConfirmation: yup.string().required(AppErrors.REQUIRED_FIELD),
-    agreement: yup.string().required(AppErrors.REQUIRED_FIELD),
+      .min(6, tError('MinCharactrers6'))
+      .max(20, tError('MaxCharactrers20'))
+      .matches(/^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/, tError('PasswordValidationError'))
+      .required(tError('RequiredField')),
+    passwordConfirmation: yup.string().required(tError('RequiredField')),
+    agreement: yup.string().required(tError('RequiredField')),
   })
 
   const {
@@ -100,36 +106,36 @@ export const SignUpForm = () => {
       <Toaster position="top-right" />
       {isLoading && <LinearLoader />}
       {registrationSuccess && (
-        <Modal title={'Email sent'} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
-          <p>We have sent a link to confirm your email </p>
+        <Modal title={t('EmailSent')} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
+          <p>{t('LinkConfirmYourEmail')} </p>
         </Modal>
       )}
-      <FormContainer title="Sign Up">
+      <FormContainer title={t('SignUp')}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer} noValidate>
           <OAuth />
           <Input
             {...register('userName')}
             type={InputType.TEXT}
-            label="Username"
-            placeholder="Enter name"
+            label={t('UserName')}
+            placeholder={t('EnterName')}
             className={inputStyles.input}
             error={(errors as FieldErrors<FormType>)?.userName?.message}
             disabled={isLoading}
           />
           <Input
             {...register('email')}
-            label="Email"
+            label={t('Email')}
+            placeholder={t('EnterEmail')}
             type={InputType.EMAIL}
-            placeholder="Enter email"
             className={inputStyles.input}
             error={(errors as FieldErrors<FormType>)?.email?.message}
             disabled={isLoading}
           />
           <Input
             {...register('password')}
-            label="Password"
+            label={t('Password')}
+            placeholder={t('EnterPassword')}
             type={InputType.PASSWORD}
-            placeholder="Enter password"
             className={inputStyles.input}
             error={(errors as FieldErrors<FormType>)?.password?.message}
             disabled={isLoading}
@@ -140,9 +146,9 @@ export const SignUpForm = () => {
                 value: (value: string) => value === password || 'Passwords do not match',
               },
             })}
-            label="Password confirmation"
+            label={t('PasswordConfirmation')}
+            placeholder={t('EnterPasswordConfirmation')}
             type={InputType.PASSWORD}
-            placeholder="Enter password confirmation"
             className={inputStyles.input}
             error={(errors as FieldErrors<FormType>)?.passwordConfirmation?.message}
             disabled={isLoading}
@@ -156,33 +162,29 @@ export const SignUpForm = () => {
               disabled={isLoading}
               label={
                 <p className={styles.agreementText}>
-                  I agree to the{' '}
+                  {t('AgreeToThe') + ' '}
                   <Link href="/auth/terms-of-service" className={styles.agreementLink}>
-                    Terms of Service
-                  </Link>{' '}
-                  and{' '}
+                    {t('TermsOfService')}
+                  </Link>
+                  {' ' + tRoot('And') + ' '}
                   <Link href="/auth/privacy-policy" className={styles.agreementLink}>
-                    Privacy Policy
+                    {t('PrivacyPolicy')}
                   </Link>
                 </p>
               }
             />
           </div>
-          <Button
-            className={isFillField ? styles.signUpBtn : styles.signUpBtnDisable}
-            // className={styles.signUpBtnDisable}
-            size={ButtonSize.STRETCHED}
-          >
-            Sign Up
+          <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
+            {t('SignUp')}
           </Button>
-          <p className={styles.helpText}>Do you have an account?</p>
+          <p className={styles.helpText}>{t('HaveAccount?')}</p>
           <Link href={'/sign-in'}>
             <Button
               className={styles.oppositeBtn}
               theme={ButtonTheme.CLEAR}
               size={ButtonSize.SMALL}
             >
-              Sign In
+              {t('SignIn')}
             </Button>
           </Link>
         </form>

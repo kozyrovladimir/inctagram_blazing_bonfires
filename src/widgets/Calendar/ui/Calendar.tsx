@@ -1,6 +1,7 @@
-import React, { useState, forwardRef } from 'react'
+import React, { useState, forwardRef, useEffect } from 'react'
 
 import Image from 'next/image'
+import { useTranslation } from 'next-i18next'
 import DatePicker, { DateObject } from 'react-multi-date-picker'
 import type { Value } from 'react-multi-date-picker'
 
@@ -18,8 +19,23 @@ interface IProps {
 export const Calendar = ({ classNameWrap, data, outsideOnChange }: IProps) => {
   // const minAge = new Date().setFullYear(new Date().getFullYear() - 13)
   // const defaultValue = data?.dateOfBirth ? new Date(data?.dateOfBirth) : new Date(minAge)
+  const { t } = useTranslation('common', { keyPrefix: 'Calendar' })
   const [value, setValue] = useState<Value | undefined>(new Date())
-  const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+  const weekDays = [t('Su'), t('Mo'), t('Tu'), t('We'), t('Th'), t('Fr'), t('Sa')]
+  const months = [
+    t('January'),
+    t('February'),
+    t('March'),
+    t('April'),
+    t('May'),
+    t('June'),
+    t('July'),
+    t('August'),
+    t('September'),
+    t('October'),
+    t('November'),
+    t('December'),
+  ]
 
   return (
     <div className={classNameWrap}>
@@ -29,6 +45,7 @@ export const Calendar = ({ classNameWrap, data, outsideOnChange }: IProps) => {
         value={value}
         monthYearSeparator=" "
         weekDays={weekDays}
+        months={months}
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
         arrow={false}
         showOtherDays
@@ -39,7 +56,7 @@ export const Calendar = ({ classNameWrap, data, outsideOnChange }: IProps) => {
           setValue(date)
           outsideOnChange(date)
         }}
-        weekStartDayIndex={0}
+        weekStartDayIndex={1}
         offsetY={-1}
       />
       <Image src={calendarIcon} alt="calendar" className={styles.calendarIcon} />

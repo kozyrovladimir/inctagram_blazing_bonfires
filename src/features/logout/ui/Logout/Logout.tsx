@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { CircularProgress } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 import style from './Logout.module.scss'
 
@@ -12,6 +13,10 @@ import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
 export const Logout = () => {
+  const {
+    t,
+    i18n: { t: tRoot },
+  } = useTranslation('common', { keyPrefix: 'Auth' })
   const router = useRouter()
 
   const [logout, { isLoading }] = useLogoutMutation()
@@ -44,20 +49,20 @@ export const Logout = () => {
 
   return (
     <>
-      <button className={style.logoutButton} onClick={logoutHandler}>
+      <Button className={style.logoutButton} onClick={logoutApiHandler}>
         <Image src={logoutImg} alt={''} />
-        <span className={style.description}>Logout</span>
-      </button>
-      {isLogout && (
+        <span className={style.description}>{t('LogOut')}</span>
+      </Button>
+      {isModalOpen && (
         <Modal
-          title={'Log Out'}
-          extraButton={'Yes'}
-          mainButton={'No'}
+          title={t('LogOut')}
+          extraButton={tRoot('Yes')}
+          mainButton={tRoot('No')}
           callBackCloseWindow={closeModal}
           extraButtonCB={logoutApiHandler}
         >
-          Are you really want to log out of your account
-          <span className={style.userName}>{userData.email}</span> ?
+          {t('LogOutOfYourAccount')}
+          <span className={style.userName}>{userData && userData.email}</span> ?
         </Modal>
       )}
     </>

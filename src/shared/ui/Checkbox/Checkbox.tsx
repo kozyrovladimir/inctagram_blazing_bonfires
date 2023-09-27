@@ -14,7 +14,7 @@ type Props = {
 export const Checkbox = forwardRef<HTMLInputElement, Props>(
   ({ label, disabled, error, value, ...rest }: Props, ref) => {
     return (
-      <div>
+      <>
         <div className={styles.checkboxWrapper}>
           <input
             value={value}
@@ -27,7 +27,7 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>(
           <label htmlFor="#">{label}</label>
         </div>
         <p className={inputStyles.error}>{error && !value ? error : ''}</p>
-      </div>
+      </>
     )
   }
 )

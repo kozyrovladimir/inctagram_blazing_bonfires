@@ -4,6 +4,7 @@ import { ReactElement, ReactNode } from 'react'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import type { AppProps } from 'next/app'
 import { NextPage } from 'next/types'
+import { appWithTranslation } from 'next-i18next'
 
 import { store } from '@/app/providers/StoreProvider'
 import { SideBar } from '@/widgets/SideBar/SideBar'
@@ -37,7 +38,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   )
 }
 
-export default (props: AppProps) => {
+function myApp(props: AppProps) {
   return (
     <StoreProvider>
       <GoogleOAuthProvider
@@ -48,3 +49,5 @@ export default (props: AppProps) => {
     </StoreProvider>
   )
 }
+
+export default appWithTranslation(myApp)

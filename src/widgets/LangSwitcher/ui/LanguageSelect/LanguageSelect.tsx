@@ -17,7 +17,7 @@ export enum ShortLangs {
 }
 
 export enum FullLangs {
-  RU = 'Russian',
+  RU = 'Русский',
   EN = 'English',
 }
 
@@ -43,11 +43,29 @@ export const LanguageSelect = () => {
 
   const refSelect = useRef<HTMLDivElement | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState(false)
-  const [activeSelect, setActiveSelect] = useState<ShortLangs>(ShortLangs.EN)
+  const [activeSelect, setActiveSelect] = useState<ShortLangs | string | null>(null)
+
+  useEffect(() => {
+    const langFromLocal = localStorage.getItem('lang')
+
+    const browserLang = window.navigator.language.slice(0, 2)
+    const defaultLang =
+      browserLang === (ShortLangs.RU || ShortLangs.EN) ? browserLang : ShortLangs.EN
+
+    if (langFromLocal) {
+      setActiveSelect(localStorage.getItem('lang') as ShortLangs)
+      router.push({ pathname, query }, asPath, { locale: langFromLocal })
+    } else {
+      setActiveSelect(defaultLang)
+      localStorage.setItem('lang', defaultLang)
+      router.push({ pathname, query }, asPath, { locale: defaultLang })
+    }
+  }, [])
 
   const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)
   const changeLanguageHandler = (lang: ShortLangs) => {
     setActiveSelect(lang)
+    localStorage.setItem('lang', lang)
     openSelectHandler()
 
     router.push({ pathname, query }, asPath, { locale: lang })
@@ -78,19 +96,20 @@ export const LanguageSelect = () => {
 
   return (
     <div className={style.select} ref={refSelect}>
-      <div className={style.selectContent} onClick={openSelectHandler}>
-        <OptionContent alt={shortLang} flagImg={flag} description={fullLang} />
-        <Image
-          src={arrow}
-          alt={''}
-          className={style.arrowImg}
-          style={{ transform: isOpenSelect ? 'rotate(180deg)' : 'rotate(0)' }}
-        />
-      </div>
+      {activeSelect && (
+        <div className={style.selectContent} onClick={openSelectHandler}>
+          <OptionContent alt={shortLang} flagImg={flag} description={fullLang} />
+          <Image
+            src={arrow}
+            alt={''}
+            className={style.arrowImg}
+            style={{ transform: isOpenSelect ? 'rotate(180deg)' : 'rotate(0)' }}
+          />
+        </div>
+      )}
       {isOpenSelect && (
         <div className={style.optionList}>
           {langOptions.map(el => (
-            // eslint-disable-next-line react/jsx-key
             <div
               key={el.shortLang}
               className={style.option}

@@ -1,12 +1,24 @@
 import React from 'react'
 
+import { GetStaticProps } from 'next'
 import Image from 'next/image'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import styles from './MergeAccounts.module.scss'
 
 import broImage from '@/shared/assets/icons/login/bro.svg'
 import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
+}
 
 const MergeAccountsPage = () => {
   return (

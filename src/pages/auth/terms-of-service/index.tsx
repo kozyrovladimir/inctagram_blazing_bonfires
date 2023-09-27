@@ -1,20 +1,35 @@
 import React from 'react'
 
+import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import styles from '@/pages/auth/privacy-policy/PrivacyPolicy.module.scss'
 import backIcon from '@/shared/assets/icons/icons/arrowBackIcon.svg'
 import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
+}
+
 export const TermsOfServicePage = () => {
+  const { t } = useTranslation('common', { keyPrefix: 'Auth' })
+
   return (
     <div className={styles.container}>
       <Link href={'/sign-up'} className={styles.backContainer}>
-        <Image src={backIcon} />
-        <p>Back to sign up</p>
+        <Image src={backIcon} alt={'icon row back'} />
+        <p>{t('BackToSignUp')}</p>
       </Link>
-      <p className={styles.articleHeader}>Terms of service</p>
+      <p className={styles.articleHeader}>{t('TermsOfService')}</p>
       <div className={styles.articleContainer}>
         <p className={styles.articleText}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
