@@ -8,7 +8,7 @@ import { useMeQuery } from '../../api/services/auth/auth.api'
 
 import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
 
-const publicPaths = ['/auth/privacy-policy', '/auth/terms-of-service']
+// const publicPaths = []
 
 // const emailConfirmationPaths = [
 // '/auth/expired-verification-link',
@@ -17,16 +17,16 @@ const publicPaths = ['/auth/privacy-policy', '/auth/terms-of-service']
 
 export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
-  const { pathname, asPath, query } = router
+  const { pathname } = router
   const { i18n } = useTranslation()
 
   // check weather url contains private paths
   // if (emailConfirmationPaths.some(paths => paths === pathname)) {
   //   return children
   // }
-  if (publicPaths.some(paths => paths === pathname)) {
-    return children
-  }
+  // if (publicPaths.some(paths => paths === pathname)) {
+  //   return children
+  // }
 
   const { data, error, isLoading, isError } = useMeQuery({})
 
