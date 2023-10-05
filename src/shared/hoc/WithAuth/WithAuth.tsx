@@ -10,10 +10,10 @@ import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSel
 
 // const publicPaths = []
 
-// const emailConfirmationPaths = [
-// '/auth/expired-verification-link',
-// '/auth/registration-confirmation',
-// ]
+const emailConfirmationPaths = [
+  '/auth/expired-verification-link',
+  '/auth/registration-confirmation',
+]
 
 export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
@@ -21,9 +21,9 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   const { i18n } = useTranslation()
 
   // check weather url contains private paths
-  // if (emailConfirmationPaths.some(paths => paths === pathname)) {
-  //   return children
-  // }
+  if (emailConfirmationPaths.some(paths => paths === pathname)) {
+    return children
+  }
   // if (publicPaths.some(paths => paths === pathname)) {
   //   return children
   // }
