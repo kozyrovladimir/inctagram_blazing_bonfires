@@ -12,6 +12,8 @@ import { PostModal } from '@/features/profile-setting'
 import CropProvider from '@/features/profile-setting/ui/profilePostModal/cropper/CropProvider'
 import { SwiperSlider } from '@/features/profile-setting/ui/profilePostModal/slider/SwiperSlider'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
+import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
+import Index from "@/features/profile-setting/ui/newPostModal";
 
 function Profile() {
   const router = useRouter()
@@ -38,10 +40,24 @@ function Profile() {
               >
                 Profile Setting{' '}
               </Button>
-              <Button size={ButtonSize.SMALL} onClick={openModal}>
-                Create
-              </Button>
-              {open && <PostModal closeWindow={() => setOpen(false)} />}
+              {/*<Button size={ButtonSize.SMALL} onClick={openModal}>*/}
+              {/*  Create*/}
+              {/*</Button>*/}
+              {/*{open && <PostModal closeWindow={() => setOpen(false)} />}*/}
+              {/*test components*/}
+              {/*<Button size={ButtonSize.SMALL} onClick={openModal}>*/}
+              {/*  Create new*/}
+              {/*</Button>*/}
+              {/*<NewPostModal*/}
+              {/*  title={'Test title'}*/}
+              {/*  isOpen={open}*/}
+              {/*  setIsOpen={setOpen}*/}
+              {/*  left={<div>Left</div>}*/}
+              {/*  right={<div>Right</div>}*/}
+              {/*>*/}
+              {/*  <span>Some test modal content</span>*/}
+              {/*</NewPostModal>*/}
+              <Index/>
             </div>
             <div className={style.subscribersContainer}>
               <div>

@@ -46,6 +46,7 @@
     "react-multi-date-picker": "^4.1.2",
     "react-query": "^3.39.3",
     "react-redux": "^8.1.2",
+    "react-use-wizard": "^2.2.3",
     "redux": "^4.2.1",
     "swiper": "^10.2.0",
     "typescript": "5.1.6",
