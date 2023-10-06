@@ -5,7 +5,7 @@ import {
   AddPostContext
 } from "@/features/profile-setting/ui/newPostModal/context/AddPostContenx";
 import Image from "next/image";
-import backIcon from '../../../../../shared/assets/icons/arrow back/back.svg';
+import backIcon from '@/shared/assets/icons/arrow back/back.svg';
 
 export const Filters = () => {
   const Context = React.useContext(AddPostContext);

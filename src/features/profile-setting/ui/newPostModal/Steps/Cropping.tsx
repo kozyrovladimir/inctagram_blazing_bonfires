@@ -1,7 +1,7 @@
 import React from "react";
 import { useWizard } from 'react-use-wizard';
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
-import backIcon from '../../../../../shared/assets/icons/arrow back/back.svg';
+import backIcon from '@/shared/assets/icons/arrow back/back.svg';
 import {
   AddPostContext
 } from "@/features/profile-setting/ui/newPostModal/context/AddPostContenx";
