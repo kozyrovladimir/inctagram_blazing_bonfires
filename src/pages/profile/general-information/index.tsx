@@ -3,7 +3,7 @@ import React from 'react'
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { ProfileSetting } from '@/features/profile-setting'
+import { GeneralInfo } from '@/features/profile-setting/'
 import { settingLayout } from '@/shared/layouts/ProfileLayout/SettingLayout'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 function GeneralInformation() {
   return (
     <>
-      <ProfileSetting />
+      <GeneralInfo />
     </>
   )
 }

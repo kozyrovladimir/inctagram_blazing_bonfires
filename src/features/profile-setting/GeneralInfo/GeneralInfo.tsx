@@ -88,7 +88,7 @@ export const GeneralInfo = () => {
       firstName: profileData?.firstName ?? '',
       lastName: profileData?.lastName ?? '',
       city: profileData?.city ?? '',
-      dateOfBirth: profileData?.dateOfBirth ?? undefined,
+      dateOfBirth: profileData?.dateOfBirth ?? new Date(),
       aboutMe: profileData?.aboutMe ?? '',
     },
   })
@@ -113,6 +113,7 @@ export const GeneralInfo = () => {
         }
       })
       .catch(error => {
+        console.log(error)
         if (error && error.data) {
           const { statusCode } = error.data
 
@@ -266,7 +267,9 @@ export const GeneralInfo = () => {
           <div className={styles.footer}>
             <div className={styles.line}></div>
           </div>
-          <Button className={styles.button}>{tRoot('SaveChanges')}</Button>
+          <Button onClick={() => console.log(1)} className={styles.button}>
+            {tRoot('SaveChanges')}
+          </Button>
         </form>
       )}
     </>
