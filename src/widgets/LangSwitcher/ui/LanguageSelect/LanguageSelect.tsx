@@ -43,21 +43,24 @@ export const LanguageSelect = () => {
 
   const refSelect = useRef<HTMLDivElement | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState(false)
-  const [activeSelect, setActiveSelect] = useState<ShortLangs | string | null>(null)
+  const [activeSelect, setActiveSelect] = useState<ShortLangs | string>(ShortLangs.EN)
 
   useEffect(() => {
-    const langFromLocal = localStorage.getItem('lang')
+    const langFromLocal = localStorage.getItem('i18nextLng')
 
     const browserLang = window.navigator.language.slice(0, 2)
     const defaultLang =
       browserLang === (ShortLangs.RU || ShortLangs.EN) ? browserLang : ShortLangs.EN
 
     if (langFromLocal) {
-      setActiveSelect(localStorage.getItem('lang') as ShortLangs)
-      router.push({ pathname, query }, asPath, { locale: langFromLocal })
+      setActiveSelect(langFromLocal)
+
+      if (pathname !== ('/auth/registration-confirmation' || '/auth/expired-verification-link')) {
+        router.push({ pathname, query }, asPath, { locale: langFromLocal })
+      }
     } else {
       setActiveSelect(defaultLang)
-      localStorage.setItem('lang', defaultLang)
+      localStorage.setItem('i18nextLng', defaultLang)
       router.push({ pathname, query }, asPath, { locale: defaultLang })
     }
   }, [])
@@ -65,7 +68,7 @@ export const LanguageSelect = () => {
   const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)
   const changeLanguageHandler = (lang: ShortLangs) => {
     setActiveSelect(lang)
-    localStorage.setItem('lang', lang)
+    localStorage.setItem('i18nextLng', lang)
     openSelectHandler()
 
     router.push({ pathname, query }, asPath, { locale: lang })

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'

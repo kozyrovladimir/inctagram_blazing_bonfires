@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { useVerifyEmailMutation } from '@/shared/api'
 import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
 import { CircularLoader } from '@/shared/ui/Loaders/CircularLoader'
+import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
 
 export const RegistrationConfirmation = () => {
   const [verifyEmail] = useVerifyEmailMutation()
@@ -13,7 +14,11 @@ export const RegistrationConfirmation = () => {
   const { code, email } = query
 
   useEffect(() => {
+    const langFromLocal = localStorage.getItem('i18nextLng')
+
     if (code) {
+      const lang = langFromLocal === ShortLangs.RU ? `/ru` : ''
+
       verifyEmail(code)
         .unwrap()
         .then(() => router.push(`/auth/confirmed-email`))

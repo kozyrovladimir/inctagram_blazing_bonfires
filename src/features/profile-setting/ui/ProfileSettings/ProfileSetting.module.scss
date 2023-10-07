@@ -39,8 +39,11 @@
   background: transparent;
   border: 1px solid var(--color-dark-300);
   padding: 10px;
-  resize: vertical;
   resize: none;
+  outline: none;
+  &:focus {
+    border-color: var(--color-info-500);
+  }
 }
 
 .footer {

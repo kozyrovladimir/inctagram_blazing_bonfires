@@ -28,8 +28,7 @@ export const profileApi = createApi({
             headers: {
               Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
             },
-            url: 'users/profile',
-            params: { id },
+            url: `users/profile/${id}`,
           }
         },
         providesTags: ['dataProfile'],

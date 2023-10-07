@@ -27,8 +27,10 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   // if (publicPaths.some(paths => paths === pathname)) {
   //   return children
   // }
-
   const { data, error, isLoading, isError } = useMeQuery({})
+
+  // console.log(error)
+  // console.log(isError)
 
   if (isError) {
     // if to use router.push will be infinite rerenders. Instead of it needs to use window.history.pushState to prevent rerenders
@@ -55,6 +57,7 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
         pageUnautorization = '/auth/expired-verification-link'
         break
     }
+
     const newUrl =
       window.location.origin +
       `${i18n.language === ShortLangs.RU ? '/ru' : ''}` +
