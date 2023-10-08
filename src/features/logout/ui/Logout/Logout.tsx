@@ -9,10 +9,16 @@ import style from './Logout.module.scss'
 
 import { useLogoutMutation, useMeQuery } from '@/shared/api'
 import logoutImg from '@/shared/assets/icons/logout/logout.svg'
-import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Modal } from '@/shared/ui/Modal/Modal'
 
-export const Logout = () => {
+interface ButtonProps {
+  className?: string
+  theme?: ButtonTheme
+  size?: ButtonSize
+}
+
+export const Logout = ({ className, theme, size }: ButtonProps) => {
   const {
     t,
     i18n: { t: tRoot },
@@ -49,7 +55,12 @@ export const Logout = () => {
 
   return (
     <>
-      <Button className={style.logoutButton} onClick={logoutApiHandler}>
+      <Button
+        className={`${style.logoutButton} ${className}`}
+        theme={theme}
+        size={size}
+        onClick={logoutApiHandler}
+      >
         <Image src={logoutImg} alt={''} />
         <span className={style.description}>{t('LogOut')}</span>
       </Button>

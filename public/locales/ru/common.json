@@ -93,6 +93,11 @@
     "City": "Город",
     "AboutMe": "Обо мне"
   },
+  "Devices": {
+    "ThisDevices": "Это устройство",
+    "TerminateAllSession": "Завершить другие сеансы",
+    "ActiveSessions": "Активные сеансы"
+  },
   "Calendar": {
     "January": "Январь",
     "February": "Февраль",

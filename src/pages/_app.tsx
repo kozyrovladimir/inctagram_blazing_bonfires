@@ -47,7 +47,6 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
         style={
           isSidebar
             ? {
-                borderLeft: '1px solid #333333',
                 marginLeft: '220px',
                 minHeight: '100vh',
               }

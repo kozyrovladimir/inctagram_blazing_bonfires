@@ -1,16 +1,23 @@
 import { useCallback, useEffect, useState } from 'react'
 
+import { useTranslation } from 'next-i18next'
 import { UAParser } from 'ua-parser-js'
 
+import { Device } from '../ui/Device/device'
+
+import styles from './Devices.module.scss'
+
 import { useGetIpQuery } from '@/shared/api/services/profile/ip.api'
-import IconApple from '@/shared/assets/icons/devices/apple.svg'
-import { SvgGenerator } from '@/shared/utils/svgGenerator'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 
 export function Devices() {
-  const [test, setTest] = useState(0)
-  const [userAgent, setUserAgent] = useState<object | null>(null)
+  const { t } = useTranslation('common', { keyPrefix: 'Devices' })
 
-  const { data } = useGetIpQuery()
+  const [userAgent, setUserAgent] = useState<object | null>(null)
+  const [os, setOs] = useState('unknow')
+  const [device, setDevice] = useState('unknow')
+
+  const { data, isLoading } = useGetIpQuery()
 
   const getUserDevice = useCallback(() => {
     const ua = window.navigator.userAgent
@@ -18,10 +25,9 @@ export function Devices() {
     const parser = new UAParser(ua)
 
     setUserAgent(parser.getResult())
-    // getBrowser()
-    // getDevice()
-    // getEngine()
-    // getOS()
+
+    setOs(parser.getOS().name ?? 'unknow')
+    setDevice(parser.getDevice().model ?? 'unknow')
   }, [])
 
   useEffect(() => {
@@ -29,17 +35,26 @@ export function Devices() {
   }, [])
 
   return (
-    <>
-      {data && <div> {JSON.stringify(data)}</div>}
-      <div>{test}</div>
-      <button
-        style={{ height: '2rem', width: '3rem', color: 'black' }}
-        onClick={() => setTest(test + 1)}
-      >
-        +1
-      </button>
-      <IconApple height="100" width="100" fill="green" stroke="black" />
+    <div className={styles.container}>
+      <section>
+        <h4> {t('ThisDevices')}</h4>
+        <Device
+          os={os}
+          device={device}
+          ip={!isLoading ? data?.ip : 'Identification...'}
+          isNotCurrent={false}
+        />
+      </section>
+      <Button className={styles.terminateBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.LARGE}>
+        {t('TerminateAllSession')}
+      </Button>
+      <section>
+        <h4> {t('ActiveSessions')}</h4>
+        <Device os={os} device={device} ip={!isLoading ? data?.ip : 'Identification...'} />
+        <Device os={os} device={device} ip={!isLoading ? data?.ip : 'Identification...'} />
+        <Device os={os} device={device} ip={!isLoading ? data?.ip : 'Identification...'} />
+      </section>
       <p>{JSON.stringify(userAgent)}</p>
-    </>
+    </div>
   )
 }

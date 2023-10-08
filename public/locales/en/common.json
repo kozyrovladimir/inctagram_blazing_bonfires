@@ -94,6 +94,11 @@
     "City": "City",
     "AboutMe": "About me"
   },
+  "Devices": {
+    "ThisDevices": "This devices",
+    "TerminateAllSession": "Terminate all other session",
+    "ActiveSessions": "Active sessions"
+  },
   "Calendar": {
     "January": "January",
     "February": "February",

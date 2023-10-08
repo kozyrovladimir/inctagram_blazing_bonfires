@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
+import { Devices } from '@/features/profile-setting/Devices/Devices'
 import { settingLayout } from '@/shared/layouts/ProfileLayout/SettingLayout'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
@@ -13,9 +14,9 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   }
 }
 
-function Devices() {
-  return <div>Devices</div>
+function DevicesPage() {
+  return <Devices />
 }
 
-Devices.getLayout = settingLayout
-export default Devices
+DevicesPage.getLayout = settingLayout
+export default DevicesPage
