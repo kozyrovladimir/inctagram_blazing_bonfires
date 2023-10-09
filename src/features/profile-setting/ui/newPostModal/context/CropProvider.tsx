@@ -12,11 +12,10 @@ type CropType = {
 
 export type PhotoType = {
   url: string;
-  crop: CropType;
+  crop: CropImageType;
   aspectRatio: number;
   isOriginal: boolean;
   isImageCropped: boolean;
-  image: HTMLImageElement | null;
   croppedImage: string | null;
   zoom: number;
   originalAspectRatio: number;

@@ -15,8 +15,13 @@ import {
 import {
   processImageFiles
 } from "@/features/profile-setting/ui/newPostModal/utils/processImageFiles";
+import { useDispatch } from "react-redux";
+import {
+  setPhotos
+} from "@/features/profile-setting/ui/newPostModal/reducers/photos.slice";
 
 export const AddPhoto = () => {
+  const dispatch = useDispatch();
   const {nextStep} = useWizard();
   const {isOpen, setIsOpen} = useAddPostContext();
 
@@ -38,14 +43,13 @@ export const AddPhoto = () => {
             aspectRatio: aspectRatio,
             isOriginal: true,
             isImageCropped: false,
-            image: image,
             croppedImage: null,
             zoom: 1,
             originalAspectRatio: aspectRatio,
             id: Math.random().toString(),
           }
         })
-        setPhotosArray(photos)
+        dispatch(setPhotos({photos}))
         nextStep()
       }
     )
