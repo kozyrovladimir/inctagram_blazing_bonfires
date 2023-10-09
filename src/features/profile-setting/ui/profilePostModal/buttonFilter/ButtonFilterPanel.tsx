@@ -5,7 +5,7 @@ import Image from 'next/image'
 import style from './ButtonFilterPanel.module.scss'
 
 import { ModalButton } from '@/features/profile-setting'
-import { useImageCropContext } from '@/features/profile-setting/ui/profilePostModal/cropper/CropProvider'
+import { useImageCropContext } from '@/features/profile-setting/ui/newPostModal/context/CropProvider'
 import { SliderItems } from '@/features/profile-setting/ui/profilePostModal/slider/SliderItems'
 import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
 import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
