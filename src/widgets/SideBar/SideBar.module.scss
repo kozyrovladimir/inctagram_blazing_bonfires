@@ -4,9 +4,9 @@
   align-items: center;
   justify-content: flex-start;
   width: 220px;
-  padding-top: 150px;
-
+  padding-top: 3.75rem;
   position: fixed;
+  border-right: 1px solid var(--color-dark-600);
   top: 0px;
   bottom: 0;
 
@@ -26,6 +26,9 @@
     letter-spacing: 0em;
     text-align: left;
     cursor: pointer;
+    &:first-child {
+      margin-top: 4.5rem;
+    }
     &:nth-child(6) {
       margin-top: 60px;
     }
@@ -36,4 +39,5 @@
       margin-right: 10px;
     }
   }
+
 }

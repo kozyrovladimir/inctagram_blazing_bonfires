@@ -46,12 +46,15 @@ export const SignUpForm = () => {
       .string()
       .min(6, tError('MinCharactrers6'))
       .max(20, tError('MaxCharactrers30'))
-      .matches(/^[0-9A-Za-z_-]$/, tError('UserNameValidationError'))
+      .matches(/^[0-9A-Za-z_-]{6,20}$/, tError('UserNameValidationError'))
       .required(tError('RequiredField')),
     email: yup
       .string()
       .min(2, tError('MinCharactrers2'))
-      .email(tError('EmailValidationError'))
+      .matches(
+        /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]+.)+([a-zA-Z]{2,})$/,
+        tError('EmailValidationError')
+      )
       .required(tError('RequiredField')),
     password: yup
       .string()

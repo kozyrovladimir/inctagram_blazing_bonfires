@@ -8,22 +8,22 @@ import { useTranslation } from 'next-i18next'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
-import styles from './ProfileSetting.module.scss'
+import { ProfilePhoto } from '../ui/ProfilePhoto/ProfilePhoto'
 
-import { ProfilePhoto } from '@/features/profile-setting/ui/ProfilePhoto/ProfilePhoto'
+import styles from './GeneralInfo.module.scss'
+
 import { useGetProfileQuery, useUpdateProfileMutation, useMeQuery } from '@/shared/api'
 import {
   useDeleteAvatarMutation,
   useUpdateAvatarMutation,
 } from '@/shared/api/services/profile/profile.api'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
-import { AppErrors } from '@/shared/common/errors'
 import { Button } from '@/shared/ui/Button/Button'
 import { CircularProgressLoader } from '@/shared/ui/CircularProgressLoader/CircularProgressLoader'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import { Calendar } from '@/widgets/Calendar/ui/Calendar'
 
-export const ProfileSetting = () => {
+export const GeneralInfo = () => {
   const {
     t,
     i18n: { t: tRoot },
@@ -52,23 +52,23 @@ export const ProfileSetting = () => {
       .string()
       .min(6, tError('MinCharactrers6'))
       .max(20, tError('MaxCharactrers30'))
-      .matches(/^[0-9A-Za-z_-]$/, tError('UserNameValidationError'))
+      .matches(/[0-9A-Za-z_-]{6,20}$/, tError('UserNameValidationError'))
       .required(tError('RequiredField')),
     firstName: yup
       .string()
       .min(1, tError('MinCharactrers1'))
       .max(50, tError('MaxCharactrers50'))
-      .matches(/^([A-ZА-Я])+([a-zа-я])$/, tError('SrartLatterNotSpecial')),
+      .matches(/^[A-ZА-Я][a-z]{1,50}$/, tError('SrartLatterNotSpecial')),
     lastName: yup
       .string()
       .min(1, tError('MinCharactrers1'))
       .max(50, tError('MaxCharactrers50'))
-      .matches(/^([A-ZА-Я])+([a-zа-я])$/, tError('SrartLatterNotSpecial')),
+      .matches(/^[A-ZА-Я][a-z]{1,50}$/, tError('SrartLatterNotSpecial')),
     city: yup
       .string()
       .min(2, tError('MinCharactrers2'))
       .max(30, tError('MaxCharactrers30'))
-      .matches(/^([A-ZА-Я])+([a-zа-я])$/, tError('SrartLatterNotSpecial')),
+      .matches(/^[A-ZА-Я][a-z]{2,30}$/, tError('SrartLatterNotSpecial')),
     dateOfBirth: yup.date(),
     aboutMe: yup.string().max(200, tError('MaxCharactrers200')),
   })
@@ -88,7 +88,7 @@ export const ProfileSetting = () => {
       firstName: profileData?.firstName ?? '',
       lastName: profileData?.lastName ?? '',
       city: profileData?.city ?? '',
-      dateOfBirth: profileData?.dateOfBirth ?? undefined,
+      dateOfBirth: profileData?.dateOfBirth ?? new Date(),
       aboutMe: profileData?.aboutMe ?? '',
     },
   })
@@ -113,6 +113,7 @@ export const ProfileSetting = () => {
         }
       })
       .catch(error => {
+        console.log(error)
         if (error && error.data) {
           const { statusCode } = error.data
 
@@ -266,7 +267,9 @@ export const ProfileSetting = () => {
           <div className={styles.footer}>
             <div className={styles.line}></div>
           </div>
-          <Button className={styles.button}>{tRoot('SaveChanges')}</Button>
+          <Button onClick={() => console.log(1)} className={styles.button}>
+            {tRoot('SaveChanges')}
+          </Button>
         </form>
       )}
     </>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
@@ -25,10 +25,15 @@ export function CreateNewPassForm() {
   const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation()
   const { t } = useTranslation('common', { keyPrefix: 'Auth' })
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
+  const [codeRecovery, setCodeRecovery] = useState('')
 
   const router = useRouter()
   const { query } = router
   const { code } = query
+
+  useEffect(() => {
+    if (code) setCodeRecovery(code as string)
+  }, [code])
 
   const schema = yup.object().shape({
     newPassword: yup
@@ -62,7 +67,7 @@ export function CreateNewPassForm() {
     if (!data) {
       throw new Error('data is undefined')
     } else {
-      data.recoveryCode = code
+      data.recoveryCode = codeRecovery
     }
 
     createNewPassword(data)
@@ -106,7 +111,7 @@ export function CreateNewPassForm() {
             className={inputStyles.input}
             error={errors.newPasswordConfirmation && errors.newPasswordConfirmation?.message}
           />
-          <p className={styles.createPassHelpText}>{tError('PasswordMin6Max20')}</p>
+          {/* <p className={styles.createPassHelpText}>{tError('PasswordMin6Max20')}</p> */}
 
           <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
             {t('CreateNewPassword')}

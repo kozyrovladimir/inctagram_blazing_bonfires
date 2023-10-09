@@ -24,14 +24,26 @@ export const SignInForm = () => {
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
 
   const schema = yup.object().shape({
-    email: yup.string().email(tError('EmailValidationError')).required(tError('RequiredField')),
-    password: yup.string().required(tError('RequiredField')),
+    email: yup
+      .string()
+      .min(2, tError('MinCharactrers2'))
+      .matches(
+        /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]+.)+([a-zA-Z]{2,})$/,
+        tError('EmailValidationError')
+      )
+      .required(tError('RequiredField')),
+    password: yup
+      .string()
+      .min(6, tError('MinCharactrers6'))
+      .max(20, tError('MaxCharactrers20'))
+      .required(tError('RequiredField')),
   })
 
   const [passwordError, setPasswordError] = useState<string>('')
   const [emailError, setEmailError] = useState<string>('')
   const [login, { isLoading }] = useLoginMutation()
   const router = useRouter()
+
   const {
     control,
     handleSubmit,

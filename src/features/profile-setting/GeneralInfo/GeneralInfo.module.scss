@@ -13,7 +13,6 @@
   align-items: flex-start;
   justify-content: space-between;
 
-
   label {
     margin-top: 24px;
     display: flex;
@@ -40,7 +39,10 @@
   border: 1px solid var(--color-dark-300);
   padding: 10px;
   resize: vertical;
-  resize: none;
+  outline: none;
+  &:focus {
+    border-color: var(--color-info-500);
+  }
 }
 
 .footer {

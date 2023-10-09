@@ -1,15 +1,16 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
-import { authApi, profileApi } from '../../../api'
+import { authApi, profileApi, ipApi } from '../../../api'
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
+    [ipApi.reducerPath]: ipApi.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(authApi.middleware).concat(profileApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware, profileApi.middleware, ipApi.middleware),
 })
 
 setupListeners(store.dispatch)

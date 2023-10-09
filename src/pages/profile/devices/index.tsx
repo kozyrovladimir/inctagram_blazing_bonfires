@@ -1,8 +1,22 @@
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+import { Devices } from '@/features/profile-setting/Devices/Devices'
 import { settingLayout } from '@/shared/layouts/ProfileLayout/SettingLayout'
 
-function Devices() {
-  return <div>Devices</div>
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
 }
 
-Devices.getLayout = settingLayout
-export default Devices
+function DevicesPage() {
+  return <Devices />
+}
+
+DevicesPage.getLayout = settingLayout
+export default DevicesPage

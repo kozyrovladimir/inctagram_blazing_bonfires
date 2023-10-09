@@ -20,7 +20,7 @@ export const SideBar = () => {
   const router = useRouter()
 
   return (
-    <div className={style.sideBarContainer}>
+    <aside className={style.sideBarContainer}>
       <div
         style={router.pathname === '/' ? { color: '#397DF6' } : {}}
         className={style.linkWrapper}
@@ -60,6 +60,6 @@ export const SideBar = () => {
       <div className={style.linkWrapper}>
         <Logout />
       </div>
-    </div>
+    </aside>
   )
 }

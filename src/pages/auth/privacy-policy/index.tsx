@@ -25,7 +25,7 @@ const PrivacyPolicyPage = () => {
   const { t } = useTranslation('common', { keyPrefix: 'Auth' })
 
   return (
-    <div>
+    <>
       <div className={styles.container}>
         <Link href={'/sign-up'} className={styles.backContainer}>
           <Image src={backIcon} alt={'icon row back'} />
@@ -104,7 +104,7 @@ const PrivacyPolicyPage = () => {
           </p>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

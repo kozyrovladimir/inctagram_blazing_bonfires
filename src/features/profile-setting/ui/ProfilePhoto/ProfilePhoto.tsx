@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 
 import styles from './ProfilePhoto.module.scss'
 
-import { PhotoModal } from '@/features/profile-setting'
+import { PhotoModal } from '@/features/profile-setting/ui/PhotoModal/PhotoModal'
 import { AvatarsType } from '@/shared/api/services/profile/profile.api.types'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'

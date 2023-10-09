@@ -10,10 +10,10 @@ import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSel
 
 // const publicPaths = []
 
-// const emailConfirmationPaths = [
-// '/auth/expired-verification-link',
-// '/auth/registration-confirmation',
-// ]
+const emailConfirmationPaths = [
+  '/auth/expired-verification-link',
+  '/auth/registration-confirmation',
+]
 
 export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
@@ -21,14 +21,16 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   const { i18n } = useTranslation()
 
   // check weather url contains private paths
-  // if (emailConfirmationPaths.some(paths => paths === pathname)) {
-  //   return children
-  // }
+  if (emailConfirmationPaths.some(paths => paths === pathname)) {
+    return children
+  }
   // if (publicPaths.some(paths => paths === pathname)) {
   //   return children
   // }
-
   const { data, error, isLoading, isError } = useMeQuery({})
+
+  // console.log(error)
+  // console.log(isError)
 
   if (isError) {
     // if to use router.push will be infinite rerenders. Instead of it needs to use window.history.pushState to prevent rerenders
@@ -55,6 +57,7 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
         pageUnautorization = '/auth/expired-verification-link'
         break
     }
+
     const newUrl =
       window.location.origin +
       `${i18n.language === ShortLangs.RU ? '/ru' : ''}` +
