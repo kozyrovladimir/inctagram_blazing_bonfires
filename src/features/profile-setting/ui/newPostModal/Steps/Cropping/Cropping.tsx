@@ -3,7 +3,7 @@ import { useWizard } from 'react-use-wizard';
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
 import backIcon from '@/shared/assets/icons/arrow back/back.svg';
 import {
-  AddPostContext
+  AddPostContext, useAddPostContext
 } from "@/features/profile-setting/ui/newPostModal/context/AddPostContenx";
 import Image from "next/image";
 import Cropper from 'react-easy-crop';
@@ -15,10 +15,8 @@ import { ButtonFilterPanel } from "@/features/profile-setting";
 import { classNames } from "@/shared/libs/classNames/classNames";
 
 export const Cropping = () => {
-  const Context = React.useContext(AddPostContext);
+  const {isOpen, setIsOpen} = useAddPostContext();
   const {nextStep, previousStep} = useWizard();
-  // need to check if context is null
-  if (!Context) return null;
 
   const {
     croppedImage,
@@ -32,8 +30,8 @@ export const Cropping = () => {
     setIsModalOpen,
     image,
     originalAspectRatio,
+    photosArray,
   } = useImageCropContext()
-  const {isOpen, setIsOpen} = Context;
 
   const imageClasses = classNames(style.croppedImage, {
     [style.imageFullWidth]: aspectRatio >= 1,
@@ -43,8 +41,8 @@ export const Cropping = () => {
   return (
     <NewPostModal isOpen={isOpen} title={'Cropping'} setIsOpen={setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
       <div className={style.container}>
-        {image && <Cropper
-          image={image || undefined}
+        {photosArray.length && <Cropper
+          image={photosArray[0].url || undefined}
           aspect={isOriginal ? originalAspectRatio : aspectRatio}
           crop={crop}
           onCropChange={setCrop}

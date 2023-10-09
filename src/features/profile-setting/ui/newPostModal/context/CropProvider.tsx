@@ -10,6 +10,19 @@ type CropType = {
   y: number
 }
 
+export type PhotoType = {
+  url: string;
+  crop: CropType;
+  aspectRatio: number;
+  isOriginal: boolean;
+  isImageCropped: boolean;
+  image: HTMLImageElement | null;
+  croppedImage: string | null;
+  zoom: number;
+  originalAspectRatio: number;
+  id: string;
+};
+
 type CropImageType = {
   x: number
   y: number
@@ -53,6 +66,8 @@ type CropContextType = {
   thumbsSwiper: any
   isSliderOpen: boolean
   setIsSliderOpen: React.Dispatch<React.SetStateAction<boolean>>
+  photosArray: PhotoType[]
+  setPhotosArray: React.Dispatch<React.SetStateAction<PhotoType[]>>
 }
 
 export const CropContext = createContext<CropContextType | undefined>(undefined)
@@ -62,6 +77,8 @@ type Props = {
 }
 
 const CropProvider: React.FC<Props> = ({ children }) => {
+  const [photosArray, setPhotosArray] = useState<PhotoType[]>([])
+
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [originalAspectRatio, setOriginalAspectRatio] = useState(1)
   const [aspectRatio, setAspectRatio] = useState(originalAspectRatio)
@@ -176,6 +193,9 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         thumbsSwiper,
         isSliderOpen,
         setIsSliderOpen,
+
+        photosArray,
+        setPhotosArray,
       }}
     >
       {children}
@@ -183,7 +203,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   )
 }
 
-export const useImageCropContext = (): CropContextType => {
+export const useImageCropContext = () => {
   const context = useContext(CropContext)
 
   if (!context) {

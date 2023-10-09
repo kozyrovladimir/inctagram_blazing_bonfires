@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
 import {
-  AddPostContext
+  AddPostContext, useAddPostContext
 } from "@/features/profile-setting/ui/newPostModal/context/AddPostContenx";
 import closeIcon from '@/shared/assets/icons/logout/close.svg';
 import mockupPhoto from '@/shared/assets/icons/avatarProfile/notPhoto.png'
@@ -13,51 +13,48 @@ import {
   useImageCropContext
 } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
 import {
-  readFile
-} from "@/features/profile-setting/ui/profilePostModal/cropper/GetCroppedImage";
+  processImageFiles
+} from "@/features/profile-setting/ui/newPostModal/utils/processImageFiles";
 
 export const AddPhoto = () => {
-  const Context = React.useContext(AddPostContext);
   const {nextStep} = useWizard();
-  // need to check if context is null
-  if (!Context) return null;
+  const {isOpen, setIsOpen} = useAddPostContext();
 
-  const {isOpen, setIsOpen} = Context;
-
-  const { setImage, setOriginalAspectRatio, photos, thumbsSwiper, setPhotos } =
-    useImageCropContext()
+  const { setPhotosArray} = useImageCropContext()
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
-    const file = files && files[0]
+    if (!files) return
 
-    if (file) {
-      const image: HTMLImageElement = new Image()
-
-      const imageDataUrl = await readFile(file)
-
-      image.src = imageDataUrl
-
-      console.log('imageDataUrl', imageDataUrl)
-
-      image.onload = () => {
-        const aspectRatio = image.width / image.height
-
-        setOriginalAspectRatio(aspectRatio)
-        setImage(imageDataUrl)
-        setPhotos([{ url: imageDataUrl }, ...photos])
+    processImageFiles(Array.from(files)).then(
+      (imageDataUrls) => {
+        const photos = imageDataUrls.map((url) => {
+          const image: HTMLImageElement = new Image();
+          image.src = url;
+          const aspectRatio = image.width / image.height;
+          return {
+            url: url,
+            crop: { x: 0, y: 0 },
+            aspectRatio: aspectRatio,
+            isOriginal: true,
+            isImageCropped: false,
+            image: image,
+            croppedImage: null,
+            zoom: 1,
+            originalAspectRatio: aspectRatio,
+            id: Math.random().toString(),
+          }
+        })
+        setPhotosArray(photos)
         nextStep()
-
       }
-    }
+    )
   }
 
   const openSelectHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     document.getElementById('inputPhotoPost')?.click()
   }
-
-  const openDraftHandler = () => {}
 
 
   return (
@@ -69,6 +66,8 @@ export const AddPhoto = () => {
         <div className={styles.buttonsContainer}>
           <input
             type={'file'}
+            accept={'image/*'}
+            multiple={true}
             onChange={handleFileChange}
             id={'inputPhotoPost'}
             className={styles.inputPhoto}

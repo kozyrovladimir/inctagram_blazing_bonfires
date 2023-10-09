@@ -19,4 +19,14 @@ const AddPostContextProvider: React.FC<PropsWithChildren> = ({children}) => {
   );
 };
 
+export const useAddPostContext = () => {
+  const context = React.useContext(AddPostContext);
+
+  if (context === undefined) {
+    throw new Error('useAddPostContext must be used within a AddPostContextProvider');
+  }
+
+  return context;
+}
+
 export default AddPostContextProvider;
