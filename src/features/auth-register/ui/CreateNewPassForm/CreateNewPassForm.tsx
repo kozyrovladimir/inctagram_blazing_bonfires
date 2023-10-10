@@ -40,7 +40,10 @@ export function CreateNewPassForm() {
       .string()
       .min(6, tError('MinCharactrers6'))
       .max(20, tError('MaxCharactrers20'))
-      .matches(/^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/, tError('PasswordValidationError'))
+      .matches(
+        /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_{|}~])[A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_{|}~]+$/,
+        tError('PasswordValidationError')
+      )
       .required(tError('RequiredField')),
     newPasswordConfirmation: yup.string().required(tError('RequiredField')),
   })
@@ -111,8 +114,6 @@ export function CreateNewPassForm() {
             className={inputStyles.input}
             error={errors.newPasswordConfirmation && errors.newPasswordConfirmation?.message}
           />
-          {/* <p className={styles.createPassHelpText}>{tError('PasswordMin6Max20')}</p> */}
-
           <Button size={ButtonSize.STRETCHED} className={styles.sendLinkBtn}>
             {t('CreateNewPassword')}
           </Button>

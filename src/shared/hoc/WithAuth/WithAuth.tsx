@@ -27,7 +27,7 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   // if (publicPaths.some(paths => paths === pathname)) {
   //   return children
   // }
-  const { data, error, isLoading, isError } = useMeQuery({})
+  const { data, error, isLoading, isError } = useMeQuery()
 
   // console.log(error)
   // console.log(isError)

@@ -7,7 +7,8 @@ import { Device } from '../ui/Device/device'
 
 import styles from './Devices.module.scss'
 
-import { useGetIpQuery } from '@/shared/api/services/profile/ip.api'
+import { useGetSessionsQuery } from '@/shared/api'
+import { useGetIpQuery } from '@/shared/api/services/devices/getIP.api'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 
 export function Devices() {
@@ -16,8 +17,10 @@ export function Devices() {
   const [userAgent, setUserAgent] = useState<object | null>(null)
   const [os, setOs] = useState('unknow')
   const [device, setDevice] = useState('unknow')
+  const [browseName, setBrowseName] = useState('unknow')
 
-  const { data, isLoading } = useGetIpQuery()
+  //   const { data, isLoading } = useGetIpQuery()
+  const { data, isLoading } = useGetSessionsQuery()
 
   const getUserDevice = useCallback(() => {
     const ua = window.navigator.userAgent
@@ -28,11 +31,14 @@ export function Devices() {
 
     setOs(parser.getOS().name ?? 'unknow')
     setDevice(parser.getDevice().model ?? 'unknow')
+    setBrowseName(parser.getBrowser().name ?? 'unknow')
   }, [])
 
   useEffect(() => {
     getUserDevice()
   }, [])
+
+  if (!isLoading) console.log(data)
 
   return (
     <div className={styles.container}>
@@ -41,8 +47,9 @@ export function Devices() {
         <Device
           os={os}
           device={device}
-          ip={!isLoading ? data?.ip : 'Identification...'}
-          isNotCurrent={false}
+          browserName={browseName}
+          ip={/* !isLoading ? data?.ip :  */ 'Identification...'}
+          isCurrent={true}
         />
       </section>
       <Button className={styles.terminateBtn} theme={ButtonTheme.CLEAR} size={ButtonSize.LARGE}>
@@ -50,11 +57,22 @@ export function Devices() {
       </Button>
       <section>
         <h4> {t('ActiveSessions')}</h4>
-        <Device os={os} device={device} ip={!isLoading ? data?.ip : 'Identification...'} />
-        <Device os={os} device={device} ip={!isLoading ? data?.ip : 'Identification...'} />
-        <Device os={os} device={device} ip={!isLoading ? data?.ip : 'Identification...'} />
+        {!isLoading &&
+          data?.map(el => {
+            return (
+              <Device
+                key={el.deviceId}
+                isCurrent={false}
+                os={el.osName}
+                browserName={el.browserName}
+                device={el.deviceName}
+                ip={'Identification...'}
+              />
+            )
+          })}
       </section>
-      <p>{JSON.stringify(userAgent)}</p>
+      {/* <p>{JSON.stringify(userAgent)}</p> */}
+      <p>{JSON.stringify(!isLoading && data)}</p>
     </div>
   )
 }

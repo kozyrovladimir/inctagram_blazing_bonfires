@@ -26,7 +26,7 @@ export const Logout = ({ className, theme, size }: ButtonProps) => {
   const router = useRouter()
 
   const [logout, { isLoading }] = useLogoutMutation()
-  const { data: userData } = useMeQuery({})
+  const { data: userData } = useMeQuery()
 
   const logoutApiHandler = () => {
     logout()

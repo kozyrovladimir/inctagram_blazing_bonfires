@@ -22,7 +22,7 @@
     "NetworkError": "Ошибка сети",
     "UserNameValidationError": "Только латинские буквы, цифры и \"_\", \"-\".",
     "EmailValidationError": "Эл.адрес должен содержать A-Z, a-z, @",
-    "PasswordValidationError": "Пароль должен содержать a-z, A-Z, 0-9 ! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~",
+    "PasswordValidationError": "Пароль должен содержать заглавную и прописную буквы, число и символ.",
     "MinCharactrers1": "Минимум 1 символ.",
     "MinCharactrers2": "Минимум 2 символа.",
     "MinCharactrers6": "Минимум 6 символов.",
@@ -33,7 +33,8 @@
     "PasswordMin6Max20": "Ваш пароль должен содержать от 6 до 20 символов",
     "SrartLatterNotSpecial": "Поле должно начинаться с заглавной буквы и не содержать специальных символов.",
     "RequiredField": "Поле обязательное для заполнения.",
-    "SomethingWentWrong": "Что-то пошло не так"
+    "SomethingWentWrong": "Что-то пошло не так",
+    "PasswordsMustMatch": "Пароди должны совпадать"
   },
 
   "Auth": {

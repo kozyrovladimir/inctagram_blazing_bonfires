@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/fetchBaseQuery'
 import { useTranslation } from 'next-i18next'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
+import { toast, Toaster } from 'react-hot-toast'
 import * as yup from 'yup'
 
 import { ProfilePhoto } from '../ui/ProfilePhoto/ProfilePhoto'
@@ -17,7 +18,7 @@ import {
   useDeleteAvatarMutation,
   useUpdateAvatarMutation,
 } from '@/shared/api/services/profile/profile.api'
-import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
+import { BaseUserType, ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import { Button } from '@/shared/ui/Button/Button'
 import { CircularProgressLoader } from '@/shared/ui/CircularProgressLoader/CircularProgressLoader'
 import { Input, InputType } from '@/shared/ui/Input/Input'
@@ -30,13 +31,14 @@ export const GeneralInfo = () => {
   } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
 
-  const { data, isError, error, isLoading } = useMeQuery({})
+  const { data, isError, error, isLoading } = useMeQuery()
 
+  // не знаю как проверить что нам пришел айди в data из useMeQuery() - пока написал такой костыль(
   const {
     data: profileData,
     isError: isErrorProfileData,
     isLoading: isLoadingProfileData,
-  } = useGetProfileQuery(data?.userId ?? null)
+  } = useGetProfileQuery(data ? data?.userId : -1, { skip: isLoading })
 
   const [updateProfile, {}] = useUpdateProfileMutation()
 
@@ -58,24 +60,26 @@ export const GeneralInfo = () => {
       .string()
       .min(1, tError('MinCharactrers1'))
       .max(50, tError('MaxCharactrers50'))
-      .matches(/^[A-ZА-Я][a-z]{1,50}$/, tError('SrartLatterNotSpecial')),
+      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial')),
     lastName: yup
       .string()
       .min(1, tError('MinCharactrers1'))
       .max(50, tError('MaxCharactrers50'))
-      .matches(/^[A-ZА-Я][a-z]{1,50}$/, tError('SrartLatterNotSpecial')),
+      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial')),
     city: yup
       .string()
       .min(2, tError('MinCharactrers2'))
       .max(30, tError('MaxCharactrers30'))
-      .matches(/^[A-ZА-Я][a-z]{2,30}$/, tError('SrartLatterNotSpecial')),
+      .matches(/^[A-ZА-Я][a-zа-я]{2,30}$/, tError('SrartLatterNotSpecial')),
     dateOfBirth: yup.date(),
-    aboutMe: yup.string().max(200, tError('MaxCharactrers200')),
+    aboutMe: yup.string().min(1, tError('MinCharactrers1')).max(200, tError('MaxCharactrers200')),
   })
 
   const {
     control,
     reset,
+    watch,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<ProfileUserType | any>({
@@ -113,7 +117,7 @@ export const GeneralInfo = () => {
         }
       })
       .catch(error => {
-        console.log(error)
+        toast.error(error.data.messages[0].message)
         if (error && error.data) {
           const { statusCode } = error.data
 
@@ -140,8 +144,20 @@ export const GeneralInfo = () => {
 
   const onError = (errors: FieldErrors) => console.log(errors)
 
+  watch()
+  const isFillField = getValues([
+    'userName',
+    'firstName',
+    'lastName',
+    'dateOfBirth',
+    'city',
+    'aboutMe',
+    'avatars',
+  ]).every(e => !!e)
+
   return (
     <>
+      <Toaster position="top-right" />
       {(isLoading || isLoadingProfileData || isLoadingAvatar || isLoadingDeleteAvatar) && (
         <CircularProgressLoader />
       )}
@@ -250,7 +266,7 @@ export const GeneralInfo = () => {
                     <textarea
                       rows={4}
                       cols={50}
-                      placeholder=" "
+                      placeholder=""
                       className={styles.aboutMeTextarea}
                       {...field}
                     />
@@ -267,7 +283,7 @@ export const GeneralInfo = () => {
           <div className={styles.footer}>
             <div className={styles.line}></div>
           </div>
-          <Button onClick={() => console.log(1)} className={styles.button}>
+          <Button className={styles.button} disabled={!isFillField}>
             {tRoot('SaveChanges')}
           </Button>
         </form>

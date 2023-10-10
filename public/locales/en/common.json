@@ -22,7 +22,7 @@
     "NetworkError": "Network error",
     "UserNameValidationError": "Only Latin letters, numbers and \"_\", \"-\".",
     "EmailValidationError": "Email must contain A-Z, a-z , @",
-    "PasswordValidationError": "Password must contain a-z, A-Z, 0-9 ! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~",
+    "PasswordValidationError": "The password must contain uppercase and lowercase letters, a number and a symbol.",
     "MinCharactrers1": "Minimum 1 characters.",
     "MinCharactrers2": "Minimum 2 characters.",
     "MinCharactrers6": "Minimum 6 characters.",
@@ -33,7 +33,8 @@
     "PasswordMin6Max20": "Your password must be between 6 and 20 characters",
     "SrartLatterNotSpecial": "The field must start with a capital letter and not have special characters.",
     "RequiredField": "Required field.",
-    "SomethingWentWrong": "Something went wrong"
+    "SomethingWentWrong": "Something went wrong",
+    "PasswordsMustMatch": "Passwords must match"
   },
   "Auth": {
     "SignUp": "Sign Up",

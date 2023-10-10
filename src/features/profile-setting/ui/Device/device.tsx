@@ -10,23 +10,30 @@ import { IconDevice } from '@/shared/utils/iconDevice'
 interface IProps {
   os?: string
   device: string
+  browserName: string
   ip: string
-  isNotCurrent?: boolean
+  isCurrent: boolean
 }
-export const Device = ({ os, device, ip, isNotCurrent }: IProps) => {
+export const Device = ({ os, device, ip, isCurrent, browserName }: IProps) => {
   return (
     <>
       <div className={styles.container}>
         <section>
-          {<IconDevice deviceName={device} theme="dark" />}
+          <IconDevice
+            deviceName={device}
+            theme="dark"
+            isCurrent={isCurrent}
+            browserName={browserName}
+          />
           <div className={styles.description}>
             {/* <h4>{`${os === ('Mac OS' || 'iOS') ? 'Apple' : ''} ${os}`}</h4> */}
-            <h5>{`${os === ('Mac OS' || 'iOS') ? 'Apple' : ''} ${device}`}</h5>
+            {isCurrent && <h4>{browserName}</h4>}
+            {!isCurrent && <h4>{`${os === ('Mac OS' || 'iOS') ? 'Apple' : ''} ${device}`}</h4>}
             <p>IP: {ip}</p>
             <p>Last visit: {new Date().toLocaleDateString()}</p>
           </div>
         </section>
-        {isNotCurrent ?? (
+        {!isCurrent && (
           <div>
             <Logout
               theme={ButtonTheme.CLEAR}
