@@ -12,6 +12,7 @@ import { ProfilePhoto } from '../ui/ProfilePhoto/ProfilePhoto'
 
 import styles from './GeneralInfo.module.scss'
 
+import { AutocompletionOfCities } from '@/features/profile-setting/GeneralInfo/Autocompletion_of_cities/AutocompletionOfCities'
 import { useGetProfileQuery, useUpdateProfileMutation, useMeQuery } from '@/shared/api'
 import {
   useDeleteAvatarMutation,
@@ -231,14 +232,12 @@ export const GeneralInfo = () => {
                 name="city"
                 control={control}
                 render={({ field }) => (
-                  <Input
-                    label={t('City')}
-                    placeholder={''}
-                    error={(errors as FieldErrors<ProfileUserType>).city?.message}
-                    type={InputType.TEXT}
-                    classNameWrap={'myCustomLabel'}
-                    {...field}
-                  />
+                  <>
+                    <label>City</label>
+                    <AutocompletionOfCities
+                      error={(errors as FieldErrors<ProfileUserType>).city?.message}
+                    />
+                  </>
                 )}
               />
               <div className={styles.textareaContent}>
