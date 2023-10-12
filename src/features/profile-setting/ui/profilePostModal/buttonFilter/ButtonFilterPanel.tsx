@@ -6,15 +6,11 @@ import style from './ButtonFilterPanel.module.scss'
 
 import { ModalButton } from '@/features/profile-setting'
 import { useImageCropContext } from '@/features/profile-setting/ui/newPostModal/context/CropProvider'
-import { SliderItems } from '@/features/profile-setting/ui/profilePostModal/slider/SliderItems'
 import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
 import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
 import { useDispatch } from "react-redux";
-import {
-  setPhotos
-} from "@/features/profile-setting/ui/newPostModal/reducers/photos.slice";
 
 interface ButtonFilterPanelProps {
   zoom: number
@@ -82,12 +78,6 @@ export const ButtonFilterPanel = () => {
           />
         </Button>
       </div>
-      {/*photos*/}
-      {/*{isSliderOpen && photos.length > 0 && (*/}
-      {/*  <div className={style.slider}>*/}
-      {/*    <SliderItems photos={photos} setThumbsSwiper={setThumbsSwiper} setPhotos={setPhotos} />*/}
-      {/*  </div>*/}
-      {/*)}*/}
     </div>
   )
 }

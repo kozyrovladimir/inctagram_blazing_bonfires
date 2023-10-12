@@ -87,7 +87,7 @@ type CropContextType = {
   setZoom: (zoom: number) => void
 }
 
-export const CropContext = createContext<CropContextType | undefined>(undefined)
+export const CropContext = createContext< CropContextType | undefined>(undefined)
 
 type Props = {
   children: ReactNode
@@ -96,7 +96,7 @@ type Props = {
 const CropProvider: React.FC<Props> = ({ children }) => {
   const [photosArray, setPhotosArray] = useState<PhotoType[]>(initialState)
 
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  // const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [originalAspectRatio, setOriginalAspectRatio] = useState(1)
   const [aspectRatio, setAspectRatio] = useState(originalAspectRatio)
   const [isOriginal, setIsOriginal] = useState(false)
@@ -164,17 +164,26 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     setShowZoomInput(!showZoomInput)
     setIsModalOpen(false)
   }
-  const handleZoomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedPhoto = { ...photosArray[0], zoom: parseFloat(event.target.value) }; // Создаем новый объект с обновленным значением zoom
+
+  // zoom
+  const zoom = photosArray[0].zoom;
+
+  const setZoom = (zoom: number) => {
+    const updatedPhoto = { ...photosArray[0], zoom }; // Создаем новый объект с обновленным значением zoom
     const updatedPhotosArray = [...photosArray];
     updatedPhotosArray[0] = updatedPhoto; // Заменяем элемент в массиве
     setPhotosArray(updatedPhotosArray)
   }
 
-  const zoom = photosArray[0].zoom;
+  const handleZoomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setZoom(parseFloat(event.target.value))
+  }
 
-  const setZoom = (zoom: number) => {
-    const updatedPhoto = { ...photosArray[0], zoom }; // Создаем новый объект с обновленным значением zoom
+  //crop
+  const crop = photosArray[0].crop;
+
+  const setCrop = (crop: CropImageType) => {
+    const updatedPhoto = { ...photosArray[0], crop }; // Создаем новый объект с обновленным значением crop
     const updatedPhotosArray = [...photosArray];
     updatedPhotosArray[0] = updatedPhoto; // Заменяем элемент в массиве
     setPhotosArray(updatedPhotosArray)

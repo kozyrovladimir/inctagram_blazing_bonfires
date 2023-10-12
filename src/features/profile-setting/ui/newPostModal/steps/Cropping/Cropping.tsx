@@ -11,13 +11,9 @@ import {
   useImageCropContext
 } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
 import style from './Cropping.module.scss'
-import { ButtonFilterPanel } from "@/features/profile-setting";
 import { classNames } from "@/shared/libs/classNames/classNames";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/providers/StoreProvider";
-import {
-  PhotoType
-} from "@/features/profile-setting/ui/newPostModal/reducers/photos.slice";
+import { ButtonFilterPanel } from "@/features/profile-setting";
+
 
 export const Cropping = () => {
   const {isOpen, setIsOpen} = useAddPostContext();
@@ -26,7 +22,7 @@ export const Cropping = () => {
   const {
     croppedImage,
     onCropComplete,
-    // crop,
+    crop,
     setCrop,
     // aspectRatio,
     // isOriginal,
@@ -46,27 +42,24 @@ export const Cropping = () => {
     [style.imageFullHeight]: photosArray[0].aspectRatio < 1,
   })
 
-  // const photos = useSelector<RootState, any>((state) => state.photos.photos)
-
   return (
     <NewPostModal isOpen={isOpen} title={'Cropping'} setIsOpen={setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
       <div className={style.container}>
         {photosArray.length && <Cropper
           image={photosArray[0].url || undefined}
-          crop={photosArray[0].crop}
+          crop={crop}
           onCropChange={setCrop}
           aspect={isOriginal ? originalAspectRatio : aspectRatio}
           onZoomChange={setZoom}
           zoom={zoom}
           onCropComplete={onCropComplete}
           // onInteractionEnd={() => setIsModalOpen(false)}
-          // objectFit={isOriginal ? undefined : "contain"}
-          // showGrid={true}
+          // objectFit={ photosArray[0].aspectRatio >= 1 ? "vertical-cover" : "cover"}
           classes={{
             cropAreaClassName: style.cropArea,
           }}
         />}
-        {/*<ButtonFilterPanel />*/}
+        <ButtonFilterPanel />
       </div>
     </NewPostModal>
   );
