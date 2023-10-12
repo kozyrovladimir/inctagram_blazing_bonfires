@@ -11,8 +11,18 @@ import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
 import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
+import { useDispatch } from "react-redux";
+import {
+  setPhotos
+} from "@/features/profile-setting/ui/newPostModal/reducers/photos.slice";
+
+interface ButtonFilterPanelProps {
+  zoom: number
+}
 
 export const ButtonFilterPanel = () => {
+  const dispatch = useDispatch();
+
   const {
     zoom,
     handleAspectRatioClick,
@@ -21,11 +31,11 @@ export const ButtonFilterPanel = () => {
     showZoomInput,
     handleZoomChange,
     handleToggleZoomInput,
-    photos,
-    setPhotos,
+    // setPhotos,
     setThumbsSwiper,
     isSliderOpen,
     setIsSliderOpen,
+    setZoom,
   } = useImageCropContext()
 
   const handlerShowSlider = () => {
@@ -72,11 +82,12 @@ export const ButtonFilterPanel = () => {
           />
         </Button>
       </div>
-      {isSliderOpen && photos.length > 0 && (
-        <div className={style.slider}>
-          <SliderItems photos={photos} setThumbsSwiper={setThumbsSwiper} setPhotos={setPhotos} />
-        </div>
-      )}
+      {/*photos*/}
+      {/*{isSliderOpen && photos.length > 0 && (*/}
+      {/*  <div className={style.slider}>*/}
+      {/*    <SliderItems photos={photos} setThumbsSwiper={setThumbsSwiper} setPhotos={setPhotos} />*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </div>
   )
 }

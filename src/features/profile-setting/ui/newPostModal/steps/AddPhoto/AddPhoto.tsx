@@ -1,8 +1,6 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent } from "react";
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
-import {
-  AddPostContext, useAddPostContext
-} from "@/features/profile-setting/ui/newPostModal/context/AddPostContenx";
+import { useAddPostContext } from "@/features/profile-setting/ui/newPostModal/context/AddPostContenx";
 import closeIcon from '@/shared/assets/icons/logout/close.svg';
 import mockupPhoto from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import styles from "./AddPhoto.module.scss"
@@ -15,17 +13,12 @@ import {
 import {
   processImageFiles
 } from "@/features/profile-setting/ui/newPostModal/utils/processImageFiles";
-import { useDispatch } from "react-redux";
-import {
-  setPhotos
-} from "@/features/profile-setting/ui/newPostModal/reducers/photos.slice";
 
 export const AddPhoto = () => {
-  const dispatch = useDispatch();
   const {nextStep} = useWizard();
   const {isOpen, setIsOpen} = useAddPostContext();
 
-  const { setPhotosArray} = useImageCropContext()
+  const {setPhotosArray} = useImageCropContext()
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -41,7 +34,7 @@ export const AddPhoto = () => {
             url: url,
             crop: { x: 0, y: 0 },
             aspectRatio: aspectRatio,
-            isOriginal: true,
+            isOriginal: false,
             isImageCropped: false,
             croppedImage: null,
             zoom: 1,
@@ -49,8 +42,8 @@ export const AddPhoto = () => {
             id: Math.random().toString(),
           }
         })
-        dispatch(setPhotos({photos}))
-        nextStep()
+        setPhotosArray(photos)
+        nextStep();
       }
     )
   }

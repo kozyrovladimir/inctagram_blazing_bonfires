@@ -26,38 +26,39 @@ export const Cropping = () => {
   const {
     croppedImage,
     onCropComplete,
-    crop,
+    // crop,
     setCrop,
-    aspectRatio,
-    isOriginal,
+    // aspectRatio,
+    // isOriginal,
     setIsModalOpen,
     image,
+    // originalAspectRatio,
+    isOriginal,
+    aspectRatio,
     originalAspectRatio,
     photosArray,
-    setZoomCreator,
-    setZoom
+    setZoom,
+    zoom
   } = useImageCropContext()
 
   const imageClasses = classNames(style.croppedImage, {
-    [style.imageFullWidth]: aspectRatio >= 1,
-    [style.imageFullHeight]: aspectRatio < 1,
+    [style.imageFullWidth]: photosArray[0].aspectRatio >= 1,
+    [style.imageFullHeight]: photosArray[0].aspectRatio < 1,
   })
 
-  const photos = useSelector<RootState, any>((state) => state.photos.photos)
+  // const photos = useSelector<RootState, any>((state) => state.photos.photos)
 
   return (
     <NewPostModal isOpen={isOpen} title={'Cropping'} setIsOpen={setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
       <div className={style.container}>
-        {photos.length && <Cropper
-          image={photos[0].url || undefined}
-          crop={{x: 0, y: 0}}
-          onCropChange={(location) => {}}
-          // aspect={photos[0].isOriginal ? photos[0].originalAspectRatio : photos[0].aspectRatio}
-          // crop={photos[0].crop}
-          // onCropChange={setCrop}
-          // onZoomChange={setZoom}
-          // zoom={photos[0].zoom}
-          // onCropComplete={onCropComplete}
+        {photosArray.length && <Cropper
+          image={photosArray[0].url || undefined}
+          crop={photosArray[0].crop}
+          onCropChange={setCrop}
+          aspect={isOriginal ? originalAspectRatio : aspectRatio}
+          onZoomChange={setZoom}
+          zoom={zoom}
+          onCropComplete={onCropComplete}
           // onInteractionEnd={() => setIsModalOpen(false)}
           // objectFit={isOriginal ? undefined : "contain"}
           // showGrid={true}
@@ -65,7 +66,7 @@ export const Cropping = () => {
             cropAreaClassName: style.cropArea,
           }}
         />}
-        <ButtonFilterPanel />
+        {/*<ButtonFilterPanel />*/}
       </div>
     </NewPostModal>
   );

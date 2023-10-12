@@ -1,9 +1,15 @@
-import React, { createContext, ReactNode, useCallback, useContext, useState } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState
+} from "react";
 
 import { getCroppedImg } from '@/features/profile-setting/ui/profilePostModal/cropper/GetCroppedImage'
 import { Photo } from '@/features/profile-setting/ui/profilePostModal/slider/SwiperSlider'
 
-type CropType = {
+export type CropType = {
   width: number
   height: number
   x: number
@@ -27,13 +33,27 @@ type CropImageType = {
   y: number
 }
 
+const initialState: PhotoType[] = [
+  {
+    url: '',
+    crop: { x: 0, y: 0 },
+    aspectRatio: 1,
+    isOriginal: false,
+    isImageCropped: false,
+    croppedImage: null,
+    zoom: 1,
+    originalAspectRatio: 1,
+    id: '',
+  },
+]
+
 type CropContextType = {
   crop: CropImageType
-  setCrop: React.Dispatch<React.SetStateAction<CropImageType>>
+  setCrop: (crop: CropImageType) => void
   aspectRatio: number
-  setAspectRatio: React.Dispatch<React.SetStateAction<number>>
+  setAspectRatio: (aspectRatio: number) => void
   isOriginal: boolean
-  setIsOriginal: React.Dispatch<React.SetStateAction<boolean>>
+  setIsOriginal: (isOriginal: boolean) => void
   isModalOpen: boolean
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   isImageCropped: boolean
@@ -50,23 +70,21 @@ type CropContextType = {
   onClose: () => void
   handleCropOpen: () => void
   zoom: number
-  setZoom: React.Dispatch<React.SetStateAction<number>>
   handleToggleZoomInput: () => void
   handleZoomChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   showZoomInput: boolean
   setShowZoomInput: React.Dispatch<React.SetStateAction<boolean>>
-  setOriginalAspectRatio: React.Dispatch<React.SetStateAction<number>>
+  setOriginalAspectRatio: (originalAspectRatio: number) => void
   originalAspectRatio: number
   selectedPhoto: Photo | null
   setSelectedPhoto: (photo: Photo | null) => void
-  photos: Photo[]
+  photosArray: PhotoType[]
+  setPhotosArray: React.Dispatch<React.SetStateAction<PhotoType[]>>
   setThumbsSwiper: React.Dispatch<React.SetStateAction<any>>
-  setPhotos: React.Dispatch<React.SetStateAction<Photo[]>>
   thumbsSwiper: any
   isSliderOpen: boolean
   setIsSliderOpen: React.Dispatch<React.SetStateAction<boolean>>
-  photosArray: PhotoType[]
-  setPhotosArray: React.Dispatch<React.SetStateAction<PhotoType[]>>
+  setZoom: (zoom: number) => void
 }
 
 export const CropContext = createContext<CropContextType | undefined>(undefined)
@@ -76,7 +94,7 @@ type Props = {
 }
 
 const CropProvider: React.FC<Props> = ({ children }) => {
-  const [photosArray, setPhotosArray] = useState<PhotoType[]>([])
+  const [photosArray, setPhotosArray] = useState<PhotoType[]>(initialState)
 
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [originalAspectRatio, setOriginalAspectRatio] = useState(1)
@@ -92,10 +110,8 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   })
   const [image, setImage] = useState<string | null>(null)
   const [croppedImage, setCroppedImage] = useState<string | null>(null)
-  const [zoom, setZoom] = useState<number>(1)
   const [showZoomInput, setShowZoomInput] = useState(false)
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
-  const [photos, setPhotos] = useState<Photo[]>([])
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null)
   const [isSliderOpen, setIsSliderOpen] = useState(false)
 
@@ -149,12 +165,28 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     setIsModalOpen(false)
   }
   const handleZoomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setZoom(parseFloat(event.target.value))
+    const updatedPhoto = { ...photosArray[0], zoom: parseFloat(event.target.value) }; // Создаем новый объект с обновленным значением zoom
+    const updatedPhotosArray = [...photosArray];
+    updatedPhotosArray[0] = updatedPhoto; // Заменяем элемент в массиве
+    setPhotosArray(updatedPhotosArray)
+  }
+
+  const zoom = photosArray[0].zoom;
+
+  const setZoom = (zoom: number) => {
+    const updatedPhoto = { ...photosArray[0], zoom }; // Создаем новый объект с обновленным значением zoom
+    const updatedPhotosArray = [...photosArray];
+    updatedPhotosArray[0] = updatedPhoto; // Заменяем элемент в массиве
+    setPhotosArray(updatedPhotosArray)
   }
 
   return (
     <CropContext.Provider
       value={{
+        setPhotosArray,
+        photosArray,
+        originalAspectRatio,
+        setOriginalAspectRatio,
         crop,
         setCrop,
         aspectRatio,
@@ -182,19 +214,12 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setShowZoomInput,
         showZoomInput,
         showCroppedImage,
-        setOriginalAspectRatio,
-        originalAspectRatio,
         selectedPhoto,
         setSelectedPhoto,
-        photos,
-        setPhotos,
         setThumbsSwiper,
         thumbsSwiper,
         isSliderOpen,
         setIsSliderOpen,
-
-        photosArray,
-        setPhotosArray,
       }}
     >
       {children}
