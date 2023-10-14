@@ -4,9 +4,9 @@ import * as React from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query/fetchBaseQuery'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
-import { toast, Toaster } from 'react-hot-toast'
 import * as yup from 'yup'
 
 import { ProfilePhoto } from '../ui/ProfilePhoto/ProfilePhoto'
@@ -18,18 +18,24 @@ import {
   useDeleteAvatarMutation,
   useUpdateAvatarMutation,
 } from '@/shared/api/services/profile/profile.api'
-import { BaseUserType, ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
+import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import { Button } from '@/shared/ui/Button/Button'
-import { CircularProgressLoader } from '@/shared/ui/CircularProgressLoader/CircularProgressLoader'
 import { Input, InputType } from '@/shared/ui/Input/Input'
+import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
+import { Modal } from '@/shared/ui/Modal/Modal'
 import { Calendar } from '@/widgets/Calendar/ui/Calendar'
 
 export const GeneralInfo = () => {
+  const router = useRouter()
+
   const {
     t,
     i18n: { t: tRoot },
   } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
+
+  const [isErrorModal, SetIsErrorModal] = useState(false)
+  const [errorMessageModal, SetErrorMessageModal] = useState('')
 
   const { data, isError, error, isLoading } = useMeQuery()
 
@@ -38,9 +44,11 @@ export const GeneralInfo = () => {
     data: profileData,
     isError: isErrorProfileData,
     isLoading: isLoadingProfileData,
-  } = useGetProfileQuery(data ? data?.userId : -1, { skip: isLoading })
+  } = useGetProfileQuery(data?.userId ? data?.userId.toString() : '', {
+    skip: isLoading || isError,
+  })
 
-  const [updateProfile, {}] = useUpdateProfileMutation()
+  const [updateProfile, { isError: isErrorUpdateProfile }] = useUpdateProfileMutation()
 
   const [updateAvatar, { isLoading: isLoadingAvatar }] = useUpdateAvatarMutation()
 
@@ -60,19 +68,29 @@ export const GeneralInfo = () => {
       .string()
       .min(1, tError('MinCharactrers1'))
       .max(50, tError('MaxCharactrers50'))
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial')),
+      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial'))
+      .required(tError('RequiredField')),
     lastName: yup
       .string()
       .min(1, tError('MinCharactrers1'))
       .max(50, tError('MaxCharactrers50'))
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial')),
+      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial'))
+      .required(tError('RequiredField')),
     city: yup
       .string()
       .min(2, tError('MinCharactrers2'))
       .max(30, tError('MaxCharactrers30'))
-      .matches(/^[A-ZА-Я][a-zа-я]{2,30}$/, tError('SrartLatterNotSpecial')),
-    dateOfBirth: yup.date(),
-    aboutMe: yup.string().min(1, tError('MinCharactrers1')).max(200, tError('MaxCharactrers200')),
+      .matches(/^[A-ZА-Я][a-zа-я]{2,30}$/, tError('SrartLatterNotSpecial'))
+      .required(tError('RequiredField')),
+    dateOfBirth: yup
+      .date()
+      .max(new Date(new Date().setFullYear(new Date().getFullYear() - 13)), tError('MinAge'))
+      .required(tError('RequiredField')),
+    aboutMe: yup
+      .string()
+      .min(1, tError('MinCharactrers1'))
+      .max(200, tError('MaxCharactrers200'))
+      .required(tError('RequiredField')),
   })
 
   const {
@@ -92,7 +110,7 @@ export const GeneralInfo = () => {
       firstName: profileData?.firstName ?? '',
       lastName: profileData?.lastName ?? '',
       city: profileData?.city ?? '',
-      dateOfBirth: profileData?.dateOfBirth ?? new Date(),
+      dateOfBirth: profileData?.dateOfBirth ?? '',
       aboutMe: profileData?.aboutMe ?? '',
     },
   })
@@ -102,43 +120,77 @@ export const GeneralInfo = () => {
   }, [isLoadingProfileData])
 
   const onSubmit = (data: ProfileUserType) => {
+    // const arrFromDate = data.dateOfBirth?.toLocaleDateString().split('.') ?? []
+
+    // arrFromDate.splice(0, 2, arrFromDate[1], arrFromDate[0]).join('.')
+
+    // console.log(data.dateOfBirth)
+    // console.log(arrFromDate)
+
+    // data.dateOfBirth = correctDate
+
+    // console.log(data.dateOfBirth)
+    // console.log(arrFromDate)
+
+    // console.log(data)
+
     updateProfile(data)
       .unwrap()
       .then(() => {
         if (isDeleteAvatar) {
           deleteAvatar()
+            .unwrap()
+            .then(() => {
+              router.push('/profile')
+            })
         }
         if (photo) {
           const formData = new FormData()
 
           formData.set('file', photo as Blob)
-
           updateAvatar(formData)
+            .unwrap()
+            .then(() => {
+              router.push('/profile')
+            })
+        } else {
+          router.push('/profile')
         }
       })
       .catch(error => {
-        toast.error(error.data.messages[0].message)
+        SetIsErrorModal(true)
         if (error && error.data) {
           const { statusCode } = error.data
 
           if (statusCode === 401) {
-            console.log('You are not authorization, please enter in your account')
+            SetErrorMessageModal('You are not authorization, please enter in your account')
+            router.push('/sign-in')
+          } else {
+            SetErrorMessageModal(error.data.messages[0].message ?? 'Error, try again late.')
           }
         } else {
-          alert('Network error')
+          SetErrorMessageModal('Network error, try again late.')
         }
       })
   }
 
-  if (isError) {
+  if (error && isError) {
     const { status } = error as FetchBaseQueryError
 
     if (status === 401) {
-      console.log('You are not authorized, please enter in your account')
+      console.log(1)
 
-      return <h2>You are not authorized, please enter in your account</h2>
+      return (
+        <Modal title="Error!" callBackCloseWindow={() => router.push('/sign-in')} mainButton="OK">
+          You are not authorized, please enter in your account
+        </Modal>
+      )
     } else {
-      return <h2>Network error. Sorry, offline mode isn&apos;t ready</h2>
+      return (
+        <Modal title="Error!" callBackCloseWindow={() => router.reload()} mainButton="OK">
+          Network error. Sorry, offline mode isn&apos;t ready
+        </Modal>
+      )
     }
   }
 
@@ -157,9 +209,8 @@ export const GeneralInfo = () => {
 
   return (
     <>
-      <Toaster position="top-right" />
       {(isLoading || isLoadingProfileData || isLoadingAvatar || isLoadingDeleteAvatar) && (
-        <CircularProgressLoader />
+        <LinearLoader />
       )}
 
       {profileData && (
@@ -236,13 +287,18 @@ export const GeneralInfo = () => {
                 }}
                 render={({ field: { onChange, ref, ...args } }) => (
                   <Calendar
-                    data={profileData}
+                    data={profileData.dateOfBirth}
                     outsideOnChange={onChange}
                     classNameWrap={styles.calendar}
                     {...args}
                   />
                 )}
               />
+              {errors && (
+                <p className={styles.error}>
+                  {(errors as FieldErrors<ProfileUserType>).dateOfBirth?.message}
+                </p>
+              )}
               <Controller
                 name="city"
                 control={control}
@@ -272,12 +328,12 @@ export const GeneralInfo = () => {
                     />
                   )}
                 />
-                {errors && (
-                  <p className={styles.error}>
-                    {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
-                  </p>
-                )}
               </div>
+              {errors && (
+                <p className={styles.error}>
+                  {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
+                </p>
+              )}
             </div>
           </div>
           <div className={styles.footer}>
@@ -287,6 +343,11 @@ export const GeneralInfo = () => {
             {tRoot('SaveChanges')}
           </Button>
         </form>
+      )}
+      {isErrorModal && (
+        <Modal title="Error!" callBackCloseWindow={() => SetIsErrorModal(false)} mainButton="OK">
+          {errorMessageModal}
+        </Modal>
       )}
     </>
   )

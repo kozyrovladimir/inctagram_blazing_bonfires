@@ -21,7 +21,7 @@ export const profileApi = createApi({
           }
         },
       }),
-      getProfile: build.query<ProfileUserType, number>({
+      getProfile: build.query<ProfileUserType, string>({
         query: id => {
           return {
             method: 'GET',

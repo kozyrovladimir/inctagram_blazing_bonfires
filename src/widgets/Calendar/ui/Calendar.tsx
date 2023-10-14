@@ -7,20 +7,21 @@ import type { Value } from 'react-multi-date-picker'
 
 import styles from './Calendar.module.scss'
 
-import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
-import calendarIcon from '@/shared/assets/icons/icons/iconCalendar.svg'
+import calendarCloseIcon from '@/shared/assets/icons/icons/calendarClose.svg'
+import calendarOpenIcon from '@/shared/assets/icons/icons/calendarOpen.svg'
 
 interface IProps {
-  data?: ProfileUserType
+  data?: Date
   outsideOnChange: (newValue: Value) => void
   classNameWrap: string
 }
 
 export const Calendar = ({ classNameWrap, data, outsideOnChange }: IProps) => {
-  // const minAge = new Date().setFullYear(new Date().getFullYear() - 13)
-  // const defaultValue = data?.dateOfBirth ? new Date(data?.dateOfBirth) : new Date(minAge)
+  const minAge = new Date().setFullYear(new Date().getFullYear() - 10)
+  const defaultValue = data ? new Date(data) : minAge
   const { t } = useTranslation('common', { keyPrefix: 'Calendar' })
-  const [value, setValue] = useState<Value | undefined>(new Date())
+  const [value, setValue] = useState<Value>(defaultValue)
+  const [isOpen, setIsOpen] = useState(false)
   const weekDays = [t('Su'), t('Mo'), t('Tu'), t('We'), t('Th'), t('Fr'), t('Sa')]
   const months = [
     t('January'),
@@ -50,8 +51,12 @@ export const Calendar = ({ classNameWrap, data, outsideOnChange }: IProps) => {
         arrow={false}
         showOtherDays
         format="MM.DD.YYYY"
+        onOpen={() => {
+          setIsOpen(true)
+        }}
+        onClose={() => setIsOpen(false)}
         // maxDate={minAge}
-        placeholder="Enter date of birth"
+        placeholder="00.00.00"
         onChange={date => {
           setValue(date)
           outsideOnChange(date)
@@ -59,7 +64,12 @@ export const Calendar = ({ classNameWrap, data, outsideOnChange }: IProps) => {
         weekStartDayIndex={1}
         offsetY={-1}
       />
-      <Image src={calendarIcon} alt="calendar" className={styles.calendarIcon} />
+
+      <Image
+        src={isOpen ? calendarCloseIcon : calendarOpenIcon}
+        alt="calendar"
+        className={styles.calendarIcon}
+      />
     </div>
   )
 }

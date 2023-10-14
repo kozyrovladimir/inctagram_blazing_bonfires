@@ -34,7 +34,8 @@
     "SrartLatterNotSpecial": "The field must start with a capital letter and not have special characters.",
     "RequiredField": "Required field.",
     "SomethingWentWrong": "Something went wrong",
-    "PasswordsMustMatch": "Passwords must match"
+    "PasswordsMustMatch": "Passwords must match",
+    "MinAge": "You must be over 13 years old"
   },
   "Auth": {
     "SignUp": "Sign Up",
