@@ -1,15 +1,15 @@
-import defaultIconDeviceDark from '@/shared/assets/icons/devices/darkIcon/anyDevices.svg'
-import defaultIconBrowserDark from '@/shared/assets/icons/devices/darkIcon/browser.svg'
-import defaultIconDeviceLight from '@/shared/assets/icons/devices/lightIcon/anyDevices.svg'
-import defaultIconBrowserLight from '@/shared/assets/icons/devices/lightIcon/browser.svg'
+import defaultIconDeviceDark from '@/shared/assets/icons/devices/darkIcons/anyDevices.svg'
+import defaultIconBrowserDark from '@/shared/assets/icons/devices/darkIcons/browser.svg'
+import defaultIconDeviceLight from '@/shared/assets/icons/devices/lightIcons/anyDevices.svg'
+import defaultIconBrowserLight from '@/shared/assets/icons/devices/lightIcons/browser.svg'
 
 const requireAll = (requireContext: any) => requireContext.keys().map(requireContext)
 const darkSVG = require.context(
-  '@/shared/assets/icons/devices/darkIcon', // путь к вашей папке с изображениями SVG
+  '@/shared/assets/icons/devices/darkIcons', // путь к вашей папке с изображениями SVG
   false, // true - включить подкаталоги/false - выключть
   /\.svg$/ // шаблон файла
 )
-const lightSVG = require.context('@/shared/assets/icons/devices/lightIcon', false, /\.svg$/)
+const lightSVG = require.context('@/shared/assets/icons/devices/lightIcons', false, /\.svg$/)
 
 const svgsDark = requireAll(darkSVG)
 const svgsLight = requireAll(lightSVG)

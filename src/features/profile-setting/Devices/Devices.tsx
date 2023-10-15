@@ -92,8 +92,10 @@ export function Devices() {
   }
 
   useEffect(() => {
-    sessions && setCurrentDevice(getCurrentDevice(sessions))
+    sessions && sessions.length > 0 && setCurrentDevice(getCurrentDevice(sessions))
   }, [sessions])
+
+  console.log(sessions)
 
   return (
     <>
