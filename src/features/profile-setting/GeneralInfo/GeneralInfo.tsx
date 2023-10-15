@@ -177,9 +177,8 @@ export const GeneralInfo = () => {
   if (error && isError) {
     const { status } = error as FetchBaseQueryError
 
-    if (status === 401) {
-      console.log(1)
-
+    console.log(error)
+    if (status === 401 || (error as Error).message === 'Token not found') {
       return (
         <Modal title="Error!" callBackCloseWindow={() => router.push('/sign-in')} mainButton="OK">
           You are not authorized, please enter in your account
