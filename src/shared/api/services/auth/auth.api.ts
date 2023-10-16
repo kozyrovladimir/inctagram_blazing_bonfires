@@ -17,6 +17,7 @@ import {
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
+  method: 'POST',
   credentials: 'include',
   prepareHeaders: headers => {
     const token = localStorage.getItem('accessToken')
@@ -43,7 +44,6 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     if (!token) {
       throw new Error('Token not found')
     }
-
     // check weather token is expired. If token is expired, it requires to update token and set it to localStorage
     const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(token)
 
