@@ -10,44 +10,20 @@ import NextImage from "next/image";
 import {
   useImageCropContext
 } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
-import {
-  processImageFiles
-} from "@/features/profile-setting/ui/newPostModal/utils/processImageFiles";
 
 export const AddPhoto = () => {
   const {nextStep} = useWizard();
   const {isOpen, setIsOpen} = useAddPostContext();
 
-  const {setPhotosArray} = useImageCropContext();
+  const {setPhotoList} = useImageCropContext();
 
   const inputRef = React.useRef<HTMLInputElement>(null)
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
     if (!files) return
-
-    processImageFiles(Array.from(files)).then(
-      (imageDataUrls) => {
-        const photos = imageDataUrls.map((url) => {
-          const image: HTMLImageElement = new Image();
-          image.src = url;
-          const aspectRatio = image.width / image.height;
-          return {
-            url: url,
-            crop: { x: 0, y: 0 },
-            aspectRatio: aspectRatio,
-            isOriginal: false,
-            isImageCropped: false,
-            croppedImage: null,
-            zoom: 1,
-            originalAspectRatio: aspectRatio,
-            id: Math.random().toString(),
-          }
-        })
-        setPhotosArray(photos)
-        nextStep();
-      }
-    )
+    setPhotoList(files)
+    await nextStep();
   }
 
   const openSelectHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -68,7 +44,6 @@ export const AddPhoto = () => {
             accept={'image/*'}
             multiple={true}
             onChange={handleFileChange}
-            // id={'inputPhotoPost'}
             ref={inputRef}
             className={styles.inputPhoto}
           />

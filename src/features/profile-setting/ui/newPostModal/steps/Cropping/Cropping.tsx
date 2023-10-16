@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useWizard } from 'react-use-wizard';
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
 import backIcon from '@/shared/assets/icons/arrow back/back.svg';
 import {
-  AddPostContext, useAddPostContext
+  useAddPostContext
 } from "@/features/profile-setting/ui/newPostModal/context/AddPostContenx";
 import Image from "next/image";
-import Cropper from 'react-easy-crop';
 import {
   useImageCropContext
 } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
 import style from './Cropping.module.scss'
-import { classNames } from "@/shared/libs/classNames/classNames";
 import { ButtonFilterPanel } from "@/features/profile-setting";
+import AvatarEditor from 'react-avatar-editor';
 
 
 export const Cropping = () => {
@@ -21,28 +20,21 @@ export const Cropping = () => {
 
   const cropContext = useImageCropContext()
 
-  const imageClasses = classNames(style.croppedImage, {
-    [style.imageFullWidth]: cropContext.aspectRatio >= 1,
-    [style.imageFullHeight]: cropContext.aspectRatio < 1,
-  })
+  const editor = useRef(null);
 
   return (
     <NewPostModal isOpen={isOpen} title={'Cropping'} setIsOpen={setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
       <div className={style.container}>
-        {cropContext.photosArray.length > 0 && <Cropper
-          image={cropContext.photosArray[0].url || undefined}
-          crop={cropContext.crop}
-          onCropChange={cropContext.setCrop}
-          aspect={cropContext.isOriginal ? cropContext.originalAspectRatio : cropContext.aspectRatio}
-          onZoomChange={cropContext.setZoom}
-          zoom={cropContext.zoom}
-          onCropComplete={cropContext.onCropComplete}
-          // onInteractionEnd={() => setIsModalOpen(false)}
-          objectFit={ cropContext.photosArray[0].aspectRatio >= 1 ? "vertical-cover" : "cover"}
-          classes={{
-            cropAreaClassName: style.cropArea,
-          }}
-        />}
+        <AvatarEditor
+          ref={editor}
+          width={200}
+          height={150}
+          border={0}
+          color={[255, 255, 255, 0.6]} // Цвет границы
+          image={cropContext.photos[0].url} // Ссылка на изображение
+          scale={1} // Масштаб
+        />
+
         <ButtonFilterPanel
           cropContext={cropContext}
         />
