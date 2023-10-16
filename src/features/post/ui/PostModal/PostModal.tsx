@@ -15,7 +15,7 @@ export const PostModal = () => {
     <div className={styles.postContainer}>
       <Link href={'/profile'}>
         <div className={styles.closeIconContainer}>
-          <Image src={closeIcon} />
+          <Image src={closeIcon} alt={''} />
         </div>
       </Link>
       <div className={styles.post}>
@@ -56,7 +56,7 @@ export const PostModal = () => {
                   </p>
                   <div className={styles.commentLikeContainer}>
                     <Link href={'#'}>
-                      <Image src={likeIcon} />
+                      <Image src={likeIcon} alt={''} />
                     </Link>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export const PostModal = () => {
                   </p>
                   <div className={styles.commentLikeContainer}>
                     <Link href={'#'}>
-                      <Image src={likeIcon} />
+                      <Image src={likeIcon} alt={''} />
                     </Link>
                   </div>
                 </div>
@@ -120,7 +120,7 @@ export const PostModal = () => {
                   </p>
                   <div className={styles.commentLikeContainer}>
                     <Link href={'#'}>
-                      <Image src={likeIcon} />
+                      <Image src={likeIcon} alt={''} />
                     </Link>
                   </div>
                 </div>
@@ -152,7 +152,7 @@ export const PostModal = () => {
                   </p>
                   <div className={styles.commentLikeContainer}>
                     <Link href={'#'}>
-                      <Image src={likeIcon} />
+                      <Image src={likeIcon} alt={''} />
                     </Link>
                   </div>
                 </div>
@@ -184,7 +184,7 @@ export const PostModal = () => {
                   </p>
                   <div className={styles.commentLikeContainer}>
                     <Link href={'#'}>
-                      <Image src={likeIcon} />
+                      <Image src={likeIcon} alt={''} />
                     </Link>
                   </div>
                 </div>
@@ -216,7 +216,7 @@ export const PostModal = () => {
                   </p>
                   <div className={styles.commentLikeContainer}>
                     <Link href={'#'}>
-                      <Image src={likeIcon} />
+                      <Image src={likeIcon} alt={''} />
                     </Link>
                   </div>
                 </div>
@@ -233,11 +233,29 @@ export const PostModal = () => {
           <div className={styles.summaryContainer}>
             <div className={styles.actionsContainer}>
               <div className={styles.likeShareContainer}>
-                <Image src={likeIcon} width={24} height={24} style={{ cursor: 'pointer' }} />
-                <Image src={shareIcon} width={24} height={24} style={{ cursor: 'pointer' }} />
+                <Image
+                  src={likeIcon}
+                  width={24}
+                  height={24}
+                  style={{ cursor: 'pointer' }}
+                  alt={''}
+                />
+                <Image
+                  src={shareIcon}
+                  width={24}
+                  height={24}
+                  style={{ cursor: 'pointer' }}
+                  alt={''}
+                />
               </div>
               <div>
-                <Image src={saveIcon} width={24} height={24} style={{ cursor: 'pointer' }} />
+                <Image
+                  src={saveIcon}
+                  width={24}
+                  height={24}
+                  style={{ cursor: 'pointer' }}
+                  alt={''}
+                />
               </div>
             </div>
             <div className={styles.totalLikes}>

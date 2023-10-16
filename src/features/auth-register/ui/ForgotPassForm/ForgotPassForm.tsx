@@ -48,8 +48,8 @@ export function ForgotPass() {
     },
   })
 
-  const onChangeRecaptchaHandler = (value: string) => {
-    setValue('recaptcha', value)
+  const onChangeRecaptchaHandler = (value: string | null) => {
+    value && setValue('recaptcha', value)
   }
 
   const onSubmit: SubmitHandler<PasswordRecoveryType> = data => {
