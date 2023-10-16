@@ -23,6 +23,8 @@ const initialState: PhotoType[] = [
 ]
 
 export type CropContextType = {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   photos: PhotoType[];
   setPhotoList: (files: FileList) => void;
 }
@@ -34,6 +36,9 @@ type Props = {
 }
 
 const CropProvider: React.FC<Props> = ({ children }) => {
+  // состояние модалки
+  const [isOpen, setIsOpen] = React.useState(false);
+
   // массив фотографий
   const [photos, setPhotos] = useState<PhotoType[]>(initialState)
 
@@ -58,10 +63,14 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   return (
     <CropContext.Provider
       value={{
+        isOpen,
+        setIsOpen,
         photos,
         setPhotoList,
       }}
     >
+      {/*temp button*/}
+      <button onClick={() => setIsOpen(true)}>click</button>
       {children}
     </CropContext.Provider>
   )

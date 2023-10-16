@@ -2,9 +2,6 @@ import React, { useRef } from "react";
 import { useWizard } from 'react-use-wizard';
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
 import backIcon from '@/shared/assets/icons/arrow back/back.svg';
-import {
-  useAddPostContext
-} from "@/features/profile-setting/ui/newPostModal/context/AddPostContenx";
 import Image from "next/image";
 import {
   useImageCropContext
@@ -15,15 +12,13 @@ import AvatarEditor from 'react-avatar-editor';
 
 
 export const Cropping = () => {
-  const {isOpen, setIsOpen} = useAddPostContext();
   const {nextStep, previousStep} = useWizard();
-
   const cropContext = useImageCropContext()
 
   const editor = useRef(null);
 
   return (
-    <NewPostModal isOpen={isOpen} title={'Cropping'} setIsOpen={setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
+    <NewPostModal isOpen={cropContext.isOpen} title={'Cropping'} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
       <div className={style.container}>
         <AvatarEditor
           ref={editor}

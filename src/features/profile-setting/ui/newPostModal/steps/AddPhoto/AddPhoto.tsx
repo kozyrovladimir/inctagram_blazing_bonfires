@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from "react";
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
-import { useAddPostContext } from "@/features/profile-setting/ui/newPostModal/context/AddPostContenx";
 import closeIcon from '@/shared/assets/icons/logout/close.svg';
 import mockupPhoto from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import styles from "./AddPhoto.module.scss"
@@ -13,9 +12,7 @@ import {
 
 export const AddPhoto = () => {
   const {nextStep} = useWizard();
-  const {isOpen, setIsOpen} = useAddPostContext();
-
-  const {setPhotoList} = useImageCropContext();
+  const {setPhotoList, isOpen, setIsOpen} = useImageCropContext();
 
   const inputRef = React.useRef<HTMLInputElement>(null)
 
