@@ -47,13 +47,13 @@ const initialState: PhotoType[] = [
   },
 ]
 
-type CropContextType = {
+export type CropContextType = {
   crop: CropImageType
   setCrop: (crop: CropImageType) => void
   aspectRatio: number
   setAspectRatio: (aspectRatio: number) => void
   isOriginal: boolean
-  setIsOriginal: (isOriginal: boolean) => void
+  // setIsOriginal: (isOriginal: boolean) => void
   isModalOpen: boolean
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   isImageCropped: boolean
@@ -74,7 +74,7 @@ type CropContextType = {
   handleZoomChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   showZoomInput: boolean
   setShowZoomInput: React.Dispatch<React.SetStateAction<boolean>>
-  setOriginalAspectRatio: (originalAspectRatio: number) => void
+  // setOriginalAspectRatio: (originalAspectRatio: number) => void
   originalAspectRatio: number
   selectedPhoto: Photo | null
   setSelectedPhoto: (photo: Photo | null) => void
@@ -95,11 +95,9 @@ type Props = {
 
 const CropProvider: React.FC<Props> = ({ children }) => {
   const [photosArray, setPhotosArray] = useState<PhotoType[]>(initialState)
-
-  // const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [originalAspectRatio, setOriginalAspectRatio] = useState(1)
-  const [aspectRatio, setAspectRatio] = useState(originalAspectRatio)
-  const [isOriginal, setIsOriginal] = useState(false)
+  // const [originalAspectRatio, setOriginalAspectRatio] = useState(1)
+  // const [aspectRatio, setAspectRatio] = useState(originalAspectRatio)
+  // const [isOriginal, setIsOriginal] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isImageCropped, setIsImageCropped] = useState(false)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<CropType>({
@@ -141,16 +139,6 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     }
   }, [image, croppedAreaPixels])
 
-  const handleAspectRatioClick = useCallback((value: number) => {
-    if (value === 0) {
-      setIsOriginal(true)
-      setCroppedImage(null)
-    } else {
-      setIsOriginal(false)
-      setAspectRatio(value)
-    }
-  }, [])
-
   const onClose = useCallback(() => {
     setCroppedImage(null)
   }, [])
@@ -189,19 +177,49 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     setPhotosArray(updatedPhotosArray)
   }
 
+  // isOriginal
+  const isOriginal = photosArray[0].isOriginal;
+  const setIsOriginal = (isOriginal: boolean) => {
+    const updatedPhoto = { ...photosArray[0], isOriginal }; // Создаем новый объект с обновленным значением isOriginal
+    const updatedPhotosArray = [...photosArray];
+    updatedPhotosArray[0] = updatedPhoto; // Заменяем элемент в массиве
+    setPhotosArray(updatedPhotosArray)
+  }
+
+  // aspectRatio
+  const originalAspectRatio = photosArray[0].originalAspectRatio;
+  const aspectRatio = photosArray[0].aspectRatio;
+
+  const setAspectRatio = (aspectRatio: number) => {
+    const updatedPhoto = { ...photosArray[0], aspectRatio }; // Создаем новый объект с обновленным значением aspectRatio
+    const updatedPhotosArray = [...photosArray];
+    updatedPhotosArray[0] = updatedPhoto; // Заменяем элемент в массиве
+    setPhotosArray(updatedPhotosArray)
+  }
+
+  const handleAspectRatioClick = (value: number) => {
+    if (value === 0) {
+      setIsOriginal(true)
+      setCroppedImage(null)
+    } else {
+      setIsOriginal(false)
+      setAspectRatio(value)
+    }
+  }
+
   return (
     <CropContext.Provider
       value={{
         setPhotosArray,
         photosArray,
         originalAspectRatio,
-        setOriginalAspectRatio,
+        // setOriginalAspectRatio,
         crop,
         setCrop,
         aspectRatio,
         setAspectRatio,
         isOriginal,
-        setIsOriginal,
+        // setIsOriginal,
         isModalOpen,
         setIsModalOpen,
         isImageCropped,
