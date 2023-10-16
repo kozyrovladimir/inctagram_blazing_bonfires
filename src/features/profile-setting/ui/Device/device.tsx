@@ -1,38 +1,62 @@
 import Image from 'next/image'
+import { useTranslation } from 'next-i18next'
 
 import styles from './device.module.scss'
 
-import { Logout } from '@/features/logout'
-import iconDevice from '@/shared/assets/icons/devices/apple.svg'
-import { ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
-import { IconDevice } from '@/shared/utils/iconDevice'
+import logoutImg from '@/shared/assets/icons/logout/logout.svg'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
+import { IconDevice } from '@/shared/ui/IconDevice/IconDevice'
 
 interface IProps {
-  os?: string
-  device: string
+  deviceName: string
+  lastActive: string
+  browserName: string
+  deviceId: number
   ip: string
-  isNotCurrent?: boolean
+  isCurrent: boolean
+  logoutCallback?: (id: number) => void
+  osName: string
 }
-export const Device = ({ os, device, ip, isNotCurrent }: IProps) => {
+export const Device = ({
+  osName,
+  ip,
+  isCurrent,
+  browserName,
+  lastActive,
+  deviceId,
+  logoutCallback,
+  deviceName,
+}: IProps) => {
+  const {
+    t,
+    i18n: { t: tRoot },
+  } = useTranslation('common', { keyPrefix: 'Auth' })
+
   return (
     <>
       <div className={styles.container}>
         <section>
-          {<IconDevice deviceName={device} theme="dark" />}
+          <IconDevice osName={osName} isCurrent={isCurrent} browserName={browserName} />
           <div className={styles.description}>
-            {/* <h4>{`${os === ('Mac OS' || 'iOS') ? 'Apple' : ''} ${os}`}</h4> */}
-            <h5>{`${os === ('Mac OS' || 'iOS') ? 'Apple' : ''} ${device}`}</h5>
+            {isCurrent && <h4>{browserName}</h4>}
+            {!isCurrent && <h4>{`${osName === ('Mac OS' || 'iOS') ? 'Apple' : ''} ${osName}`}</h4>}
             <p>IP: {ip}</p>
-            <p>Last visit: {new Date().toLocaleDateString()}</p>
+            {!isCurrent && <p>Last visit: {new Date(lastActive).toLocaleDateString()}</p>}
           </div>
         </section>
-        {isNotCurrent ?? (
+        {!isCurrent && logoutCallback && (
           <div>
-            <Logout
-              theme={ButtonTheme.CLEAR}
+            <Button
               className={styles.logOut}
+              theme={ButtonTheme.CLEAR}
               size={ButtonSize.STRETCHED}
-            />
+              onClick={() => {
+                logoutCallback(deviceId)
+              }}
+            >
+              <Image src={logoutImg} alt={''} />
+              <span className={styles.description}>{t('LogOut')}</span>
+            </Button>
           </div>
         )}
       </div>

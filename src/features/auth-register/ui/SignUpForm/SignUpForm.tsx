@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React, { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -46,23 +47,26 @@ export const SignUpForm = () => {
       .string()
       .min(6, tError('MinCharactrers6'))
       .max(20, tError('MaxCharactrers30'))
-      .matches(/^[0-9A-Za-z_-]{6,20}$/, tError('UserNameValidationError'))
+      .matches(/^[a-zA-Z0-9_-]*$/, tError('UserNameValidationError'))
       .required(tError('RequiredField')),
     email: yup
       .string()
       .min(2, tError('MinCharactrers2'))
-      .matches(
-        /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]+.)+([a-zA-Z]{2,})$/,
-        tError('EmailValidationError')
-      )
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, tError('EmailValidationError'))
       .required(tError('RequiredField')),
     password: yup
       .string()
       .min(6, tError('MinCharactrers6'))
       .max(20, tError('MaxCharactrers20'))
-      .matches(/^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/, tError('PasswordValidationError'))
+      .matches(
+        /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_{|}~])[A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_{|}~]+$/,
+        tError('PasswordValidationError')
+      )
       .required(tError('RequiredField')),
-    passwordConfirmation: yup.string().required(tError('RequiredField')),
+    passwordConfirmation: yup
+      .string()
+      .oneOf([yup.ref('password'), ''], tError('PasswordsMustMatch'))
+      .required(tError('RequiredField')),
     agreement: yup.string().required(tError('RequiredField')),
   })
 
@@ -75,7 +79,7 @@ export const SignUpForm = () => {
     formState: { errors },
     reset,
   } = useForm<FormType | any>({
-    mode: 'onTouched',
+    mode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: {
       userName: '',
@@ -85,7 +89,7 @@ export const SignUpForm = () => {
       agreement: false,
     },
   })
-  const password = watch('password', '')
+  const password = watch('password')
   const onSubmit: SubmitHandler<SignUpType> = (data: SignUpType) => {
     signUp(data)
       .unwrap()
@@ -96,6 +100,8 @@ export const SignUpForm = () => {
       .catch(error => toast.error(error.data.messages[0].message))
   }
 
+  // проверяет заполнены ли все поля, а watch следит за обновленеием - без него не работатет
+  watch()
   const isFillField = getValues([
     'userName',
     'email',
@@ -144,11 +150,7 @@ export const SignUpForm = () => {
             disabled={isLoading}
           />
           <Input
-            {...register('passwordConfirmation', {
-              validate: {
-                value: (value: string) => value === password || 'Passwords do not match',
-              },
-            })}
+            {...register('passwordConfirmation')}
             label={t('PasswordConfirmation')}
             placeholder={t('EnterPasswordConfirmation')}
             type={InputType.PASSWORD}
@@ -177,7 +179,7 @@ export const SignUpForm = () => {
               }
             />
           </div>
-          <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED}>
+          <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED} disabled={!isFillField}>
             {t('SignUp')}
           </Button>
           <p className={styles.helpText}>{t('HaveAccount?')}</p>

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React, { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -12,12 +13,10 @@ import styles from './SignInForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/OAuth/OAuth'
 import { useLoginMutation, LoginFormType } from '@/shared/api'
-import { AppErrors } from '@/shared/common/errors'
 import { Button, ButtonSize } from '@/shared/ui/Button/Button'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/Input/Input'
 import { LinearLoader } from '@/shared/ui/Loaders/LinearLoader'
-import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
 
 export const SignInForm = () => {
   const { t, i18n } = useTranslation('common', { keyPrefix: 'Auth' })
@@ -27,10 +26,7 @@ export const SignInForm = () => {
     email: yup
       .string()
       .min(2, tError('MinCharactrers2'))
-      .matches(
-        /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]+.)+([a-zA-Z]{2,})$/,
-        tError('EmailValidationError')
-      )
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, tError('EmailValidationError'))
       .required(tError('RequiredField')),
     password: yup
       .string()

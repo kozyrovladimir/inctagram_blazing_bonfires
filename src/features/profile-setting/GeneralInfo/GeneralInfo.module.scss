@@ -30,6 +30,7 @@
 }
 .textareaContent {
   display: flex;
+  position: relative;
   flex-direction: column;
 }
 
@@ -70,10 +71,13 @@
   margin-top: 1.5rem;
   color: var(--color-light-900);
   background-color: var(--color-info-900);
-}
-
-.calendar {
-  margin-bottom: 20px;
+  &:hover {
+    background-color: var(--color-info-700);
+  }
+  &:disabled {
+    background-color: var(--color-info-100);
+    cursor: auto;
+  }
 }
 
 .labelDateBirth {
@@ -85,4 +89,5 @@
   font-size: 16px;
   color: var(--color-danger-500);
   line-height: 24px;
+  position: absolute;
 }

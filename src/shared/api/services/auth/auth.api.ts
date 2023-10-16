@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { algByDecodingToken } from '../../utils/algByDecodingToken'
 import { baseURL } from '../baseUrl.api'
+import { BaseUserType } from '../profile/profile.api.types'
 
 import {
   LoginFormType,
@@ -162,7 +163,7 @@ export const authApi = createApi({
           }
         },
       }),
-      me: build.query({
+      me: build.query<BaseUserType, void>({
         query: () => {
           return {
             method: 'GET',

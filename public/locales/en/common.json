@@ -12,17 +12,22 @@
   "AddProfilePhoto": "Add a Profile Photo",
   "SelectFromComputer": "Select from Computer",
   "ProfileSetting": "Profile Setting",
+  "ErrorTitle": "Error!",
+  "AttentionTitle": "Attention!",
   "And": "and",
   "Yes": "Yes",
   "No": "No",
 
   "Error": {
+    "NetworkError": "Network error",
+    "TryAgain": "Error, try again late.",
+    "NotAuthorization": "You are not authorization, please enter in your account",
+    "NotOfflineMode": "Network error. Sorry, offline mode isn&apos;t ready",
     "PasswordIncorrect": "The password is incorrect. Try again please ",
     "EmailNotRegidtred": "This email address is not registered. Please register",
-    "NetworkError": "Network error",
     "UserNameValidationError": "Only Latin letters, numbers and \"_\", \"-\".",
     "EmailValidationError": "Email must contain A-Z, a-z , @",
-    "PasswordValidationError": "Password must contain a-z, A-Z, 0-9 ! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~",
+    "PasswordValidationError": "The password must contain uppercase and lowercase letters, a number and a symbol.",
     "MinCharactrers1": "Minimum 1 characters.",
     "MinCharactrers2": "Minimum 2 characters.",
     "MinCharactrers6": "Minimum 6 characters.",
@@ -33,7 +38,9 @@
     "PasswordMin6Max20": "Your password must be between 6 and 20 characters",
     "SrartLatterNotSpecial": "The field must start with a capital letter and not have special characters.",
     "RequiredField": "Required field.",
-    "SomethingWentWrong": "Something went wrong"
+    "SomethingWentWrong": "Something went wrong",
+    "PasswordsMustMatch": "Passwords must match",
+    "MinAge": "You must be over 13 years old"
   },
   "Auth": {
     "SignUp": "Sign Up",
@@ -73,7 +80,6 @@
     "EnterEmailForGetInstruction": "Enter your email address and we will send you further instructions",
     "LinkHasBeenSent": "The link has been sent by email. If you don’t receive an email send link again"
   },
-
   "Navbar": {
     "GeneralInformation": "General information",
     "Devices": "Devices",
@@ -97,7 +103,9 @@
   "Devices": {
     "ThisDevices": "This devices",
     "TerminateAllSession": "Terminate all other session",
-    "ActiveSessions": "Active sessions"
+    "ActiveSessions": "Active sessions",
+    "ReallyLogout": "This is your device, do you really want to exit?",
+    "AllSessionsTerminated": "All your sessions on other devices are terminated"
   },
   "Calendar": {
     "January": "January",
