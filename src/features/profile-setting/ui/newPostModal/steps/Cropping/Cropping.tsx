@@ -29,7 +29,7 @@ export const Cropping = () => {
   return (
     <NewPostModal isOpen={isOpen} title={'Cropping'} setIsOpen={setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
       <div className={style.container}>
-        {cropContext.photosArray.length && <Cropper
+        {cropContext.photosArray.length > 0 && <Cropper
           image={cropContext.photosArray[0].url || undefined}
           crop={cropContext.crop}
           onCropChange={cropContext.setCrop}

@@ -18,7 +18,9 @@ export const AddPhoto = () => {
   const {nextStep} = useWizard();
   const {isOpen, setIsOpen} = useAddPostContext();
 
-  const {setPhotosArray} = useImageCropContext()
+  const {setPhotosArray} = useImageCropContext();
+
+  const inputRef = React.useRef<HTMLInputElement>(null)
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -50,7 +52,7 @@ export const AddPhoto = () => {
 
   const openSelectHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    document.getElementById('inputPhotoPost')?.click()
+    inputRef.current?.click()
   }
 
 
@@ -66,7 +68,8 @@ export const AddPhoto = () => {
             accept={'image/*'}
             multiple={true}
             onChange={handleFileChange}
-            id={'inputPhotoPost'}
+            // id={'inputPhotoPost'}
+            ref={inputRef}
             className={styles.inputPhoto}
           />
           <Button onClick={openSelectHandler} className={styles.button}>
