@@ -66,3 +66,10 @@
   left: 12px;
   bottom: 12px;
 }
+.container ul {
+  list-style-type: none;
+  & li {
+    cursor: pointer;
+  }
+}
+
