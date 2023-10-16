@@ -12,14 +12,19 @@
   "AddProfilePhoto": "Add a Profile Photo",
   "SelectFromComputer": "Select from Computer",
   "ProfileSetting": "Profile Setting",
+  "ErrorTitle": "Error!",
+  "AttentionTitle": "Attention!",
   "And": "and",
   "Yes": "Yes",
   "No": "No",
 
   "Error": {
+    "NetworkError": "Network error",
+    "TryAgain": "Error, try again late.",
+    "NotAuthorization": "You are not authorization, please enter in your account",
+    "NotOfflineMode": "Network error. Sorry, offline mode isn&apos;t ready",
     "PasswordIncorrect": "The password is incorrect. Try again please ",
     "EmailNotRegidtred": "This email address is not registered. Please register",
-    "NetworkError": "Network error",
     "UserNameValidationError": "Only Latin letters, numbers and \"_\", \"-\".",
     "EmailValidationError": "Email must contain A-Z, a-z , @",
     "PasswordValidationError": "The password must contain uppercase and lowercase letters, a number and a symbol.",
@@ -75,7 +80,6 @@
     "EnterEmailForGetInstruction": "Enter your email address and we will send you further instructions",
     "LinkHasBeenSent": "The link has been sent by email. If you don’t receive an email send link again"
   },
-
   "Navbar": {
     "GeneralInformation": "General information",
     "Devices": "Devices",
@@ -99,7 +103,9 @@
   "Devices": {
     "ThisDevices": "This devices",
     "TerminateAllSession": "Terminate all other session",
-    "ActiveSessions": "Active sessions"
+    "ActiveSessions": "Active sessions",
+    "ReallyLogout": "This is your device, do you really want to exit?",
+    "AllSessionsTerminated": "All your sessions on other devices are terminated"
   },
   "Calendar": {
     "January": "January",

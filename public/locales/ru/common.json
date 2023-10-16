@@ -12,14 +12,19 @@
   "AddProfilePhoto": "Добавть фотографию",
   "SelectFromComputer": "Выбрать на устройстве",
   "ProfileSetting": "Настройки профиля",
+  "ErrorTitle": "Ошибка!",
+  "AttentionTitle": "Внимание!",
   "And": "и",
   "Yes": "Да",
   "No": "Нет",
 
   "Error": {
+    "NetworkError": "Ошибка сети",
+    "TryAgain": "Ошибка, попробуйте позже.",
+    "NotAuthorization": "Вы не авторизованы, пожалуйста, войдите в свою учетную запись",
+    "NotOfflineMode": "Сетевая ошибка. Извините, оффлайн режим еще не готов",
     "PasswordIncorrect": "Пароль неверен. Попробуйте еще раз",
     "EmailNotRegidtred": "Этот адрес электронной почты не зарегистрирован. Пожалуйста, зарегистрируйтесь",
-    "NetworkError": "Ошибка сети",
     "UserNameValidationError": "Только латинские буквы, цифры и \"_\", \"-\".",
     "EmailValidationError": "Эл.адрес должен содержать A-Z, a-z, @",
     "PasswordValidationError": "Пароль должен содержать заглавную и прописную буквы, число и символ.",
@@ -98,7 +103,9 @@
   "Devices": {
     "ThisDevices": "Это устройство",
     "TerminateAllSession": "Завершить другие сеансы",
-    "ActiveSessions": "Активные сеансы"
+    "ActiveSessions": "Активные сеансы",
+    "ReallyLogout": "Это ваше устройство, вы действительно хотите выйти?",
+    "AllSessionsTerminated": "Все ваши сеансы на других устройствах завершены"
   },
   "Calendar": {
     "January": "Январь",

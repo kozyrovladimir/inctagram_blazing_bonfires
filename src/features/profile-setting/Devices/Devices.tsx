@@ -20,7 +20,11 @@ import { Modal } from '@/shared/ui/Modal/Modal'
 
 export function Devices() {
   const router = useRouter()
-  const { t } = useTranslation('common', { keyPrefix: 'Devices' })
+  const {
+    t,
+    i18n: { t: tRoot },
+  } = useTranslation('common', { keyPrefix: 'Devices' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
 
   const [currentDevice, setCurrentDevice] = useState<UserSessionsType | undefined>(undefined)
   const [isModal, setIsModal] = useState(false)
@@ -36,18 +40,19 @@ export function Devices() {
   const logoutSession = (id: number) => {
     if (id === currentDevice?.deviceId) {
       setIsModal(true)
-      SetMessageModal('Это ваше устройство, вы действительно хотите выйти?')
+      SetMessageModal(t('ReallyLogout'))
     } else {
       deleteSession(id)
         .unwrap()
         .catch(error => {
           setIsError(true)
           setIsChooseModal(false)
-          SetMessageModal(error.data.messages[0].message ?? 'Error, try again late.')
+          SetMessageModal(error.data.messages[0].message ?? tError('TryAgain'))
         })
     }
   }
-  const logoutApiHandler = () => {
+
+  const logoutCurrentDevice = () => {
     logout()
       .unwrap()
       .then(() => {
@@ -64,16 +69,16 @@ export function Devices() {
         .unwrap()
         .then(() => {
           setIsModal(true)
-          SetMessageModal('All other sessions terminate')
+          SetMessageModal(tError('AllSessionsTerminated'))
         })
         .catch(error => {
           setIsError(true)
           setIsChooseModal(false)
-          SetMessageModal(error.data.messages[0].message ?? 'Error, try again late.')
+          SetMessageModal(error.data.messages[0].message ?? tError('TryAgain'))
         })
     } else {
       setIsModal(true)
-      SetMessageModal('All other sessions terminate')
+      SetMessageModal(tError('AllSessionsTerminated'))
     }
   }
 
@@ -94,8 +99,6 @@ export function Devices() {
   useEffect(() => {
     sessions && sessions.length > 0 && setCurrentDevice(getCurrentDevice(sessions))
   }, [sessions])
-
-  console.log(sessions)
 
   return (
     <>
@@ -155,18 +158,18 @@ export function Devices() {
 
       {isModal && (
         <Modal
-          title="Attention"
+          title={isError ? 'Error' : 'Attention'}
           callBackCloseWindow={() => {
             setIsModal(false)
           }}
           mainButtonCB={() => {
-            isChooseModal && logoutApiHandler()
+            isChooseModal && logoutCurrentDevice()
           }}
           extraButtonCB={() => {
             setIsModal(false)
           }}
-          mainButton={isChooseModal ? 'Да' : 'OK'}
-          extraButton={isChooseModal ? 'Нет' : undefined}
+          mainButton={isChooseModal ? tRoot('Yes') : 'OK'}
+          extraButton={isChooseModal ? tRoot('No') : undefined}
         >
           {messageModal}
         </Modal>
