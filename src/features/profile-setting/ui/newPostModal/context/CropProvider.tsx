@@ -27,6 +27,7 @@ export type CropContextType = {
   setIsOpen: (isOpen: boolean) => void;
   photos: PhotoType[];
   setPhotoList: (files: FileList) => void;
+  originalAspect: number;
 }
 
 export const CropContext = createContext< CropContextType | undefined>(undefined)
@@ -36,7 +37,7 @@ type Props = {
 }
 
 const CropProvider: React.FC<Props> = ({ children }) => {
-  // состояние модалки
+  // состояние модалки (открыта/закрыта)
   const [isOpen, setIsOpen] = React.useState(false);
 
   // массив фотографий
@@ -49,6 +50,14 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         const photos = imageDataUrls.map((url) => {
           const image: HTMLImageElement = new Image();
           image.src = url;
+          let width = 0;
+          let height = 0;
+
+          image.onload = () => {
+            width = image.width;
+            height = image.height;
+          }
+
           return {
             url: url,
             width: image.width,
@@ -60,6 +69,9 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     )
   }
 
+  // оригинальное соотношение сторон
+  const originalAspect = photos[0].width / photos[0].height
+
   return (
     <CropContext.Provider
       value={{
@@ -67,6 +79,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setIsOpen,
         photos,
         setPhotoList,
+        originalAspect,
       }}
     >
       {/*temp button*/}

@@ -1,27 +1,9 @@
-.container {
+.editorContainer {
   position: relative;
   width: 500px;
   height: 500px;
-}
 
-
-.croppedImageContainer {
   display: flex;
-
-  .croppedImage {
-  }
-
-  .imageFullWidth {
-    width: 492px;
-  }
-
-  .imageFullHeight {
-    height: 492px;
-  }
-}
-
-.cropArea {
-  color: #313131 !important;
-  transition: all 0.3s ease !important;
-  display: block;
+  justify-content: center;
+  align-items: center;
 }

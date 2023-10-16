@@ -28,7 +28,6 @@ export const AddPhoto = () => {
     inputRef.current?.click()
   }
 
-
   return (
     <NewPostModal isOpen={isOpen} title={'Add photo'} setIsOpen={setIsOpen} right={<NextImage src={closeIcon} alt={''} onClick={() => setIsOpen(false)} />}>
       <div className={styles.addPhotoContentContainer}>
