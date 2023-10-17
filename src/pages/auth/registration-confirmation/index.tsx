@@ -3,9 +3,9 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { useVerifyEmailMutation } from '@/shared/api'
-import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
-import { CircularLoader } from '@/shared/ui/Loaders/CircularLoader'
-import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
+import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
+import { CircularLoader } from '@/shared/ui/loaders/CircularLoader'
+import { ShortLangs } from '@/widgets/langSwitcher/ui/LanguageSelect'
 
 export const RegistrationConfirmation = () => {
   const [verifyEmail] = useVerifyEmailMutation()

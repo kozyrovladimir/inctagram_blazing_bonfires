@@ -1,23 +1,19 @@
 import type { Preview } from '@storybook/react'
-import { ApiDecorator } from "../src/shared/config/storybook/ApiDecorator/ApiDecorator";
-import { StyleDecorator } from "../src/shared/config/storybook/StyleDecorator/StyleDecorator";
-import { StoreDecorator } from '../src/shared/providers/StoreProvider/index'
+import { ApiDecorator } from '@/shared/config/storybook/apiDecorator/ApiDecorator'
+import { StyleDecorator } from '@/shared/config/storybook/styleDecorator/StyleDecorator'
+import { StoreDecorator } from '@/shared/providers/storeProvider/index'
 
 const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
-       color: /(background|color)$/i,
-       date: /Date$/,
+        color: /(background|color)$/i,
+        date: /Date$/,
       },
     },
   },
-  decorators: [
-    StyleDecorator,
-    ApiDecorator,
-    StoreDecorator
-  ]
-};
+  decorators: [StyleDecorator, ApiDecorator, StoreDecorator],
+}
 
-export default preview;
+export default preview
