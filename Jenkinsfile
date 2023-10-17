@@ -4,7 +4,7 @@ pipeline {
     agent any
     environment {
         ENV_TYPE = "production"
-        PORT = 3006
+        PORT = 3158
         NAMESPACE = "blazingbonfires-click"
         REGISTRY_HOSTNAME = "kozyrovladimir"
         REGISTRY = "registry.hub.docker.com"
