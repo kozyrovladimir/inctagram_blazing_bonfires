@@ -164,13 +164,13 @@ export const GeneralInfo = () => {
           const { statusCode } = error.data
 
           if (statusCode === 401) {
-            SetErrorMessageModal(tError("NotAuthorization"))
+            SetErrorMessageModal(tError('NotAuthorization'))
             router.push('/sign-in')
           } else {
-            SetErrorMessageModal(error.data.messages[0].message ?? tError("TryAgain"))
+            SetErrorMessageModal(error.data.messages[0].message ?? tError('TryAgain'))
           }
         } else {
-          SetErrorMessageModal(tError("NetworkError"))
+          SetErrorMessageModal(tError('NetworkError'))
         }
       })
   }
@@ -181,14 +181,22 @@ export const GeneralInfo = () => {
     console.log(error)
     if (status === 401 || (error as Error).message === 'Token not found') {
       return (
-        <Modal title={tRoot("ErrorTitle")} callBackCloseWindow={() => router.push('/sign-in')} mainButton="OK">
-          {tError("NotAuthorization")}
+        <Modal
+          title={tRoot('ErrorTitle')}
+          callBackCloseWindow={() => router.push('/sign-in')}
+          mainButton="OK"
+        >
+          {tError('NotAuthorization')}
         </Modal>
       )
     } else {
       return (
-        <Modal title={tRoot("ErrorTitle")} callBackCloseWindow={() => router.reload()} mainButton="OK">
-          {tError("NotOfflineMode")}
+        <Modal
+          title={tRoot('ErrorTitle')}
+          callBackCloseWindow={() => router.reload()}
+          mainButton="OK"
+        >
+          {tError('NotOfflineMode')}
         </Modal>
       )
     }
