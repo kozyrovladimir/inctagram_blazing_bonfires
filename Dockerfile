@@ -1,14 +1,16 @@
 FROM node:18.15 as dependencies
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 RUN npm install
 
+# Создайте "builder" и скопируйте все файлы
 FROM node:18.15 as builder
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
 RUN npm build:production
 
+# Создайте "runner" и скопируйте файлы из "builder"
 FROM node:18.15 as runner
 WORKDIR /app
 ENV NODE_ENV production
@@ -20,3 +22,4 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 EXPOSE 3000
 CMD ["npm", "start"]
+
