@@ -5,10 +5,10 @@ import styles from './FormContainer.module.scss'
 
 import { classNames } from '@/shared/libs/classNames/classNames'
 
-interface IProps extends FormHTMLAttributes<HTMLFormElement> {
+type Props = {
   title: string
   className?: string
-}
+} & FormHTMLAttributes<HTMLFormElement>
 
 export enum FormOption {
   SIGNIN = 'signin',
@@ -17,7 +17,7 @@ export enum FormOption {
   FORGOTPASSWORD = 'forgotPassword',
 }
 
-const FormContainer = ({ title, children, className }: IProps) => {
+const FormContainer = ({ title, children, className }: Props) => {
   return (
     <div className={classNames(styles.formContainer, {}, [className ? className : ''])}>
       <h3>{title}</h3>

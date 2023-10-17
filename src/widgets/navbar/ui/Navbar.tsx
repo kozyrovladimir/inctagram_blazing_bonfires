@@ -6,8 +6,6 @@ import { useTranslation } from 'next-i18next'
 
 import styles from './Navbar.module.scss'
 
-import { ShortLangs } from '@/widgets/langSwitcher/ui/LanguageSelect'
-
 export const Navbar = () => {
   const { t } = useTranslation('common', { keyPrefix: 'Navbar' })
   const router = useRouter()

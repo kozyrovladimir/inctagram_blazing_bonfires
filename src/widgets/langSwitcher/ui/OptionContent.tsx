@@ -12,7 +12,7 @@ type Props = {
   flagImg: Flags
   description: FullLangs
 }
-export const OptionContent: FC<Props> = ({ alt, description, flagImg }) => {
+export const OptionContent = ({ alt, description, flagImg }: Props) => {
   const flagSrc = flagImg as unknown as string | StaticImport
 
   return (

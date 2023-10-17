@@ -1,12 +1,10 @@
 /* eslint-disable no-useless-escape */
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
 import * as yup from 'yup'
 
@@ -14,7 +12,6 @@ import styles from './SignUpForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
 import { SignUpType, useSignUpMutation } from '@/shared/api'
-import { AppErrors } from '@/shared/common/errors'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
 import FormContainer from '@/shared/ui/formContainer/FormContainer'

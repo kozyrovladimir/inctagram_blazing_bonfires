@@ -12,13 +12,13 @@ import logoutImg from '@/shared/assets/icons/logout/logout.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { Modal } from '@/shared/ui/modal/Modal'
 
-interface ButtonProps {
+type Props = {
   className?: string
   theme?: ButtonTheme
   size?: ButtonSize
 }
 
-export const Logout = ({ className, theme, size }: ButtonProps) => {
+export const Logout = ({ className, theme, size }: Props) => {
   const {
     t,
     i18n: { t: tRoot },

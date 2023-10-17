@@ -1,4 +1,4 @@
-import React, { useTransition } from 'react'
+import React from 'react'
 
 import { GetStaticProps } from 'next'
 import Image from 'next/image'

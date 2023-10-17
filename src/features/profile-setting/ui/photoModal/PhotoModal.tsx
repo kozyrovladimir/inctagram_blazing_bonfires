@@ -18,7 +18,7 @@ type Props = {
   savePhoto: (photo: null | Blob | MediaSource) => void
 }
 
-export const PhotoModal: FC<Props> = ({ closeWindow, savePhoto }) => {
+export const PhotoModal = ({ closeWindow, savePhoto }: Props) => {
   const { t } = useTranslation()
   const [photoProfile, setPhotoProfile] = useState<null | Blob | MediaSource>(null)
   const [uploadError, setUploadError] = useState('')

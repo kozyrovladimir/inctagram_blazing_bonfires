@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
@@ -7,8 +5,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Logout } from '@/features/logout'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
-
-// const inter = Inter({ subsets: ['latin'] })
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
@@ -44,6 +40,7 @@ function Home() {
     </>
   )
 }
+
 Home.getLayout = getLayout
 export default Home
 

@@ -16,13 +16,13 @@ export enum ButtonSize {
   STRETCHED = 'stretched',
 }
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type Props = {
   className?: string
   theme?: ButtonTheme
   size?: ButtonSize
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
-export const Button: FC<ButtonProps> = props => {
+export const Button = (props: Props) => {
   const {
     className,
     children,

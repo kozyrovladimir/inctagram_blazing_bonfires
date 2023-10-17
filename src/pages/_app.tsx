@@ -25,7 +25,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const { pathname } = useRouter()
 
-  const pathWithoutSudebar = [
+  const pathWithoutSidebar = [
     'auth/expired-verification-link',
     '/sign-in',
     '/sign-up',
@@ -39,7 +39,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
     '/auth/privacy-policy',
   ]
 
-  const isSidebar = !pathWithoutSudebar.includes(pathname)
+  const isSidebar = !pathWithoutSidebar.includes(pathname)
 
   return getLayout(
     <WithAuth>

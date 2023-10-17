@@ -11,8 +11,8 @@ const darkSVG = require.context(
 )
 const lightSVG = require.context('@/shared/assets/icons/devices/lightIcons', false, /\.svg$/)
 
-const svgsDark = requireAll(darkSVG)
-const svgsLight = requireAll(lightSVG)
+const svgDark = requireAll(darkSVG)
+const svgLight = requireAll(lightSVG)
 
 interface svgFile {
   default: {
@@ -41,10 +41,10 @@ export const findPathSVG = (name: string, isCurrent: boolean, theme?: string): s
 
   if (theme) {
     defaultIcon = isCurrent ? defaultIconBrowserLight : defaultIconDeviceLight
-    file = findFile(svgsDark)
+    file = findFile(svgDark)
   } else {
     defaultIcon = isCurrent ? defaultIconBrowserDark : defaultIconDeviceDark
-    file = findFile(svgsLight)
+    file = findFile(svgLight)
   }
 
   return file ? file.default.src : defaultIcon

@@ -1,11 +1,11 @@
 import React from 'react'
 
 import styles from './RemoveAvatarButton.module.scss'
-interface IRoundRedBtnProps {
+type Props = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export const RemoveAvatarButton = ({ onClick }: IRoundRedBtnProps) => {
+export const RemoveAvatarButton = ({ onClick }: Props) => {
   return (
     <button className={styles.container} onClick={onClick}>
       <div className={styles.redBtn}>

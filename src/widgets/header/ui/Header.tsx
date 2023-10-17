@@ -14,7 +14,7 @@ export const Header = () => {
   return (
     <header className={s.header}>
       <Link href="/" className={s.logo}>
-        Inctagram
+        Instagram
       </Link>
       <div className={s.option}>
         <div className={s.ball}>

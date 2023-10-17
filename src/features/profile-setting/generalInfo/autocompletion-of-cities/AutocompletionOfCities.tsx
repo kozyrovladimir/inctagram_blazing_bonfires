@@ -2,7 +2,7 @@ import React, { FC, FormEvent, useState } from 'react'
 
 import Autosuggest from 'react-autosuggest'
 
-import { citiesRF } from '@/features/profile-setting/generalInfo/autocompletion-of-cities/cities'
+import { citiesRF } from '@/features/profile-setting/generalInfo/autocompletion-of-cities/Cities'
 import theme from '@/shared/ui/input/Input.module.scss'
 
 const cities = citiesRF.map(city => city.name)
@@ -11,7 +11,7 @@ type Props = {
   error?: string
 }
 
-export const AutocompletionOfCities: FC<Props> = ({ error }) => {
+export const AutocompletionOfCities = ({ error }: Props) => {
   const [value, setValue] = useState<string>('')
   const [suggestions, setSuggestions] = useState<string[]>([])
 

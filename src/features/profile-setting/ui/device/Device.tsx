@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
-import styles from './device.module.scss'
+import styles from './Device.module.scss'
 
 import logoutImg from '@/shared/assets/icons/logout/logout.svg'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { IconDevice } from '@/shared/ui/iconDevice/IconDevice'
 
-interface IProps {
+type Props = {
   deviceName: string
   lastActive: string
   browserName: string
@@ -26,7 +26,7 @@ export const Device = ({
   deviceId,
   logoutCallback,
   deviceName,
-}: IProps) => {
+}: Props) => {
   const {
     t,
     i18n: { t: tRoot },

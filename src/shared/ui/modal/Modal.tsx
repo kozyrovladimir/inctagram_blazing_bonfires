@@ -20,7 +20,7 @@ type Props = {
   children: ReactNode
 }
 
-export const Modal: FC<Props> = ({
+export const Modal = ({
   isShowButton = true,
   styles,
   children,
@@ -30,7 +30,7 @@ export const Modal: FC<Props> = ({
   callBackCloseWindow,
   extraButtonCB,
   mainButtonCB,
-}) => {
+}: Props) => {
   const refModalWindow = useRef<HTMLDivElement | null>(null)
   const [isOpen, setIsOpen] = useState(true)
 

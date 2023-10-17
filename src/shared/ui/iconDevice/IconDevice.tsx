@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import { findPathSVG } from '@/shared/utils/iconGenerator'
 
-interface IProps {
+type Props = {
   osName: string
   browserName: string
   size?: string
@@ -12,7 +12,7 @@ interface IProps {
   isCurrent: boolean
 }
 
-export const IconDevice = ({ osName, isCurrent, theme, browserName }: IProps) => {
+export const IconDevice = ({ osName, isCurrent, theme, browserName }: Props) => {
   const path = useCallback(() => {
     const displayIcon = isCurrent ? browserName : osName
 

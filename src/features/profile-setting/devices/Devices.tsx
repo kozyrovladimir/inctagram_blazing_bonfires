@@ -6,7 +6,7 @@ import { UAParser } from 'ua-parser-js'
 
 import styles from './Devices.module.scss'
 
-import { Device } from '@/features/profile-setting/ui/device/device'
+import { Device } from '@/features/profile-setting/ui/device/Device'
 import { useGetSessionsQuery, useLogoutMutation } from '@/shared/api'
 import {
   useDeleteSessionMutation,
