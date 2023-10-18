@@ -9,7 +9,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styles from './PrivacyPolicy.module.scss'
 
 import backIcon from '@/shared/assets/icons/icons/arrowBackIcon.svg'
-import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
+import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()

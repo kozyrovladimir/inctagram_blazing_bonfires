@@ -7,9 +7,10 @@ import { useRouter } from 'next/router'
 import { NextPage } from 'next/types'
 import { appWithTranslation } from 'next-i18next'
 
-import { WithAuth } from '@/shared/hoc/WithAuth/WithAuth'
-import { StoreProvider } from '@/shared/providers/StoreProvider'
-import { SideBar } from '@/widgets/SideBar/SideBar'
+import { StoreProvider } from '../shared/providers/storeProvider'
+
+import { WithAuth } from '@/shared/hoc/withAuth/WithAuth'
+import { SideBar } from '@/widgets/sideBar/ui/SideBar'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -24,7 +25,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const { pathname } = useRouter()
 
-  const pathWithoutSudebar = [
+  const pathWithoutSidebar = [
     'auth/expired-verification-link',
     '/sign-in',
     '/sign-up',
@@ -38,7 +39,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
     '/auth/privacy-policy',
   ]
 
-  const isSidebar = !pathWithoutSudebar.includes(pathname)
+  const isSidebar = !pathWithoutSidebar.includes(pathname)
 
   return getLayout(
     <WithAuth>
