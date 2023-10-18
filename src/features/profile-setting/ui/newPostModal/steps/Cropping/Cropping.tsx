@@ -18,19 +18,18 @@ export const Cropping = () => {
   const {nextStep, previousStep} = useWizard();
   const cropContext = useImageCropContext();
 
-  // console.log('cropContext', cropContext);
-
   const editor = useRef(null);
 
   const handleSave = () => {
     if (editor.current) {
-      const canvas = editor.current;
-      console.log('canvas' ,canvas);
-      // Здесь вы можете сохранить изображение, например, отправив его на сервер
+      const canvas = editor.current as any;
+      const croppedImage = canvas.getImageScaledToCanvas().toDataURL();
+      cropContext.setCroppedUrl(croppedImage, 0);
     }
   };
 
   // ширина и высота контейнера редактора в пикселях
+  // значения такие же как в style.editorContainer
   const editorContainerWidth = 500;
   const editorContainerHeight = 500;
 
@@ -46,9 +45,10 @@ export const Cropping = () => {
           height={height}
           border={0}
           image={cropContext.photos[0].url} // Ссылка на изображение
-          scale={1} // Масштаб
+          scale={3} // Масштаб
         />
-
+        <button onClick={handleSave} >save</button>
+        {cropContext.photos[0].croppedUrl && <img src={cropContext.photos[0].croppedUrl} alt="Cropped Image" />}
         <ButtonFilterPanel
           cropContext={cropContext}
         />

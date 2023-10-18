@@ -12,11 +12,13 @@ export type PhotoType = {
   url: string;
   width: number;
   height: number;
+  croppedUrl: string;
 };
 
 const initialState: PhotoType[] = [
   {
     url: '',
+    croppedUrl: '',
     width: 0,
     height: 0,
   },
@@ -27,6 +29,7 @@ export type CropContextType = {
   setIsOpen: (isOpen: boolean) => void;
   photos: PhotoType[];
   setPhotoList: (files: FileList) => void;
+  setCroppedUrl: (croppedUrl: string, index: number) => void;
   originalAspect: number;
 }
 
@@ -61,12 +64,13 @@ const CropProvider: React.FC<Props> = ({ children }) => {
           // TODO: убрать setTimeout
           // без него не успевает прогрузиться изображение
           setTimeout(() => {
-          }, 50)
+          }, 20)
 
           return {
             url: url,
             width: image.width,
             height: image.height,
+            croppedUrl: '',
           }
         })
         setPhotos(photos)
@@ -77,6 +81,12 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // оригинальное соотношение сторон
   const originalAspect = photos[0].width / photos[0].height
 
+  const setCroppedUrl = (croppedUrl: string, index: number) => {
+    const newPhotos = [...photos]
+    newPhotos[index].croppedUrl = croppedUrl
+    setPhotos(newPhotos)
+  }
+
   return (
     <CropContext.Provider
       value={{
@@ -85,6 +95,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         photos,
         setPhotoList,
         originalAspect,
+        setCroppedUrl,
       }}
     >
       {/*temp button*/}
