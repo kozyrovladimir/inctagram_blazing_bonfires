@@ -12,6 +12,10 @@ export type PhotoType = {
   url: string;
   width: number;
   height: number;
+  position: {
+    x: number;
+    y: number;
+  }
   croppedUrl: string;
   zoom: number;
   originalAspect: number;
@@ -24,6 +28,10 @@ const initialState: PhotoType[] = [
     croppedUrl: '',
     width: 0,
     height: 0,
+    position: {
+      x: 0,
+      y: 0,
+    },
     zoom: 1,
     originalAspect: 0,
     currentAspect: 0,
@@ -39,6 +47,7 @@ export type CropContextType = {
   setZoom: (index: number) => (zoom: number) => void;
   originalAspect: number;
   handleAspectRatioClick: (index: number) => (aspectRatio: number) => void;
+  setPosition: (index: number) => (position: { x: number; y: number }) => void;
 }
 
 export const CropContext = createContext< CropContextType | undefined>(undefined)
@@ -75,6 +84,10 @@ const CropProvider: React.FC<Props> = ({ children }) => {
             zoom: 1,
             originalAspect: image.width/ image.height,
             currentAspect: image.width/ image.height,
+            position: {
+              x: 0,
+              y: 0,
+            }
           }
         })
         setPhotos(photos)
@@ -106,6 +119,13 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     setPhotos(newPhotos)
   }
 
+  // position
+  const setPosition = (index: number) => (position: { x: number; y: number }) => {
+    const newPhotos = [...photos]
+    newPhotos[index].position = position
+    setPhotos(newPhotos)
+  }
+
   return (
     <CropContext.Provider
       value={{
@@ -117,6 +137,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setCroppedUrl,
         setZoom,
         handleAspectRatioClick,
+        setPosition,
       }}
     >
       {/*temp button*/}

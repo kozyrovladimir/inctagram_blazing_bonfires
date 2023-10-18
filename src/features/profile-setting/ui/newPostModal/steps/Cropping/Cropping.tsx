@@ -18,6 +18,10 @@ export const Cropping = () => {
   const {nextStep, previousStep} = useWizard();
   const cropContext = useImageCropContext();
 
+  const positionChange = (position: { x: number; y: number; }) => {
+    cropContext.setPosition(0)(position);
+  }
+
   const editor = useRef(null);
 
   const handleSave = () => {
@@ -53,6 +57,8 @@ export const Cropping = () => {
           border={0}
           image={cropContext.photos[0].url} // Ссылка на изображение
           scale={cropContext.photos[0].zoom} // Масштаб
+          position={cropContext.photos[0].position} // Позиция
+          onPositionChange={positionChange}
         />
         <ButtonFilterPanel
           cropContext={cropContext}
