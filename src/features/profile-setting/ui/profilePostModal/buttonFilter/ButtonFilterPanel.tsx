@@ -1,70 +1,86 @@
-import React from 'react'
+import React from "react";
 
-import Image from 'next/image'
+import Image from "next/image";
 
-import style from './ButtonFilterPanel.module.scss'
+import style from "./ButtonFilterPanel.module.scss";
 
-import { ModalButton } from '@/features/profile-setting'
+import { ModalButton } from "@/features/profile-setting";
 import {
   CropContextType,
-  useImageCropContext
 } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
-import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
-import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
-import noImage from '@/shared/assets/icons/image/no-image.svg'
-import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
+import maxmMin from "@/shared/assets/icons/filterPostPhoto/maximize-outline.svg";
+import sizePhoto from "@/shared/assets/icons/filterPostPhoto/size.svg";
+import noImage from "@/shared/assets/icons/image/no-image.svg";
+import { Button, ButtonTheme } from "@/shared/ui/Button/Button";
 import { useDispatch } from "react-redux";
 
 interface ButtonFilterPanelProps {
-  cropContext: CropContextType
+  cropContext: CropContextType;
 }
 
-export const ButtonFilterPanel: React.FC<ButtonFilterPanelProps> = ({cropContext}) => {
+export const ButtonFilterPanel: React.FC<ButtonFilterPanelProps> = ({ cropContext }) => {
+  const [aspectModalOpen, setAspectModalOpen] = React.useState(false);
+  const toggleAspectModal = () => setAspectModalOpen(!aspectModalOpen);
+  const [zoomModalOpen, setZoomModalOpen] = React.useState(false);
+  const toggleZoomModal = () => setZoomModalOpen(!zoomModalOpen);
 
-  if (!cropContext) return null
+  const handleZoomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const zoom = Number(event.target.value);
+    cropContext.setZoom(0)(zoom);
+  };
+
+  const handleAspectRatioClick = cropContext.handleAspectRatioClick(0);
 
   return (
     <div className={style.filterPanelContainer}>
       <div className={style.leftPanel}>
         <div className={style.buttonContainer}>
-          {cropContext.isModalOpen && <ModalButton onAspectRatioChange={cropContext.handleAspectRatioClick} />}
-          <Button theme={ButtonTheme.CLEAR} className={style.sizeButton} onClick={cropContext.handleCropOpen}>
-            <Image src={sizePhoto} alt={''} />
+          {aspectModalOpen &&
+            <ModalButton originalAspect={cropContext.photos[0].originalAspect}
+                         onAspectRatioChange={handleAspectRatioClick} />}
+          <Button theme={ButtonTheme.CLEAR} className={style.sizeButton}
+                  onClick={toggleAspectModal}>
+            <Image src={sizePhoto} alt={""} />
           </Button>
         </div>
         <div>
-          {cropContext.showZoomInput && (
+          {zoomModalOpen && (
             <div className={style.zoomInput}>
               <input
                 type="range"
                 min={1}
                 max={3}
                 step={0.1}
-                value={cropContext.zoom}
-                onChange={cropContext.handleZoomChange}
+                value={cropContext.photos[0].zoom}
+                onChange={handleZoomChange}
               />
             </div>
           )}
           <Button
             theme={ButtonTheme.CLEAR}
             className={style.sizeButton}
-            onClick={cropContext.handleToggleZoomInput}
+            onClick={toggleZoomModal}
           >
-            <Image src={maxmMin} alt={''} />
+            <Image src={maxmMin} alt={""} />
           </Button>
         </div>
       </div>
       <div className={style.rightButton}>
         <Button theme={ButtonTheme.CLEAR} className={style.sizeButton}
-                // onClick={cropContext.handlerShowSlider}
+          // onClick={cropContext.handlerShowSlider}
         >
           <Image
             src={noImage}
-            alt={''}
-            style={{ width: '24px', height: '24px', display: 'flex', flexDirection: 'column' }}
+            alt={""}
+            style={{
+              width: "24px",
+              height: "24px",
+              display: "flex",
+              flexDirection: "column"
+            }}
           />
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};

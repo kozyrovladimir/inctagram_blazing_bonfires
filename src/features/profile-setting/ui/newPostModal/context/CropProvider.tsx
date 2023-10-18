@@ -13,6 +13,9 @@ export type PhotoType = {
   width: number;
   height: number;
   croppedUrl: string;
+  zoom: number;
+  originalAspect: number;
+  currentAspect: number;
 };
 
 const initialState: PhotoType[] = [
@@ -21,6 +24,9 @@ const initialState: PhotoType[] = [
     croppedUrl: '',
     width: 0,
     height: 0,
+    zoom: 1,
+    originalAspect: 0,
+    currentAspect: 0,
   },
 ]
 
@@ -30,7 +36,9 @@ export type CropContextType = {
   photos: PhotoType[];
   setPhotoList: (files: FileList) => void;
   setCroppedUrl: (croppedUrl: string, index: number) => void;
+  setZoom: (index: number) => (zoom: number) => void;
   originalAspect: number;
+  handleAspectRatioClick: (index: number) => (aspectRatio: number) => void;
 }
 
 export const CropContext = createContext< CropContextType | undefined>(undefined)
@@ -53,24 +61,20 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         const photos = imageDataUrls.map((url) => {
           const image: HTMLImageElement = new Image();
           image.src = url;
-          let width = 0;
-          let height = 0;
-
-          image.onload = () => {
-            width = image.width;
-            height = image.height;
-          }
 
           // TODO: убрать setTimeout
           // без него не успевает прогрузиться изображение
           setTimeout(() => {
-          }, 20)
+          }, 100)
 
           return {
             url: url,
             width: image.width,
             height: image.height,
             croppedUrl: '',
+            zoom: 1,
+            originalAspect: image.width/ image.height,
+            currentAspect: image.width/ image.height,
           }
         })
         setPhotos(photos)
@@ -81,9 +85,24 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // оригинальное соотношение сторон
   const originalAspect = photos[0].width / photos[0].height
 
+  // запись в массив обрезанной фотографии
   const setCroppedUrl = (croppedUrl: string, index: number) => {
     const newPhotos = [...photos]
     newPhotos[index].croppedUrl = croppedUrl
+    setPhotos(newPhotos)
+  }
+
+  // zoom
+  const setZoom = (index: number) => (zoom: number) => {
+    const newPhotos = [...photos]
+    newPhotos[index].zoom = zoom
+    setPhotos(newPhotos)
+  }
+
+  // aspect ratio
+  const handleAspectRatioClick = (index: number) => (aspectRatio: number) => {
+    const newPhotos = [...photos]
+    newPhotos[index].currentAspect = aspectRatio
     setPhotos(newPhotos)
   }
 
@@ -96,6 +115,8 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setPhotoList,
         originalAspect,
         setCroppedUrl,
+        setZoom,
+        handleAspectRatioClick,
       }}
     >
       {/*temp button*/}

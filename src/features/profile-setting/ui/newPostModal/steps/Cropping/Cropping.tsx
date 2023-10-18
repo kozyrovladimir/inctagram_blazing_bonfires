@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useWizard } from 'react-use-wizard';
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
 import backIcon from '@/shared/assets/icons/arrow back/back.svg';
@@ -33,7 +33,14 @@ export const Cropping = () => {
   const editorContainerWidth = 500;
   const editorContainerHeight = 500;
 
-  const {width, height} = calculateImageDimensions(cropContext.photos[0].width, cropContext.photos[0].height, editorContainerWidth, editorContainerHeight);
+  const {width, height} = calculateImageDimensions(cropContext.photos[0].currentAspect, editorContainerWidth, editorContainerHeight);
+
+  useEffect(() => {
+    return () => {
+      handleSave();
+    }
+  }
+  , []);
 
   return (
     <NewPostModal isOpen={cropContext.isOpen} title={'Cropping'} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
@@ -45,10 +52,8 @@ export const Cropping = () => {
           height={height}
           border={0}
           image={cropContext.photos[0].url} // Ссылка на изображение
-          scale={3} // Масштаб
+          scale={cropContext.photos[0].zoom} // Масштаб
         />
-        <button onClick={handleSave} >save</button>
-        {cropContext.photos[0].croppedUrl && <img src={cropContext.photos[0].croppedUrl} alt="Cropped Image" />}
         <ButtonFilterPanel
           cropContext={cropContext}
         />

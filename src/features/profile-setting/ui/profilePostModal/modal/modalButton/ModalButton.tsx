@@ -11,16 +11,17 @@ import style from './ModalButton.module.scss'
 
 interface ModalButtonProps {
   onAspectRatioChange: (aspectRatio: number) => void
+  originalAspect: number
 }
 
-export const ModalButton: FC<ModalButtonProps> = ({ onAspectRatioChange }) => {
+export const ModalButton: FC<ModalButtonProps> = ({ onAspectRatioChange,  originalAspect }) => {
   const handleAspectRatioClick = (aspectRatio: number) => {
     onAspectRatioChange(aspectRatio)
   }
 
   return (
     <div className={style.actionBtns}>
-      <div onClick={() => handleAspectRatioClick(0)}>
+      <div onClick={() => handleAspectRatioClick(originalAspect)}>
         <Image src={originImage} alt={''} />
       </div>
       <div onClick={() => handleAspectRatioClick(1)}>
