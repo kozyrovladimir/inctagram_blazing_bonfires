@@ -58,6 +58,11 @@ const CropProvider: React.FC<Props> = ({ children }) => {
             height = image.height;
           }
 
+          // TODO: убрать setTimeout
+          // без него не успевает прогрузиться изображение
+          setTimeout(() => {
+          }, 50)
+
           return {
             url: url,
             width: image.width,
