@@ -4,7 +4,7 @@ import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostM
 import backIcon from '@/shared/assets/icons/arrow back/back.svg';
 import Image from "next/image";
 import {
-  useImageCropContext
+  CropContextType,
 } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
 import style from './Cropping.module.scss'
 import { ButtonFilterPanel } from "@/features/profile-setting";
@@ -13,13 +13,16 @@ import {
   calculateImageDimensions
 } from "@/features/profile-setting/ui/newPostModal/utils/calculateImageDimensions";
 
+interface CroppingProps {
+  cropContext: CropContextType;
+  index: number;
+}
 
-export const Cropping = () => {
+
+export const Cropping: React.FC<CroppingProps> = ({cropContext, index}) => {
   const {nextStep, previousStep} = useWizard();
-  const cropContext = useImageCropContext();
-
   const positionChange = (position: { x: number; y: number; }) => {
-    cropContext.setPosition(0)(position);
+    cropContext.setPosition(index)(position);
   }
 
   const editor = useRef(null);
@@ -28,7 +31,7 @@ export const Cropping = () => {
     if (editor.current) {
       const canvas = editor.current as any;
       const croppedImage = canvas.getImageScaledToCanvas().toDataURL();
-      cropContext.setCroppedUrl(croppedImage, 0);
+      cropContext.setCroppedUrl(croppedImage, index);
     }
   };
 
@@ -37,7 +40,7 @@ export const Cropping = () => {
   const editorContainerWidth = 500;
   const editorContainerHeight = 500;
 
-  const {width, height} = calculateImageDimensions(cropContext.photos[0].currentAspect, editorContainerWidth, editorContainerHeight);
+  const {width, height} = calculateImageDimensions(cropContext.photos[index].currentAspect, editorContainerWidth, editorContainerHeight);
 
   useEffect(() => {
     return () => {
@@ -47,7 +50,7 @@ export const Cropping = () => {
   , []);
 
   return (
-    <NewPostModal isOpen={cropContext.isOpen} title={'Cropping'} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
+    // <NewPostModal isOpen={cropContext.isOpen} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} title={'Cropping'} right={<span onClick={nextStep}>Next</span>}>
       <div className={style.editorContainer}>
         <AvatarEditor
           className={style.imageFullWidth}
@@ -55,15 +58,16 @@ export const Cropping = () => {
           width={width}
           height={height}
           border={0}
-          image={cropContext.photos[0].url} // Ссылка на изображение
-          scale={cropContext.photos[0].zoom} // Масштаб
-          position={cropContext.photos[0].position} // Позиция
+          image={cropContext.photos[index].url} // Ссылка на изображение
+          scale={cropContext.photos[index].zoom} // Масштаб
+          position={cropContext.photos[index].position} // Позиция
           onPositionChange={positionChange}
         />
         <ButtonFilterPanel
+          index={index}
           cropContext={cropContext}
         />
       </div>
-    </NewPostModal>
+    // </NewPostModal>
   );
 };

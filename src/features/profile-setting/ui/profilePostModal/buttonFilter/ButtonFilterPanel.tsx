@@ -12,13 +12,13 @@ import maxmMin from "@/shared/assets/icons/filterPostPhoto/maximize-outline.svg"
 import sizePhoto from "@/shared/assets/icons/filterPostPhoto/size.svg";
 import noImage from "@/shared/assets/icons/image/no-image.svg";
 import { Button, ButtonTheme } from "@/shared/ui/Button/Button";
-import { useDispatch } from "react-redux";
 
 interface ButtonFilterPanelProps {
   cropContext: CropContextType;
+  index: number;
 }
 
-export const ButtonFilterPanel: React.FC<ButtonFilterPanelProps> = ({ cropContext }) => {
+export const ButtonFilterPanel: React.FC<ButtonFilterPanelProps> = ({ cropContext, index }) => {
   const [aspectModalOpen, setAspectModalOpen] = React.useState(false);
   const toggleAspectModal = () => setAspectModalOpen(!aspectModalOpen);
   const [zoomModalOpen, setZoomModalOpen] = React.useState(false);
@@ -26,17 +26,17 @@ export const ButtonFilterPanel: React.FC<ButtonFilterPanelProps> = ({ cropContex
 
   const handleZoomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const zoom = Number(event.target.value);
-    cropContext.setZoom(0)(zoom);
+    cropContext.setZoom(index)(zoom);
   };
 
-  const handleAspectRatioClick = cropContext.handleAspectRatioClick(0);
+  const handleAspectRatioClick = cropContext.handleAspectRatioClick(index);
 
   return (
     <div className={style.filterPanelContainer}>
       <div className={style.leftPanel}>
         <div className={style.buttonContainer}>
           {aspectModalOpen &&
-            <ModalButton originalAspect={cropContext.photos[0].originalAspect}
+            <ModalButton originalAspect={cropContext.photos[index].originalAspect}
                          onAspectRatioChange={handleAspectRatioClick} />}
           <Button theme={ButtonTheme.CLEAR} className={style.sizeButton}
                   onClick={toggleAspectModal}>
@@ -51,7 +51,7 @@ export const ButtonFilterPanel: React.FC<ButtonFilterPanelProps> = ({ cropContex
                 min={1}
                 max={3}
                 step={0.1}
-                value={cropContext.photos[0].zoom}
+                value={cropContext.photos[index].zoom}
                 onChange={handleZoomChange}
               />
             </div>

@@ -6,6 +6,8 @@ import {Filters} from "@/features/profile-setting/ui/newPostModal/steps/Filters/
 import {Publication} from "@/features/profile-setting/ui/newPostModal/steps/Publication/Publication";
 import CropProvider
   from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
+import CropSlider
+  from "@/features/profile-setting/ui/newPostModal/components/CropSlider/CropSlider";
 
 
 const Index = () => {
@@ -13,7 +15,7 @@ const Index = () => {
       <CropProvider>
         <Wizard>
           <AddPhoto/>
-          <Cropping/>
+          <CropSlider/>
           <Filters/>
           <Publication/>
         </Wizard>

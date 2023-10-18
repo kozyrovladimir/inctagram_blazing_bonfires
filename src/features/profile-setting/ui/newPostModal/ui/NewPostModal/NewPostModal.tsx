@@ -8,7 +8,7 @@ interface NewPostModalProps {
   title: string;
   left?: React.ReactNode;
   right?: React.ReactNode;
-  children: React.ReactNode;
+  children: React.ReactNode | any;
 }
 
 const NewPostModal: React.FC<NewPostModalProps> = (props) => {
