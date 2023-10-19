@@ -6,7 +6,7 @@ export const algByDecodingToken = (accessToken: string) => {
   const expirationTime = payload.exp // это время в секундах с начала эпохи (Unix timestamp)
   const dateOfExpiration = new Date(expirationTime * 1000) // превращаем Unix timestamp в объект даты
 
-  const isExpirationTimeLongerThanCurrent = expirationTime > Date.now()
+  const isExpirationTimeLongerThanCurrent = expirationTime > Date.now() / 1000
 
   return {
     isExpirationTimeLongerThanCurrent,

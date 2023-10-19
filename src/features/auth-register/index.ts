@@ -1,4 +1,4 @@
-export { CreateNewPassForm } from './ui/CreateNewPassForm/CreateNewPassForm'
-export { SignInForm } from './ui/SignInForm/SignInForm'
-export { SignUpForm } from './ui/SignUpForm/SignUpForm'
-export { ForgotPass } from './ui/ForgotPassForm/ForgotPassForm'
+export { CreateNewPassForm } from '@/features/auth-register/ui/createNewPassForm/CreateNewPassForm'
+export { SignInForm } from '@/features/auth-register/ui/signInForm/SignInForm'
+export { SignUpForm } from '@/features/auth-register/ui/signUpForm/SignUpForm'
+export { ForgotPass } from '@/features/auth-register/ui/forgotPassForm/ForgotPassForm'

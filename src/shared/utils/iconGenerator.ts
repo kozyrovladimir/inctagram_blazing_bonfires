@@ -4,15 +4,11 @@ import defaultIconDeviceLight from '@/shared/assets/icons/devices/lightIcons/any
 import defaultIconBrowserLight from '@/shared/assets/icons/devices/lightIcons/browser.svg'
 
 const requireAll = (requireContext: any) => requireContext.keys().map(requireContext)
-const darkSVG = require.context(
-  '@/shared/assets/icons/devices/darkIcons', // путь к вашей папке с изображениями SVG
-  false, // true - включить подкаталоги/false - выключть
-  /\.svg$/ // шаблон файла
-)
+const darkSVG = require.context('@/shared/assets/icons/devices/darkIcons', false, /\.svg$/)
 const lightSVG = require.context('@/shared/assets/icons/devices/lightIcons', false, /\.svg$/)
 
-const svgsDark = requireAll(darkSVG)
-const svgsLight = requireAll(lightSVG)
+const svgDark = requireAll(darkSVG)
+const svgLight = requireAll(lightSVG)
 
 interface svgFile {
   default: {
@@ -41,10 +37,10 @@ export const findPathSVG = (name: string, isCurrent: boolean, theme?: string): s
 
   if (theme) {
     defaultIcon = isCurrent ? defaultIconBrowserLight : defaultIconDeviceLight
-    file = findFile(svgsDark)
+    file = findFile(svgDark)
   } else {
     defaultIcon = isCurrent ? defaultIconBrowserDark : defaultIconDeviceDark
-    file = findFile(svgsLight)
+    file = findFile(svgLight)
   }
 
   return file ? file.default.src : defaultIcon

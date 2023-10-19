@@ -13,11 +13,11 @@ import styles from './ExpiredVerificationLink.module.scss'
 import { useResendVerificationLinkMutation } from '@/shared/api/services/auth/auth.api'
 import { ResendVerificationLinkType } from '@/shared/api/services/auth/auth.api.types'
 import broResend from '@/shared/assets/icons/login/broResend.svg'
-import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
-import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
-import { CircularLoader } from '@/shared/ui/Loaders/CircularLoader'
-import { Modal } from '@/shared/ui/Modal/Modal'
-import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
+import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
+import { CircularLoader } from '@/shared/ui/loaders/CircularLoader'
+import { Modal } from '@/shared/ui/modal/Modal'
+import { ShortLangs } from '@/widgets/langSwitcher/ui/LanguageSelect'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()

@@ -1,4 +1,4 @@
-import React, { useTransition } from 'react'
+import React from 'react'
 
 import { GetStaticProps } from 'next'
 import Image from 'next/image'
@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next'
 import styles from './ConfirmedEmail.module.scss'
 
 import broConfirmImage from '@/shared/assets/icons/login/broCongratulations.svg'
-import { getLayout } from '@/shared/layouts/MainLayout/MainLayout'
-import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
+import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
+import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()

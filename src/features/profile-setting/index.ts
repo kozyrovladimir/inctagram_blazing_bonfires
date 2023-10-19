@@ -1,1 +1,1 @@
-export { GeneralInfo } from './GeneralInfo/GeneralInfo'
+export { GeneralInfo } from '@/features/profile-setting/generalInfo/GeneralInfo'
