@@ -202,14 +202,14 @@ export const GeneralInfo = () => {
             </div>
 
             <div className={styles.textFieldsContent}>
-              {allFields.map(e => {
+              {allFields.map(name => {
                 return (
                   <Controller
-                    key={e}
-                    name={e}
+                    key={name}
+                    name={name}
                     control={control}
                     render={
-                      e === 'dateOfBirth'
+                      name === 'dateOfBirth'
                         ? ({ field: { onChange, ref, ...args } }) => (
                             <>
                               <label className={styles.labelDate}>{t('DateBirthday')}</label>
@@ -221,12 +221,12 @@ export const GeneralInfo = () => {
                               />
                               {errors && (
                                 <p className={styles.error}>
-                                  {(errors as FieldErrors<ProfileUserType>)[e]?.message}
+                                  {(errors as FieldErrors<ProfileUserType>)[name]?.message}
                                 </p>
                               )}
                             </>
                           )
-                        : e === 'city'
+                        : name === 'city'
                         ? ({ field }) => (
                             <>
                               <label>{t('City')}</label>
@@ -236,7 +236,7 @@ export const GeneralInfo = () => {
                               />
                             </>
                           )
-                        : e === 'aboutMe'
+                        : name === 'aboutMe'
                         ? ({ field }) => (
                             <>
                               <div className={styles.textareaContent}>
@@ -244,7 +244,7 @@ export const GeneralInfo = () => {
                                 <textarea
                                   rows={4}
                                   cols={50}
-                                  placeholder=""
+                                  placeholder={t('WriteAboutYourself')}
                                   className={styles.aboutMeTextarea}
                                   {...field}
                                 />
@@ -258,10 +258,18 @@ export const GeneralInfo = () => {
                           )
                         : ({ field }) => (
                             <Input
-                              label={t(e.replace(e[0], e[0].toUpperCase()))}
+                              label={t(name.replace(name[0], name[0].toUpperCase()))}
                               type={InputType.TEXT}
-                              placeholder={`Enter your ${e}`}
-                              error={(errors as FieldErrors<ProfileUserType>)[e]?.message}
+                              placeholder={
+                                name === 'userName'
+                                  ? t('EnterUserName')
+                                  : name === 'firstName'
+                                  ? t('EnterFirstName')
+                                  : name === 'lastName'
+                                  ? t('EnterLastName')
+                                  : '...'
+                              }
+                              error={(errors as FieldErrors<ProfileUserType>)[name]?.message}
                               classNameWrap={'myCustomLabel'}
                               {...field}
                             />

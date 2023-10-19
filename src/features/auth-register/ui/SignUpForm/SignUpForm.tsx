@@ -14,7 +14,6 @@ import styles from './SignUpForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/OAuth/OAuth'
 import { SignUpType, useSignUpMutation } from '@/shared/api'
-import { AppErrors } from '@/shared/common/errors'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/Button/Button'
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import FormContainer from '@/shared/ui/FormContainer/FormContainer'
@@ -100,7 +99,6 @@ export const SignUpForm = () => {
       .catch(error => toast.error(error.data.messages[0].message))
   }
 
-  // проверяет заполнены ли все поля, а watch следит за обновленеием - без него не работатет
   watch()
   const isFillField = getValues([
     'userName',

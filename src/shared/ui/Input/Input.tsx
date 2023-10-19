@@ -86,7 +86,11 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             )}
           </>
         )}
-        {error && <p className={styles.error}>{error}</p>}
+        {error && (
+          <p className={styles.error} style={error.length > 44 ? { fontSize: '13px' } : undefined}>
+            {error}
+          </p>
+        )}
       </div>
     )
   }
