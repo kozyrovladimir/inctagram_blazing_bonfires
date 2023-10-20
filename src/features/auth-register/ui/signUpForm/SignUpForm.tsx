@@ -97,7 +97,6 @@ export const SignUpForm = () => {
       .catch(error => toast.error(error.data.messages[0].message))
   }
 
-  // проверяет заполнены ли все поля, а watch следит за обновленеием - без него не работатет
   watch()
   const isFillField = getValues([
     'userName',

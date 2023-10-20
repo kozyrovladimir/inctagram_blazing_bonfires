@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import moment from 'moment'
 
 import { baseURL } from '../baseUrl.api'
 
@@ -48,7 +47,7 @@ export const profileApi = createApi({
         },
         invalidatesTags: ['dataProfile'],
       }),
-      updateAvatar: build.mutation<any, FormData>({
+      updateAvatar: build.mutation<AvatarsType, FormData>({
         query: data => {
           return {
             method: 'POST',

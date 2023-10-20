@@ -16,7 +16,7 @@ export const IconDevice = ({ osName, isCurrent, theme, browserName }: Props) => 
   const path = useCallback(() => {
     const displayIcon = isCurrent ? browserName : osName
 
-    return theme ? findPathSVG(displayIcon, isCurrent, theme) : findPathSVG(displayIcon, isCurrent)
+    return findPathSVG(displayIcon, isCurrent, theme)
   }, [theme, osName, browserName, isCurrent])
 
   return (
