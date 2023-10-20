@@ -9,19 +9,9 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'storage.yandexcloud.net',
         port: '',
-        // pathname: '/account123/**',
       },
     ],
   },
-  // webpack(config) {
-  //   config.module.rules.push({
-  //     test: /\.svg$/i,
-  //     issuer: /\.[jt]sx?$/,
-  //     use: ['@svgr/webpack'],
-  //   })
-
-  //   return config
-  // },
 }
 
 module.exports = nextConfig
