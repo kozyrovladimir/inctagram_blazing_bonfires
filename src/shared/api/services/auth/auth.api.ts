@@ -19,7 +19,7 @@ import {
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
   method: 'POST',
-  credentials: 'include',
+  credentials: 'same-origin',
   prepareHeaders: headers => {
     const token = localStorage.getItem('accessToken')
 

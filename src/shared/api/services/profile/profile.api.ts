@@ -6,7 +6,7 @@ import { AvatarsType, BaseUserType, ProfileUserType } from './profile.api.types'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
-  baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'same-origin' }),
   tagTypes: ['dataProfile'],
   endpoints: build => {
     return {

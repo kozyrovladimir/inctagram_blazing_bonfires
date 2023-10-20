@@ -6,7 +6,7 @@ import { UserSessionsType } from './devices.api.types'
 
 export const devicesApi = createApi({
   reducerPath: 'devicesApi',
-  baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'same-origin' }),
   tagTypes: ['sessions'],
   endpoints: build => {
     return {
