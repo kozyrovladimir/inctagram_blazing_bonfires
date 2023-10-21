@@ -4,9 +4,19 @@ import Autosuggest from 'react-autosuggest'
 
 import theme from '../../../../shared/ui/Input/Input.module.scss'
 
-import { citiesRF } from '@/features/profile-setting/GeneralInfo/Autocompletion_of_cities/cities'
+import { citiesBelarus } from '@/features/profile-setting/GeneralInfo/Autocompletion_of_cities/citiesBelarus'
+import { citiesRF } from '@/features/profile-setting/GeneralInfo/Autocompletion_of_cities/citiesRF'
 
-const cities = citiesRF.map(city => city.name)
+let cities = citiesRF.map(city => city.name)
+
+// .push(citiesBelarus.map(city => city.cities.map(c => c.name)))
+const citiesB = citiesBelarus.map(city => city.cities.map(c => c.name))
+
+let mergedCitiesBelarus: string[] = []
+
+citiesB.forEach(e => mergedCitiesBelarus.push(...e))
+
+cities.push(...mergedCitiesBelarus)
 
 type Props = {
   error?: string

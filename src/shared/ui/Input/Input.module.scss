@@ -68,8 +68,12 @@
 }
 .container ul {
   list-style-type: none;
+  height: 200px;
+  overflow: hidden;
+  overflow-y: scroll;
   & li {
     cursor: pointer;
   }
 }
+
 
