@@ -17,6 +17,7 @@ import {
 import {
   Cropping
 } from "@/features/profile-setting/ui/newPostModal/steps/Cropping/Cropping";
+import styles from "./CroppingSlider.module.scss"
 
 
 const CropSlider = () => {
@@ -35,7 +36,7 @@ const CropSlider = () => {
           touchEnabled={false}
           dragEnabled={false}
         >
-          <Slider>
+          <Slider className={styles.slider}>
             {
               cropContext.photos.map((photo, index) => (
                 <Slide index={index}>
