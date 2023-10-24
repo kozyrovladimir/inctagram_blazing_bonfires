@@ -17,6 +17,7 @@ export type PhotoType = {
     y: number;
   }
   croppedUrl: string;
+  filteredUrl: string;
   zoom: number;
   originalAspect: number;
   currentAspect: number;
@@ -26,6 +27,7 @@ const initialState: PhotoType[] = [
   {
     url: '',
     croppedUrl: '',
+    filteredUrl: '',
     width: 0,
     height: 0,
     position: {
@@ -44,6 +46,7 @@ export type CropContextType = {
   photos: PhotoType[];
   setPhotoList: (files: FileList) => void;
   setCroppedUrl: (croppedUrl: string, index: number) => void;
+  setFilteredUrl: (filteredUrl: string, index: number) => void;
   setZoom: (index: number) => (zoom: number) => void;
   originalAspect: number;
   handleAspectRatioClick: (index: number) => (aspectRatio: number) => void;
@@ -78,6 +81,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
                 width: image.width,
                 height: image.height,
                 croppedUrl: url,
+                filteredUrl: url,
                 zoom: 1,
                 originalAspect: image.width / image.height,
                 currentAspect: image.width / image.height,
@@ -116,6 +120,13 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     setPhotos(newPhotos)
   }
 
+  // запись в массив отфильтрованной фотографии
+  const setFilteredUrl = (filteredUrl: string, index: number) => {
+    const newPhotos = [...photos]
+    newPhotos[index].filteredUrl = filteredUrl
+    setPhotos(newPhotos)
+  }
+
   // zoom
   const setZoom = (index: number) => (zoom: number) => {
     const newPhotos = [...photos]
@@ -146,6 +157,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setPhotoList,
         originalAspect,
         setCroppedUrl,
+        setFilteredUrl,
         setZoom,
         handleAspectRatioClick,
         setPosition,

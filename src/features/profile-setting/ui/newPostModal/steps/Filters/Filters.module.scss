@@ -2,11 +2,13 @@
     position: relative;
     width: 500px;
     height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .sliderImage {
       width: 100%;
       height: 100%;
-      object-fit: contain;
     }
 
     .sliderButtonsContainer {
@@ -40,4 +42,13 @@
       padding-left: 8px;
       padding-right: 8px;
     }
+}
+
+.filtersModalContent {
+  display: flex;
+
+  .filters {
+    width: 500px;
+    height: 500px;
+  }
 }
