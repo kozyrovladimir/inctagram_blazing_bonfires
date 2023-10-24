@@ -15,7 +15,7 @@ const Index = () => {
       <CropProvider>
         <Wizard>
           <AddPhoto/>
-          <CropSlider/>
+          <Cropping/>
           <Filters/>
           <Publication/>
         </Wizard>

@@ -16,6 +16,7 @@ interface ModalButtonProps {
 
 export const ModalButton: FC<ModalButtonProps> = ({ onAspectRatioChange,  originalAspect }) => {
   const handleAspectRatioClick = (aspectRatio: number) => {
+    console.log(aspectRatio);
     onAspectRatioChange(aspectRatio)
   }
 

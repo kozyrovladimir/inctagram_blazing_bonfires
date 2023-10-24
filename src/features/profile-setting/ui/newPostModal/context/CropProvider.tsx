@@ -74,7 +74,28 @@ const CropProvider: React.FC<Props> = ({ children }) => {
           // TODO: убрать setTimeout
           // без него не успевает прогрузиться изображение
           setTimeout(() => {
-          }, 120)
+          }, 80)
+
+          // const onLoadImage = new Promise((resolve, reject) => {
+          //   image.onload = () => resolve(image)
+          //   image.onerror = () => reject()
+          // })
+
+          // return onLoadImage.then(() => {
+          //   return {
+          //     url: url,
+          //     width: image.width,
+          //     height: image.height,
+          //     croppedUrl: '',
+          //     zoom: 1,
+          //     originalAspect: image.width/ image.height,
+          //     currentAspect: image.width/ image.height,
+          //     position: {
+          //       x: 0,
+          //       y: 0,
+          //     }
+          //   }
+          // })
 
           return {
             url: url,

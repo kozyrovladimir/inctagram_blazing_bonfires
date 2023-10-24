@@ -4,7 +4,7 @@ import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostM
 import backIcon from '@/shared/assets/icons/arrow back/back.svg';
 import Image from "next/image";
 import {
-  CropContextType,
+  CropContextType, useImageCropContext
 } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
 import style from './Cropping.module.scss'
 import { ButtonFilterPanel } from "@/features/profile-setting";
@@ -12,14 +12,16 @@ import AvatarEditor from 'react-avatar-editor';
 import {
   calculateImageDimensions
 } from "@/features/profile-setting/ui/newPostModal/utils/calculateImageDimensions";
-
-interface CroppingProps {
-  cropContext: CropContextType;
-  index: number;
-}
+import { useSlider } from "./../../utils/useSlider";
 
 
-export const Cropping: React.FC<CroppingProps> = ({cropContext, index}) => {
+export const Cropping: React.FC = () => {
+  const cropContext = useImageCropContext()
+
+  const {currentIndex, prevSlide, nextSlide} = useSlider(cropContext.photos.length);
+
+  const index = currentIndex;
+
   const {nextStep, previousStep} = useWizard();
   const positionChange = (position: { x: number; y: number; }) => {
     cropContext.setPosition(index)(position);
@@ -50,7 +52,7 @@ export const Cropping: React.FC<CroppingProps> = ({cropContext, index}) => {
   , []);
 
   return (
-    // <NewPostModal isOpen={cropContext.isOpen} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} title={'Cropping'} right={<span onClick={nextStep}>Next</span>}>
+    <NewPostModal isOpen={cropContext.isOpen} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} title={'Cropping'} right={<span onClick={nextStep}>Next</span>}>
       <div className={style.editorContainer}>
         <AvatarEditor
           className={style.imageFullWidth}
@@ -63,11 +65,15 @@ export const Cropping: React.FC<CroppingProps> = ({cropContext, index}) => {
           position={cropContext.photos[index].position} // Позиция
           onPositionChange={positionChange}
         />
+        <div className={style.sliderButtonsContainer}>
+          <button onClick={prevSlide}>prev</button>
+          <button onClick={nextSlide}>next</button>
+        </div>
         <ButtonFilterPanel
           index={index}
           cropContext={cropContext}
         />
       </div>
-    // </NewPostModal>
+    </NewPostModal>
   );
 };

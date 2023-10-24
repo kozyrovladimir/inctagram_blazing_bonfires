@@ -3,9 +3,18 @@
   width: 500px;
   height: 500px;
 
-  border: 2px solid red;
-
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.sliderButtonsContainer {
+  position: absolute;
+  bottom: 240px;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
