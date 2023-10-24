@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useWizard } from 'react-use-wizard';
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
 import backIcon from '@/shared/assets/icons/arrow back/back.svg';
 import Image from "next/image";
-import {
-  CropContextType, useImageCropContext
-} from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
+import { useImageCropContext } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
 import style from './Cropping.module.scss'
 import { ButtonFilterPanel } from "@/features/profile-setting";
 import AvatarEditor from 'react-avatar-editor';
@@ -33,7 +31,6 @@ export const Cropping: React.FC = () => {
     if (editor.current) {
       const canvas = editor.current as any;
       const croppedImage = canvas.getImageScaledToCanvas().toDataURL();
-      console.log(croppedImage);
       cropContext.setCroppedUrl(croppedImage, index);
     }
   };
@@ -49,13 +46,6 @@ export const Cropping: React.FC = () => {
   const editorContainerHeight = 500;
 
   const {width, height} = calculateImageDimensions(cropContext.photos[index].currentAspect, editorContainerWidth, editorContainerHeight);
-
-  // useEffect(() => {
-  //   return () => {
-  //     handleSave();
-  //   }
-  // }
-  // , []);
 
   return (
     <NewPostModal isOpen={cropContext.isOpen} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} title={'Cropping'} right={<span onClick={nextStepHandler}>Next</span>}>
