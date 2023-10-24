@@ -6,14 +6,24 @@ import backIcon from '@/shared/assets/icons/arrow back/back.svg';
 import {
   useImageCropContext
 } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
+import { useSlider } from "@/features/profile-setting/ui/newPostModal/utils/useSlider";
+import style from './Filters.module.scss';
 
 export const Filters = () => {
   const {nextStep, previousStep} = useWizard();
-  const {isOpen, setIsOpen} = useImageCropContext();
+  const cropContext = useImageCropContext();
+  const {currentIndex, prevSlide, nextSlide} = useSlider(cropContext.photos.length);
 
   return (
-    <NewPostModal isOpen={isOpen} title={'Filters'} setIsOpen={setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
+    <NewPostModal isOpen={cropContext.isOpen} title={'Filters'} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
       <span>Filters</span>
+      <div className={style.sliderWrapper}>
+        <img className={style.sliderImage} src={cropContext.photos[currentIndex].croppedUrl} alt="slide" />
+        <div className={style.sliderButtonsContainer}>
+          <button onClick={prevSlide}>prev</button>
+          <button onClick={nextSlide}>next</button>
+        </div>
+      </div>
     </NewPostModal>
   );
 };

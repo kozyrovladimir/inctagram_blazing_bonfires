@@ -77,7 +77,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
                 url,
                 width: image.width,
                 height: image.height,
-                croppedUrl: '',
+                croppedUrl: url,
                 zoom: 1,
                 originalAspect: image.width / image.height,
                 currentAspect: image.width / image.height,

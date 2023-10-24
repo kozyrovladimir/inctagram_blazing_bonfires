@@ -33,9 +33,15 @@ export const Cropping: React.FC = () => {
     if (editor.current) {
       const canvas = editor.current as any;
       const croppedImage = canvas.getImageScaledToCanvas().toDataURL();
+      console.log(croppedImage);
       cropContext.setCroppedUrl(croppedImage, index);
     }
   };
+
+  const nextStepHandler = () => {
+    handleSave();
+    void nextStep();
+  }
 
   // ширина и высота контейнера редактора в пикселях
   // значения такие же как в style.editorContainer
@@ -44,15 +50,15 @@ export const Cropping: React.FC = () => {
 
   const {width, height} = calculateImageDimensions(cropContext.photos[index].currentAspect, editorContainerWidth, editorContainerHeight);
 
-  useEffect(() => {
-    return () => {
-      handleSave();
-    }
-  }
-  , []);
+  // useEffect(() => {
+  //   return () => {
+  //     handleSave();
+  //   }
+  // }
+  // , []);
 
   return (
-    <NewPostModal isOpen={cropContext.isOpen} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} title={'Cropping'} right={<span onClick={nextStep}>Next</span>}>
+    <NewPostModal isOpen={cropContext.isOpen} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} title={'Cropping'} right={<span onClick={nextStepHandler}>Next</span>}>
       <div className={style.editorContainer}>
         <AvatarEditor
           className={style.imageFullWidth}
