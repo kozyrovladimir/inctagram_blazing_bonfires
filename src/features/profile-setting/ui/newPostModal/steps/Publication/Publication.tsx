@@ -8,12 +8,12 @@ import {
 } from "@/features/profile-setting/ui/newPostModal/context/CropProvider";
 
 export const Publication = () => {
-  const {isOpen, setIsOpen} = useImageCropContext();
+  const cropContext = useImageCropContext();
   const {previousStep} = useWizard();
 
   return (
-    <NewPostModal isOpen={isOpen} title={'Publication'} setIsOpen={setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span>Publish</span>}>
-      <span>Publication</span>
+    <NewPostModal isOpen={cropContext.isOpen} title={'Publication'} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span>Publish</span>}>
+      <img src={cropContext.photos[0].filteredUrl} alt="image" />
     </NewPostModal>
   );
 };

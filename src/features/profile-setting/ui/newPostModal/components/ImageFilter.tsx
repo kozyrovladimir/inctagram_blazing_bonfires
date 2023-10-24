@@ -176,7 +176,7 @@ function ImageFilter({
         canvas.height = img.height;
 
         // Рисуем изображение на canvas с примененным фильтром
-        ctx.filter = `matrix(${filterMatrix.join(' ')})`;
+        ctx.filter = `url(#filter-image-${id})`;
         ctx.drawImage(img, 0, 0);
 
         // Получаем base64 строку изображения с фильтром

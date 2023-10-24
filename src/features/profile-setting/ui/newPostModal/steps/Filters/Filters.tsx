@@ -27,9 +27,15 @@ export const Filters = () => {
           <ImageFilter
               className={style.sliderImage}
               image={cropContext.photos[currentIndex].croppedUrl}
-              filter={ 'sepia' } // see docs beneath
-              colorOne={ [40, 250, 250] }
-              colorTwo={ [250, 150, 30] }
+              // filter={ 'sepia' } // see docs beneath
+              // colorOne={ [40, 250, 250] }
+              // colorTwo={ [250, 150, 30] }
+            filter={[
+              0.3, 2, -0.4, 0.6, 1,
+              0, 1, 0, 0, -0.7,
+              0, 0, 1, 0, -0.3,
+              0, 0, 0, 1, 0,
+            ]}
               onChange={ (filteredImg: string) => {
                 cropContext.setFilteredUrl(filteredImg, currentIndex);
                 } }
