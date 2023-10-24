@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useWizard } from 'react-use-wizard';
 import NewPostModal from "@/features/profile-setting/ui/newPostModal/ui/NewPostModal/NewPostModal";
 import Image from "next/image";
@@ -14,11 +14,15 @@ import prev from "@/shared/assets/icons/filterPostPhoto/prev.svg";
 import { DotsBar } from "@/features/profile-setting/ui/newPostModal/ui/DotsBar/DotsBar";
 import ImageFilter
   from "@/features/profile-setting/ui/newPostModal/components/ImageFilter";
+import {
+  CanvasFilters
+} from "@/features/profile-setting/ui/newPostModal/constants/canvasFilters";
 
 export const Filters = () => {
   const {nextStep, previousStep} = useWizard();
   const cropContext = useImageCropContext();
   const {currentIndex, prevSlide, nextSlide} = useSlider(cropContext.photos.length);
+  const setFilter = cropContext.setFilter(currentIndex);
 
   return (
     <NewPostModal isOpen={cropContext.isOpen} title={'Filters'} setIsOpen={cropContext.setIsOpen} left={<Image src={backIcon} alt={''} onClick={previousStep} />} right={<span onClick={nextStep}>Next</span>}>
@@ -30,12 +34,7 @@ export const Filters = () => {
               // filter={ 'sepia' } // see docs beneath
               // colorOne={ [40, 250, 250] }
               // colorTwo={ [250, 150, 30] }
-            filter={[
-              0.3, 2, -0.4, 0.6, 1,
-              0, 1, 0, 0, -0.7,
-              0, 0, 1, 0, -0.3,
-              0, 0, 0, 1, 0,
-            ]}
+            filter={cropContext.photos[currentIndex].filter}
               onChange={ (filteredImg: string) => {
                 cropContext.setFilteredUrl(filteredImg, currentIndex);
                 } }
@@ -65,7 +64,11 @@ export const Filters = () => {
           </div>
         </div>
         <div className={style.filters}>
-
+          <span style={{textAlign: 'center'}}>choose filter: </span>
+          <button onClick={() => setFilter(CanvasFilters.NONE)}>none</button>
+          <button onClick={() => setFilter(CanvasFilters.WARM)}>warm</button>
+          <button onClick={() => setFilter(CanvasFilters.COOL)}>cool</button>
+          <button onClick={() => setFilter(CanvasFilters.SEPIA)}>sepia</button>
         </div>
       </div>
     </NewPostModal>

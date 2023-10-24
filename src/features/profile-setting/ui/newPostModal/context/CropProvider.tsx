@@ -7,6 +7,9 @@ import React, {
 import {
   processImageFiles
 } from "@/features/profile-setting/ui/newPostModal/utils/processImageFiles";
+import {
+  CanvasFilters
+} from "@/features/profile-setting/ui/newPostModal/constants/canvasFilters";
 
 export type PhotoType = {
   url: string;
@@ -16,6 +19,7 @@ export type PhotoType = {
     x: number;
     y: number;
   }
+  filter: number[];
   croppedUrl: string;
   filteredUrl: string;
   zoom: number;
@@ -34,6 +38,7 @@ const initialState: PhotoType[] = [
       x: 0,
       y: 0,
     },
+    filter: [],
     zoom: 1,
     originalAspect: 0,
     currentAspect: 0,
@@ -51,6 +56,7 @@ export type CropContextType = {
   originalAspect: number;
   handleAspectRatioClick: (index: number) => (aspectRatio: number) => void;
   setPosition: (index: number) => (position: { x: number; y: number }) => void;
+  setFilter: (index: number) => (filter: number[]) => void;
 }
 
 export const CropContext = createContext< CropContextType | undefined>(undefined)
@@ -88,7 +94,8 @@ const CropProvider: React.FC<Props> = ({ children }) => {
                 position: {
                   x: 0,
                   y: 0,
-                }
+                },
+                filter: CanvasFilters.NONE,
               });
             };
 
@@ -134,6 +141,13 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     setPhotos(newPhotos)
   }
 
+  // filter
+  const setFilter = (index: number) => (filter: number[]) => {
+    const newPhotos = [...photos]
+    newPhotos[index].filter = filter
+    setPhotos(newPhotos)
+  }
+
   // aspect ratio
   const handleAspectRatioClick = (index: number) => (aspectRatio: number) => {
     const newPhotos = [...photos]
@@ -161,6 +175,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setZoom,
         handleAspectRatioClick,
         setPosition,
+        setFilter
       }}
     >
       {/*temp button*/}
