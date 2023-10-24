@@ -65,56 +65,46 @@ const CropProvider: React.FC<Props> = ({ children }) => {
 
   // обработка фотографий и запись в массив
   const setPhotoList = (files: FileList) => {
-    processImageFiles(Array.from(files)).then(
-      (imageDataUrls) => {
-        const photos = imageDataUrls.map((url) => {
-          const image: HTMLImageElement = new Image();
-          image.src = url;
+    processImageFiles(Array.from(files))
+      .then((imageDataUrls) => {
+        const photosPromises = imageDataUrls.map((url) => {
+          return new Promise((resolve, reject) => {
+            const image = new Image();
+            image.src = url;
 
-          // TODO: убрать setTimeout
-          // без него не успевает прогрузиться изображение
-          setTimeout(() => {
-          }, 80)
+            image.onload = () => {
+              resolve({
+                url,
+                width: image.width,
+                height: image.height,
+                croppedUrl: '',
+                zoom: 1,
+                originalAspect: image.width / image.height,
+                currentAspect: image.width / image.height,
+                position: {
+                  x: 0,
+                  y: 0,
+                }
+              });
+            };
 
-          // const onLoadImage = new Promise((resolve, reject) => {
-          //   image.onload = () => resolve(image)
-          //   image.onerror = () => reject()
-          // })
+            image.onerror = () => {
+              reject(new Error('Failed to load image.'));
+            };
+          });
+        });
 
-          // return onLoadImage.then(() => {
-          //   return {
-          //     url: url,
-          //     width: image.width,
-          //     height: image.height,
-          //     croppedUrl: '',
-          //     zoom: 1,
-          //     originalAspect: image.width/ image.height,
-          //     currentAspect: image.width/ image.height,
-          //     position: {
-          //       x: 0,
-          //       y: 0,
-          //     }
-          //   }
-          // })
+        return Promise.all(photosPromises);
+      })
+      .then((photos ) => {
+        setPhotos(photos as PhotoType[]);
+      })
+      .catch((error) => {
+        // Обработка ошибки при загрузке изображения
+        console.error('Error loading images:', error);
+      });
+  };
 
-          return {
-            url: url,
-            width: image.width,
-            height: image.height,
-            croppedUrl: '',
-            zoom: 1,
-            originalAspect: image.width/ image.height,
-            currentAspect: image.width/ image.height,
-            position: {
-              x: 0,
-              y: 0,
-            }
-          }
-        })
-        setPhotos(photos)
-      }
-    )
-  }
 
   // оригинальное соотношение сторон
   const originalAspect = photos[0].width / photos[0].height
