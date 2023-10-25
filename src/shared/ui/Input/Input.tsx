@@ -4,6 +4,7 @@ import Image from 'next/image'
 
 import eyeImg from '../../assets/icons/input/eye.svg'
 import searchImg from '../../assets/icons/input/search.svg'
+import location from '../../assets/icons/location/location.svg'
 import { classNames, Mods } from '../../libs/classNames/classNames'
 
 import styles from './Input.module.scss'
@@ -14,6 +15,7 @@ export enum InputType {
   PASSWORD = 'password',
   TEXT = 'text',
   TEL = 'tel',
+  LOCATION = 'location',
 }
 
 type Props = {
@@ -51,6 +53,9 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         <label className={styles.label}>{label}</label>
         {type === InputType.SEARCH && (
           <Image src={searchImg} alt="search" width={15} height={15} className={styles.search} />
+        )}
+        {type === InputType.LOCATION && (
+          <Image src={location} alt="location" width={24} height={24} className={styles.location} />
         )}
         <input
           ref={ref}

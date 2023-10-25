@@ -31,8 +31,8 @@
   outline: none;
 }
 .input::placeholder {
-    color: var(--color-dark-300);
-    font-size: var(--font-size-m);
+  color: var(--color-dark-300);
+  font-size: var(--font-size-m);
 }
 .input:focus {
   border-color: var(--color-info-500);
@@ -64,4 +64,9 @@
   position: absolute;
   left: 12px;
   bottom: 12px;
+}
+.location {
+  position: absolute;
+  left: calc(100% - 36px);
+  bottom: 28px;
 }
