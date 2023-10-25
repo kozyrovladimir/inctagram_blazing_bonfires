@@ -1,7 +1,6 @@
 import {
   useEffect,
   useState,
-  React,
   yupResolver,
   useRouter,
   useTranslation,
@@ -61,6 +60,7 @@ export const GeneralInfo = () => {
 
   const currentError =
     error || errorProfileData || errorUpdateProfile || errorUpdateAvatar || errorDeleteAvatar
+
   const currentIsLoading =
     isLoading ||
     isLoadingUpdateProfile ||
@@ -160,8 +160,7 @@ export const GeneralInfo = () => {
           router.push(PROFILE_PATH)
         })
         .catch(error => currentErrorHandler(error))
-    }
-    router.push(PROFILE_PATH)
+    } else router.push(PROFILE_PATH)
   }
 
   const onSubmit = (data: ProfileUserType) => {
@@ -173,8 +172,6 @@ export const GeneralInfo = () => {
       .catch(error => currentErrorHandler(error))
   }
 
-  watch()
-
   const allFields: GeneralInfoFields = [
     'userName',
     'firstName',
@@ -183,6 +180,8 @@ export const GeneralInfo = () => {
     'city',
     'aboutMe',
   ]
+
+  watch()
   const isFillField = getValues(allFields).every(e => !!e)
 
   return (
@@ -211,7 +210,6 @@ export const GeneralInfo = () => {
                 )}
               />
             </div>
-
             <div className={styles.textFieldsContent}>
               {allFields.map(name => {
                 switch (name) {
@@ -272,12 +270,12 @@ export const GeneralInfo = () => {
                                 className={styles.aboutMeTextarea}
                                 {...field}
                               />
+                              {errors && (
+                                <p className={styles.errorTextarea}>
+                                  {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
+                                </p>
+                              )}
                             </div>
-                            {errors && (
-                              <p className={styles.error}>
-                                {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
-                              </p>
-                            )}
                           </>
                         )}
                       />

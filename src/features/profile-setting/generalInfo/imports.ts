@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import * as React from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SerializedError } from '@reduxjs/toolkit'
@@ -31,7 +30,6 @@ import { Calendar } from '@/widgets/calendar/ui/Calendar'
 export {
   useEffect,
   useState,
-  React,
   yupResolver,
   useRouter,
   useTranslation,
