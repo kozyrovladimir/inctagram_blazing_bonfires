@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import styles from './ConfirmedEmail.module.scss'
 
 import broConfirmImage from '@/shared/assets/icons/login/broCongratulations.svg'
+import { SIGN_IN_PATH } from '@/shared/constants/paths'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
@@ -29,7 +30,7 @@ const ConfirmedEmailPage = () => {
     <div className={styles.confirmedContainer}>
       <h3>{t('Congratulations')}</h3>
       <p>{t('EmailConfirmed')}</p>
-      <Link href={'/sign-in'}>
+      <Link href={SIGN_IN_PATH}>
         <Button theme={ButtonTheme.FILLED}>{t('SignIn')}</Button>
       </Link>
       <Image src={broConfirmImage} alt={'women login account in her phone'} />

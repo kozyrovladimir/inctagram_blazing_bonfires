@@ -15,6 +15,7 @@ import {
   useTerminateAllMutation,
 } from '@/shared/api/services/devices/devices.api'
 import { UserSessionsType } from '@/shared/api/services/devices/devices.api.types'
+import { SIGN_IN_PATH } from '@/shared/constants/paths'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
 import { Modal } from '@/shared/ui/modal/Modal'
@@ -31,7 +32,7 @@ export function Devices() {
   const [currentDevice, setCurrentDevice] = useState<UserSessionsType | undefined>(undefined)
   const [isModal, setIsModal] = useState(false)
   const [isChooseModal, setIsChooseModal] = useState(true)
-  const [messageModal, SetMessageModal] = useState('')
+  const [messageModal, setMessageModal] = useState('')
 
   const { data: sessions, error, isLoading } = useGetSessionsQuery()
   const [deleteSession, { isLoading: isLoadingDeleteSessons }] = useDeleteSessionMutation()
@@ -48,43 +49,51 @@ export function Devices() {
     currentErrorHandler(error)
   }
 
-  const logoutSession = (id: number) => {
-    setIsChooseModal(false)
+  const callModal = (withChoose: boolean) => {
+    setIsChooseModal(withChoose)
+    setIsModal(true)
+  }
 
+  const logoutSession = (id: number) => {
     if (id === currentDevice?.deviceId) {
-      setIsModal(true)
-      SetMessageModal(t('ReallyLogout'))
+      callModal(true)
+      setMessageModal(t('ReallyLogout'))
     } else {
       deleteSession(id)
         .unwrap()
-        .catch(error => currentErrorHandler(error))
+        .catch((error: FetchBaseQueryError | SerializedError | undefined) =>
+          currentErrorHandler(error)
+        )
     }
   }
 
   const logoutCurrentDevice = () => {
+    callModal(true)
     logout()
       .unwrap()
       .then(() => {
-        router.push('/sign-in')
+        router.push(SIGN_IN_PATH)
       })
-      .catch(error => currentErrorHandler(error))
+      .catch((error: FetchBaseQueryError | SerializedError | undefined) =>
+        currentErrorHandler(error)
+      )
       .finally(() => {
         setIsModal(false)
       })
   }
 
   const allTerminateHandler = () => {
-    if (sessions && sessions?.length > 1) {
+    if (!!sessions && sessions?.length > 1) {
       terminateAll()
         .unwrap()
         .then(() => {
-          setIsModal(true)
-          SetMessageModal(t('AllSessionsTerminated'))
+          callModal(false)
+          setMessageModal(t('AllSessionsTerminated'))
         })
         .catch(error => currentErrorHandler(error))
     } else {
-      setIsModal(true)
-      SetMessageModal(t('AllSessionsTerminated'))
+      callModal(false)
+      setMessageModal(t('AllSessionsTerminated'))
     }
   }
 
@@ -101,19 +110,19 @@ export function Devices() {
       )
     })
   }
+
   const logoutHandler = (id: number) => {
-    setIsChooseModal(true)
     logoutSession(id)
   }
 
   useEffect(() => {
-    sessions && sessions.length > 0 && setCurrentDevice(getCurrentDevice(sessions))
+    !!sessions && sessions.length > 0 && setCurrentDevice(getCurrentDevice(sessions))
   }, [sessions])
 
   return (
     <>
       {currentIsLoading && <LinearLoader />}
-      {sessions && sessions.length > 0 && (
+      {!!sessions && sessions.length > 0 && (
         <div className={styles.container}>
           {currentDevice && (
             <section>
@@ -126,6 +135,7 @@ export function Devices() {
                 isCurrent={true}
                 lastActive={currentDevice.lastActive}
                 deviceId={currentDevice.deviceId}
+                deviceType={currentDevice.deviceType}
               />
             </section>
           )}
@@ -140,7 +150,7 @@ export function Devices() {
           <section>
             <h4> {t('ActiveSessions')}</h4>
 
-            {sessions!.map(session => {
+            {sessions.map(session => {
               return (
                 <Device
                   key={session.deviceId}
@@ -152,27 +162,29 @@ export function Devices() {
                   lastActive={session.lastActive}
                   logoutCallback={id => logoutHandler(id)}
                   deviceId={session.deviceId}
+                  deviceType={session.deviceType}
                 />
               )
             })}
           </section>
+          <p>{JSON.stringify(sessions)}</p>
         </div>
       )}
 
       {isModal && (
         <Modal
-          title={tRoot('AttentionTitle')}
+          title={tRoot('Notification')}
           callBackCloseWindow={() => {
             setIsModal(false)
           }}
-          mainButtonCB={() => {
+          extraButtonCB={() => {
             isChooseModal && logoutCurrentDevice()
           }}
-          extraButtonCB={() => {
+          mainButtonCB={() => {
             setIsModal(false)
           }}
-          mainButton={isChooseModal ? tRoot('Yes') : 'OK'}
-          extraButton={isChooseModal ? tRoot('No') : undefined}
+          extraButton={isChooseModal ? tRoot('Yes') : undefined}
+          mainButton={isChooseModal ? tRoot('No') : 'OK'}
         >
           {messageModal}
         </Modal>

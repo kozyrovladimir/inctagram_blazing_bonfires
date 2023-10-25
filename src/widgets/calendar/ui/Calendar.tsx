@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
@@ -11,12 +11,12 @@ import calendarCloseIcon from '@/shared/assets/icons/icons/calendarClose.svg'
 import calendarOpenIcon from '@/shared/assets/icons/icons/calendarOpen.svg'
 
 type Props = {
-  data?: Date
   outsideOnChange: (newValue: Value) => void
-  classNameWrap: string
+  data?: Date
+  classNameWrap?: string
 }
 
-export const Calendar = ({ classNameWrap, data, outsideOnChange }: Props) => {
+export const Calendar = ({ outsideOnChange, classNameWrap, data }: Props) => {
   const minAge = new Date().setFullYear(new Date().getFullYear() - 10)
   const defaultValue = data ? new Date(data) : minAge
   const { t } = useTranslation('common', { keyPrefix: 'Calendar' })

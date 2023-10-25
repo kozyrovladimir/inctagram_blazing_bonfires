@@ -10,6 +10,10 @@ import { OptionContent } from './OptionContent'
 import enFlag from '@/shared/assets/icons/langSelect/britishFlag.svg'
 import ruFlag from '@/shared/assets/icons/langSelect/russianFlag.svg'
 import arrow from '@/shared/assets/icons/langSelect/selectArrow.svg'
+import {
+  AUTH_EXPIRRED_VERIFICATION_LINK_PATH,
+  AUTH_REGISTRATION_CONFIRMATION_PATH,
+} from '@/shared/constants/paths'
 
 export enum ShortLangs {
   RU = 'ru',
@@ -55,7 +59,9 @@ export const LanguageSelect = () => {
     if (langFromLocal) {
       setActiveSelect(langFromLocal)
 
-      if (pathname !== ('/auth/registration-confirmation' || '/auth/expired-verification-link')) {
+      if (
+        pathname !== (AUTH_REGISTRATION_CONFIRMATION_PATH || AUTH_EXPIRRED_VERIFICATION_LINK_PATH)
+      ) {
         router.push({ pathname, query }, asPath, { locale: langFromLocal })
       }
     } else {

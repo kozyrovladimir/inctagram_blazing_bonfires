@@ -1,32 +1,35 @@
-/* eslint-disable no-nested-ternary */
-import { useEffect, useState } from 'react'
-import * as React from 'react'
-
-import { yupResolver } from '@hookform/resolvers/yup'
-import { SerializedError } from '@reduxjs/toolkit'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import { Controller, FieldErrors, useForm } from 'react-hook-form'
-import { Toaster } from 'react-hot-toast'
-import * as yup from 'yup'
-
-import styles from './GeneralInfo.module.scss'
-
-import { AutocompletionOfCities } from '@/features/profile-setting/generalInfo/autocompletion-of-cities/AutocompletionOfCities'
-import { ProfilePhoto } from '@/features/profile-setting/ui/profilePhoto/ProfilePhoto'
-import { useGetProfileQuery, useUpdateProfileMutation, useMeQuery } from '@/shared/api'
 import {
+  useEffect,
+  useState,
+  React,
+  yupResolver,
+  useRouter,
+  useTranslation,
+  Controller,
+  useForm,
+  Toaster,
+  yup,
+  styles,
+  AutocompletionOfCities,
+  ProfilePhoto,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+  useMeQuery,
   useDeleteAvatarMutation,
   useUpdateAvatarMutation,
-} from '@/shared/api/services/profile/profile.api'
-import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
-import { fieldGeneralInfo } from '@/shared/types/profileSettingTypes'
-import { Button } from '@/shared/ui/button/Button'
-import { Input, InputType } from '@/shared/ui/input/Input'
-import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
-import { errorHandler } from '@/shared/utils/errorHandler'
-import { Calendar } from '@/widgets/calendar/ui/Calendar'
+  Button,
+  Input,
+  InputType,
+  LinearLoader,
+  errorHandler,
+  Calendar,
+  PROFILE_PATH,
+  SerializedError,
+  FetchBaseQueryError,
+  FieldErrors,
+  ProfileUserType,
+  GeneralInfoFields,
+} from './imports'
 
 export const GeneralInfo = () => {
   const router = useRouter()
@@ -47,7 +50,8 @@ export const GeneralInfo = () => {
     skip: isLoading || isError,
   })
 
-  const [updateProfile, { error: errorUpdateProfile }] = useUpdateProfileMutation()
+  const [updateProfile, { isLoading: isLoadingUpdateProfile, error: errorUpdateProfile }] =
+    useUpdateProfileMutation()
 
   const [updateAvatar, { isLoading: isLoadingAvatar, error: errorUpdateAvatar }] =
     useUpdateAvatarMutation()
@@ -58,9 +62,18 @@ export const GeneralInfo = () => {
   const currentError =
     error || errorProfileData || errorUpdateProfile || errorUpdateAvatar || errorDeleteAvatar
   const currentIsLoading =
-    isLoading || isLoadingProfileData || isLoadingAvatar || isLoadingDeleteAvatar
+    isLoading ||
+    isLoadingUpdateProfile ||
+    isLoadingProfileData ||
+    isLoadingAvatar ||
+    isLoadingDeleteAvatar
+
   const currentErrorHandler = (error: FetchBaseQueryError | SerializedError | undefined) => {
     errorHandler(error, tError('NotAuthorization'), tError('TryAgain'), tError('NetworkError'))
+  }
+
+  if (currentError) {
+    currentErrorHandler(currentError)
   }
 
   const [photo, setPhoto] = useState<Blob | null>(null)
@@ -128,42 +141,41 @@ export const GeneralInfo = () => {
     reset(profileData)
   }, [isLoadingProfileData])
 
-  if (currentError) {
-    currentErrorHandler(currentError)
+  const updateAvatarHandler = () => {
+    if (isDeleteAvatar) {
+      deleteAvatar()
+        .unwrap()
+        .then(() => {
+          router.push(PROFILE_PATH)
+        })
+        .catch(error => currentErrorHandler(error))
+    }
+    if (photo) {
+      const formData = new FormData()
+
+      formData.set('file', photo as Blob)
+      updateAvatar(formData)
+        .unwrap()
+        .then(() => {
+          router.push(PROFILE_PATH)
+        })
+        .catch(error => currentErrorHandler(error))
+    }
+    router.push(PROFILE_PATH)
   }
 
   const onSubmit = (data: ProfileUserType) => {
     updateProfile(data)
       .unwrap()
       .then(() => {
-        if (isDeleteAvatar) {
-          deleteAvatar()
-            .unwrap()
-            .then(() => {
-              router.push('/profile')
-            })
-            .catch(error => currentErrorHandler(error))
-        }
-        if (photo) {
-          const formData = new FormData()
-
-          formData.set('file', photo as Blob)
-          updateAvatar(formData)
-            .unwrap()
-            .then(() => {
-              router.push('/profile')
-            })
-            .catch(error => currentErrorHandler(error))
-        } else {
-          router.push('/profile')
-        }
+        updateAvatarHandler()
       })
       .catch(error => currentErrorHandler(error))
   }
 
   watch()
 
-  const allFields: fieldGeneralInfo[] = [
+  const allFields: GeneralInfoFields = [
     'userName',
     'firstName',
     'lastName',
@@ -178,7 +190,7 @@ export const GeneralInfo = () => {
       {currentIsLoading && <LinearLoader />}
       <Toaster position="top-right" />
 
-      {profileData && (
+      {!!profileData && (
         <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.content}>
             <div className={styles.photoContent}>
@@ -202,80 +214,93 @@ export const GeneralInfo = () => {
 
             <div className={styles.textFieldsContent}>
               {allFields.map(name => {
-                return (
-                  <Controller
-                    key={name}
-                    name={name}
-                    control={control}
-                    render={
-                      name === 'dateOfBirth'
-                        ? ({ field: { onChange, ref, ...args } }) => (
-                            <>
-                              <label className={styles.labelDate}>{t('DateBirthday')}</label>
-                              <Calendar
-                                data={profileData.dateOfBirth}
-                                outsideOnChange={onChange}
-                                classNameWrap={styles.calendar}
-                                {...args}
-                              />
-                              {errors && (
-                                <p className={styles.error}>
-                                  {(errors as FieldErrors<ProfileUserType>)[name]?.message}
-                                </p>
-                              )}
-                            </>
-                          )
-                        : name === 'city'
-                        ? ({ field }) => (
-                            <>
-                              <label>{t('City')}</label>
-                              <AutocompletionOfCities
-                                error={(errors as FieldErrors<ProfileUserType>).city?.message}
+                switch (name) {
+                  case 'dateOfBirth':
+                    return (
+                      <Controller
+                        key={name}
+                        name={name}
+                        control={control}
+                        render={({ field: { onChange, ref, ...args } }) => (
+                          <div>
+                            <label>{t('DateBirthday')}</label>
+                            <Calendar
+                              data={profileData.dateOfBirth}
+                              outsideOnChange={onChange}
+                              classNameWrap={styles.calendar}
+                              {...args}
+                            />
+                            {errors && (
+                              <p className={styles.error}>
+                                {(errors as FieldErrors<ProfileUserType>)[name]?.message}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      />
+                    )
+                  case 'city':
+                    return (
+                      <Controller
+                        key={name}
+                        name={name}
+                        control={control}
+                        render={({ field: { ref, ...args } }) => (
+                          <div>
+                            <label>{t('City')}</label>
+                            <AutocompletionOfCities
+                              error={(errors as FieldErrors<ProfileUserType>).city?.message}
+                              {...args}
+                            />
+                          </div>
+                        )}
+                      />
+                    )
+                  case 'aboutMe':
+                    return (
+                      <Controller
+                        key={name}
+                        name={name}
+                        control={control}
+                        render={({ field }) => (
+                          <>
+                            <div className={styles.textareaContent}>
+                              <label className={styles.aboutMeLabel}>{t('AboutMe')}</label>
+                              <textarea
+                                rows={4}
+                                cols={50}
+                                className={styles.aboutMeTextarea}
                                 {...field}
                               />
-                            </>
-                          )
-                        : name === 'aboutMe'
-                        ? ({ field }) => (
-                            <>
-                              <div className={styles.textareaContent}>
-                                <label className={styles.aboutMeLabel}>{t('AboutMe')}</label>
-                                <textarea
-                                  rows={4}
-                                  cols={50}
-                                  placeholder={t('WriteAboutYourself')}
-                                  className={styles.aboutMeTextarea}
-                                  {...field}
-                                />
-                              </div>
-                              {errors && (
-                                <p className={styles.error}>
-                                  {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
-                                </p>
-                              )}
-                            </>
-                          )
-                        : ({ field }) => (
-                            <Input
-                              label={t(name.replace(name[0], name[0].toUpperCase()))}
-                              type={InputType.TEXT}
-                              placeholder={
-                                name === 'userName'
-                                  ? t('EnterUserName')
-                                  : name === 'firstName'
-                                  ? t('EnterFirstName')
-                                  : name === 'lastName'
-                                  ? t('EnterLastName')
-                                  : '...'
-                              }
-                              error={(errors as FieldErrors<ProfileUserType>)[name]?.message}
-                              classNameWrap={'myCustomLabel'}
-                              {...field}
-                            />
-                          )
-                    }
-                  />
-                )
+                            </div>
+                            {errors && (
+                              <p className={styles.error}>
+                                {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
+                              </p>
+                            )}
+                          </>
+                        )}
+                      />
+                    )
+                  default:
+                    return (
+                      <Controller
+                        key={name}
+                        name={name}
+                        control={control}
+                        render={({ field }) => (
+                          <Input
+                            label={t(name.replace(name[0], name[0].toUpperCase()))}
+                            type={InputType.TEXT}
+                            error={(errors as FieldErrors<ProfileUserType>)[name]?.message}
+                            classNameWrap={'myCustomLabel'}
+                            placeholder=""
+                            {...field}
+                          />
+                        )}
+                      />
+                    )
+                }
               })}
             </div>
           </div>

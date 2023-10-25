@@ -3,6 +3,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import router from 'next/router'
 import { toast } from 'react-hot-toast'
 
+import { SIGN_IN_PATH } from '../constants/paths'
 import { serverError } from '../types/errorTypes'
 
 export const errorHandler = (
@@ -13,7 +14,7 @@ export const errorHandler = (
 ) => {
   const notAuthorizationHadler = () => {
     toast.error(notAuthorizationMessage, { id: notAuthorizationMessage })
-    router.push('/sign-in')
+    router.push(SIGN_IN_PATH)
   }
 
   if (error) {

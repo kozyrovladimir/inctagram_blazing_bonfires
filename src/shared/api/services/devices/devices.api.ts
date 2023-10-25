@@ -21,7 +21,7 @@ export const devicesApi = createApi({
         },
         providesTags: ['sessions'],
       }),
-      deleteSession: build.mutation<any, number>({
+      deleteSession: build.mutation<UserSessionsType, number>({
         query: id => {
           return {
             method: 'DELETE',
@@ -33,7 +33,7 @@ export const devicesApi = createApi({
         },
         invalidatesTags: ['sessions'],
       }),
-      terminateAll: build.mutation<any, void>({
+      terminateAll: build.mutation<UserSessionsType, void>({
         query: () => {
           return {
             method: 'DELETE',

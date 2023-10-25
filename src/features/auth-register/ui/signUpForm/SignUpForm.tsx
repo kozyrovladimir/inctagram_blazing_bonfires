@@ -12,6 +12,7 @@ import styles from './SignUpForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
 import { SignUpType, useSignUpMutation } from '@/shared/api'
+import { SIGN_IN_PATH } from '@/shared/constants/paths'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
 import FormContainer from '@/shared/ui/formContainer/FormContainer'
@@ -71,7 +72,6 @@ export const SignUpForm = () => {
     watch,
     register,
     handleSubmit,
-    setError,
     getValues,
     formState: { errors },
     reset,
@@ -179,7 +179,7 @@ export const SignUpForm = () => {
             {t('SignUp')}
           </Button>
           <p className={styles.helpText}>{t('HaveAccount?')}</p>
-          <Link href={'/sign-in'}>
+          <Link href={SIGN_IN_PATH}>
             <Button
               className={styles.oppositeBtn}
               theme={ButtonTheme.CLEAR}
