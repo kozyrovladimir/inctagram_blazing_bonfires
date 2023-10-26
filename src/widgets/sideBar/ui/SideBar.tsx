@@ -15,6 +15,7 @@ import statisticsImage from '../../../shared/assets/icons/sideBar/statistics.svg
 import style from './SideBar.module.scss'
 
 import { Logout } from '@/features/logout/ui/logout/Logout'
+import { PROFILE_PATH } from '@/shared/constants/paths'
 
 export const SideBar = () => {
   const { t } = useTranslation('common')
@@ -35,9 +36,9 @@ export const SideBar = () => {
         {t('Create')}
       </div>
       <div
-        style={router.pathname === '/profile' ? { color: '#397DF6' } : {}}
+        style={router.pathname === PROFILE_PATH ? { color: '#397DF6' } : {}}
         className={style.linkWrapper}
-        onClick={() => router.push('/profile')}
+        onClick={() => router.push(PROFILE_PATH)}
       >
         <Image src={myProfileImage} alt={''} />
         {t('MyProfile')}

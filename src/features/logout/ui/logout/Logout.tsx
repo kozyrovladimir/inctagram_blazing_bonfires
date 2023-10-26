@@ -9,6 +9,7 @@ import style from './Logout.module.scss'
 
 import { useLogoutMutation, useMeQuery } from '@/shared/api'
 import logoutImg from '@/shared/assets/icons/logout/logout.svg'
+import { SIGN_IN_PATH } from '@/shared/constants/paths'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { Modal } from '@/shared/ui/modal/Modal'
 
@@ -28,18 +29,18 @@ export const Logout = ({ className, theme, size }: Props) => {
   const [logout, { isLoading }] = useLogoutMutation()
   const { data: userData } = useMeQuery()
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const logoutApiHandler = () => {
     logout()
       .unwrap()
       .then(() => {
-        router.push('/sign-in')
+        router.push(SIGN_IN_PATH)
       })
       .finally(() => {
         closeModal()
       })
   }
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
     setIsModalOpen(true)
@@ -59,7 +60,7 @@ export const Logout = ({ className, theme, size }: Props) => {
         className={`${style.logoutButton} ${className}`}
         theme={theme}
         size={size}
-        onClick={logoutApiHandler}
+        onClick={openModal}
       >
         <Image src={logoutImg} alt={''} />
         <span className={style.description}>{t('LogOut')}</span>
@@ -73,7 +74,7 @@ export const Logout = ({ className, theme, size }: Props) => {
           extraButtonCB={logoutApiHandler}
         >
           {t('LogOutOfYourAccount')}
-          <span className={style.userName}>{userData && userData.email}</span> ?
+          <span className={style.userName}> {!!userData && userData.email}</span> ?
         </Modal>
       )}
     </>

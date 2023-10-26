@@ -6,13 +6,23 @@ import { useTranslation } from 'next-i18next'
 
 import { useMeQuery } from '../../api/services/auth/auth.api'
 
+import {
+  AUTH_CONFIRMED_EMAIL_PATH,
+  AUTH_EXPIRRED_VERIFICATION_LINK_PATH,
+  AUTH_PRIVACY_POLICY_PATH,
+  AUTH_REGISTRATION_CONFIRMATION_PATH,
+  AUTH_TERMS_OF_SERVICE_PATH,
+  FORGOT_PASSWORD_PATH,
+  SIGN_IN_PATH,
+  SIGN_UP_PATH,
+} from '@/shared/constants/paths'
 import { ShortLangs } from '@/widgets/langSwitcher/ui/LanguageSelect'
 
 // const publicPaths = []
 
 const emailConfirmationPaths = [
-  '/auth/expired-verification-link',
-  '/auth/registration-confirmation',
+  AUTH_EXPIRRED_VERIFICATION_LINK_PATH,
+  AUTH_REGISTRATION_CONFIRMATION_PATH,
 ]
 
 export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
@@ -29,32 +39,29 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   // }
   const { data, error, isLoading, isError } = useMeQuery()
 
-  // console.log(error)
-  // console.log(isError)
-
   if (isError) {
     // if to use router.push will be infinite rerenders. Instead of it needs to use window.history.pushState to prevent rerenders
 
-    let pageUnautorization = '/sign-in'
+    let pageUnautorization = SIGN_IN_PATH
 
     switch (pathname) {
-      case '/sign-up':
-        pageUnautorization = '/sign-up'
+      case SIGN_UP_PATH:
+        pageUnautorization = SIGN_UP_PATH
         break
-      case '/forgot-password':
-        pageUnautorization = '/forgot-password'
+      case FORGOT_PASSWORD_PATH:
+        pageUnautorization = FORGOT_PASSWORD_PATH
         break
-      case '/auth/terms-of-service':
-        pageUnautorization = '/auth/terms-of-service'
+      case AUTH_TERMS_OF_SERVICE_PATH:
+        pageUnautorization = AUTH_TERMS_OF_SERVICE_PATH
         break
-      case '/auth/privacy-policy':
-        pageUnautorization = '/auth/privacy-policy'
+      case AUTH_PRIVACY_POLICY_PATH:
+        pageUnautorization = AUTH_PRIVACY_POLICY_PATH
         break
-      case '/auth/confirmed-email':
-        pageUnautorization = '/auth/confirmed-email'
+      case AUTH_CONFIRMED_EMAIL_PATH:
+        pageUnautorization = AUTH_CONFIRMED_EMAIL_PATH
         break
-      case '/auth/expired-verification-link':
-        pageUnautorization = '/auth/expired-verification-link'
+      case AUTH_EXPIRRED_VERIFICATION_LINK_PATH:
+        pageUnautorization = AUTH_EXPIRRED_VERIFICATION_LINK_PATH
         break
     }
 
