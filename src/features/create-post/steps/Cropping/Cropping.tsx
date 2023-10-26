@@ -5,7 +5,7 @@ import backIcon from '@/shared/assets/icons/arrow back/back.svg';
 import Image from "next/image";
 import { useImageCropContext } from "@/features/create-post/context/CropProvider";
 import style from './Cropping.module.scss'
-import { ButtonFilterPanel } from "@/features/create-post";
+import { ButtonFilterPanel } from "@/features/create-post/components/ButtonFilterPanel/ButtonFilterPanel";
 import AvatarEditor from 'react-avatar-editor';
 import {
   calculateImageDimensions

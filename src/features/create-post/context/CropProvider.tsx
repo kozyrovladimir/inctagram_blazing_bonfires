@@ -11,7 +11,7 @@ import {
   CanvasFilters
 } from "@/features/create-post/constants/canvasFilters";
 import create from "@/shared/assets/icons/sideBar/create.svg";
-import Image from "next/image";
+import NextImage from "next/image";
 
 export type PhotoType = {
   url: string;
@@ -180,7 +180,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setFilter
       }}
     >
-      <Image src={create} alt={''} onClick={() => setIsOpen(true)}/>
+      <NextImage src={create} alt={''} onClick={() => setIsOpen(true)}/>
       {children}
     </CropContext.Provider>
   )

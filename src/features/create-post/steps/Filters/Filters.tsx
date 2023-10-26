@@ -13,7 +13,7 @@ import next from "@/shared/assets/icons/filterPostPhoto/next.svg";
 import prev from "@/shared/assets/icons/filterPostPhoto/prev.svg";
 import { DotsBar } from "@/features/create-post/ui/DotsBar/DotsBar";
 import ImageFilter
-  from "@/features/create-post/components/ImageFilter";
+  from "@/features/create-post/components/ImageFilter/ImageFilter";
 import {
   CanvasFilters
 } from "@/features/create-post/constants/canvasFilters";
