@@ -167,7 +167,6 @@ export function Devices() {
               )
             })}
           </section>
-          <p>{JSON.stringify(sessions)}</p>
         </div>
       )}
 
