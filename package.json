@@ -19,6 +19,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.1",
@@ -48,6 +49,7 @@
     "react-multi-date-picker": "^4.1.2",
     "react-query": "^3.39.3",
     "react-redux": "^8.1.2",
+    "react-use-wizard": "^2.2.4",
     "redux": "^4.2.1",
     "sharp": "^0.32.5",
     "typescript": "5.1.6",

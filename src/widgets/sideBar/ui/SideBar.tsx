@@ -15,6 +15,7 @@ import statisticsImage from '../../../shared/assets/icons/sideBar/statistics.svg
 import style from './SideBar.module.scss'
 
 import { Logout } from '@/features/logout/ui/logout/Logout'
+import CreatePost from "@/features/create-post";
 
 export const SideBar = () => {
   const { t } = useTranslation('common')
@@ -31,7 +32,8 @@ export const SideBar = () => {
         {t('Home')}
       </div>
       <div className={style.linkWrapper}>
-        <Image src={createImage} alt={''} />
+        {/*<Image src={createImage} alt={''} />*/}
+        <CreatePost/>
         {t('Create')}
       </div>
       <div
