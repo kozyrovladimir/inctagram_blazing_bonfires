@@ -1,33 +1,26 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useState
-} from "react";
-import {
-  processImageFiles
-} from "@/features/create-post/utils/processImageFiles";
-import {
-  CanvasFilters
-} from "@/features/create-post/constants/canvasFilters";
-import create from "@/shared/assets/icons/sideBar/create.svg";
-import NextImage from "next/image";
+import React, { createContext, ReactNode, useContext, useState } from 'react'
+
+import NextImage from 'next/image'
+
+import { CanvasFilters } from '@/features/create-post/constants/canvasFilters'
+import { processImageFiles } from '@/features/create-post/utils/processImageFiles'
+import create from '@/shared/assets/icons/sideBar/create.svg'
 
 export type PhotoType = {
-  url: string;
-  width: number;
-  height: number;
+  url: string
+  width: number
+  height: number
   position: {
-    x: number;
-    y: number;
+    x: number
+    y: number
   }
-  filter: number[];
-  croppedUrl: string;
-  filteredUrl: string;
-  zoom: number;
-  originalAspect: number;
-  currentAspect: number;
-};
+  filter: number[]
+  croppedUrl: string
+  filteredUrl: string
+  zoom: number
+  originalAspect: number
+  currentAspect: number
+}
 
 const initialState: PhotoType[] = [
   {
@@ -48,28 +41,28 @@ const initialState: PhotoType[] = [
 ]
 
 export type CropContextType = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  photos: PhotoType[];
-  setPhotoList: (files: FileList) => void;
-  setCroppedUrl: (croppedUrl: string, index: number) => void;
-  setFilteredUrl: (filteredUrl: string, index: number) => void;
-  setZoom: (index: number) => (zoom: number) => void;
-  originalAspect: number;
-  handleAspectRatioClick: (index: number) => (aspectRatio: number) => void;
-  setPosition: (index: number) => (position: { x: number; y: number }) => void;
-  setFilter: (index: number) => (filter: number[]) => void;
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+  photos: PhotoType[]
+  setPhotoList: (files: FileList) => void
+  setCroppedUrl: (croppedUrl: string, index: number) => void
+  setFilteredUrl: (filteredUrl: string, index: number) => void
+  setZoom: (index: number) => (zoom: number) => void
+  originalAspect: number
+  handleAspectRatioClick: (index: number) => (aspectRatio: number) => void
+  setPosition: (index: number) => (position: { x: number; y: number }) => void
+  setFilter: (index: number) => (filter: number[]) => void
 }
 
-export const CropContext = createContext< CropContextType | undefined>(undefined)
+export const CropContext = createContext<CropContextType | undefined>(undefined)
 
 type Props = {
-  children: ReactNode,
+  children: ReactNode
 }
 
 const CropProvider: React.FC<Props> = ({ children }) => {
   // состояние модалки (открыта/закрыта)
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false)
 
   // массив фотографий
   const [photos, setPhotos] = useState<PhotoType[]>(initialState)
@@ -77,11 +70,12 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // обработка фотографий и запись в массив
   const setPhotoList = (files: FileList) => {
     processImageFiles(Array.from(files))
-      .then((imageDataUrls) => {
-        const photosPromises = imageDataUrls.map((url) => {
+      .then(imageDataUrls => {
+        const photosPromises = imageDataUrls.map(url => {
           return new Promise((resolve, reject) => {
-            const image = new Image();
-            image.src = url;
+            const image = new Image()
+
+            image.src = url
 
             image.onload = () => {
               resolve({
@@ -98,26 +92,25 @@ const CropProvider: React.FC<Props> = ({ children }) => {
                   y: 0,
                 },
                 filter: CanvasFilters.NONE,
-              });
-            };
+              })
+            }
 
             image.onerror = () => {
-              reject(new Error('Failed to load image.'));
-            };
-          });
-        });
+              reject(new Error('Failed to load image.'))
+            }
+          })
+        })
 
-        return Promise.all(photosPromises);
+        return Promise.all(photosPromises)
       })
-      .then((photos ) => {
-        setPhotos(photos as PhotoType[]);
+      .then(photos => {
+        setPhotos(photos as PhotoType[])
       })
-      .catch((error) => {
+      .catch(error => {
         // Обработка ошибки при загрузке изображения
-        console.error('Error loading images:', error);
-      });
-  };
-
+        console.error('Error loading images:', error)
+      })
+  }
 
   // оригинальное соотношение сторон
   const originalAspect = photos[0].width / photos[0].height
@@ -125,6 +118,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // запись в массив обрезанной фотографии
   const setCroppedUrl = (croppedUrl: string, index: number) => {
     const newPhotos = [...photos]
+
     newPhotos[index].croppedUrl = croppedUrl
     setPhotos(newPhotos)
   }
@@ -132,6 +126,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // запись в массив отфильтрованной фотографии
   const setFilteredUrl = (filteredUrl: string, index: number) => {
     const newPhotos = [...photos]
+
     newPhotos[index].filteredUrl = filteredUrl
     setPhotos(newPhotos)
   }
@@ -139,6 +134,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // zoom
   const setZoom = (index: number) => (zoom: number) => {
     const newPhotos = [...photos]
+
     newPhotos[index].zoom = zoom
     setPhotos(newPhotos)
   }
@@ -146,6 +142,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // filter
   const setFilter = (index: number) => (filter: number[]) => {
     const newPhotos = [...photos]
+
     newPhotos[index].filter = filter
     setPhotos(newPhotos)
   }
@@ -153,6 +150,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // aspect ratio
   const handleAspectRatioClick = (index: number) => (aspectRatio: number) => {
     const newPhotos = [...photos]
+
     newPhotos[index].currentAspect = aspectRatio
     setPhotos(newPhotos)
   }
@@ -160,6 +158,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // position
   const setPosition = (index: number) => (position: { x: number; y: number }) => {
     const newPhotos = [...photos]
+
     newPhotos[index].position = position
     setPhotos(newPhotos)
   }
@@ -177,10 +176,10 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setZoom,
         handleAspectRatioClick,
         setPosition,
-        setFilter
+        setFilter,
       }}
     >
-      <NextImage src={create} alt={''} onClick={() => setIsOpen(true)}/>
+      <NextImage src={create} alt={''} onClick={() => setIsOpen(true)} />
       {children}
     </CropContext.Provider>
   )
