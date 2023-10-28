@@ -8,12 +8,12 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import noImage from '../../shared/assets/icons/avatarProfile/notPhoto.png'
-import { getLayout } from '../../shared/layouts/MainLayout/MainLayout'
-import { Button } from '../../shared/ui/Button/Button'
 
 import style from './profile.module.scss'
 
-import { ShortLangs } from '@/widgets/LangSwitcher/ui/LanguageSelect/LanguageSelect'
+import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
+import { Button } from '@/shared/ui/button/Button'
+import { ShortLangs } from '@/widgets/langSwitcher/ui/LanguageSelect'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()

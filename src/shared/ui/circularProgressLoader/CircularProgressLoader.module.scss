@@ -1,0 +1,7 @@
+.CircularProgressLoader {
+  height: calc(100vh - var(--header-height));
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

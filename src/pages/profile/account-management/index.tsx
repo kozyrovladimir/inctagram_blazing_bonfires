@@ -1,4 +1,4 @@
-import { settingLayout } from '@/shared/layouts/ProfileLayout/SettingLayout'
+import { settingLayout } from '@/shared/layouts/profileLayout/SettingLayout'
 
 function AccountManagement() {
   return <div>Account Management</div>

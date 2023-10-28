@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { algByDecodingToken } from '../../utils/algByDecodingToken'
 import { baseURL } from '../baseUrl.api'
+import { BaseUserType } from '../profile/profile.api.types'
 
 import {
   LoginFormType,
@@ -17,7 +18,8 @@ import {
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
-  credentials: 'include',
+  method: 'POST',
+  credentials: 'same-origin',
   prepareHeaders: headers => {
     const token = localStorage.getItem('accessToken')
 
@@ -43,7 +45,6 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     if (!token) {
       throw new Error('Token not found')
     }
-
     // check weather token is expired. If token is expired, it requires to update token and set it to localStorage
     const { isExpirationTimeLongerThanCurrent } = algByDecodingToken(token)
 
@@ -162,7 +163,7 @@ export const authApi = createApi({
           }
         },
       }),
-      me: build.query({
+      me: build.query<BaseUserType, void>({
         query: () => {
           return {
             method: 'GET',

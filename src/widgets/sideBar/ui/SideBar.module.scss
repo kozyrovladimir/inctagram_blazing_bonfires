@@ -1,0 +1,42 @@
+.sideBarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 220px;
+  padding-top: 3.75rem;
+  position: fixed;
+  border-right: 1px solid var(--color-dark-600);
+  top: 0px;
+  bottom: 0;
+
+  max-height: calc(100vh);
+  z-index: 10;
+
+  .linkWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 24px;
+    width: 112px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    cursor: pointer;
+    &:first-child {
+      margin-top: 4.5rem;
+    }
+    &:nth-child(6) {
+      margin-top: 60px;
+    }
+    &:last-child {
+      margin-top: 90px;
+    }
+    & img {
+      margin-right: 10px;
+    }
+  }
+}

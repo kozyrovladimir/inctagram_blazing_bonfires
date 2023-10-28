@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import moment from 'moment'
 
 import { baseURL } from '../baseUrl.api'
 
@@ -7,7 +6,7 @@ import { AvatarsType, BaseUserType, ProfileUserType } from './profile.api.types'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
-  baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'same-origin' }),
   tagTypes: ['dataProfile'],
   endpoints: build => {
     return {
@@ -21,7 +20,7 @@ export const profileApi = createApi({
           }
         },
       }),
-      getProfile: build.query<ProfileUserType, number | null>({
+      getProfile: build.query<ProfileUserType, string>({
         query: id => {
           return {
             method: 'GET',
@@ -48,7 +47,7 @@ export const profileApi = createApi({
         },
         invalidatesTags: ['dataProfile'],
       }),
-      updateAvatar: build.mutation<any, FormData>({
+      updateAvatar: build.mutation<AvatarsType, FormData>({
         query: data => {
           return {
             method: 'POST',
@@ -78,6 +77,7 @@ export const profileApi = createApi({
 })
 
 export const {
+  useGetAuthMeQuery,
   useGetProfileQuery,
   useUpdateProfileMutation,
   useUpdateAvatarMutation,

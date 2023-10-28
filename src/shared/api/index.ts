@@ -29,6 +29,6 @@ export {
   useUpdateProfileMutation,
 } from './services/profile/profile.api'
 
-export { ipApi } from './services/profile/ip.api'
+export { devicesApi, useGetSessionsQuery } from './services/devices/devices.api'
 
 export { baseURL } from './services/baseUrl.api'
