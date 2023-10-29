@@ -148,7 +148,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   }
 
   // aspect ratio
-  const handleAspectRatioClick = (index: number) => (aspectRatio: number) => {
+  const handleAspectRatio = (index: number) => (aspectRatio: number) => {
     const newPhotos = [...photos]
 
     newPhotos[index].currentAspect = aspectRatio
@@ -174,7 +174,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         setCroppedUrl,
         setFilteredUrl,
         setZoom,
-        handleAspectRatioClick,
+        handleAspectRatioClick: handleAspectRatio,
         setPosition,
         setFilter,
       }}

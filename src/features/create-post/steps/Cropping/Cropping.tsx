@@ -61,10 +61,6 @@ export const Cropping: React.FC = () => {
           position={cropContext.photos[index].position} // Позиция
           onPositionChange={positionChange}
         />
-        <div className={style.sliderButtonsContainer}>
-          <button onClick={prevSlide}>prev</button>
-          <button onClick={nextSlide}>next</button>
-        </div>
         <ButtonFilterPanel
           index={index}
           cropContext={cropContext}

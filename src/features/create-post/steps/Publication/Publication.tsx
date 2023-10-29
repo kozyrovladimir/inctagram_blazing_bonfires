@@ -1,5 +1,3 @@
-import { readFileSync } from 'fs'
-
 import React, { ChangeEvent, useState } from 'react'
 
 import Image from 'next/image'
@@ -8,7 +6,7 @@ import { useWizard } from 'react-use-wizard'
 import style from './Publication.module.scss'
 
 import ImageFilter from '@/features/create-post/components/ImageFilter/ImageFilter'
-import { PhotoType, useImageCropContext } from '@/features/create-post/context/CropProvider'
+import { useImageCropContext } from '@/features/create-post/context/CropProvider'
 import { DotsBar } from '@/features/create-post/ui/DotsBar/DotsBar'
 import NewPostModal from '@/features/create-post/ui/NewPostModal/NewPostModal'
 import { useSlider } from '@/features/create-post/utils/useSlider'
@@ -17,7 +15,6 @@ import {
   useCreatePostMutation,
   useUploadImageMutation,
 } from '@/shared/api/services/posts/posts.api'
-import { PostsType } from '@/shared/api/services/posts/posts.api.types'
 import backIcon from '@/shared/assets/icons/arrow back/back.svg'
 import next from '@/shared/assets/icons/filterPostPhoto/next.svg'
 import prev from '@/shared/assets/icons/filterPostPhoto/prev.svg'

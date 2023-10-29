@@ -14,7 +14,7 @@ import { useSlider } from '@/features/create-post/utils/useSlider'
 import backIcon from '@/shared/assets/icons/arrow back/back.svg'
 import next from '@/shared/assets/icons/filterPostPhoto/next.svg'
 import prev from '@/shared/assets/icons/filterPostPhoto/prev.svg'
-import { Button, ButtonTheme } from '@/shared/ui/Button/Button'
+import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 export const Filters = () => {
   const { nextStep, previousStep } = useWizard()
@@ -35,9 +35,6 @@ export const Filters = () => {
           <ImageFilter
             className={style.sliderImage}
             image={cropContext.photos[currentIndex].croppedUrl}
-            // filter={ 'sepia' } // see docs beneath
-            // colorOne={ [40, 250, 250] }
-            // colorTwo={ [250, 150, 30] }
             filter={cropContext.photos[currentIndex].filter}
             onChange={(filteredImg: string) => {
               cropContext.setFilteredUrl(filteredImg, currentIndex)

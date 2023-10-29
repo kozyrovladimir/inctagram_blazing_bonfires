@@ -4,14 +4,14 @@ import Image from "next/image";
 
 import style from "./ButtonFilterPanel.module.scss";
 
-import { ModalButton } from "@/features/create-post/components/ModalButton/ModalButton";
 import {
   CropContextType,
 } from "@/features/create-post/context/CropProvider";
 import maxmMin from "@/shared/assets/icons/filterPostPhoto/maximize-outline.svg";
-import sizePhoto from "@/shared/assets/icons/filterPostPhoto/size.svg";
 import noImage from "@/shared/assets/icons/image/no-image.svg";
 import { Button, ButtonTheme } from "@/shared/ui/button/Button";
+import AspectRatioPanel
+  from "@/features/create-post/components/AspectRatioPanel/AspectRatioPanel";
 
 interface ButtonFilterPanelProps {
   cropContext: CropContextType;
@@ -35,13 +35,10 @@ export const ButtonFilterPanel: React.FC<ButtonFilterPanelProps> = ({ cropContex
     <div className={style.filterPanelContainer}>
       <div className={style.leftPanel}>
         <div className={style.buttonContainer}>
-          {aspectModalOpen &&
-            <ModalButton originalAspect={cropContext.photos[index].originalAspect}
-                         onAspectRatioChange={handleAspectRatioClick} />}
-          <Button theme={ButtonTheme.CLEAR} className={style.sizeButton}
-                  onClick={toggleAspectModal}>
-            <Image src={sizePhoto} alt={""} />
-          </Button>
+          <AspectRatioPanel
+            originalAspect={cropContext.photos[index].originalAspect}
+            onAspectRatioChange={handleAspectRatioClick}
+          />
         </div>
         <div>
           {zoomModalOpen && (
