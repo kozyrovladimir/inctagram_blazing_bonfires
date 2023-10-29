@@ -11,7 +11,7 @@ import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 import style from '@/features/create-post/components/ButtonFilterPanel/ButtonFilterPanel.module.scss'
 
 interface AspectRatioPanel {
-  onAspectRatioChange: (aspectRatio: number) => void
+  handleAspectRatio: (aspect: number) => void
   originalAspect: number
 }
 
@@ -21,11 +21,7 @@ const aspectRatio = {
   horizontalRectangle: 16 / 9,
 }
 
-const AspectRatioPanel: React.FC<AspectRatioPanel> = ({ originalAspect, onAspectRatioChange }) => {
-  const handleAspectRatio = (aspectRatio: number) => {
-    onAspectRatioChange(aspectRatio)
-  }
-
+const AspectRatioPanel: React.FC<AspectRatioPanel> = ({ originalAspect, handleAspectRatio }) => {
   return (
     <Popover className={styles.relative}>
       <Popover.Panel className={styles.buttonPanel}>

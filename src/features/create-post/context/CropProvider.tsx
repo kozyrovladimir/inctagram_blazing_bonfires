@@ -132,7 +132,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   }
 
   // zoom
-  const setZoom = (index: number) => (zoom: number) => {
+  const generateSetZoomFunc = (index: number) => (zoom: number) => {
     const newPhotos = [...photos]
 
     newPhotos[index].zoom = zoom
@@ -140,7 +140,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   }
 
   // filter
-  const setFilter = (index: number) => (filter: number[]) => {
+  const generateSetFilterFunc = (index: number) => (filter: number[]) => {
     const newPhotos = [...photos]
 
     newPhotos[index].filter = filter
@@ -148,7 +148,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   }
 
   // aspect ratio
-  const handleAspectRatio = (index: number) => (aspectRatio: number) => {
+  const generateHandleAspectRatioFunc = (index: number) => (aspectRatio: number) => {
     const newPhotos = [...photos]
 
     newPhotos[index].currentAspect = aspectRatio
@@ -156,7 +156,7 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   }
 
   // position
-  const setPosition = (index: number) => (position: { x: number; y: number }) => {
+  const generateSetPositionFunc = (index: number) => (position: { x: number; y: number }) => {
     const newPhotos = [...photos]
 
     newPhotos[index].position = position
@@ -173,10 +173,10 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         originalAspect,
         setCroppedUrl,
         setFilteredUrl,
-        setZoom,
-        handleAspectRatioClick: handleAspectRatio,
-        setPosition,
-        setFilter,
+        setZoom: generateSetZoomFunc,
+        handleAspectRatioClick: generateHandleAspectRatioFunc,
+        setPosition: generateSetPositionFunc,
+        setFilter: generateSetFilterFunc,
       }}
     >
       <NextImage src={create} alt={''} onClick={() => setIsOpen(true)} />
