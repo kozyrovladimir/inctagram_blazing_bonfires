@@ -81,17 +81,29 @@ export const Publication = () => {
             }}
             preserveAspectRatio={'contain'}
           />
-          <div className={style.sliderButtonsContainer}>
-            <Button theme={ButtonTheme.CLEAR} className={style.sliderButton} onClick={prevSlide}>
-              <Image src={prev} alt={''} />
-            </Button>
-            <Button theme={ButtonTheme.CLEAR} className={style.sliderButton} onClick={nextSlide}>
-              <Image src={next} alt={''} />
-            </Button>
-          </div>
-          <div className={style.sliderDotsBarWrapper}>
-            <DotsBar activeIndex={currentIndex} count={cropContext.photos.length} />
-          </div>
+          {cropContext.photos.length > 1 && (
+            <>
+              <div className={style.sliderButtonsContainer}>
+                <Button
+                  theme={ButtonTheme.CLEAR}
+                  className={style.sliderButton}
+                  onClick={prevSlide}
+                >
+                  <Image src={prev} alt={''} />
+                </Button>
+                <Button
+                  theme={ButtonTheme.CLEAR}
+                  className={style.sliderButton}
+                  onClick={nextSlide}
+                >
+                  <Image src={next} alt={''} />
+                </Button>
+              </div>
+              <div className={style.sliderDotsBarWrapper}>
+                <DotsBar activeIndex={currentIndex} count={cropContext.photos.length} />
+              </div>
+            </>
+          )}
         </div>
         <div className={style.publish}>
           <div className={style.publishContent}>
