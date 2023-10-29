@@ -1,18 +1,16 @@
-import React, { ChangeEvent } from "react";
-import NewPostModal from "@/features/create-post/ui/NewPostModal/NewPostModal";
-import closeIcon from '@/shared/assets/icons/logout/close.svg';
+import React, { ChangeEvent } from 'react'
+import NewPostModal from '@/features/create-post/ui/NewPostModal/NewPostModal'
+import closeIcon from '@/shared/assets/icons/logout/close.svg'
 import mockupPhoto from '@/shared/assets/icons/avatarProfile/notPhoto.png'
-import styles from "./AddPhoto.module.scss"
-import { Button } from "@/shared/ui/Button/Button";
-import { useWizard } from "react-use-wizard";
-import NextImage from "next/image";
-import {
-  useImageCropContext
-} from "@/features/create-post/context/CropProvider";
+import styles from './AddPhoto.module.scss'
+import { Button } from '@/shared/ui/Button/Button'
+import { useWizard } from 'react-use-wizard'
+import NextImage from 'next/image'
+import { useImageCropContext } from '@/features/create-post/context/CropProvider'
 
 export const AddPhoto = () => {
-  const {nextStep} = useWizard();
-  const {setPhotoList, isOpen, setIsOpen} = useImageCropContext();
+  const { nextStep } = useWizard()
+  const { setPhotoList, isOpen, setIsOpen } = useImageCropContext()
 
   const inputRef = React.useRef<HTMLInputElement>(null)
 
@@ -20,7 +18,7 @@ export const AddPhoto = () => {
     const files = event.target.files
     if (!files) return
     setPhotoList(files)
-    await nextStep();
+    await nextStep()
   }
 
   const openSelectHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,10 +27,15 @@ export const AddPhoto = () => {
   }
 
   return (
-    <NewPostModal isOpen={isOpen} title={'Add photo'} setIsOpen={setIsOpen} right={<NextImage src={closeIcon} alt={''} onClick={() => setIsOpen(false)} />}>
+    <NewPostModal
+      isOpen={isOpen}
+      title={'Add photo'}
+      setIsOpen={setIsOpen}
+      right={<NextImage src={closeIcon} alt={''} onClick={() => setIsOpen(false)} />}
+    >
       <div className={styles.addPhotoContentContainer}>
         <div className={styles.darkBox}>
-          <NextImage src={mockupPhoto} alt={'mockup photo'}/>
+          <NextImage src={mockupPhoto} alt={'mockup photo'} />
         </div>
         <div className={styles.buttonsContainer}>
           <input
@@ -52,5 +55,5 @@ export const AddPhoto = () => {
         </div>
       </div>
     </NewPostModal>
-  );
-};
+  )
+}

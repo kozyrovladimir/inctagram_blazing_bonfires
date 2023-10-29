@@ -65,8 +65,8 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             type === InputType.PASSWORD && passwordInvisible
               ? 'password'
               : type === InputType.EMAIL
-                ? 'email'
-                : 'text'
+              ? 'email'
+              : 'text'
           }
           value={value}
           placeholder={placeholder}

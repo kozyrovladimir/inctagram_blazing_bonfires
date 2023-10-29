@@ -3,32 +3,32 @@
 }
 
 .buttonPanel {
-    position: absolute;
-    background-color: #4c4c4c;
-    padding: 10px;
-    border-radius: 2px;
-    bottom: 42px;
-    width: 160px;
+  position: absolute;
+  background-color: #4c4c4c;
+  padding: 10px;
+  border-radius: 2px;
+  bottom: 42px;
+  width: 160px;
 }
 
 .button {
-    cursor: pointer;
-    border: 0;
-    background-color: transparent;
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
 
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .mainButton {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
 }
 
 .image {
-    fill: white;
+  fill: white;
 }

@@ -1,19 +1,23 @@
-import React from "react";
-import { Dialog } from '@headlessui/react';
+import React from 'react'
+import { Dialog } from '@headlessui/react'
 import styles from './NewPostModal.module.scss'
 
 interface NewPostModalProps {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  title: string;
-  left?: React.ReactNode;
-  right?: React.ReactNode;
-  children: React.ReactNode | any;
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+  title: string
+  left?: React.ReactNode
+  right?: React.ReactNode
+  children: React.ReactNode | any
 }
 
-const NewPostModal: React.FC<NewPostModalProps> = (props) => {
+const NewPostModal: React.FC<NewPostModalProps> = props => {
   return (
-    <Dialog open={props.isOpen} onClose={() => props.setIsOpen(false)} className={styles.modalWrapper}>
+    <Dialog
+      open={props.isOpen}
+      onClose={() => props.setIsOpen(false)}
+      className={styles.modalWrapper}
+    >
       <Dialog.Panel className={styles.modal}>
         {/*header*/}
         <div className={styles.modalHeader}>
@@ -22,12 +26,10 @@ const NewPostModal: React.FC<NewPostModalProps> = (props) => {
           {props.right}
         </div>
         {/*content*/}
-        <div className={styles.modalContent}>
-          {props.children}
-        </div>
+        <div className={styles.modalContent}>{props.children}</div>
       </Dialog.Panel>
     </Dialog>
-  );
-};
+  )
+}
 
-export default NewPostModal;
+export default NewPostModal

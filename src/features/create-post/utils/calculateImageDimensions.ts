@@ -5,21 +5,24 @@
  * @param {number} containerHeight - Высота контейнера в пикселях.
  * @returns {{width: number, height: number}} Объект с шириной и высотой подогнанного изображения в пикселях.
  */
-export function calculateImageDimensions(aspectRatio: number, containerWidth: number, containerHeight: number) {
+export function calculateImageDimensions(
+  aspectRatio: number,
+  containerWidth: number,
+  containerHeight: number
+) {
   // Рассчитываем соотношение сторон контейнера
-  const containerAspectRatio = containerWidth / containerHeight;
+  const containerAspectRatio = containerWidth / containerHeight
 
   if (aspectRatio < containerAspectRatio) {
     // Если соотношение сторон изображения больше, чем у контейнера,
     // устанавливаем максимальную высоту равную высоте контейнера
-    const newHeight = containerHeight;
-    const newWidth = containerHeight * aspectRatio;
-    return { width: newWidth, height: newHeight };
+    const newHeight = containerHeight
+    const newWidth = containerHeight * aspectRatio
+    return { width: newWidth, height: newHeight }
   } else {
     // Иначе, устанавливаем максимальную ширину равную ширине контейнера
-    const newWidth = containerWidth;
-    const newHeight = containerWidth / aspectRatio;
-    return { width: newWidth, height: newHeight };
+    const newWidth = containerWidth
+    const newHeight = containerWidth / aspectRatio
+    return { width: newWidth, height: newHeight }
   }
 }
-

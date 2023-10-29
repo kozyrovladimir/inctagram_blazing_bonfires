@@ -1,68 +1,48 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
 const WRAPPER_STYLE = {
   position: 'relative',
-};
+}
 
 const IMAGE_STYLE = {
   display: 'block',
   visibility: 'hidden',
   width: '100%',
-};
+}
 
 const SVG_STYLE = {
   display: 'block',
   height: '100%',
   width: '100%',
   overflow: 'hidden',
-};
+}
 
 const SVG_ABSOLUTE_STYLE = {
   left: 0,
   position: 'absolute',
   top: 0,
-};
+}
 
-const NONE = [
-  1, 0, 0, 0, 0,
-  0, 1, 0, 0, 0,
-  0, 0, 1, 0, 0,
-  0, 0, 0, 1, 0,
-];
+const NONE = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]
 
-const INVERT = [
-  -1, 0, 0, 0, 1,
-  0, -1, 0, 0, 1,
-  0, 0, -1, 0, 1,
-  0, 0, 0, 1, 0,
-];
+const INVERT = [-1, 0, 0, 0, 1, 0, -1, 0, 0, 1, 0, 0, -1, 0, 1, 0, 0, 0, 1, 0]
 
-const GRAYSCALE = [
-  1, 0, 0, 0, 0,
-  1, 0, 0, 0, 0,
-  1, 0, 0, 0, 0,
-  0, 0, 0, 1, 0,
-];
+const GRAYSCALE = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0]
 
-const SEPIA = [
-  0.3, 0.45, 0.1, 0, 0,
-  0.2, 0.45, 0.1, 0, 0,
-  0.1, 0.3, 0.1, 0, 0,
-  0, 0, 0, 1, 0,
-];
+const SEPIA = [0.3, 0.45, 0.1, 0, 0, 0.2, 0.45, 0.1, 0, 0, 0.1, 0.3, 0.1, 0, 0, 0, 0, 0, 1, 0]
 
 function omit(object, keysToOmit) {
-  const result = {};
+  const result = {}
 
-  Object.keys(object).forEach((key) => {
+  Object.keys(object).forEach(key => {
     if (keysToOmit.indexOf(key) === -1) {
-      result[key] = object[key];
+      result[key] = object[key]
     }
-  });
+  })
 
-  return result;
+  return result
 }
 
 const types = {
@@ -70,71 +50,86 @@ const types = {
   INVERT: 'invert',
   GRAYSCALE: 'grayscale',
   SEPIA: 'sepia',
-};
+}
 
 function convertToDueTone(color1, color2) {
   return [
-    (color2[0] / 256) - (color1[0] / 256), 0, 0, 0, color1[0] / 256,
-    (color2[1] / 256) - (color1[1] / 256), 0, 0, 0, color1[1] / 256,
-    (color2[2] / 256) - (color1[2] / 256), 0, 0, 0, color1[2] / 256,
-    0, 0, 0, 1, 0,
-  ];
+    color2[0] / 256 - color1[0] / 256,
+    0,
+    0,
+    0,
+    color1[0] / 256,
+    color2[1] / 256 - color1[1] / 256,
+    0,
+    0,
+    0,
+    color1[1] / 256,
+    color2[2] / 256 - color1[2] / 256,
+    0,
+    0,
+    0,
+    color1[2] / 256,
+    0,
+    0,
+    0,
+    1,
+    0,
+  ]
 }
 
 function ImageFilter({
-                       image,
-                       filter,
-                       preserveAspectRatio,
-                       className,
-                       style,
-                       svgStyle,
-                       svgProps,
-                       colorOne,
-                       colorTwo,
-                       onChange,
-                     }) {
-  const [id] = useState(`${new Date().getTime()}${Math.random()}`.replace('.', ''));
-  const [filterMatrix, setFilterMatrix] = useState(NONE);
+  image,
+  filter,
+  preserveAspectRatio,
+  className,
+  style,
+  svgStyle,
+  svgProps,
+  colorOne,
+  colorTwo,
+  onChange,
+}) {
+  const [id] = useState(`${new Date().getTime()}${Math.random()}`.replace('.', ''))
+  const [filterMatrix, setFilterMatrix] = useState(NONE)
 
   useEffect(() => {
     const getMatrix = (props, triggerCallback = false) => {
-      let newFilter = props.filter;
+      let newFilter = props.filter
 
       if (newFilter === types.GRAYSCALE) {
-        newFilter = GRAYSCALE;
+        newFilter = GRAYSCALE
       } else if (newFilter === types.INVERT) {
-        newFilter = INVERT;
+        newFilter = INVERT
       } else if (newFilter === types.SEPIA) {
-        newFilter = SEPIA;
+        newFilter = SEPIA
       } else if (newFilter === types.DUOTONE) {
-        newFilter = convertToDueTone(props.colorOne, props.colorTwo);
+        newFilter = convertToDueTone(props.colorOne, props.colorTwo)
       }
 
       // Создаем <canvas> элемент
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
 
-      return newFilter;
-    };
+      return newFilter
+    }
 
-    const newFilterMatrix = getMatrix({ filter, colorOne, colorTwo }, true);
-    setFilterMatrix(newFilterMatrix);
+    const newFilterMatrix = getMatrix({ filter, colorOne, colorTwo }, true)
+    setFilterMatrix(newFilterMatrix)
+  }, [filter, colorOne, colorTwo])
 
-  }, [filter, colorOne, colorTwo]);
-
-  const aspectRatio = preserveAspectRatio === 'cover' ? 'xMidYMid slice' : preserveAspectRatio;
-  const renderImage = preserveAspectRatio === 'none';
+  const aspectRatio = preserveAspectRatio === 'cover' ? 'xMidYMid slice' : preserveAspectRatio
+  const renderImage = preserveAspectRatio === 'none'
 
   const svgMergedStyle = renderImage
     ? {
-      ...SVG_STYLE,
-      ...SVG_ABSOLUTE_STYLE,
-      ...svgStyle,
-    }
+        ...SVG_STYLE,
+        ...SVG_ABSOLUTE_STYLE,
+        ...svgStyle,
+      }
     : {
-      ...SVG_STYLE,
-      ...svgStyle,
-    };
+        ...SVG_STYLE,
+        ...svgStyle,
+      }
 
   const otherProps = omit(
     {
@@ -160,32 +155,31 @@ function ImageFilter({
       'colorOne',
       'colorTwo',
     ]
-  );
+  )
 
   useEffect(() => {
     // Создаем новый Image элемент для изображения
-    const img = new Image();
-    img.src = image;
+    const img = new Image()
+    img.src = image
 
     img.onload = () => {
       // Создаем <canvas> элемент
-      const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
 
-        canvas.width = img.width;
-        canvas.height = img.height;
+      canvas.width = img.width
+      canvas.height = img.height
 
-        // Рисуем изображение на canvas с примененным фильтром
-        ctx.filter = `url(#filter-image-${id})`;
-        ctx.drawImage(img, 0, 0);
+      // Рисуем изображение на canvas с примененным фильтром
+      ctx.filter = `url(#filter-image-${id})`
+      ctx.drawImage(img, 0, 0)
 
-        // Получаем base64 строку изображения с фильтром
-        const filteredImageBase64 = canvas.toDataURL('image/png');
+      // Получаем base64 строку изображения с фильтром
+      const filteredImageBase64 = canvas.toDataURL('image/png')
 
-        onChange(filteredImageBase64);
+      onChange(filteredImageBase64)
     }
-
-  }, [image, filterMatrix]);
+  }, [image, filterMatrix])
 
   return (
     <div
@@ -217,7 +211,7 @@ function ImageFilter({
         />
       </svg>
     </div>
-  );
+  )
 }
 
 ImageFilter.propTypes = {
@@ -232,7 +226,7 @@ ImageFilter.propTypes = {
   colorOne: PropTypes.array,
   colorTwo: PropTypes.array,
   onChange: PropTypes.func,
-};
+}
 
 ImageFilter.defaultProps = {
   filter: NONE,
@@ -241,6 +235,6 @@ ImageFilter.defaultProps = {
   style: {},
   svgStyle: {},
   svgProps: {},
-};
+}
 
-export default ImageFilter;
+export default ImageFilter
