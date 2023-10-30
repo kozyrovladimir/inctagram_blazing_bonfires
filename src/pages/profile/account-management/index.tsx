@@ -1,7 +1,8 @@
-import { settingLayout } from '@/shared/layouts/profileLayout/SettingLayout'
+import { Management } from '@/features/profile-setting/ui/Management/Management'
+import { settingLayout } from '@/shared/layouts/ProfileLayout/SettingLayout'
 
 function AccountManagement() {
-  return <div>Account Management</div>
+  return <Management />
 }
 
 AccountManagement.getLayout = settingLayout

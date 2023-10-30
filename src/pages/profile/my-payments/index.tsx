@@ -1,7 +1,8 @@
-import { settingLayout } from '@/shared/layouts/profileLayout/SettingLayout'
+import { Payments } from '@/features/profile-setting/ui/Payments/Payments'
+import { settingLayout } from '@/shared/layouts/ProfileLayout/SettingLayout'
 
 function MyPayments() {
-  return <div>MY Payments</div>
+  return <Payments />
 }
 
 MyPayments.getLayout = settingLayout

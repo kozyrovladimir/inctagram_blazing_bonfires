@@ -31,4 +31,9 @@ export {
 
 export { devicesApi, useGetSessionsQuery } from './services/devices/devices.api'
 
+export {
+  subscriptionsApi,
+  useGetSubscriptionsQuery,
+} from './services/subscriptions/subscriptions.api'
+
 export { baseURL } from './services/baseUrl.api'
