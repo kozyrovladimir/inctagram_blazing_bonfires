@@ -66,7 +66,7 @@ export const Publication = () => {
 
         createPost(body)
           .unwrap()
-          .then(res => {
+          .then(() => {
             toast.success('Post Created')
             setIsOpen(!isOpen)
           })
