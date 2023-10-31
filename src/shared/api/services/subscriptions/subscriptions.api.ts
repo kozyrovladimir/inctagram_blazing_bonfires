@@ -51,7 +51,7 @@ export const subscriptionsApi = createApi({
 
 export const {
   useGetSubscriptionsQuery,
-  useGetSubscriptionsCost,
-  useGetCurrentSubscription,
+  useGetSubscriptionsCostQuery,
+  useGetCurrentSubscriptionQuery,
   useCreateNewSubscriptionMutation,
 } = subscriptionsApi

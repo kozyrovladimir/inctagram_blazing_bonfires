@@ -9,7 +9,10 @@ import * as yup from 'yup'
 
 import styles from './Management.module.scss'
 
-import { useCreateNewSubscriptionMutation } from '@/shared/api/services/subscriptions/subscriptions.api'
+import {
+  useCreateNewSubscriptionMutation,
+  useGetCurrentSubscriptionQuery,
+} from '@/shared/api/services/subscriptions/subscriptions.api'
 import {
   PaymentType,
   SubscriptionType,
@@ -24,7 +27,7 @@ const schema = yup.object({
   typeSubscription: yup.string<SubscriptionType>().required(),
   paymentType: yup.string<PaymentType>().required(),
   amount: yup.number().default(1).required(),
-  baseUrl: yup.string().default('https://inctagram.work/').required(),
+  baseUrl: yup.string().default('http://localhost:3000/').required(),
 })
 
 type FormData = {
@@ -44,6 +47,9 @@ export const Management = () => {
 
   const [error, setError] = useState('')
 
+  const { data } = useGetCurrentSubscriptionQuery()
+
+  console.log(data)
   const [createNewSubscription] = useCreateNewSubscriptionMutation()
   const {
     handleSubmit,
@@ -95,6 +101,19 @@ export const Management = () => {
       )}
       <div className={styles.wrapper}>
         <div>
+          <h3 className={styles.title}>Current Subscription:</h3>
+          <div className={styles.listWrapper}>
+            <div>
+              <p>Expire at</p>
+            </div>
+            <div>
+              <p>Next payment</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.wrapper}>
+        <div>
           <h3 className={styles.title}>Account type:</h3>
           <div className={styles.listWrapper}>
             <RoundCheckbox
@@ -134,7 +153,7 @@ export const Management = () => {
                     />
                     <RoundCheckbox
                       value={'MONTHLY'}
-                      label={<p className={styles.listItem}>$10 per month</p>}
+                      label={<p className={styles.listItem}>$100 per month</p>}
                       onChange={onChange}
                       checked={value === 'MONTHLY'}
                     />
