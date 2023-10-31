@@ -45,7 +45,8 @@ export const Management = () => {
 
   const [accType, setAccType] = useState('personal')
 
-  const [error, setError] = useState('')
+  const [error, setError] = useState(false)
+  const callBackCloseErrorWindow = () => setError(false)
 
   const { data } = useGetCurrentSubscriptionQuery()
 
@@ -90,7 +91,7 @@ export const Management = () => {
   return (
     <>
       {error && (
-        <Modal title={'Error'} mainButton={' Back '} callBackCloseWindow={callBackCloseWindow}>
+        <Modal title={'Error'} mainButton={' Back '} callBackCloseWindow={callBackCloseErrorWindow}>
           <p>Transaction failed, please try again</p>
         </Modal>
       )}
