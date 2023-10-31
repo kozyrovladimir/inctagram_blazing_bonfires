@@ -1,12 +1,17 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import styles from './Payments.module.scss'
 
-import { useGetSubscriptionsQuery } from '@/shared/api/services/subscriptions/subscriptions.api'
+import { SubscriptionDataType } from '@/shared/api/services/subscriptions/subscriptions.api.types'
+import { formatDate } from '@/shared/libs/formatDates/formatDates'
 import { TablePagination } from '@/widgets/pagination/ui/TablePagination'
 
-export const Payments = () => {
+type PropsType = {
+  payments: SubscriptionDataType[]
+}
+
+export const Payments: React.FC<PropsType> = ({ payments }) => {
   const [page, setPage] = useState(2)
   const [count, setCount] = useState(10)
   const [totalCount, setTotalCount] = useState(100)
@@ -16,11 +21,7 @@ export const Payments = () => {
     setCount(newCount)
   }
 
-  const { data, isLoading, isError } = useGetSubscriptionsQuery()
-
-  useEffect(() => {
-    console.log(data)
-  }, [])
+  console.log(payments)
 
   return (
     <div className={styles.wrapper}>
@@ -35,13 +36,19 @@ export const Payments = () => {
           </tr>
         </thead>
         <tbody className={styles.body}>
-          <tr className={styles.line}>
-            {/*<td className={styles.item}>10.08.22</td>*/}
-            {/*<td className={styles.item}>11.08.22</td>*/}
-            {/*<td className={styles.item}>$10</td>*/}
-            {/*<td className={styles.item}>1 day</td>*/}
-            {/*<td className={styles.item}>Stripe</td>*/}
-          </tr>
+          {payments.map(item => {
+            return (
+              <tr key={item.subscriptionId} className={styles.line}>
+                <td className={styles.item}>{formatDate(item.dateOfPayment, 'dd.mm.yyyy')}</td>
+                <td className={styles.item}>
+                  {formatDate(item.endDateOfSubscription, 'dd.mm.yyyy')}
+                </td>
+                <td className={styles.item}>{item.price}</td>
+                <td className={styles.item}>{item.subscriptionType}</td>
+                <td className={styles.item}>{item.paymentType}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
       <TablePagination
