@@ -1,62 +1,93 @@
 import * as React from 'react'
 import { useState } from 'react'
 
+import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { SubmitHandler, useForm, Controller } from 'react-hook-form'
+import * as yup from 'yup'
 
 import styles from './Management.module.scss'
 
+import { useCreateNewSubscriptionMutation } from '@/shared/api/services/subscriptions/subscriptions.api'
+import {
+  PaymentType,
+  SubscriptionType,
+} from '@/shared/api/services/subscriptions/subscriptions.api.types'
 import payPal from '@/shared/assets/icons/payments/payPal.svg'
 import stripe from '@/shared/assets/icons/payments/stripe.svg'
 import { Modal } from '@/shared/ui/modal/Modal'
 import { RoundCheckbox } from '@/shared/ui/roundCheckbox/RoundCheckbox'
 
-type AccType = {
-  id: number
-  name: string
-}
-const accTypes: AccType[] = [
-  { id: 0, name: 'personal' },
-  { id: 1, name: 'business' },
-]
+// create new subscription
+const schema = yup.object({
+  typeSubscription: yup.string<SubscriptionType>().required(),
+  paymentType: yup.string<PaymentType>().required(),
+  amount: yup.number().default(1).required(),
+  baseUrl: yup.string().default('https://inctagram.work/').required(),
+})
 
-type PriceType = {
-  id: number
-  value: string
-}
-const prices: PriceType[] = [
-  { id: 0, value: '$10 per 1 Day' },
-  { id: 1, value: '$50 per 7 Day' },
-  { id: 2, value: '$100 per month' },
-]
-
-// helper function
-function capitalizeFirstLetter(inputString) {
-  if (inputString.length === 0) {
-    return inputString
-  }
-
-  return inputString.charAt(0).toUpperCase() + inputString.slice(1)
+type FormData = {
+  typeSubscription: string
+  paymentType: string
+  amount: number
+  baseUrl: string
 }
 
 export const Management = () => {
+  const router = useRouter()
+
   const [subscribed, setSubscribed] = useState(false)
   const callBackCloseWindow = () => setSubscribed(false)
 
-  const [accType, setAccType] = useState(0)
-  const handleChangeAccType = (value: number) => setAccType(value)
+  const [accType, setAccType] = useState('personal')
 
-  const [accPrice, setAccPrice] = useState(0)
-  const handleAccPriceType = (value: number) => setAccPrice(value)
+  const [error, setError] = useState('')
 
-  const choosePaymentMethod = () => console.log('choose payment method')
+  const [createNewSubscription] = useCreateNewSubscriptionMutation()
+  const {
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues: { typeSubscription: 'DAY' },
+    mode: 'onChange',
+  })
+
+  const handleStripePaymentType = () => {
+    setValue('paymentType', 'STRIPE')
+
+    return handleSubmit()
+  }
+  const handlePaypalPaymentType = () => {
+    setValue('paymentType', 'PAYPAL')
+
+    return handleSubmit()
+  }
+
+  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+    createNewSubscription(data)
+      .unwrap()
+      .then(data => {
+        router.replace(data.url)
+        setSubscribed(true)
+      })
+      .catch(error => {
+        console.log(error)
+        setError(error)
+      })
+    console.log(data)
+  }
 
   return (
     <>
-      {/*{error &&*/}
-      {/*  <Modal title={'Error'} mainButton={' Back '} callBackCloseWindow={callBackCloseWindow}>*/}
-      {/*    <p>Transaction failed, please try again</p>*/}
-      {/*  </Modal>*/}
-      {/*}*/}
+      {error && (
+        <Modal title={'Error'} mainButton={' Back '} callBackCloseWindow={callBackCloseWindow}>
+          <p>Transaction failed, please try again</p>
+        </Modal>
+      )}
       {subscribed && (
         <Modal title={'Success'} mainButton={' OK '} callBackCloseWindow={callBackCloseWindow}>
           <p>Payment was successful!</p>
@@ -66,49 +97,63 @@ export const Management = () => {
         <div>
           <h3 className={styles.title}>Account type:</h3>
           <div className={styles.listWrapper}>
-            {accTypes.map(item => {
-              return (
-                <RoundCheckbox
-                  id={item.id}
-                  key={item.id}
-                  name={'accType'}
-                  onChangeCheckbox={() => handleChangeAccType(item.id)}
-                  label={<p className={styles.listItem}>{capitalizeFirstLetter(item.name)}</p>}
-                />
-              )
-            })}
+            <RoundCheckbox
+              name={'accType'}
+              onChange={() => setAccType('personal')}
+              label={<p className={styles.listItem}>Personal</p>}
+              checked={accType === 'personal'}
+            />
+            <RoundCheckbox
+              name={'accType'}
+              onChange={() => setAccType('business')}
+              label={<p className={styles.listItem}>Business</p>}
+              checked={accType === 'business'}
+            />
           </div>
         </div>
-        {accType === 1 && (
-          <>
-            <div>
-              <h3 className={styles.title}>Your subscription costs:</h3>
-              <div className={styles.listWrapper}>
-                {prices.map(item => {
-                  return (
+        {accType === 'business' && (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <h3 className={styles.title}>Your subscription costs:</h3>
+            <div className={styles.listWrapper}>
+              <Controller
+                control={control}
+                name="typeSubscription"
+                render={({ field: { onChange, value } }) => (
+                  <>
                     <RoundCheckbox
-                      id={item.id}
-                      key={item.id}
-                      name={'accPrice'}
-                      onChangeCheckbox={() => handleAccPriceType(item.id)}
-                      label={<p className={styles.listItem}>{item.value}</p>}
+                      value={'DAY'}
+                      label={<p className={styles.listItem}>$10 per 1 Day</p>}
+                      onChange={onChange}
+                      checked={value === 'DAY'}
                     />
-                  )
-                })}
-              </div>
+                    <RoundCheckbox
+                      value={'WEEKLY'}
+                      label={<p className={styles.listItem}>$50 per 7 Days</p>}
+                      onChange={onChange}
+                      checked={value === 'WEEKLY'}
+                    />
+                    <RoundCheckbox
+                      value={'MONTHLY'}
+                      label={<p className={styles.listItem}>$10 per month</p>}
+                      onChange={onChange}
+                      checked={value === 'MONTHLY'}
+                    />
+                  </>
+                )}
+              />
             </div>
             <div className={styles.footerWrapper}>
               <div className={styles.footer}>
-                <div onClick={choosePaymentMethod} className={styles.imgWrapper}>
+                <button className={styles.imgWrapper} onClick={handlePaypalPaymentType}>
                   <Image className={styles.img} src={payPal} alt="payPal icon" />
-                </div>
+                </button>
                 <p>or</p>
-                <div onClick={choosePaymentMethod} className={styles.imgWrapper}>
+                <button className={styles.imgWrapper} onClick={handleStripePaymentType}>
                   <Image className={styles.img} src={stripe} alt="stripe icon" />
-                </div>
+                </button>
               </div>
             </div>
-          </>
+          </form>
         )}
       </div>
     </>

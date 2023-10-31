@@ -9,18 +9,49 @@ export const subscriptionsApi = createApi({
   endpoints: build => {
     return {
       getSubscriptions: build.query<any, any>({
-        query: () => {
-          return {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-            },
-            method: 'GET',
-            url: 'subscriptions/my-payments',
-          }
-        },
+        query: () => ({
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+          },
+          method: 'GET',
+          url: 'subscriptions/my-payments',
+        }),
+      }),
+      getSubscriptionsCost: build.query<any, void>({
+        query: () => ({
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+          },
+          url: `subscriptions/cost-of-subscriptions`,
+          method: 'GET',
+        }),
+      }),
+      getCurrentSubscription: build.query<any, void>({
+        query: () => ({
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+          },
+          url: `subscriptions/current-subscriptions`,
+          method: 'GET',
+        }),
+      }),
+      createNewSubscription: build.mutation<any, any>({
+        query: body => ({
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+          },
+          url: 'subscriptions',
+          method: 'POST',
+          body,
+        }),
       }),
     }
   },
 })
 
-export const { useGetSubscriptionsQuery } = subscriptionsApi
+export const {
+  useGetSubscriptionsQuery,
+  useGetSubscriptionsCost,
+  useGetCurrentSubscription,
+  useCreateNewSubscriptionMutation,
+} = subscriptionsApi

@@ -1,8 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
-import { authApi, profileApi, devicesApi } from '../../../api'
-import { subscriptionsApi } from '@/shared/api'
+import { authApi, profileApi, devicesApi, subscriptionsApi } from '../../../api'
 
 export const store = configureStore({
   reducer: {
