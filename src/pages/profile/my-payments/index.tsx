@@ -1,11 +1,14 @@
-import { Payments } from '@/features/profile-setting/ui/Payments/Payments'
-import { useGetSubscriptionsQuery } from '@/shared/api'
-import { settingLayout } from '@/shared/layouts/ProfileLayout/SettingLayout'
+import * as React from 'react'
+
+import { Payments } from '@/features/profile-setting/ui/payments/Payments'
+import { settingLayout } from '@/shared/layouts/profileLayout/SettingLayout'
 
 function MyPayments() {
-  const { data, isLoading, isError } = useGetSubscriptionsQuery()
-
-  return <Payments payments={data} />
+  return (
+    <>
+      <Payments />
+    </>
+  )
 }
 
 MyPayments.getLayout = settingLayout

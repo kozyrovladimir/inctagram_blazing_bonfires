@@ -11,14 +11,18 @@ import styles from './Management.module.scss'
 
 import {
   useCreateNewSubscriptionMutation,
-  useGetCurrentSubscriptionQuery,
+  useGetCurrentSubscriptionsQuery,
 } from '@/shared/api/services/subscriptions/subscriptions.api'
 import {
+  NewSubscriptionType,
   PaymentType,
+  SubscriptionDataType,
   SubscriptionType,
 } from '@/shared/api/services/subscriptions/subscriptions.api.types'
 import payPal from '@/shared/assets/icons/payments/payPal.svg'
 import stripe from '@/shared/assets/icons/payments/stripe.svg'
+import { formatDate } from '@/shared/libs/formatDates/formatDates'
+import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
 import { Modal } from '@/shared/ui/modal/Modal'
 import { RoundCheckbox } from '@/shared/ui/roundCheckbox/RoundCheckbox'
 
@@ -29,13 +33,6 @@ const schema = yup.object({
   amount: yup.number().default(1).required(),
   baseUrl: yup.string().default('http://localhost:3000/').required(),
 })
-
-type FormData = {
-  typeSubscription: string
-  paymentType: string
-  amount: number
-  baseUrl: string
-}
 
 export const Management = () => {
   const router = useRouter()
@@ -48,16 +45,16 @@ export const Management = () => {
   const [error, setError] = useState(false)
   const callBackCloseErrorWindow = () => setError(false)
 
-  const { data } = useGetCurrentSubscriptionQuery()
+  const { data: currentSubscriptions, isLoading: currentSubscriptionLoading } =
+    useGetCurrentSubscriptionsQuery()
 
-  console.log(data)
-  const [createNewSubscription] = useCreateNewSubscriptionMutation()
+  const [createNewSubscription, { isLoading }] = useCreateNewSubscriptionMutation()
   const {
     handleSubmit,
     setValue,
     control,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<NewSubscriptionType>({
     resolver: yupResolver(schema),
     defaultValues: { typeSubscription: 'DAY' },
     mode: 'onChange',
@@ -79,17 +76,18 @@ export const Management = () => {
       .unwrap()
       .then(data => {
         router.replace(data.url)
-        setSubscribed(true)
       })
       .catch(error => {
-        console.log(error)
         setError(error)
       })
-    console.log(data)
   }
+
+  const currentSubscriptionWrapper = styles.listWrapper + ' ' + styles.currentSubscriptionColumn
 
   return (
     <>
+      {isLoading && <LinearLoader />}
+      {currentSubscriptionLoading && <LinearLoader />}
       {error && (
         <Modal title={'Error'} mainButton={' Back '} callBackCloseWindow={callBackCloseErrorWindow}>
           <p>Transaction failed, please try again</p>
@@ -101,17 +99,32 @@ export const Management = () => {
         </Modal>
       )}
       <div className={styles.wrapper}>
-        <div>
-          <h3 className={styles.title}>Current Subscription:</h3>
-          <div className={styles.listWrapper}>
-            <div>
-              <p>Expire at</p>
-            </div>
-            <div>
-              <p>Next payment</p>
+        {currentSubscriptions && (
+          <div key={currentSubscriptions.data.length - 1}>
+            <h3 className={styles.title}>Current Subscription:</h3>
+            <div className={currentSubscriptionWrapper}>
+              <div className={styles.currentSubscriptionColumn}>
+                <p className={styles.currentSubscriptionColumnName}>Expire at:</p>
+                <p className={styles.currentSubscriptionColumnData}>
+                  {formatDate(
+                    currentSubscriptions.data[currentSubscriptions.data.length - 1]
+                      .endDateOfSubscription,
+                    'dd.mm.yyyy'
+                  )}
+                </p>
+              </div>
+              <div className={styles.currentSubscriptionColumn}>
+                <p className={styles.currentSubscriptionColumnName}>Next payment:</p>
+                <p className={styles.currentSubscriptionColumnData}>
+                  {formatDate(
+                    currentSubscriptions.data[currentSubscriptions.data.length - 1].dateOfPayment,
+                    'dd.mm.yyyy'
+                  )}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <div className={styles.wrapper}>
         <div>

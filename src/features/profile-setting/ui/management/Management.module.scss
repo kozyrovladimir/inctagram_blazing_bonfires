@@ -56,3 +56,23 @@
 .img {
   width: auto;
 }
+
+.currentSubscriptionColumn {
+  flex-direction: row;
+  gap: 48px;
+}
+
+.currentSubscriptionColumn {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.currentSubscriptionColumnName {
+  font-weight: 400;
+  color: var(--color-light-900);
+  margin-bottom: 12px;
+}
+
+.currentSubscriptionColumnData {
+  font-weight: 600;
+}

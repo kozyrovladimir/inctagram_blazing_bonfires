@@ -1,6 +1,14 @@
+import { debuggerStatement } from '@babel/types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { baseURL } from '../baseUrl.api'
+
+import {
+  CurrentSubscriptionType,
+  NewSubscriptionType,
+  ResponseNewSubscriptionType,
+  SubscriptionDataType,
+} from '@/shared/api/services/subscriptions/subscriptions.api.types'
 
 export const subscriptionsApi = createApi({
   reducerPath: 'subscriptionsApi',
@@ -8,7 +16,7 @@ export const subscriptionsApi = createApi({
   tagTypes: ['dataPSubscriptions'],
   endpoints: build => {
     return {
-      getSubscriptions: build.query<any, any>({
+      getSubscriptions: build.query<SubscriptionDataType[], any>({
         query: () => ({
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
@@ -17,16 +25,7 @@ export const subscriptionsApi = createApi({
           url: 'subscriptions/my-payments',
         }),
       }),
-      getSubscriptionsCost: build.query<any, void>({
-        query: () => ({
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-          },
-          url: `subscriptions/cost-of-subscriptions`,
-          method: 'GET',
-        }),
-      }),
-      getCurrentSubscription: build.query<any, void>({
+      getCurrentSubscriptions: build.query<CurrentSubscriptionType[], void>({
         query: () => ({
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
@@ -35,7 +34,7 @@ export const subscriptionsApi = createApi({
           method: 'GET',
         }),
       }),
-      createNewSubscription: build.mutation<any, any>({
+      createNewSubscription: build.mutation<ResponseNewSubscriptionType, NewSubscriptionType>({
         query: body => ({
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
@@ -51,7 +50,6 @@ export const subscriptionsApi = createApi({
 
 export const {
   useGetSubscriptionsQuery,
-  useGetSubscriptionsCostQuery,
-  useGetCurrentSubscriptionQuery,
+  useGetCurrentSubscriptionsQuery,
   useCreateNewSubscriptionMutation,
 } = subscriptionsApi

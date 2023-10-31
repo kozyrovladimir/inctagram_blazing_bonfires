@@ -1,5 +1,5 @@
-import { Management } from '@/features/profile-setting/ui/Management/Management'
-import { settingLayout } from '@/shared/layouts/ProfileLayout/SettingLayout'
+import { Management } from '@/features/profile-setting/ui/management/Management'
+import { settingLayout } from '@/shared/layouts/profileLayout/SettingLayout'
 
 function AccountManagement() {
   return <Management />
