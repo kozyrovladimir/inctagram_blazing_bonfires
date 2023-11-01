@@ -1,20 +1,25 @@
 import React, { useRef } from 'react'
-import { useWizard } from 'react-use-wizard'
-import NewPostModal from '@/features/create-post/ui/NewPostModal/NewPostModal'
-import backIcon from '@/shared/assets/icons/arrow back/back.svg'
+
 import Image from 'next/image'
-import { useImageCropContext } from '@/features/create-post/context/CropProvider'
-import style from './Cropping.module.scss'
-import { ButtonFilterPanel } from '@/features/create-post/components/ButtonFilterPanel/ButtonFilterPanel'
 import AvatarEditor from 'react-avatar-editor'
-import { calculateImageDimensions } from '@/features/create-post/utils/calculateImageDimensions'
+import { useWizard } from 'react-use-wizard'
+
 import { useSlider } from './../../utils/useSlider'
+import style from './Cropping.module.scss'
 
-export const Cropping: React.FC = () => {
+import { ButtonFilterPanel } from '@/features/create-post/components/ButtonFilterPanel/ButtonFilterPanel'
+import { useImageCropContext } from '@/features/create-post/context/CropProvider'
+import { DotsBar } from '@/features/create-post/ui/DotsBar/DotsBar'
+import NewPostModal from '@/features/create-post/ui/NewPostModal/NewPostModal'
+import { calculateImageDimensions } from '@/features/create-post/utils/calculateImageDimensions'
+import backIcon from '@/shared/assets/icons/arrow back/back.svg'
+import next from '@/shared/assets/icons/filterPostPhoto/next.svg'
+import prev from '@/shared/assets/icons/filterPostPhoto/prev.svg'
+import { Button, ButtonTheme } from '@/shared/ui/button/Button'
+
+export const Cropping = () => {
   const cropContext = useImageCropContext()
-
   const { currentIndex, prevSlide, nextSlide } = useSlider(cropContext.photos.length)
-
   const index = currentIndex
 
   const { nextStep, previousStep } = useWizard()
@@ -28,6 +33,7 @@ export const Cropping: React.FC = () => {
     if (editor.current) {
       const canvas = editor.current as any
       const croppedImage = canvas.getImageScaledToCanvas().toDataURL()
+
       cropContext.setCroppedUrl(croppedImage, index)
     }
   }
@@ -52,22 +58,51 @@ export const Cropping: React.FC = () => {
     <NewPostModal
       isOpen={cropContext.isOpen}
       setIsOpen={cropContext.setIsOpen}
-      left={<Image src={backIcon} alt={''} onClick={previousStep} />}
+      left={<Image style={{ cursor: 'pointer' }} src={backIcon} alt={''} onClick={previousStep} />}
       title={'Cropping'}
-      right={<span onClick={nextStepHandler}>Next</span>}
+      right={
+        <span style={{ cursor: 'pointer' }} onClick={nextStepHandler}>
+          Next
+        </span>
+      }
     >
       <div className={style.editorContainer}>
-        <AvatarEditor
-          className={style.imageFullWidth}
-          ref={editor}
-          width={width}
-          height={height}
-          border={0}
-          image={cropContext.photos[index].url} // Ссылка на изображение
-          scale={cropContext.photos[index].zoom} // Масштаб
-          position={cropContext.photos[index].position} // Позиция
-          onPositionChange={positionChange}
-        />
+        <div className={style.sliderWrapper}>
+          <AvatarEditor
+            className={style.imageFullWidth}
+            ref={editor}
+            width={width}
+            height={height}
+            border={0}
+            image={cropContext.photos[index].url} // Ссылка на изображение
+            scale={cropContext.photos[index].zoom} // Масштаб
+            position={cropContext.photos[index].position} // Позиция
+            onPositionChange={positionChange}
+          />
+          {cropContext.photos.length > 1 && (
+            <>
+              <div className={style.sliderButtonsContainer}>
+                <Button
+                  theme={ButtonTheme.CLEAR}
+                  className={style.sliderButton}
+                  onClick={prevSlide}
+                >
+                  <Image src={prev} alt={''} />
+                </Button>
+                <Button
+                  theme={ButtonTheme.CLEAR}
+                  className={style.sliderButton}
+                  onClick={nextSlide}
+                >
+                  <Image src={next} alt={''} />
+                </Button>
+              </div>
+              <div className={style.sliderDotsBarWrapper}>
+                <DotsBar activeIndex={index} count={cropContext.photos.length} />
+              </div>
+            </>
+          )}
+        </div>
         <ButtonFilterPanel index={index} cropContext={cropContext} />
       </div>
     </NewPostModal>
