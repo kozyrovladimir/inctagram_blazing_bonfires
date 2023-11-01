@@ -87,8 +87,14 @@ export const Publication = () => {
         isOpen={isOpen}
         title={'Publication'}
         setIsOpen={setIsOpen}
-        left={<Image src={backIcon} alt={''} onClick={previousStep} />}
-        right={<span onClick={handlePublish}>Publish</span>}
+        left={
+          <Image style={{ cursor: 'pointer' }} src={backIcon} alt={''} onClick={previousStep} />
+        }
+        right={
+          <span style={{ cursor: 'pointer' }} onClick={handlePublish}>
+            Publish
+          </span>
+        }
       >
         <div className={style.publishModalContent}>
           <div className={style.sliderWrapper}>
