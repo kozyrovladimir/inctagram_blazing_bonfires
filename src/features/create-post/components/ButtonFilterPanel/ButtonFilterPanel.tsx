@@ -1,28 +1,30 @@
 import React from 'react'
 
-import Image from 'next/image'
-
 import style from './ButtonFilterPanel.module.scss'
 
-import { CropContextType } from '@/features/create-post/context/CropProvider'
-import noImage from '@/shared/assets/icons/image/no-image.svg'
-import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 import AspectRatioPanel from '@/features/create-post/components/AspectRatioPanel/AspectRatioPanel'
 import ZoomPanel from '@/features/create-post/components/ZoomPanel/ZoomPanel'
+import { CropContextType } from '@/features/create-post/context/CropProvider'
+import { AddPhotoSlider } from '@/features/create-post/steps/AddPhotoSlider/AddPhotoSlider'
 
-interface ButtonFilterPanelProps {
+type Props = {
   cropContext: CropContextType
   index: number
 }
 
-export const ButtonFilterPanel: React.FC<ButtonFilterPanelProps> = ({ cropContext, index }) => {
+export const ButtonFilterPanel = ({ cropContext, index }: Props) => {
   const handleAspectRatio = (aspectRatio: number) => {
     cropContext.handleAspectRatioClick(index)(aspectRatio)
   }
 
   const handleZoomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const zoom = Number(event.target.value)
+
     cropContext.setZoom(index)(zoom)
+  }
+
+  const handlePhotoClick = (index: number) => {
+    cropContext.setSelectedIndex(index)
   }
 
   return (
@@ -43,18 +45,7 @@ export const ButtonFilterPanel: React.FC<ButtonFilterPanelProps> = ({ cropContex
         </div>
       </div>
       <div className={style.rightButton}>
-        <Button theme={ButtonTheme.CLEAR} className={style.sizeButton}>
-          <Image
-            src={noImage}
-            alt={''}
-            style={{
-              width: '24px',
-              height: '24px',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          />
-        </Button>
+        <AddPhotoSlider cropContext={cropContext} handlePhotoClick={handlePhotoClick} />
       </div>
     </div>
   )
