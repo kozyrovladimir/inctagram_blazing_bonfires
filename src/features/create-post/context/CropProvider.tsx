@@ -52,6 +52,10 @@ export type CropContextType = {
   handleAspectRatioClick: (index: number) => (aspectRatio: number) => void
   setPosition: (index: number) => (position: { x: number; y: number }) => void
   setFilter: (index: number) => (filter: number[]) => void
+  selectedIndex: number
+  setSelectedIndex: (index: number) => void
+  setNewPhotoList: (files: FileList) => void
+  deletePhoto: (deleteIndex: number) => void
 }
 
 export const CropContext = createContext<CropContextType | undefined>(undefined)
@@ -66,6 +70,8 @@ const CropProvider: React.FC<Props> = ({ children }) => {
 
   // массив фотографий
   const [photos, setPhotos] = useState<PhotoType[]>(initialState)
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   // обработка фотографий и запись в массив
   const setPhotoList = (files: FileList) => {
@@ -112,6 +118,51 @@ const CropProvider: React.FC<Props> = ({ children }) => {
       })
   }
 
+  //обработка и добавление фотографий в существующий массив
+  const setNewPhotoList = (files: FileList) => {
+    processImageFiles(Array.from(files))
+      .then(imageDataUrls => {
+        const newPhotosPromises = imageDataUrls.map(url => {
+          return new Promise((resolve, reject) => {
+            const image = new Image()
+
+            image.src = url
+
+            image.onload = () => {
+              resolve({
+                url,
+                width: image.width,
+                height: image.height,
+                croppedUrl: url,
+                filteredUrl: url,
+                zoom: 1,
+                originalAspect: image.width / image.height,
+                currentAspect: image.width / image.height,
+                position: {
+                  x: 0,
+                  y: 0,
+                },
+                filter: CanvasFilters.NONE,
+              })
+            }
+
+            image.onerror = () => {
+              reject(new Error('Failed to load image.'))
+            }
+          })
+        })
+
+        return Promise.all(newPhotosPromises)
+      })
+      .then(newPhotos => {
+        const updatedPhotos = photos.concat(newPhotos as PhotoType[])
+
+        setPhotos(updatedPhotos)
+      })
+      .catch(error => {
+        console.error('Error loading images:', error)
+      })
+  }
   // оригинальное соотношение сторон
   const originalAspect = photos[0].width / photos[0].height
 
@@ -162,6 +213,12 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     newPhotos[index].position = position
     setPhotos(newPhotos)
   }
+  // удаление фотографии из массива
+  const deletePhoto = (deleteIndex: number) => {
+    const updatedPhotos = photos.filter((photo, index) => index !== deleteIndex)
+
+    setPhotos(updatedPhotos)
+  }
 
   return (
     <CropContext.Provider
@@ -177,6 +234,10 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         handleAspectRatioClick: generateHandleAspectRatioFunc,
         setPosition: generateSetPositionFunc,
         setFilter: generateSetFilterFunc,
+        selectedIndex,
+        setSelectedIndex,
+        setNewPhotoList,
+        deletePhoto,
       }}
     >
       <NextImage src={create} alt={''} onClick={() => setIsOpen(true)} />
