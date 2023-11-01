@@ -6,7 +6,7 @@ import { useWizard } from 'react-use-wizard'
 import style from './Filters.module.scss'
 
 import ImageFilter from '@/features/create-post/components/ImageFilter/ImageFilter'
-import { CanvasFilters } from '@/features/create-post/constants/canvasFilters'
+import { filterNames } from '@/features/create-post/constants/canvasFilters'
 import { useImageCropContext } from '@/features/create-post/context/CropProvider'
 import { DotsBar } from '@/features/create-post/ui/DotsBar/DotsBar'
 import NewPostModal from '@/features/create-post/ui/NewPostModal/NewPostModal'
@@ -27,8 +27,12 @@ export const Filters = () => {
       isOpen={cropContext.isOpen}
       title={'Filters'}
       setIsOpen={cropContext.setIsOpen}
-      left={<Image src={backIcon} alt={''} onClick={previousStep} />}
-      right={<span onClick={nextStep}>Next</span>}
+      left={<Image style={{ cursor: 'pointer' }} src={backIcon} alt={''} onClick={previousStep} />}
+      right={
+        <span style={{ cursor: 'pointer' }} onClick={nextStep}>
+          Next
+        </span>
+      }
     >
       <div className={style.filtersModalContent}>
         <div className={style.sliderWrapper}>
@@ -66,11 +70,22 @@ export const Filters = () => {
           )}
         </div>
         <div className={style.filters}>
-          <span style={{ textAlign: 'center' }}>choose filter: </span>
-          <button onClick={() => setFilter(CanvasFilters.NONE)}>none</button>
-          <button onClick={() => setFilter(CanvasFilters.WARM)}>warm</button>
-          <button onClick={() => setFilter(CanvasFilters.COOL)}>cool</button>
-          <button onClick={() => setFilter(CanvasFilters.SEPIA)}>sepia</button>
+          {filterNames.map((filter, index) => (
+            <div key={index} className={style.filterItem} onClick={() => setFilter(filter.filter)}>
+              <div className={style.filterImageContainer}>
+                <ImageFilter
+                  className={style.filterImage}
+                  image={cropContext.photos[currentIndex].croppedUrl}
+                  filter={filter.filter}
+                  onChange={(filteredImg: string) => {
+                    cropContext.setFilteredUrl(filteredImg, currentIndex)
+                  }}
+                  preserveAspectRatio={'contain'}
+                />
+              </div>
+              <div className={style.filterLabel}>{filter.name}</div>
+            </div>
+          ))}
         </div>
       </div>
     </NewPostModal>
