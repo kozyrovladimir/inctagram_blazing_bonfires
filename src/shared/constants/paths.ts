@@ -16,6 +16,10 @@ const PROFILE_DEVICES_PATH = '/profile/devices'
 const PROFILE_ACCOUNT_MANAGEMENT_PATH = '/profile/account-management'
 const PROFILE_MY_PAYMENTS_PATH = '/profile/my-payments'
 const FOLDER_NEXT_STATIC_MEDIA_PATH = '/_next/static/media/'
+const SUPER_ADMIN_USERS_LIST = '/super-admin/users-list'
+const SUPER_ADMIN_STATISTICS = '/super-admin/statistics'
+const SUPER_ADMIN_PAYMENTS_LIST = '/super-admin/payments-list'
+const SUPER_ADMIN_POSTS_LIST = '/super-admin/posts-list'
 const API_AUTH_GITHUB_LOGIN_PATH = 'https://inctagram.work/api/v1/auth/github/login'
 
 export {
@@ -37,5 +41,9 @@ export {
   PROFILE_DEVICES_PATH,
   PROFILE_ACCOUNT_MANAGEMENT_PATH,
   PROFILE_MY_PAYMENTS_PATH,
+  SUPER_ADMIN_USERS_LIST,
+  SUPER_ADMIN_STATISTICS,
+  SUPER_ADMIN_PAYMENTS_LIST,
+  SUPER_ADMIN_POSTS_LIST,
   API_AUTH_GITHUB_LOGIN_PATH,
 }

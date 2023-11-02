@@ -17,6 +17,13 @@
     line-height: 36px;
     text-decoration: none;
     color: white;
+    .adminDescription {
+      font-size: 12px;
+      .adminDescriptionThin {
+        font-weight: normal;
+      }
+
+    }
   }
   .option {
     display: flex;
