@@ -4,8 +4,9 @@ import * as React from 'react'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
 
-import { ShortLangs, Flags, FullLangs } from './LanguageSelect'
 import style from './LanguageSelect.module.scss'
+
+import { Flags, FullLangs, ShortLangs } from '@/shared/types/langSwitcherTypes'
 
 type Props = {
   alt: ShortLangs

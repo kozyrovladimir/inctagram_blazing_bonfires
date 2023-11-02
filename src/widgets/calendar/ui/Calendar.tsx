@@ -17,8 +17,8 @@ type Props = {
 }
 
 export const Calendar = ({ outsideOnChange, classNameWrap, data }: Props) => {
-  const minAge = new Date().setFullYear(new Date().getFullYear() - 10)
-  const defaultValue = data ? new Date(data) : minAge
+  const minAge = new Date().setFullYear(new Date().getFullYear() - 13)
+  const defaultValue = data ? new Date(data) : ''
   const { t } = useTranslation('common', { keyPrefix: 'Calendar' })
   const [value, setValue] = useState<Value>(defaultValue)
   const [isOpen, setIsOpen] = useState(false)

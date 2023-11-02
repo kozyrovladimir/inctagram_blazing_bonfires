@@ -6,23 +6,14 @@ import { useTranslation } from 'next-i18next'
 
 import { useMeQuery } from '../../api/services/auth/auth.api'
 
-import {
-  AUTH_CONFIRMED_EMAIL_PATH,
-  AUTH_EXPIRRED_VERIFICATION_LINK_PATH,
-  AUTH_PRIVACY_POLICY_PATH,
-  AUTH_REGISTRATION_CONFIRMATION_PATH,
-  AUTH_TERMS_OF_SERVICE_PATH,
-  FORGOT_PASSWORD_PATH,
-  SIGN_IN_PATH,
-  SIGN_UP_PATH,
-} from '@/shared/constants/paths'
-import { ShortLangs } from '@/widgets/langSwitcher/ui/LanguageSelect'
+import { RoutersPath } from '@/shared/constants/paths'
+import { ShortLangs } from '@/shared/types/langSwitcherTypes'
 
 // const publicPaths = []
 
 const emailConfirmationPaths = [
-  AUTH_EXPIRRED_VERIFICATION_LINK_PATH,
-  AUTH_REGISTRATION_CONFIRMATION_PATH,
+  RoutersPath.authExpirredVerificationLink,
+  RoutersPath.authRegistrationConfirmation,
 ]
 
 export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
@@ -42,26 +33,26 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   if (isError) {
     // if to use router.push will be infinite rerenders. Instead of it needs to use window.history.pushState to prevent rerenders
 
-    let pageUnautorization = SIGN_IN_PATH
+    let pageUnautorization = RoutersPath.signIn
 
     switch (pathname) {
-      case SIGN_UP_PATH:
-        pageUnautorization = SIGN_UP_PATH
+      case RoutersPath.signUp:
+        pageUnautorization = RoutersPath.signUp
         break
-      case FORGOT_PASSWORD_PATH:
-        pageUnautorization = FORGOT_PASSWORD_PATH
+      case RoutersPath.forgotPassword:
+        pageUnautorization = RoutersPath.forgotPassword
         break
-      case AUTH_TERMS_OF_SERVICE_PATH:
-        pageUnautorization = AUTH_TERMS_OF_SERVICE_PATH
+      case RoutersPath.authTermsOfService:
+        pageUnautorization = RoutersPath.authTermsOfService
         break
-      case AUTH_PRIVACY_POLICY_PATH:
-        pageUnautorization = AUTH_PRIVACY_POLICY_PATH
+      case RoutersPath.authPrivacyPolicy:
+        pageUnautorization = RoutersPath.authPrivacyPolicy
         break
-      case AUTH_CONFIRMED_EMAIL_PATH:
-        pageUnautorization = AUTH_CONFIRMED_EMAIL_PATH
+      case RoutersPath.authConfirmedEmail:
+        pageUnautorization = RoutersPath.authConfirmedEmail
         break
-      case AUTH_EXPIRRED_VERIFICATION_LINK_PATH:
-        pageUnautorization = AUTH_EXPIRRED_VERIFICATION_LINK_PATH
+      case RoutersPath.authExpirredVerificationLink:
+        pageUnautorization = RoutersPath.authExpirredVerificationLink
         break
     }
 

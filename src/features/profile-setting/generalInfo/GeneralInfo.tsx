@@ -19,7 +19,7 @@ import {
   useUpdateAvatarMutation,
 } from '@/shared/api/services/profile/profile.api'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
-import { PROFILE_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 import { GeneralInfoFields } from '@/shared/types/profileSettingTypes'
 import { Button } from '@/shared/ui/button/Button'
 import { Input, InputType } from '@/shared/ui/input/Input'
@@ -124,8 +124,6 @@ export const GeneralInfo = () => {
     resolver: yupResolver(profileSchema),
     defaultValues: {
       userName: profileData?.userName ?? '',
-      email: profileData?.email ?? '',
-      password: profileData?.password ?? '',
       firstName: profileData?.firstName ?? '',
       lastName: profileData?.lastName ?? '',
       city: profileData?.city ?? '',
@@ -143,7 +141,7 @@ export const GeneralInfo = () => {
       deleteAvatar()
         .unwrap()
         .then(() => {
-          router.push(PROFILE_PATH)
+          router.push(RoutersPath.profile)
         })
         .catch(error => currentErrorHandler(error))
     }
@@ -154,10 +152,10 @@ export const GeneralInfo = () => {
       updateAvatar(formData)
         .unwrap()
         .then(() => {
-          router.push(PROFILE_PATH)
+          router.push(RoutersPath.profile)
         })
         .catch(error => currentErrorHandler(error))
-    } else router.push(PROFILE_PATH)
+    } else router.push(RoutersPath.profile)
   }
 
   const onSubmit = (data: ProfileUserType) => {
@@ -179,7 +177,14 @@ export const GeneralInfo = () => {
   ]
 
   watch()
+  // const city = watch('city')
+  // const firstName = getValues('firstName')
   const isFillField = getValues(allFields).every(e => !!e)
+
+  // useEffect(() => {
+  //   console.log(getValues(allFields))
+  //   console.log(city)
+  // }, [city, firstName])
 
   return (
     <>
@@ -211,43 +216,59 @@ export const GeneralInfo = () => {
               <Controller
                 name="userName"
                 control={control}
-                render={({ field }) => (
+                render={({ field: { ref, value, ...args } }) => (
                   <Input
                     label={t('UserName')}
                     type={InputType.TEXT}
                     placeholder={''}
                     error={(errors as FieldErrors<ProfileUserType>).userName?.message}
                     classNameWrap={'myCustomLabel'}
-                    {...field}
+                    value={value ?? ''}
+                    {...args}
                   />
                 )}
               />
               <Controller
                 name="firstName"
                 control={control}
-                render={({ field }) => (
+                render={({ field: { ref, value, ...args } }) => (
                   <Input
                     label={t('FirstName')}
                     placeholder={''}
                     type={InputType.TEXT}
                     error={(errors as FieldErrors<ProfileUserType>).firstName?.message}
                     classNameWrap={'myCustomLabel'}
-                    {...field}
+                    value={value ?? ''}
+                    {...args}
                   />
                 )}
               />
               <Controller
                 name="lastName"
                 control={control}
-                render={({ field }) => (
+                render={({ field: { ref, value, ...args } }) => (
                   <Input
                     label={t('LastName')}
                     placeholder={''}
                     type={InputType.TEXT}
                     error={(errors as FieldErrors<ProfileUserType>).lastName?.message}
                     classNameWrap={'myCustomLabel'}
-                    {...field}
+                    value={value ?? ''}
+                    {...args}
                   />
+                )}
+              />
+              <Controller
+                name="city"
+                control={control}
+                render={({ field: { ref, value, ...args } }) => (
+                  <>
+                    <label>{t('city')}</label>
+                    <AutocompletionOfCities
+                      error={(errors as FieldErrors<ProfileUserType>).city?.message}
+                      {...args}
+                    />
+                  </>
                 )}
               />
               <Controller
@@ -263,38 +284,27 @@ export const GeneralInfo = () => {
                       {...args}
                     />
                     {errors && (
-                      <p className={styles.error}>
+                      <p className={styles.errorCalendar}>
                         {(errors as FieldErrors<ProfileUserType>).dateOfBirth?.message}
                       </p>
                     )}
                   </div>
                 )}
               />
-              <Controller
-                name="city"
-                control={control}
-                render={({ field: { ref, ...args } }) => (
-                  <div>
-                    <label>City</label>
-                    <AutocompletionOfCities
-                      error={(errors as FieldErrors<ProfileUserType>).city?.message}
-                      {...args}
-                    />
-                  </div>
-                )}
-              />
+
               <div className={styles.textareaContent}>
                 <label className={styles.aboutMeLabel}>{t('AboutMe')}</label>
                 <Controller
                   name="aboutMe"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, value, ...args } }) => (
                     <textarea
                       rows={4}
                       cols={50}
                       placeholder=""
                       className={styles.aboutMeTextarea}
-                      {...field}
+                      value={value ?? ''}
+                      {...args}
                     />
                   )}
                 />

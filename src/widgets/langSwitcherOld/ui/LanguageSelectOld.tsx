@@ -1,0 +1,110 @@
+import * as React from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+
+import style from './LanguageSelect.module.scss'
+import { OptionContent } from './OptionContent'
+
+import arrow from '@/shared/assets/icons/langSelect/selectArrow.svg'
+import { RoutersPath } from '@/shared/constants/paths'
+import { Flags, FullLangs, LangOptionType, ShortLangs } from '@/shared/types/langSwitcherTypes'
+
+const langOptions: LangOptionType[] = [
+  { shortLang: ShortLangs.EN, fullLang: FullLangs.EN, flag: Flags.EN },
+  { shortLang: ShortLangs.RU, fullLang: FullLangs.RU, flag: Flags.RU },
+]
+
+export const LanguageSelectOld = () => {
+  const router = useRouter()
+  const { pathname, asPath, query } = router
+
+  const refSelect = useRef<HTMLDivElement | null>(null)
+  const [isOpenSelect, setIsOpenSelect] = useState(false)
+  const [activeSelect, setActiveSelect] = useState<ShortLangs | string>(ShortLangs.EN)
+
+  useEffect(() => {
+    const langFromLocal = localStorage.getItem('i18nextLng')
+
+    const browserLang = window.navigator.language.slice(0, 2)
+    const defaultLang =
+      browserLang === (ShortLangs.RU || ShortLangs.EN) ? browserLang : ShortLangs.EN
+
+    if (langFromLocal) {
+      setActiveSelect(langFromLocal)
+
+      if (
+        pathname !==
+        (RoutersPath.authRegistrationConfirmation || RoutersPath.authExpirredVerificationLink)
+      ) {
+        router.push({ pathname, query }, asPath, { locale: langFromLocal })
+      }
+    } else {
+      setActiveSelect(defaultLang)
+      localStorage.setItem('i18nextLng', defaultLang)
+      router.push({ pathname, query }, asPath, { locale: defaultLang })
+    }
+  }, [])
+
+  const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)
+  const changeLanguageHandler = (lang: ShortLangs) => {
+    setActiveSelect(lang)
+    localStorage.setItem('i18nextLng', lang)
+    openSelectHandler()
+
+    router.push({ pathname, query }, asPath, { locale: lang })
+  }
+
+  const closeOpenMenus = (e: DocumentEventMap['mousedown']) => {
+    if (
+      refSelect.current &&
+      isOpenSelect &&
+      !refSelect.current!.contains(e.target as HTMLDivElement)
+    ) {
+      setIsOpenSelect(false)
+    }
+  }
+
+  const { shortLang, fullLang, flag } =
+    langOptions.find(el => el.shortLang === activeSelect) || langOptions[0]
+
+  useEffect(() => {
+    if (isOpenSelect) {
+      document.addEventListener('mousedown', closeOpenMenus)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', closeOpenMenus)
+    }
+  }, [isOpenSelect])
+
+  return (
+    <div className={style.select} ref={refSelect}>
+      {activeSelect && (
+        <div className={style.selectContent} onClick={openSelectHandler}>
+          <OptionContent alt={shortLang} flagImg={flag} description={fullLang} />
+          <Image
+            src={arrow}
+            alt={''}
+            className={style.arrowImg}
+            style={{ transform: isOpenSelect ? 'rotate(180deg)' : 'rotate(0)' }}
+          />
+        </div>
+      )}
+      {isOpenSelect && (
+        <div className={style.optionList}>
+          {langOptions.map(el => (
+            <div
+              key={el.shortLang}
+              className={style.option}
+              onClick={() => changeLanguageHandler(el.shortLang)}
+            >
+              <OptionContent alt={el.shortLang} flagImg={el.flag} description={el.fullLang} />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}

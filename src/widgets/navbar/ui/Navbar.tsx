@@ -6,12 +6,7 @@ import { useTranslation } from 'next-i18next'
 
 import styles from './Navbar.module.scss'
 
-import {
-  PROFILE_ACCOUNT_MANAGEMENT_PATH,
-  PROFILE_DEVICES_PATH,
-  PROFILE_GENERAL_INFORMATION_PATH,
-  PROFILE_MY_PAYMENTS_PATH,
-} from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 
 export const Navbar = () => {
   const { t } = useTranslation('common', { keyPrefix: 'Navbar' })
@@ -19,31 +14,37 @@ export const Navbar = () => {
 
   return (
     <nav className={styles.navbar}>
-      <Link href={PROFILE_GENERAL_INFORMATION_PATH}>
+      <Link href={RoutersPath.profileGeneralInformation}>
         <div
           className={
-            router.pathname === PROFILE_GENERAL_INFORMATION_PATH ? styles['current-page'] : ''
+            router.pathname === RoutersPath.profileGeneralInformation ? styles['current-page'] : ''
           }
         >
           {t('GeneralInformation')}
         </div>
       </Link>
-      <Link href={PROFILE_DEVICES_PATH}>
-        <div className={router.pathname === PROFILE_DEVICES_PATH ? styles['current-page'] : ''}>
+      <Link href={RoutersPath.profileDevices}>
+        <div
+          className={router.pathname === RoutersPath.profileDevices ? styles['current-page'] : ''}
+        >
           {t('Devices')}
         </div>
       </Link>
-      <Link href={PROFILE_ACCOUNT_MANAGEMENT_PATH}>
+      <Link href={RoutersPath.profileAccountManagement}>
         <div
           className={
-            router.pathname === PROFILE_ACCOUNT_MANAGEMENT_PATH ? styles['current-page'] : ''
+            router.pathname === RoutersPath.profileAccountManagement ? styles['current-page'] : ''
           }
         >
           {t('AccountManagement')}
         </div>
       </Link>
-      <Link href={PROFILE_MY_PAYMENTS_PATH}>
-        <div className={router.pathname === PROFILE_MY_PAYMENTS_PATH ? styles['current-page'] : ''}>
+      <Link href={RoutersPath.profileMyPayments}>
+        <div
+          className={
+            router.pathname === RoutersPath.profileMyPayments ? styles['current-page'] : ''
+          }
+        >
           {t('MyPayments')}
         </div>
       </Link>

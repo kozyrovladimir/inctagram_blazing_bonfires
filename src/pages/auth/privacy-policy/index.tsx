@@ -9,7 +9,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import styles from './PrivacyPolicy.module.scss'
 
 import backIcon from '@/shared/assets/icons/icons/arrowBackIcon.svg'
-import { SIGN_UP_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
@@ -28,7 +28,7 @@ const PrivacyPolicyPage = () => {
   return (
     <>
       <div className={styles.container}>
-        <Link href={SIGN_UP_PATH} className={styles.backContainer}>
+        <Link href={RoutersPath.signUp} className={styles.backContainer}>
           <Image src={backIcon} alt={'icon row back'} />
           <p>{t('BackToSignUp')}</p>
         </Link>

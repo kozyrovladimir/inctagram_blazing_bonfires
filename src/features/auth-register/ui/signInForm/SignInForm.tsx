@@ -13,7 +13,7 @@ import styles from './SignInForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
 import { useLoginMutation, LoginFormType } from '@/shared/api'
-import { PROFILE_PATH, SIGN_UP_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 import { Button, ButtonSize } from '@/shared/ui/button/Button'
 import FormContainer from '@/shared/ui/formContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/input/Input'
@@ -57,7 +57,7 @@ export const SignInForm = () => {
   const onSubmit = (args: LoginFormType) => {
     login(args)
       .unwrap()
-      .then(() => router.push(PROFILE_PATH))
+      .then(() => router.push(RoutersPath.profile))
       .catch(error => {
         if (error && error.data) {
           const { statusCode } = error.data
@@ -111,7 +111,7 @@ export const SignInForm = () => {
           </Link>
           <Button size={ButtonSize.STRETCHED}>{t('SignIn')}</Button>
           <p className={styles.helpText}>{t('DontHaveAccount?')}</p>
-          <Link href={SIGN_UP_PATH} className={styles.link}>
+          <Link href={RoutersPath.signUp} className={styles.link}>
             <p className={styles.oppositeBtn}>{t('SignUp')}</p>
           </Link>
         </form>
