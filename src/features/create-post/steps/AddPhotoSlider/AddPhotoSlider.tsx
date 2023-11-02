@@ -12,10 +12,9 @@ import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 type Props = {
   cropContext: CropContextType
-  handlePhotoClick: (currentIndex: number) => void
 }
 
-export const AddPhotoSlider = ({ cropContext, handlePhotoClick }: Props) => {
+export const AddPhotoSlider = ({ cropContext }: Props) => {
   const inputRef = React.useRef<HTMLInputElement>(null)
   const handlerAddImageClick = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -44,7 +43,6 @@ export const AddPhotoSlider = ({ cropContext, handlePhotoClick }: Props) => {
                 height={50}
                 objectFit="cover"
                 className={style.thumbnailImage}
-                onClick={() => handlePhotoClick(index)}
               />
               <button className={style.deleteButton} onClick={() => handleDeleteClick(index)}>
                 x

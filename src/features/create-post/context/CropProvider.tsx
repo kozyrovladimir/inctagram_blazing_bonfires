@@ -52,10 +52,11 @@ export type CropContextType = {
   handleAspectRatioClick: (index: number) => (aspectRatio: number) => void
   setPosition: (index: number) => (position: { x: number; y: number }) => void
   setFilter: (index: number) => (filter: number[]) => void
-  selectedIndex: number
-  setSelectedIndex: (index: number) => void
   setNewPhotoList: (files: FileList) => void
   deletePhoto: (deleteIndex: number) => void
+  isOpenModal: boolean
+  setIsOpenModal: (isOpenModal: boolean) => void
+  resetData: () => void
 }
 
 export const CropContext = createContext<CropContextType | undefined>(undefined)
@@ -68,10 +69,10 @@ const CropProvider: React.FC<Props> = ({ children }) => {
   // состояние модалки (открыта/закрыта)
   const [isOpen, setIsOpen] = React.useState(false)
 
+  const [isOpenModal, setIsOpenModal] = useState(false)
+
   // массив фотографий
   const [photos, setPhotos] = useState<PhotoType[]>(initialState)
-
-  const [selectedIndex, setSelectedIndex] = useState(0)
 
   // обработка фотографий и запись в массив
   const setPhotoList = (files: FileList) => {
@@ -220,6 +221,11 @@ const CropProvider: React.FC<Props> = ({ children }) => {
     setPhotos(updatedPhotos)
   }
 
+  // очистка черновика фотографий
+  const resetData = () => {
+    setPhotos(initialState)
+  }
+
   return (
     <CropContext.Provider
       value={{
@@ -234,10 +240,11 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         handleAspectRatioClick: generateHandleAspectRatioFunc,
         setPosition: generateSetPositionFunc,
         setFilter: generateSetFilterFunc,
-        selectedIndex,
-        setSelectedIndex,
         setNewPhotoList,
         deletePhoto,
+        isOpenModal,
+        setIsOpenModal,
+        resetData,
       }}
     >
       <NextImage src={create} alt={''} onClick={() => setIsOpen(true)} />

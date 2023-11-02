@@ -23,10 +23,6 @@ export const ButtonFilterPanel = ({ cropContext, index }: Props) => {
     cropContext.setZoom(index)(zoom)
   }
 
-  const handlePhotoClick = (index: number) => {
-    cropContext.setSelectedIndex(index)
-  }
-
   return (
     <div className={style.filterPanelContainer}>
       <div className={style.leftPanel}>
@@ -45,7 +41,7 @@ export const ButtonFilterPanel = ({ cropContext, index }: Props) => {
         </div>
       </div>
       <div className={style.rightButton}>
-        <AddPhotoSlider cropContext={cropContext} handlePhotoClick={handlePhotoClick} />
+        <AddPhotoSlider cropContext={cropContext} />
       </div>
     </div>
   )

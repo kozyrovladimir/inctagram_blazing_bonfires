@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 
 import Image from 'next/image'
+import NextImage from 'next/image'
 import AvatarEditor from 'react-avatar-editor'
 import { useWizard } from 'react-use-wizard'
 

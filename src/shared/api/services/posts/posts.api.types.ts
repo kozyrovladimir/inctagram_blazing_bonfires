@@ -19,7 +19,7 @@ export type PostsType = {
     uploadId: string
   }[]
 }
-export type ImageData = {
+export type ImageDataType = {
   url: string
   width: number
   height: number
@@ -28,5 +28,5 @@ export type ImageData = {
 }
 
 export type ImagesResponse = {
-  images: ImageData[]
+  images: ImageDataType[]
 }
