@@ -24,7 +24,7 @@ const StripePayment = () => {
 
   useEffect(() => {
     if (query.success === 'true') {
-      router.push(`/profile/account-management`)
+      router.push(`/profile/account-management?success=true`)
     }
   }, [query.success])
 

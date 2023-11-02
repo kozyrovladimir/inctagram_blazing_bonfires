@@ -25,7 +25,7 @@ const PaymentAccess = () => {
   useEffect(() => {
     if (token) {
       localStorage.setItem('paymentAccessToken', token as string)
-      router.push(`/profile/account-management`)
+      router.push(`/profile/account-management?success=true`)
     }
   }, [token])
 

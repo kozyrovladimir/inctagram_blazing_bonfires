@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
@@ -37,8 +37,16 @@ const schema = yup.object({
 export const Management = () => {
   const router = useRouter()
 
+  const { success } = router.query
+
   const [subscribed, setSubscribed] = useState(false)
   const callBackCloseWindow = () => setSubscribed(false)
+
+  useEffect(() => {
+    if (success === 'true') {
+      setSubscribed(true)
+    }
+  }, [success])
 
   const [accType, setAccType] = useState('personal')
 
@@ -99,32 +107,28 @@ export const Management = () => {
         </Modal>
       )}
       <div className={styles.wrapper}>
-        {currentSubscriptions && (
-          <div key={currentSubscriptions.data.length - 1}>
-            <h3 className={styles.title}>Current Subscription:</h3>
-            <div className={currentSubscriptionWrapper}>
-              <div className={styles.currentSubscriptionColumn}>
-                <p className={styles.currentSubscriptionColumnName}>Expire at:</p>
-                <p className={styles.currentSubscriptionColumnData}>
-                  {formatDate(
-                    currentSubscriptions.data[currentSubscriptions.data.length - 1]
-                      .endDateOfSubscription,
-                    'dd.mm.yyyy'
-                  )}
-                </p>
+        {currentSubscriptions &&
+          currentSubscriptions.data.map((item: SubscriptionDataType) => {
+            return (
+              <div key={item.subscriptionId}>
+                <h3 className={styles.title}>Current Subscription:</h3>
+                <div className={currentSubscriptionWrapper}>
+                  <div className={styles.currentSubscriptionColumn}>
+                    <p className={styles.currentSubscriptionColumnName}>Expire at:</p>
+                    <p className={styles.currentSubscriptionColumnData}>
+                      {formatDate(item.endDateOfSubscription, 'dd.mm.yyyy')}
+                    </p>
+                  </div>
+                  <div className={styles.currentSubscriptionColumn}>
+                    <p className={styles.currentSubscriptionColumnName}>Next payment:</p>
+                    <p className={styles.currentSubscriptionColumnData}>
+                      {formatDate(item.dateOfPayment, 'dd.mm.yyyy')}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className={styles.currentSubscriptionColumn}>
-                <p className={styles.currentSubscriptionColumnName}>Next payment:</p>
-                <p className={styles.currentSubscriptionColumnData}>
-                  {formatDate(
-                    currentSubscriptions.data[currentSubscriptions.data.length - 1].dateOfPayment,
-                    'dd.mm.yyyy'
-                  )}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
+            )
+          })}
       </div>
       <div className={styles.wrapper}>
         <div>
