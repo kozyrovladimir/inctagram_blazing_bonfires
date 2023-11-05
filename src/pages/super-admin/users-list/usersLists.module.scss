@@ -1,10 +1,43 @@
 .root {
   width: 100%;
+  padding-top: 60px;
+  padding-left: 30px;
+  padding-right: 30px;
   .searchBlock {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    position: relative;
+
+    .inputSearch {
+      width: 644px;
+      height: 32px;
+      padding-left: 50px;
+      background-color: #0d0d0d;
+      border: 1px solid #4c4c4c;
+      color: #4c4c4c;
+      border-radius: 2px;
+    }
+    .searchImg {
+      position: relative;
+      left: 30px;
+      top: 2px;
+    }
   }
   .tableBlock {
     margin-top: 50px;
+    margin-bottom: 40px;
+  }
+  .paginationBlock {
+    display: flex;
+    align-items: center;
+    .paginationText {
+      margin-left: 40px;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .pagination button,
+  .pagination div {
+    color: #fff;
   }
 }
