@@ -79,27 +79,27 @@ export const GeneralInfo = () => {
   const profileSchema = yup.object().shape({
     userName: yup
       .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers30'))
-      .matches(/[0-9A-Za-z_-]{6,20}$/, tError('UserNameValidationError'))
+      .min(6, tError('MinCharacters6'))
+      .max(30, tError('MaxCharacters30'))
+      .matches(/[0-9A-Za-z_-]{6,30}$/, tError('UserNameValidationError'))
       .required(tError('RequiredField')),
     firstName: yup
       .string()
-      .min(1, tError('MinCharactrers1'))
-      .max(50, tError('MaxCharactrers50'))
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial'))
+      .min(1, tError('MinCharacters1'))
+      .max(50, tError('MaxCharacters50'))
+      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('StartLatterNotSpecial'))
       .required(tError('RequiredField')),
     lastName: yup
       .string()
-      .min(1, tError('MinCharactrers1'))
-      .max(50, tError('MaxCharactrers50'))
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial'))
+      .min(1, tError('MinCharacters1'))
+      .max(50, tError('MaxCharacters50'))
+      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('StartLatterNotSpecial'))
       .required(tError('RequiredField')),
     city: yup
       .string()
-      .min(2, tError('MinCharactrers2'))
-      .max(30, tError('MaxCharactrers30'))
-      .matches(/^[A-ZА-Я][a-zа-я]{2,30}$/, tError('SrartLatterNotSpecial'))
+      .min(2, tError('MinCharacters2'))
+      .max(30, tError('MaxCharacters30'))
+      .matches(/^[A-ZА-Я][a-zа-я]{2,30}$/, tError('StartLatterNotSpecial'))
       .required(tError('RequiredField')),
     dateOfBirth: yup
       .date()
@@ -107,8 +107,8 @@ export const GeneralInfo = () => {
       .required(tError('RequiredField')),
     aboutMe: yup
       .string()
-      .min(1, tError('MinCharactrers1'))
-      .max(200, tError('MaxCharactrers200'))
+      .min(1, tError('MinCharacters1'))
+      .max(200, tError('MaxCharacters200'))
       .required(tError('RequiredField')),
   })
 
@@ -263,7 +263,7 @@ export const GeneralInfo = () => {
                 control={control}
                 render={({ field: { ref, value, ...args } }) => (
                   <>
-                    <label>{t('city')}</label>
+                    <label>{t('City')}</label>
                     <AutocompletionOfCities
                       error={(errors as FieldErrors<ProfileUserType>).city?.message}
                       {...args}

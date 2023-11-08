@@ -39,8 +39,8 @@ export function CreateNewPassForm() {
   const schema = yup.object().shape({
     newPassword: yup
       .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers20'))
+      .min(6, tError('MinCharacters6'))
+      .max(20, tError('MaxCharacters20'))
       .matches(
         /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_{|}~])[A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_{|}~]+$/,
         tError('PasswordValidationError')

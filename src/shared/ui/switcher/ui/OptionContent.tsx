@@ -3,7 +3,7 @@ import * as React from 'react'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
 
-import style from './LanguageSelect.module.scss'
+import style from './Switcher.module.scss'
 
 type Props = {
   description: string

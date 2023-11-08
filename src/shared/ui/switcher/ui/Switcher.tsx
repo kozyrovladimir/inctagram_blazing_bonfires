@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 
-import style from './LanguageSelect.module.scss'
 import { OptionContent } from './OptionContent'
+import style from './Switcher.module.scss'
 
 import arrow from '@/shared/assets/icons/langSelect/selectArrow.svg'
 import { optionsType } from '@/shared/types/optionSwitcherTypes'
@@ -58,7 +58,7 @@ export const Switcher = ({ options, initialValue, changeHandlerExtraFn }: Props)
           <OptionContent alt={shortDescription} icon={icon} description={description} />
           <Image
             src={arrow}
-            alt={''}
+            alt="Arrow"
             className={style.arrowImg}
             style={{ transform: isOpenSelect ? 'rotate(180deg)' : 'rotate(0)' }}
           />

@@ -26,13 +26,13 @@ export const SignInForm = () => {
   const schema = yup.object().shape({
     email: yup
       .string()
-      .min(2, tError('MinCharactrers2'))
+      .min(2, tError('MinCharacters2'))
       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, tError('EmailValidationError'))
       .required(tError('RequiredField')),
     password: yup
       .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers20'))
+      .min(6, tError('MinCharacters6'))
+      .max(20, tError('MaxCharacters20'))
       .required(tError('RequiredField')),
   })
 
@@ -65,7 +65,7 @@ export const SignInForm = () => {
           if (statusCode === 400) {
             setPasswordError(tError('PasswordIncorrect'))
           } else if (statusCode === 401) {
-            setEmailError(tError('EmailNotRegidtred'))
+            setEmailError(tError('EmailNotRegistered'))
           }
         } else {
           toast.error(tError('NetworkError'))

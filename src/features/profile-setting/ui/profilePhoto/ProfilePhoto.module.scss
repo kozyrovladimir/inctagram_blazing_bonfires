@@ -13,7 +13,8 @@
   align-items: center;
 }
 
-.AddPhotoBtn {
+.addPhotoBtn {
+  font-size: var(--font-size-m);
   margin-top: 1.5rem;
   width: 100%;
 }
@@ -22,4 +23,10 @@
   top: 0.75rem;
   right: 0.75rem;
   z-index: 10;
+}
+
+.addPhotoBtnRU {
+  font-size: var(--font-size-s);
+  margin-top: 1.5rem;
+  width: 100%;
 }

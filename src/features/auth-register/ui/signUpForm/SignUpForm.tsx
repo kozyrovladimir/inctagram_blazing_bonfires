@@ -43,19 +43,19 @@ export const SignUpForm = () => {
   const schema = yup.object().shape({
     userName: yup
       .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers30'))
+      .min(6, tError('MinCharacters6'))
+      .max(20, tError('MaxCharacters30'))
       .matches(/^[a-zA-Z0-9_-]*$/, tError('UserNameValidationError'))
       .required(tError('RequiredField')),
     email: yup
       .string()
-      .min(2, tError('MinCharactrers2'))
+      .min(2, tError('MinCharacters2'))
       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, tError('EmailValidationError'))
       .required(tError('RequiredField')),
     password: yup
       .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers20'))
+      .min(6, tError('MinCharacters6'))
+      .max(20, tError('MaxCharacters20'))
       .matches(
         /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_{|}~])[A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_{|}~]+$/,
         tError('PasswordValidationError')

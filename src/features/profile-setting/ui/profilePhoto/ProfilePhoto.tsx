@@ -8,6 +8,7 @@ import styles from './ProfilePhoto.module.scss'
 import { PhotoModal } from '@/features/profile-setting/ui/photoModal/PhotoModal'
 import { AvatarsType } from '@/shared/api/services/profile/profile.api.types'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
+import { ShortLangs } from '@/shared/types/langSwitcherTypes'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { RemoveAvatarButton } from '@/shared/ui/removeButton/RemoveAvatarButton'
 
@@ -18,7 +19,7 @@ type Props = {
 }
 
 export const ProfilePhoto = ({ outsideOnChange, photoFromServer, deleteAvatar }: Props) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const isPhotoFromServer = photoFromServer?.length > 0
   const photoDefaultSRC = (isPhotoFromServer && (photoFromServer[0].url as string)) || noImage
 
@@ -65,7 +66,7 @@ export const ProfilePhoto = ({ outsideOnChange, photoFromServer, deleteAvatar }:
       <Button
         size={ButtonSize.MIDDLE}
         theme={ButtonTheme.CLEAR}
-        className={styles.AddPhotoBtn}
+        className={i18n.language === ShortLangs.RU ? styles.addPhotoBtnRU : styles.addPhotoBtn}
         onClick={openModal}
       >
         {t('AddProfilePhoto')}
