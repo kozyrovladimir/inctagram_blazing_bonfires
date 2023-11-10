@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast'
 import style from './CloseModal.module.scss'
 
 import { CropContextType } from '@/features/create-post/context/CropProvider'
-import NewPostModal from '@/features/create-post/ui/NewPostModal/NewPostModal'
+import NewPostModal from '@/features/create-post/ui/newPostModal/NewPostModal'
 import { filterBestQualityImages } from '@/features/create-post/utils/filterBestQualityImages'
 import { useUploadImageMutation } from '@/shared/api/services/posts/posts.api'
 import closeIcon from '@/shared/assets/icons/logout/close.svg'
@@ -43,6 +43,7 @@ export const CloseModal = ({ cropContext }: Props) => {
         const filteredPhoto = filterBestQualityImages(uploadedImages)
 
         localStorage.setItem('uploadedImages', JSON.stringify(filteredPhoto))
+        console.log('image', filteredPhoto)
         cropContext.setIsOpenModal(false)
         cropContext.setIsOpen(false)
       })

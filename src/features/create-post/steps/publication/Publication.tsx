@@ -6,35 +6,36 @@ import { useWizard } from 'react-use-wizard'
 
 import style from './Publication.module.scss'
 
-import ImageFilter from '@/features/create-post/components/ImageFilter/ImageFilter'
 import { useImageCropContext } from '@/features/create-post/context/CropProvider'
-import { DotsBar } from '@/features/create-post/ui/DotsBar/DotsBar'
-import NewPostModal from '@/features/create-post/ui/NewPostModal/NewPostModal'
-import { useSlider } from '@/features/create-post/utils/useSlider'
+import { ImagePublication } from '@/features/create-post/steps/imagePablication/ImagePublication'
+import { SavedImage } from '@/features/create-post/steps/savedImage/SavedImage'
+import NewPostModal from '@/features/create-post/ui/newPostModal/NewPostModal'
 import { useGetProfileQuery, useMeQuery } from '@/shared/api'
 import {
   useCreatePostMutation,
   useUploadImageMutation,
 } from '@/shared/api/services/posts/posts.api'
+import { ImageDataType } from '@/shared/api/services/posts/posts.api.types'
 import backIcon from '@/shared/assets/icons/arrow back/back.svg'
-import next from '@/shared/assets/icons/filterPostPhoto/next.svg'
-import prev from '@/shared/assets/icons/filterPostPhoto/prev.svg'
-import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 import { Input, InputType } from '@/shared/ui/input/Input'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
 
-export const Publication = () => {
+type Prop = {
+  savedImages: ImageDataType[]
+}
+export const Publication = ({ savedImages }: Prop) => {
   const { isOpen, setIsOpen } = useImageCropContext()
   const [text, setText] = useState<string>('')
   const { previousStep } = useWizard()
   const cropContext = useImageCropContext()
-  const { currentIndex, prevSlide, nextSlide } = useSlider(cropContext.photos.length)
+
   const { data } = useMeQuery()
   const { data: profileData } = useGetProfileQuery(data?.userId ? data?.userId.toString() : '')
   const [uploadImage, { isLoading: isUploadLoading }] = useUploadImageMutation()
   const [createPost, { isLoading: isCreatePostLoading }] = useCreatePostMutation()
 
-  const avatar = profileData?.avatars[0].url
+  // const avatar = profileData?.avatars[1].url
+  // const avatar= 'sss'
   const isLoading = isUploadLoading || isCreatePostLoading
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -78,6 +79,23 @@ export const Publication = () => {
         toast.error(error.data.messages)
       })
   }
+  const handleSavedImagePublish = () => {
+    const uploadIds = savedImages.map(image => image.uploadId)
+    const body = {
+      description: text,
+      childrenMetadata: uploadIds.map(uploadId => ({ uploadId })),
+    }
+
+    createPost(body)
+      .unwrap()
+      .then(() => {
+        toast.success('Post Created')
+        setIsOpen(!isOpen)
+      })
+      .catch(error => {
+        toast.error(error.data.messages[0].message)
+      })
+  }
 
   return (
     <>
@@ -91,52 +109,30 @@ export const Publication = () => {
           <Image style={{ cursor: 'pointer' }} src={backIcon} alt={''} onClick={previousStep} />
         }
         right={
-          <span style={{ cursor: 'pointer' }} onClick={handlePublish}>
+          <span
+            style={{ cursor: 'pointer' }}
+            onClick={savedImages ? handleSavedImagePublish : handlePublish}
+          >
             Publish
           </span>
         }
       >
         <div className={style.publishModalContent}>
           <div className={style.sliderWrapper}>
-            <ImageFilter
-              className={style.sliderImage}
-              image={cropContext.photos[currentIndex].croppedUrl}
-              filter={cropContext.photos[currentIndex].filter}
-              onChange={(filteredImg: string) => {
-                cropContext.setFilteredUrl(filteredImg, currentIndex)
-              }}
-              preserveAspectRatio={'contain'}
-            />
-            {cropContext.photos.length > 1 && (
+            {savedImages ? (
               <>
-                <div className={style.sliderButtonsContainer}>
-                  <Button
-                    theme={ButtonTheme.CLEAR}
-                    className={style.sliderButton}
-                    onClick={prevSlide}
-                  >
-                    <Image src={prev} alt={''} />
-                  </Button>
-                  <Button
-                    theme={ButtonTheme.CLEAR}
-                    className={style.sliderButton}
-                    onClick={nextSlide}
-                  >
-                    <Image src={next} alt={''} />
-                  </Button>
-                </div>
-                <div className={style.sliderDotsBarWrapper}>
-                  <DotsBar activeIndex={currentIndex} count={cropContext.photos.length} />
-                </div>
+                <SavedImage savedImages={savedImages} />
               </>
+            ) : (
+              <ImagePublication cropContext={cropContext} />
             )}
           </div>
           <div className={style.publish}>
             <div className={style.publishContent}>
               <div className={style.avatarWrapper}>
-                {avatar && (
+                {backIcon && (
                   <Image
-                    src={avatar}
+                    src={backIcon}
                     alt="userPhoto"
                     className={style.avatar}
                     width={45}

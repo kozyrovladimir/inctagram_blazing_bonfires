@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import NextImage from 'next/image'
 import { useWizard } from 'react-use-wizard'
@@ -6,7 +6,9 @@ import { useWizard } from 'react-use-wizard'
 import styles from './AddPhoto.module.scss'
 
 import { useImageCropContext } from '@/features/create-post/context/CropProvider'
-import NewPostModal from '@/features/create-post/ui/NewPostModal/NewPostModal'
+import { Publication } from '@/features/create-post/steps/publication/Publication'
+import NewPostModal from '@/features/create-post/ui/newPostModal/NewPostModal'
+import { ImageDataType } from '@/shared/api/services/posts/posts.api.types'
 import mockupPhoto from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import closeIcon from '@/shared/assets/icons/logout/close.svg'
 import { Button } from '@/shared/ui/button/Button'
@@ -17,6 +19,8 @@ export const AddPhoto = () => {
 
   const inputRef = React.useRef<HTMLInputElement>(null)
 
+  const [isPublicationOpen, setIsPublicationOpen] = useState(false)
+  const [savedImages, setSavedImages] = useState<ImageDataType[]>([])
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
 
@@ -28,6 +32,18 @@ export const AddPhoto = () => {
   const openSelectHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     inputRef.current?.click()
+  }
+
+  const handleOpenDraft = () => {
+    if (typeof localStorage !== 'undefined') {
+      const savedImagesString = localStorage.getItem('uploadedImages')
+      const savedImages = savedImagesString ? JSON.parse(savedImagesString) : null
+
+      if (savedImages) {
+        setSavedImages(savedImages)
+        setIsPublicationOpen(true)
+      }
+    }
   }
 
   return (
@@ -60,10 +76,11 @@ export const AddPhoto = () => {
           <Button onClick={openSelectHandler} className={styles.button}>
             Select from Computer
           </Button>
-          <Button onClick={nextStep} className={styles.button}>
+          <Button onClick={handleOpenDraft} className={styles.button}>
             Open Draft
           </Button>
         </div>
+        {isPublicationOpen && <Publication savedImages={savedImages} />}
       </div>
     </NewPostModal>
   )

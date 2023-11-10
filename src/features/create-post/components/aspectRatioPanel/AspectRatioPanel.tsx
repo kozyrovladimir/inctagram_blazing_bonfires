@@ -1,14 +1,17 @@
 import React from 'react'
+
 import { Popover } from '@headlessui/react'
 import Image from 'next/image'
-import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
+
 import styles from './AspectRatioPanel.module.scss'
+
+import style from '@/features/create-post/components/buttonFilterPanel/ButtonFilterPanel.module.scss'
+import HorizontalRectangle from '@/features/create-post/ui/icons/HorizontalRectangle'
 import OriginalAspectIcon from '@/features/create-post/ui/icons/OriginalAspectIcon'
 import SquareIcon from '@/features/create-post/ui/icons/SquareIcon'
 import VerticalRectangle from '@/features/create-post/ui/icons/VerticalRectangle'
-import HorizontalRectangle from '@/features/create-post/ui/icons/HorizontalRectangle'
+import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
 import { Button, ButtonTheme } from '@/shared/ui/button/Button'
-import style from '@/features/create-post/components/ButtonFilterPanel/ButtonFilterPanel.module.scss'
 
 interface AspectRatioPanel {
   handleAspectRatio: (aspect: number) => void

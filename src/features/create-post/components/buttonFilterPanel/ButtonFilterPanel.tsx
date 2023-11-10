@@ -2,10 +2,10 @@ import React from 'react'
 
 import style from './ButtonFilterPanel.module.scss'
 
-import AspectRatioPanel from '@/features/create-post/components/AspectRatioPanel/AspectRatioPanel'
-import ZoomPanel from '@/features/create-post/components/ZoomPanel/ZoomPanel'
+import AspectRatioPanel from '@/features/create-post/components/aspectRatioPanel/AspectRatioPanel'
+import ZoomPanel from '@/features/create-post/components/zoomPanel/ZoomPanel'
 import { CropContextType } from '@/features/create-post/context/CropProvider'
-import { AddPhotoSlider } from '@/features/create-post/steps/AddPhotoSlider/AddPhotoSlider'
+import { AddPhotoSlider } from '@/features/create-post/steps/addPhotoSlider/AddPhotoSlider'
 
 type Props = {
   cropContext: CropContextType
