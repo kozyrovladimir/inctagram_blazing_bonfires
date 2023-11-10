@@ -15,38 +15,38 @@ export const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <Link href={RoutersPath.profileGeneralInformation}>
-        <div
+        <h3
           className={
             router.pathname === RoutersPath.profileGeneralInformation ? styles['current-page'] : ''
           }
         >
           {t('GeneralInformation')}
-        </div>
+        </h3>
       </Link>
       <Link href={RoutersPath.profileDevices}>
-        <div
+        <h3
           className={router.pathname === RoutersPath.profileDevices ? styles['current-page'] : ''}
         >
           {t('Devices')}
-        </div>
+        </h3>
       </Link>
       <Link href={RoutersPath.profileAccountManagement}>
-        <div
+        <h3
           className={
             router.pathname === RoutersPath.profileAccountManagement ? styles['current-page'] : ''
           }
         >
           {t('AccountManagement')}
-        </div>
+        </h3>
       </Link>
       <Link href={RoutersPath.profileMyPayments}>
-        <div
+        <h3
           className={
             router.pathname === RoutersPath.profileMyPayments ? styles['current-page'] : ''
           }
         >
           {t('MyPayments')}
-        </div>
+        </h3>
       </Link>
     </nav>
   )

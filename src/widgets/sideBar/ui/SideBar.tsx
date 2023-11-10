@@ -16,6 +16,7 @@ import style from './SideBar.module.scss'
 
 import { Logout } from '@/features/logout/ui/logout/Logout'
 import { RoutersPath } from '@/shared/constants/paths'
+import { ButtonTheme } from '@/shared/ui/button/Button'
 
 export const SideBar = () => {
   const { t } = useTranslation('common')
@@ -60,7 +61,7 @@ export const SideBar = () => {
         {t('Favorites')}
       </div>
       <div className={style.linkWrapper}>
-        <Logout />
+        <Logout className={style.logoutBtn} theme={ButtonTheme.CLEAR} />
       </div>
     </aside>
   )

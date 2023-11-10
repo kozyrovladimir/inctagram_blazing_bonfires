@@ -82,41 +82,38 @@ export const GeneralInfo = () => {
       .min(6, tError('MinCharacters6'))
       .max(30, tError('MaxCharacters30'))
       .matches(/[0-9A-Za-z_-]{6,30}$/, tError('UserNameValidationError'))
+      .nullable()
       .required(tError('RequiredField')),
     firstName: yup
       .string()
       .min(1, tError('MinCharacters1'))
       .max(50, tError('MaxCharacters50'))
       .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('StartLatterNotSpecial'))
+      .nullable()
       .required(tError('RequiredField')),
     lastName: yup
       .string()
       .min(1, tError('MinCharacters1'))
       .max(50, tError('MaxCharacters50'))
       .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('StartLatterNotSpecial'))
+      .nullable()
       .required(tError('RequiredField')),
     city: yup
       .string()
       .min(2, tError('MinCharacters2'))
       .max(30, tError('MaxCharacters30'))
-      .matches(/^[A-ZА-Я][a-zа-я]{2,30}$/, tError('StartLatterNotSpecial'))
-      .required(tError('RequiredField')),
+      .nullable()
+      .matches(/^[A-ZА-Я][a-zа-я]{2,30}$/, tError('StartLatterNotSpecial')),
     dateOfBirth: yup
       .date()
-      .max(new Date(new Date().setFullYear(new Date().getFullYear() - 13)), tError('MinAge'))
-      .required(tError('RequiredField')),
-    aboutMe: yup
-      .string()
-      .min(1, tError('MinCharacters1'))
-      .max(200, tError('MaxCharacters200'))
-      .required(tError('RequiredField')),
+      .nullable()
+      .max(new Date(new Date().setFullYear(new Date().getFullYear() - 13)), tError('MinAge')),
+    aboutMe: yup.string().nullable().max(200, tError('MaxCharacters200')),
   })
 
   const {
     control,
     reset,
-    watch,
-    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<ProfileUserType | any>({
@@ -176,16 +173,6 @@ export const GeneralInfo = () => {
     'aboutMe',
   ]
 
-  watch()
-  // const city = watch('city')
-  // const firstName = getValues('firstName')
-  const isFillField = getValues(allFields).every(e => !!e)
-
-  // useEffect(() => {
-  //   console.log(getValues(allFields))
-  //   console.log(city)
-  // }, [city, firstName])
-
   return (
     <>
       {currentIsLoading && <LinearLoader />}
@@ -222,7 +209,7 @@ export const GeneralInfo = () => {
                     type={InputType.TEXT}
                     placeholder={''}
                     error={(errors as FieldErrors<ProfileUserType>).userName?.message}
-                    classNameWrap={'myCustomLabel'}
+                    classNameWrap={styles.myCustomLabel}
                     value={value ?? ''}
                     {...args}
                   />
@@ -237,7 +224,7 @@ export const GeneralInfo = () => {
                     placeholder={''}
                     type={InputType.TEXT}
                     error={(errors as FieldErrors<ProfileUserType>).firstName?.message}
-                    classNameWrap={'myCustomLabel'}
+                    classNameWrap={styles.myCustomLabel}
                     value={value ?? ''}
                     {...args}
                   />
@@ -252,7 +239,7 @@ export const GeneralInfo = () => {
                     placeholder={''}
                     type={InputType.TEXT}
                     error={(errors as FieldErrors<ProfileUserType>).lastName?.message}
-                    classNameWrap={'myCustomLabel'}
+                    classNameWrap={styles.myCustomLabel}
                     value={value ?? ''}
                     {...args}
                   />
@@ -316,12 +303,8 @@ export const GeneralInfo = () => {
               </div>
             </div>
           </div>
-          <div className={styles.footer}>
-            <div className={styles.line}></div>
-          </div>
-          <Button className={styles.button} disabled={!isFillField}>
-            {tRoot('SaveChanges')}
-          </Button>
+          <div className={styles.line}></div>
+          <Button className={styles.button}>{tRoot('SaveChanges')}</Button>
         </form>
       )}
     </>

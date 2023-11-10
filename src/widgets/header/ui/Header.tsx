@@ -12,19 +12,21 @@ export const Header = () => {
   const [count, setCounter] = useState(3)
 
   return (
-    <header className={styles.header}>
-      <Link href="/" className={styles.logo}>
-        Instagram
-      </Link>
-      <div className={styles.option}>
-        <div className={styles.ball}>
-          <NotificationsNoneIcon />
-          <div className={styles.count}>{count}</div>
+    <>
+      <header className={styles.header}>
+        <Link href="/" className={styles.logo}>
+          Instagram
+        </Link>
+        <div className={styles.option}>
+          <div className={styles.ball}>
+            <NotificationsNoneIcon />
+            <div className={styles.count}>{count}</div>
+          </div>
+          <div>
+            <LanguageSelect />
+          </div>
         </div>
-        <div>
-          <LanguageSelect />
-        </div>
-      </div>
-    </header>
+      </header>
+    </>
   )
 }

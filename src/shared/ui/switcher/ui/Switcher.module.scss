@@ -1,6 +1,6 @@
 .select {
   color: white;
-  background: black;
+  background: var( --color-dark-900);
   width: 163px;
   height: 36px;
   border-radius: 0;
@@ -9,11 +9,12 @@
   font-weight: 400;
   z-index: 10;
   .selectContent {
+    background: var( --color-dark-900);
     border: 1px solid #4c4c4c;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin-top: 10px;
+    height: 100%;
     cursor: pointer;
     .optionContent {
       display: flex;
@@ -25,7 +26,7 @@
   }
   .optionList {
     border: 1px solid #4c4c4c;
-    background: black;
+    background: var( --color-dark-900);
     padding-top: 8px;
     border-top: none;
     .option {

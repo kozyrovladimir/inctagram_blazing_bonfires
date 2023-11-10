@@ -41,7 +41,7 @@
     "RequiredField": "Required field",
     "SomethingWentWrong": "Something went wrong",
     "PasswordsMustMatch": "Passwords must match",
-    "MinAge": "You must be over 13 years old"
+    "MinAge": "A user under 13 cannot create a profile"
   },
   "Auth": {
     "SignUp": "Sign Up",

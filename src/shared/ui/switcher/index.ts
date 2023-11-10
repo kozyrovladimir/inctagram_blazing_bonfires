@@ -1,1 +1,1 @@
-export { LanguageSelect } from '@/widgets/langSwitcher/ui/LanguageSelect'
+export { Switcher } from '@/shared/ui/switcher/ui/Switcher'
