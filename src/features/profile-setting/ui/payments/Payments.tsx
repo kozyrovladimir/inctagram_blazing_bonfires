@@ -9,6 +9,7 @@ import { formatDate } from '@/shared/libs/formatDates/formatDates'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
 import { Modal } from '@/shared/ui/modal/Modal'
 import { TablePagination } from '@/shared/ui/pagination/TablePagination'
+import { Table } from '@/shared/ui/table/Table'
 
 export const Payments = () => {
   const { data: payments, isLoading, isError } = useGetSubscriptionsQuery()
@@ -34,7 +35,6 @@ export const Payments = () => {
       setAllPayment(payments)
     }
   }, [payments])
-  console.log(isError)
 
   return (
     <>
@@ -45,45 +45,7 @@ export const Payments = () => {
         </Modal>
       )}
       <div className={styles.wrapper}>
-        <table className={styles.table}>
-          <thead className={styles.head}>
-            <tr>
-              <th className={styles.item}>Date of Payment</th>
-              <th className={styles.item}>End date of subscription</th>
-              <th className={styles.item}>Price</th>
-              <th className={styles.item}>Subscription Type</th>
-              <th className={styles.item}>Payment Type</th>
-            </tr>
-          </thead>
-          <tbody className={styles.body}>
-            {currentPayments &&
-              currentPayments.map((item: SubscriptionDataType, index: number) => {
-                return (
-                  <tr key={index} className={styles.line}>
-                    <td className={styles.item}>
-                      {index + 1}, {formatDate(item.dateOfPayment, 'dd.mm.yyyy')}
-                    </td>
-                    <td className={styles.item}>
-                      {formatDate(item.endDateOfSubscription, 'dd.mm.yyyy')}
-                    </td>
-                    <td className={styles.item}>{item.price}</td>
-                    <td className={styles.item}>
-                      {item.subscriptionType === 'DAY'
-                        ? '1 day'
-                        : item.subscriptionType === 'WEEKLY'
-                        ? '7 days'
-                        : item.subscriptionType === 'MONTHLY'
-                        ? '1 month'
-                        : ''}
-                    </td>
-                    <td className={styles.item}>
-                      {item.paymentType === 'PAYPAL' ? 'PayPal' : 'Stripe'}
-                    </td>
-                  </tr>
-                )
-              })}
-          </tbody>
-        </table>
+        {currentPayments && <Table items={currentPayments} />}
         <TablePagination
           page={page}
           itemsCountForPage={itemsCountForPage}
