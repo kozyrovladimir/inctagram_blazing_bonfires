@@ -20,10 +20,7 @@ import backIcon from '@/shared/assets/icons/arrow back/back.svg'
 import { Input, InputType } from '@/shared/ui/input/Input'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
 
-type Prop = {
-  savedImages: ImageDataType[]
-}
-export const Publication = ({ savedImages }: Prop) => {
+export const Publication = () => {
   const { isOpen, setIsOpen } = useImageCropContext()
   const [text, setText] = useState<string>('')
   const { previousStep } = useWizard()
@@ -33,6 +30,8 @@ export const Publication = ({ savedImages }: Prop) => {
   const { data: profileData } = useGetProfileQuery(data?.userId ? data?.userId.toString() : '')
   const [uploadImage, { isLoading: isUploadLoading }] = useUploadImageMutation()
   const [createPost, { isLoading: isCreatePostLoading }] = useCreatePostMutation()
+  const savedImagesString = localStorage.getItem('uploadedImages')
+  const savedImages: ImageDataType[] = savedImagesString ? JSON.parse(savedImagesString) : null
 
   // const avatar = profileData?.avatars[1].url
   // const avatar= 'sss'
