@@ -3,9 +3,8 @@ import React, { ChangeEvent } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material'
 import Pagination from '@mui/material/Pagination'
 
-import styles from 'src/widgets/pagination/ui/TablePagination.module.scss'
-
-import { Select } from '@/shared/ui/Select/Select'
+import styles from '@/shared/ui/pagination/TablePagination.module.scss'
+import { Select } from '@/shared/ui/select/Select'
 
 export type PaginationPropsType = {
   page: number
@@ -54,8 +53,8 @@ export const TablePagination: React.FC<PaginationPropsType> = ({
           color="primary"
           variant="outlined"
           shape="rounded"
-          page={2}
-          count={10}
+          page={page}
+          count={lastPage}
           onChange={onChangeCallback}
         />
 
@@ -75,8 +74,8 @@ export const TablePagination: React.FC<PaginationPropsType> = ({
               border: '1px solid #4c4c4c',
             }}
             options={[
-              { id: 4, value: 4 },
-              { id: 7, value: 7 },
+              { id: 1000, value: 1000 },
+              { id: 100, value: 100 },
               { id: 10, value: 10 },
             ]}
             onChangeOption={onChangeSelect}

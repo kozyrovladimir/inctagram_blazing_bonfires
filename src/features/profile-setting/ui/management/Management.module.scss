@@ -57,12 +57,10 @@
   width: auto;
 }
 
-.currentSubscriptionColumn {
+.currentSubscriptionRow {
+  display: flex;
   flex-direction: row;
   gap: 48px;
-}
-
-.currentSubscriptionColumn {
   font-size: 14px;
   line-height: 24px;
 }
@@ -75,4 +73,18 @@
 
 .currentSubscriptionColumnData {
   font-weight: 600;
+}
+
+.autoRenewalWrapper {
+  margin: 19px 0px 0px 24px;
+}
+
+.autoRenewalLabelStyle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.wrapperTop {
+  margin-top: -30px;
 }

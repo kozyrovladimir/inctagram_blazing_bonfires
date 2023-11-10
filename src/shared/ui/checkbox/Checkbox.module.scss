@@ -20,3 +20,11 @@
 .checkbox:checked {
   background-image: url('../../assets/icons/checkbox/checked.svg');
 }
+
+.checkboxDisabled {
+  background-color: #7e7676;
+}
+
+.labelDisabled {
+  color: #7e7676;
+}

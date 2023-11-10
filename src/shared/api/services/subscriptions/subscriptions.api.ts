@@ -1,4 +1,3 @@
-import { debuggerStatement } from '@babel/types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { baseURL } from '../baseUrl.api'
@@ -44,12 +43,22 @@ export const subscriptionsApi = createApi({
           body,
         }),
       }),
+      cancelAutoRenewal: build.mutation<any, void>({
+        query: () => ({
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+          },
+          url: 'subscriptions/canceled-auto-renewal',
+          method: 'POST',
+        }),
+      }),
     }
   },
 })
 
 export const {
-  useGetSubscriptionsQuery,
-  useGetCurrentSubscriptionsQuery,
+  useGetSubscriptionsQuery, // get all subscriptions
+  useGetCurrentSubscriptionsQuery, // only current
   useCreateNewSubscriptionMutation,
+  useCancelAutoRenewalMutation,
 } = subscriptionsApi
