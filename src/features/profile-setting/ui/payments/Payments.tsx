@@ -5,7 +5,6 @@ import styles from './Payments.module.scss'
 
 import { useGetSubscriptionsQuery } from '@/shared/api'
 import { SubscriptionDataType } from '@/shared/api/services/subscriptions/subscriptions.api.types'
-import { formatDate } from '@/shared/libs/formatDates/formatDates'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
 import { Modal } from '@/shared/ui/modal/Modal'
 import { TablePagination } from '@/shared/ui/pagination/TablePagination'
@@ -47,7 +46,7 @@ export const Payments = () => {
           <p>Loading failed, please try again</p>
         </Modal>
       )}
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} data-testid="table">
         {currentPayments && <Table items={currentPayments} />}
         <TablePagination
           page={page}
