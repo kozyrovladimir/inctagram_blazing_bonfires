@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { RoundCheckbox } from './roundCheckbox'
+import { RoundCheckbox } from './RoundCheckbox'
 
 const meta: Meta<typeof RoundCheckbox> = {
   component: RoundCheckbox,
-  title: 'Example/RoundCheckbox',
+  title: 'Example/roundCheckbox',
   parameters: {
     layout: 'centered',
   },

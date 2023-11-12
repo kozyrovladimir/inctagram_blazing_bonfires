@@ -21,7 +21,10 @@ export const Payments = () => {
 
   const lastPaymentIndex = page * itemsCountForPage
   const firstPaymentIndex = lastPaymentIndex - itemsCountForPage
-  const currentPayments = allPayments.slice(firstPaymentIndex, lastPaymentIndex)
+  const currentPayments: SubscriptionDataType[] = allPayments.slice(
+    firstPaymentIndex,
+    lastPaymentIndex
+  )
 
   const onChangePagination = (newPage: number, newCount: number) => {
     setPage(newPage)

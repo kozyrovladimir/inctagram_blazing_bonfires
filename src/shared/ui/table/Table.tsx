@@ -25,9 +25,9 @@ export const Table: React.FC<Props> = ({ items }) => {
         {items.map((item: SubscriptionDataType, index: number) => (
           <tr key={index} className={styles.line}>
             <td className={styles.item}>
-              {index + 1}, {formatDate(item.dateOfPayment, 'dd.mm.yyyy')}
+              {index + 1}, {formatDate(item.dateOfPayment, 'mm.dd.yyyy')}
             </td>
-            <td className={styles.item}>{formatDate(item.endDateOfSubscription, 'dd.mm.yyyy')}</td>
+            <td className={styles.item}>{formatDate(item.endDateOfSubscription, 'mm.dd.yyyy')}</td>
             <td className={styles.item}>{item.price}</td>
             <td className={styles.item}>
               {item.subscriptionType === 'DAY'
