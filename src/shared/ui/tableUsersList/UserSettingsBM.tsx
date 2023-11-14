@@ -1,9 +1,12 @@
+import { useEffect, useRef, useState } from 'react'
+
 import Image from 'next/image'
-import style from './UserSettingsBM.module.scss'
+
+import banUserImg from '../../assets/icons/table/ban-user.svg'
 import burgerMenuImg from '../../assets/icons/table/burger-menu.svg'
 import deleteUserImg from '../../assets/icons/table/delete-user.svg'
-import banUserImg from '../../assets/icons/table/ban-user.svg'
-import { useEffect, useRef, useState } from 'react'
+
+import style from './UserSettingsBM.module.scss'
 
 export const UserSettingsBM = () => {
   const [isOpenUserSettings, setIsOpenUserSettings] = useState(false)

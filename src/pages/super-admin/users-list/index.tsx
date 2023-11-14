@@ -1,17 +1,20 @@
 import React from 'react'
-import style from './usersLists.module.scss'
 
-import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
-import { TableUsersList } from '@/shared/ui/tableUsersList/TableUsersList'
-import { Select } from '@/shared/ui/select/Select'
-import searchImg from '@/shared/assets/icons/input/search.svg'
-import Image from 'next/image'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
+import Image from 'next/image'
+
+import style from './usersLists.module.scss'
+
+import searchImg from '@/shared/assets/icons/input/search.svg'
+import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
+import { Select } from '@/shared/ui/select/Select'
+import { TableUsersList } from '@/shared/ui/tableUsersList/TableUsersList'
 
 const UsersList = () => {
   const selectOptions = ['Not selected', 'Blocked', 'Not blocked']
   const usersPageSelect = ['5', '10', '30', '50', '100']
+
   return (
     <div className={style.root}>
       <div className={style.searchBlock}>

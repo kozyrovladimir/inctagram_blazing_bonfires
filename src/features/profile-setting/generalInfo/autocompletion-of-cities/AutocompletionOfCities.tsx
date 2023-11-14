@@ -25,8 +25,6 @@ export const AutocompletionOfCities = ({ error }: Props) => {
   const [value, setValue] = useState<string>('')
   const [suggestions, setSuggestions] = useState<string[]>([])
 
-  console.log(value, 5464)
-
   const onChange = (_: FormEvent<HTMLElement>, { newValue }: Autosuggest.ChangeEvent) => {
     setValue(newValue)
   }

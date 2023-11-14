@@ -1,7 +1,10 @@
 import * as React from 'react'
 import { FC, useEffect, useRef, useState } from 'react'
-import style from './Select.module.scss'
+
 import Image from 'next/image'
+
+import style from './Select.module.scss'
+
 import arrow from '@/shared/assets/icons/langSelect/selectArrow.svg'
 
 type Props = {

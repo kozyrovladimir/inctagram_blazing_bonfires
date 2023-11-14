@@ -18,7 +18,13 @@ import userListImage from '../../../shared/assets/icons/sideBar/user-list.svg'
 import style from './SideBar.module.scss'
 
 import { Logout } from '@/features/logout/ui/logout/Logout'
-import { PROFILE_PATH, SUPER_ADMIN_PAYMENTS_LIST, SUPER_ADMIN_POSTS_LIST, SUPER_ADMIN_STATISTICS, SUPER_ADMIN_USERS_LIST } from '@/shared/constants/paths'
+import {
+  PROFILE_PATH,
+  SUPER_ADMIN_PAYMENTS_LIST,
+  SUPER_ADMIN_POSTS_LIST,
+  SUPER_ADMIN_STATISTICS,
+  SUPER_ADMIN_USERS_LIST,
+} from '@/shared/constants/paths'
 
 export const SideBar = () => {
   const { t } = useTranslation('common')
@@ -29,24 +35,15 @@ export const SideBar = () => {
     <aside className={style.sideBarContainer}>
       {mainPath[1] === 'super-admin' ? (
         <>
-          <div
-            className={style.linkWrapper}
-            onClick={() => router.push(SUPER_ADMIN_USERS_LIST)}
-          >
+          <div className={style.linkWrapper} onClick={() => router.push(SUPER_ADMIN_USERS_LIST)}>
             <Image src={userListImage} alt={''} />
             {t('User list')}
           </div>
-          <div
-            className={style.linkWrapper}
-            onClick={() => router.push(SUPER_ADMIN_STATISTICS)}
-          >
+          <div className={style.linkWrapper} onClick={() => router.push(SUPER_ADMIN_STATISTICS)}>
             <Image src={statisticsImage} alt={''} />
             {t('Statistics')}
           </div>
-          <div
-            className={style.linkWrapper}
-            onClick={() => router.push(SUPER_ADMIN_PAYMENTS_LIST)}
-          >
+          <div className={style.linkWrapper} onClick={() => router.push(SUPER_ADMIN_PAYMENTS_LIST)}>
             <Image src={paymentsImage} alt={''} />
             {t('Payments list')}
           </div>

@@ -16,9 +16,9 @@
     width: inherit;
     border: 1px solid #fff;
     padding: 0 10px;
-    font-size: 16px;
+    font-size: var(--font-size-m);
     font-weight: 400;
-    line-height: 24px;
+    line-height: var(--line-height-m);
     letter-spacing: 0em;
     position: absolute;
     top: 34px;
