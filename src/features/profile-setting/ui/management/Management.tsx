@@ -15,7 +15,6 @@ import {
   useGetCurrentSubscriptionsQuery,
 } from '@/shared/api/services/subscriptions/subscriptions.api'
 import {
-  CurrentSubscriptionType,
   NewSubscriptionType,
   PaymentType,
   SubscriptionDataType,
@@ -35,10 +34,6 @@ const schema = yup.object({
   paymentType: yup.string<PaymentType>().required(),
   amount: yup.number().default(1).required(),
   baseUrl: yup.string().default('http://localhost:3000/').required(),
-})
-// auto-renewal
-const autoRenewalSchema = yup.object({
-  hasAutoRenewal: yup.boolean<CurrentSubscriptionType>().required(),
 })
 
 export const Management = () => {
@@ -110,8 +105,6 @@ export const Management = () => {
   }
 
   const [currentSubs, setCurrentSubs] = useState([])
-
-  console.log('currentSubs - ', currentSubs)
 
   useEffect(() => {
     currentSubscriptions?.data?.length && setCurrentSubs(currentSubscriptions.data)
@@ -188,12 +181,12 @@ export const Management = () => {
               name={'accType'}
               onChange={() => setAccType('business')}
               label={<p className={styles.listItem}>Business</p>}
-              checked={accType === 'business'}
+              checked={currentSubscriptions}
             />
           </div>
         </div>
         {/*due date*/}
-        {accType === 'business' && (
+        {currentSubscriptions && (
           <form onSubmit={handleSubmitSubscriptions(onSubmit)}>
             <h3 className={styles.title}>Your subscription costs:</h3>
             <div className={styles.listWrapper}>

@@ -1,12 +1,10 @@
 import React from 'react'
 
 import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 import { Payments } from './Payments'
 
 import { useGetSubscriptionsQuery } from '@/shared/api/services/subscriptions/subscriptions.api'
-import { SubscriptionDataType } from '@/shared/api/services/subscriptions/subscriptions.api.types'
 import { payments } from '@/shared/ui/table/Table.stories'
 
 jest.mock('@/shared/api/services/subscriptions/subscriptions.api', () => ({
