@@ -11,9 +11,9 @@ import { TablePagination } from '@/shared/ui/pagination/TablePagination'
 import { Table } from '@/shared/ui/table/Table'
 
 export const Payments = () => {
-  const { data: payments, isLoading, isError } = useGetSubscriptionsQuery()
+  const { data: payments, isLoading, isError } = useGetSubscriptionsQuery(undefined)
   const [error, setError] = useState(false)
-  const [allPayments, setAllPayment] = useState([])
+  const [allPayments, setAllPayment] = useState<SubscriptionDataType[]>([])
   const [page, setPage] = useState(1) // number of page
   const [itemsCountForPage, setItemsCountForPage] = useState(10) // quantity of payments per page
   const [totalCount, setTotalCount] = useState(100) // all payments

@@ -34,8 +34,9 @@ export { devicesApi, useGetSessionsQuery } from './services/devices/devices.api'
 export {
   subscriptionsApi,
   useGetSubscriptionsQuery,
-  useGetSubscriptionsCost,
-  useGetCurrentSubscription,
+  useGetCurrentSubscriptionsQuery,
+  useCreateNewSubscriptionMutation,
+  useCancelAutoRenewalMutation,
 } from './services/subscriptions/subscriptions.api'
 
 export { baseURL } from './services/baseUrl.api'

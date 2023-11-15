@@ -74,12 +74,12 @@ export const Management = () => {
   const handleStripePaymentType = () => {
     setValue('paymentType', 'STRIPE')
 
-    return handleSubmitSubscriptions()
+    return handleSubmitSubscriptions(onSubmit as SubmitHandler<NewSubscriptionType>)()
   }
   const handlePaypalPaymentType = () => {
     setValue('paymentType', 'PAYPAL')
 
-    return handleSubmitSubscriptions()
+    return handleSubmitSubscriptions(onSubmit as SubmitHandler<NewSubscriptionType>)()
   }
 
   const onSubmit: SubmitHandler<NewSubscriptionType> = async (data: NewSubscriptionType) => {
@@ -104,14 +104,16 @@ export const Management = () => {
       })
   }
 
-  const [currentSubs, setCurrentSubs] = useState([])
+  const [currentSubs, setCurrentSubs] = useState<SubscriptionDataType[]>([])
 
   useEffect(() => {
     currentSubscriptions?.data?.length && setCurrentSubs(currentSubscriptions.data)
-  }, [onSubmit, handleSubmitSubscriptions])
+  }, [onSubmit])
 
   const wrapper =
     styles.wrapper + ' ' + (currentSubscriptions?.data?.length === 0 ? styles.wrapperTop : '')
+
+  const setAccountType = () => setAccType('personal')
 
   return (
     <>
@@ -139,7 +141,7 @@ export const Management = () => {
                   Next payment:
                 </p>
               </div>
-              {currentSubscriptions.data.map((item: SubscriptionDataType, index) => {
+              {currentSubs.map((item: SubscriptionDataType, index) => {
                 return (
                   <div key={index}>
                     <div className={styles.currentSubscriptionRow}>
@@ -173,7 +175,7 @@ export const Management = () => {
           <div className={styles.listWrapper}>
             <RoundCheckbox
               name={'accType'}
-              onChange={() => setAccType('personal')}
+              onChange={setAccountType}
               label={<p className={styles.listItem}>Personal</p>}
               checked={accType === 'personal'}
             />
@@ -181,7 +183,7 @@ export const Management = () => {
               name={'accType'}
               onChange={() => setAccType('business')}
               label={<p className={styles.listItem}>Business</p>}
-              checked={currentSubscriptions}
+              checked={currentSubs && currentSubs.length > 0}
             />
           </div>
         </div>

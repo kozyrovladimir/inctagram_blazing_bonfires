@@ -24,7 +24,7 @@ export const subscriptionsApi = createApi({
           url: 'subscriptions/my-payments',
         }),
       }),
-      getCurrentSubscriptions: build.query<CurrentSubscriptionType[], void>({
+      getCurrentSubscriptions: build.query<CurrentSubscriptionType, void>({
         query: () => ({
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,

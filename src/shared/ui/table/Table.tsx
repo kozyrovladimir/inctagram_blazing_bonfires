@@ -30,15 +30,27 @@ export const Table: React.FC<Props> = ({ items }) => {
             <td className={styles.item}>{formatDate(item.endDateOfSubscription, 'mm.dd.yyyy')}</td>
             <td className={styles.item}>{item.price}</td>
             <td className={styles.item}>
-              {item.subscriptionType === 'DAY'
-                ? '1 day'
-                : item.subscriptionType === 'WEEKLY'
-                ? '7 days'
-                : item.subscriptionType === 'MONTHLY'
-                ? '1 month'
-                : ''}
+              {(() => {
+                if (item.subscriptionType === 'DAY') {
+                  return '1 day'
+                } else if (item.subscriptionType === 'WEEKLY') {
+                  return '7 days'
+                } else if (item.subscriptionType === 'MONTHLY') {
+                  return '1 month'
+                } else {
+                  return ''
+                }
+              })()}
             </td>
-            <td className={styles.item}>{item.paymentType === 'PAYPAL' ? 'PayPal' : 'Stripe'}</td>
+            <td className={styles.item}>
+              {(() => {
+                if (item.paymentType === 'PAYPAL') {
+                  return 'PayPal'
+                } else {
+                  return 'Stripe'
+                }
+              })()}
+            </td>
           </tr>
         ))}
       </tbody>
