@@ -2,6 +2,7 @@ import React, { ChangeEvent } from 'react'
 
 import { createTheme, ThemeProvider } from '@mui/material'
 import Pagination from '@mui/material/Pagination'
+import { useTranslation } from 'next-i18next'
 
 import styles from '@/shared/ui/pagination/TablePagination.module.scss'
 import { Select } from '@/shared/ui/select/Select'
@@ -19,6 +20,8 @@ export const TablePagination: React.FC<PaginationPropsType> = ({
   totalCount,
   onChange,
 }) => {
+  const { t } = useTranslation('common', { keyPrefix: 'TablePagination' })
+
   const lastPage = Math.ceil(totalCount / itemsCountForPage)
 
   const onChangeCallback = (event: ChangeEvent<unknown>, page: number) => {
@@ -59,7 +62,7 @@ export const TablePagination: React.FC<PaginationPropsType> = ({
         />
 
         <div className={styles.container}>
-          <span className={styles.text1}>Show</span>
+          <span className={styles.text1}>{t('Show')}</span>
 
           <Select
             value={itemsCountForPage}
@@ -81,7 +84,7 @@ export const TablePagination: React.FC<PaginationPropsType> = ({
             onChangeOption={onChangeSelect}
           />
 
-          <span className={styles.text2}>on page</span>
+          <span className={styles.text2}>{t('OnPage')}</span>
         </div>
       </div>
     </ThemeProvider>

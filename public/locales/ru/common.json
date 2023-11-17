@@ -113,6 +113,28 @@
     "ReallyLogout": "Это ваше устройство, вы действительно хотите выйти?",
     "AllSessionsTerminated": "Все ваши сеансы на других устройствах завершены"
   },
+  "AccountManagement": {
+    "CurrentSubscription": "Текущая подписка",
+    "ExpireAt": "Истекает",
+    "NextPayment": "Следующий платеж",
+    "AutoRenewal": "Авто-обновление",
+    "AccountType": "Тип аккаунта",
+    "Personal": "Личный",
+    "Business": "Бизнес",
+    "YourSubscriptionCosts": "Стоимость подписки",
+    "$10per1Day": "$10 на 1 день",
+    "$50per7Days": "$50 на 7 дней",
+    "$100per1month": "$100 на 1 месяц",
+    "or": "или",
+    "PaymentSuccessful": "Оплата прошла успешно!"
+  },
+  "Payments": {
+    "DateOfPayment": "Дата платежа",
+    "EndDateOfSubscription": "Дата окончания подписки",
+    "Price": "Цена",
+    "SubscriptionType": "Тип подписки",
+    "PaymentType": "Тип оплаты"
+  },
   "Calendar": {
     "January": "Январь",
     "February": "Февраль",
@@ -133,5 +155,9 @@
     "Th": "Чт",
     "Fr": "Пт",
     "Sa": "Сб"
+  },
+  "TablePagination": {
+    "Show": "Показать",
+    "OnPage": "на странице"
   }
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -38,6 +39,9 @@ const schema = yup.object({
 
 export const Management = () => {
   const router = useRouter()
+
+  const { t } = useTranslation('common', { keyPrefix: 'AccountManagement' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
 
   const { success } = router.query
 
@@ -121,24 +125,24 @@ export const Management = () => {
       {currentSubscriptionLoading && <LinearLoader />}
       {error && (
         <Modal title={'Error'} mainButton={' Back '} callBackCloseWindow={callBackCloseErrorWindow}>
-          <p>Transaction failed, please try again</p>
+          <p>{tError('TransactionFailed')}</p>
         </Modal>
       )}
       {subscribed && (
         <Modal title={'Success'} mainButton={' OK '} callBackCloseWindow={callBackCloseWindow}>
-          <p>Payment was successful!</p>
+          <p>{t('PaymentSuccessful')}</p>
         </Modal>
       )}
       {/*current subscription*/}
       {currentSubs.length! > 0 && (
         <div className={styles.wrapper} style={{ marginTop: '-30px' }}>
           <div>
-            <h3 className={styles.title}>Current Subscription:</h3>
+            <h3 className={styles.title}> {t('CurrentSubscription')}:</h3>
             <div className={styles.listWrapper}>
               <div className={styles.currentSubscriptionRow}>
-                <p className={styles.currentSubscriptionColumnName}>Expire at:</p>
+                <p className={styles.currentSubscriptionColumnName}>{t('ExpireAt')}:</p>
                 <p className={styles.currentSubscriptionColumnName} style={{ marginLeft: '10px' }}>
-                  Next payment:
+                  {t('NextPayment')}:
                 </p>
               </div>
               {currentSubs.map((item: SubscriptionDataType, index) => {
@@ -160,7 +164,7 @@ export const Management = () => {
             {/*auto-renewal*/}
             <div className={styles.autoRenewalWrapper}>
               <Checkbox
-                label={'Auto-Renewal'}
+                label={t('AutoRenewal')}
                 labelStyle={styles.autoRenewalLabelStyle}
                 onChange={handleHasAutoRenewal}
               />
@@ -171,18 +175,18 @@ export const Management = () => {
       {/*business or personal acc*/}
       <div className={wrapper}>
         <div>
-          <h3 className={styles.title}>Account type:</h3>
+          <h3 className={styles.title}>{t('AccountType')}:</h3>
           <div className={styles.listWrapper}>
             <RoundCheckbox
               name={'accType'}
               onChange={setAccountType}
-              label={<p className={styles.listItem}>Personal</p>}
+              label={<p className={styles.listItem}>{t('Personal')}</p>}
               checked={accType === 'personal'}
             />
             <RoundCheckbox
               name={'accType'}
               onChange={() => setAccType('business')}
-              label={<p className={styles.listItem}>Business</p>}
+              label={<p className={styles.listItem}>{t('Business')}</p>}
               checked={currentSubs && currentSubs.length > 0}
             />
           </div>
@@ -190,7 +194,7 @@ export const Management = () => {
         {/*due date*/}
         {currentSubscriptions && (
           <form onSubmit={handleSubmitSubscriptions(onSubmit)}>
-            <h3 className={styles.title}>Your subscription costs:</h3>
+            <h3 className={styles.title}>{t('YourSubscriptionCosts')}:</h3>
             <div className={styles.listWrapper}>
               <Controller
                 control={control}
@@ -200,21 +204,21 @@ export const Management = () => {
                     <RoundCheckbox
                       key={'day'}
                       value={'DAY'}
-                      label={<p className={styles.listItem}>$10 per 1 Day</p>}
+                      label={<p className={styles.listItem}>{t('$10per1Day')}</p>}
                       onChange={onChange}
                       checked={value === 'DAY'}
                     />
                     <RoundCheckbox
                       key={'weekly'}
                       value={'WEEKLY'}
-                      label={<p className={styles.listItem}>$50 per 7 Days</p>}
+                      label={<p className={styles.listItem}>{t('$50per7Days')}</p>}
                       onChange={onChange}
                       checked={value === 'WEEKLY'}
                     />
                     <RoundCheckbox
                       key={'monthly'}
                       value={'MONTHLY'}
-                      label={<p className={styles.listItem}>$100 per month</p>}
+                      label={<p className={styles.listItem}>{t('$100per1month')}</p>}
                       onChange={onChange}
                       checked={value === 'MONTHLY'}
                     />
@@ -228,7 +232,7 @@ export const Management = () => {
                 <button className={styles.imgWrapper} onClick={handlePaypalPaymentType}>
                   <Image className={styles.img} src={payPal} alt="payPal icon" />
                 </button>
-                <p>or</p>
+                <p>{t('or')}</p>
                 <button className={styles.imgWrapper} onClick={handleStripePaymentType}>
                   <Image className={styles.img} src={stripe} alt="stripe icon" />
                 </button>

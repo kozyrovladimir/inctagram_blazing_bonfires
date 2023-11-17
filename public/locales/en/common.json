@@ -113,6 +113,28 @@
     "ReallyLogout": "This is your device, do you really want to exit?",
     "AllSessionsTerminated": "All your sessions on other devices are terminated"
   },
+  "AccountManagement": {
+    "CurrentSubscription": "Current subscription",
+    "ExpireAt": "Expire at",
+    "NextPayment": "Next payment",
+    "AutoRenewal": "Auto-Renewal",
+    "AccountType": "Account type",
+    "Personal": "Personal",
+    "Business": "Business",
+    "YourSubscriptionCosts": "Your subscription costs",
+    "$10per1Day": "$10 per 1 day",
+    "$50per7Days": "$50 per 7 days",
+    "$100per1month": "$100 per 1 month",
+    "or": "or",
+    "PaymentSuccessful": "Payment was successful!"
+  },
+  "Payments": {
+    "DateOfPayment": "Date of payment",
+    "EndDateOfSubscription": "End date of subscription",
+    "Price": "Price",
+    "SubscriptionType": "Subscription Type",
+    "PaymentType": "Payment Type"
+  },
   "Calendar": {
     "January": "January",
     "February": "February",
@@ -133,5 +155,9 @@
     "Th": "Th",
     "Fr": "Fr",
     "Sa": "Sa"
+  },
+  "TablePagination": {
+    "Show": "Show",
+    "OnPage": "on page"
   }
 }
