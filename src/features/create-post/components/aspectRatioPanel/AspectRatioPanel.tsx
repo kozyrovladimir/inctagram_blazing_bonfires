@@ -13,7 +13,7 @@ import VerticalRectangle from '@/features/create-post/ui/icons/VerticalRectangle
 import sizePhoto from '@/shared/assets/icons/filterPostPhoto/size.svg'
 import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
-interface AspectRatioPanel {
+interface AspectRatioPanelProps {
   handleAspectRatio: (aspect: number) => void
   originalAspect: number
 }
@@ -24,7 +24,10 @@ const aspectRatio = {
   horizontalRectangle: 16 / 9,
 }
 
-const AspectRatioPanel: React.FC<AspectRatioPanel> = ({ originalAspect, handleAspectRatio }) => {
+const AspectRatioPanel: React.FC<AspectRatioPanelProps> = ({
+  originalAspect,
+  handleAspectRatio,
+}) => {
   return (
     <Popover className={styles.relative}>
       <Popover.Panel className={styles.buttonPanel}>

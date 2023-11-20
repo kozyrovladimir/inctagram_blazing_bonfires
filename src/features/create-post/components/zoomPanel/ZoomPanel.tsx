@@ -1,9 +1,12 @@
 import React from 'react'
+
 import { Popover } from '@headlessui/react'
 import Image from 'next/image'
-import { Button, ButtonTheme } from '@/shared/ui/button/Button'
+
 import styles from './ZoomPanel.module.scss'
+
 import maxmMin from '@/shared/assets/icons/filterPostPhoto/maximize-outline.svg'
+import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 type ZoomPanelProps = {
   zoom: number

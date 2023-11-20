@@ -1,5 +1,7 @@
+/* eslint-disable */
 // @ts-nocheck
 import React, { useState, useEffect } from 'react'
+
 import PropTypes from 'prop-types'
 
 const WRAPPER_STYLE = {
@@ -114,6 +116,7 @@ function ImageFilter({
     }
 
     const newFilterMatrix = getMatrix({ filter, colorOne, colorTwo }, true)
+
     setFilterMatrix(newFilterMatrix)
   }, [filter, colorOne, colorTwo])
 
@@ -160,6 +163,7 @@ function ImageFilter({
   useEffect(() => {
     // Создаем новый Image элемент для изображения
     const img = new Image()
+
     img.src = image
 
     img.onload = () => {

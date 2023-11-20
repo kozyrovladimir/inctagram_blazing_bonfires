@@ -2,12 +2,12 @@ import { ComponentPropsWithoutRef, Ref, forwardRef, useState } from 'react'
 
 import Image from 'next/image'
 
+import styles from './Input.module.scss'
+
 import eyeImg from '@/shared/assets/icons/input/eye.svg'
 import searchImg from '@/shared/assets/icons/input/search.svg'
 import location from '@/shared/assets/icons/location/location.svg'
 import { classNames, Mods } from '@/shared/libs/classNames/classNames'
-
-import styles from './Input.module.scss'
 
 export enum InputType {
   SEARCH = 'search',

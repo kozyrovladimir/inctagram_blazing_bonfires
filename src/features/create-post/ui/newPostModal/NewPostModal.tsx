@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { Dialog } from '@headlessui/react'
+
 import styles from './NewPostModal.module.scss'
 
 interface NewPostModalProps {

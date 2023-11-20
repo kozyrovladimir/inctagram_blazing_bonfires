@@ -1,5 +1,7 @@
 import React from 'react'
+
 import style from './DotsBar.module.scss'
+
 import { classNames } from '@/shared/libs/classNames/classNames'
 
 interface DotsBarProps {

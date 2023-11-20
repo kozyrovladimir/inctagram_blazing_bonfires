@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 import Image from 'next/image'
-import NextImage from 'next/image'
 import { useWizard } from 'react-use-wizard'
 
 import style from './Filters.module.scss'

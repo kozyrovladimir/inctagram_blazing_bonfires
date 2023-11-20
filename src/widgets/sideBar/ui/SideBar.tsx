@@ -8,12 +8,16 @@ import favoritesImage from '../../../shared/assets/icons/sideBar/favorites.svg'
 import homeImage from '../../../shared/assets/icons/sideBar/home.svg'
 import messengerImage from '../../../shared/assets/icons/sideBar/messenger.svg'
 import myProfileImage from '../../../shared/assets/icons/sideBar/myProfile.svg'
+import paymentsImage from '../../../shared/assets/icons/sideBar/payments.svg'
+import postsImage from '../../../shared/assets/icons/sideBar/posts.svg'
 import searchImage from '../../../shared/assets/icons/sideBar/search.svg'
 import statisticsImage from '../../../shared/assets/icons/sideBar/statistics.svg'
 import userListImage from '../../../shared/assets/icons/sideBar/user-list.svg'
-import paymentsImage from '../../../shared/assets/icons/sideBar/payments.svg'
-import postsImage from '../../../shared/assets/icons/sideBar/posts.svg'
+
+import style from './SideBar.module.scss'
+
 import CreatePost from '@/features/create-post'
+import { Logout } from '@/features/logout/ui/logout/Logout'
 import {
   PROFILE_PATH,
   SUPER_ADMIN_PAYMENTS_LIST,
@@ -21,10 +25,6 @@ import {
   SUPER_ADMIN_STATISTICS,
   SUPER_ADMIN_USERS_LIST,
 } from '@/shared/constants/paths'
-
-import style from './SideBar.module.scss'
-
-import { Logout } from '@/features/logout/ui/logout/Logout'
 
 export const SideBar = () => {
   const { t } = useTranslation('common')
