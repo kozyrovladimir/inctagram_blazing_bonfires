@@ -9,6 +9,19 @@ import { appWithTranslation } from 'next-i18next'
 
 import { StoreProvider } from '../shared/providers/storeProvider'
 
+import {
+  AUTH_EXPIRRED_VERIFICATION_LINK_PATH,
+  SIGN_IN_PATH,
+  SIGN_UP_PATH,
+  SENT_EMAIL_PATH,
+  MERGE_ACCOUNTS_PATH,
+  INVALID_VERIFICATION_LINK_PATH,
+  FORGOT_PASSWORD_PATH,
+  AUTH_CONFIRMED_EMAIL_PATH,
+  AUTH_TERMS_OF_SERVICE_PATH,
+  AUTH_PRIVACY_POLICY_PATH,
+  CREATE_NEW_PASSWORD_PATH,
+} from '@/shared/constants/paths'
 import { WithAuth } from '@/shared/hoc/withAuth/WithAuth'
 import { SideBar } from '@/widgets/sideBar/ui/SideBar'
 
@@ -26,17 +39,17 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   const { pathname } = useRouter()
 
   const pathWithoutSidebar = [
-    'auth/expired-verification-link',
-    '/sign-in',
-    '/sign-up',
-    '/sent-email',
-    '/merge-accounts',
-    '/invalid-verification-link',
-    '/forgot-password',
-    '/create-new-password',
-    '/auth/confirmed-email',
-    '/auth/terms-of-service',
-    '/auth/privacy-policy',
+    AUTH_EXPIRRED_VERIFICATION_LINK_PATH,
+    SIGN_IN_PATH,
+    SIGN_UP_PATH,
+    SENT_EMAIL_PATH,
+    MERGE_ACCOUNTS_PATH,
+    INVALID_VERIFICATION_LINK_PATH,
+    FORGOT_PASSWORD_PATH,
+    CREATE_NEW_PASSWORD_PATH,
+    AUTH_CONFIRMED_EMAIL_PATH,
+    AUTH_TERMS_OF_SERVICE_PATH,
+    AUTH_PRIVACY_POLICY_PATH,
   ]
 
   const isSidebar = !pathWithoutSidebar.includes(pathname)

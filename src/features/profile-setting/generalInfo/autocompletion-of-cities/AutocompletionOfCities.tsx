@@ -2,10 +2,20 @@ import React, { FC, FormEvent, useState } from 'react'
 
 import Autosuggest from 'react-autosuggest'
 
-import { citiesRF } from '@/features/profile-setting/generalInfo/autocompletion-of-cities/Cities'
-import theme from '@/shared/ui/input/Input.module.scss'
+import theme from '../../../../shared/ui/input/Input.module.scss'
 
-const cities = citiesRF.map(city => city.name)
+import { citiesBelarus } from './citiesBelarus'
+import { citiesRF } from './citiesRF'
+
+let cities = citiesRF.map(city => city.name)
+
+const citiesB = citiesBelarus.map(city => city.cities.map(c => c.name))
+
+let mergedCitiesBelarus: string[] = []
+
+citiesB.forEach(e => mergedCitiesBelarus.push(...e))
+
+cities.push(...mergedCitiesBelarus)
 
 type Props = {
   error?: string
@@ -33,7 +43,6 @@ export const AutocompletionOfCities = ({ error }: Props) => {
   const onSuggestionsClearRequested = () => {
     setSuggestions([])
   }
-
   const getSuggestionValue = (suggestion: string) => suggestion
   const renderSuggestion = (suggestion: string) => <div>{suggestion}</div>
 

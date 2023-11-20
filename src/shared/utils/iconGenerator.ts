@@ -1,3 +1,5 @@
+import { FOLDER_NEXT_STATIC_MEDIA_PATH } from '../constants/paths'
+
 import defaultIconDeviceDark from '@/shared/assets/icons/devices/darkIcons/anyDevices.svg'
 import defaultIconBrowserDark from '@/shared/assets/icons/devices/darkIcons/browser.svg'
 import defaultIconDeviceLight from '@/shared/assets/icons/devices/lightIcons/anyDevices.svg'
@@ -22,7 +24,10 @@ interface svgFile {
 
 export const findPathSVG = (name: string, isCurrent: boolean, theme?: string): string => {
   const findName = (file: svgFile): string => {
-    return file.default.src.replace('/_next/static/media/', '').split('.')[0].toLocaleLowerCase()
+    return file.default.src
+      .replace(FOLDER_NEXT_STATIC_MEDIA_PATH, '')
+      .split('.')[0]
+      .toLocaleLowerCase()
   }
   const findFile = (files: svgFile[]): svgFile => {
     const file = files.filter((file: svgFile) => {

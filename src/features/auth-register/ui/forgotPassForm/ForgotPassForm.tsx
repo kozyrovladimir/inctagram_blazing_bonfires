@@ -13,6 +13,7 @@ import styles from './ForgotPassForm.module.scss'
 
 import { useRecoverPasswordMutation } from '@/shared/api/services/auth/auth.api'
 import { PasswordRecoveryType } from '@/shared/api/services/auth/auth.api.types'
+import { SIGN_IN_PATH } from '@/shared/constants/paths'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import FormContainer from '@/shared/ui/formContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/input/Input'
@@ -99,7 +100,7 @@ export function ForgotPass() {
               {t('SendAgain')}
             </Button>
           )}
-          <Link href={'/sign-in'}>
+          <Link href={SIGN_IN_PATH}>
             <Button
               className={styles.oppositeBtn}
               theme={ButtonTheme.CLEAR}

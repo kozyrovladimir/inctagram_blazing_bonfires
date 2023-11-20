@@ -92,6 +92,9 @@ const TempNavigationLinks = () => {
       <li>
         <Link href="/auth/privacy-policy">privacy policy</Link>
       </li>
+      <li>
+        <Link href="/super-admin/users-list">Super Admin</Link>
+      </li>
     </ul>
   )
 }

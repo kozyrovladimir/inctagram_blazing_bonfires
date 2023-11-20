@@ -1,5 +1,7 @@
 .header {
   position: relative;
+  top: 0;
+  width: 100%;
   height: 60px;
   background: var(--color-dark-900);
   color: white;
@@ -15,6 +17,13 @@
     line-height: 36px;
     text-decoration: none;
     color: white;
+    .adminDescription {
+      font-size: 12px;
+      .adminDescriptionThin {
+        font-weight: normal;
+      }
+
+    }
   }
   .option {
     display: flex;

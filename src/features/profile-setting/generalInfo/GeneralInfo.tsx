@@ -1,6 +1,4 @@
-/* eslint-disable no-nested-ternary */
 import { useEffect, useState } from 'react'
-import * as React from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SerializedError } from '@reduxjs/toolkit'
@@ -21,7 +19,8 @@ import {
   useUpdateAvatarMutation,
 } from '@/shared/api/services/profile/profile.api'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
-import { fieldGeneralInfo } from '@/shared/types/profileSettingTypes'
+import { PROFILE_PATH } from '@/shared/constants/paths'
+import { GeneralInfoFields } from '@/shared/types/profileSettingTypes'
 import { Button } from '@/shared/ui/button/Button'
 import { Input, InputType } from '@/shared/ui/input/Input'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
@@ -47,7 +46,8 @@ export const GeneralInfo = () => {
     skip: isLoading || isError,
   })
 
-  const [updateProfile, { error: errorUpdateProfile }] = useUpdateProfileMutation()
+  const [updateProfile, { isLoading: isLoadingUpdateProfile, error: errorUpdateProfile }] =
+    useUpdateProfileMutation()
 
   const [updateAvatar, { isLoading: isLoadingAvatar, error: errorUpdateAvatar }] =
     useUpdateAvatarMutation()
@@ -57,10 +57,20 @@ export const GeneralInfo = () => {
 
   const currentError =
     error || errorProfileData || errorUpdateProfile || errorUpdateAvatar || errorDeleteAvatar
+
   const currentIsLoading =
-    isLoading || isLoadingProfileData || isLoadingAvatar || isLoadingDeleteAvatar
+    isLoading ||
+    isLoadingUpdateProfile ||
+    isLoadingProfileData ||
+    isLoadingAvatar ||
+    isLoadingDeleteAvatar
+
   const currentErrorHandler = (error: FetchBaseQueryError | SerializedError | undefined) => {
     errorHandler(error, tError('NotAuthorization'), tError('TryAgain'), tError('NetworkError'))
+  }
+
+  if (currentError) {
+    currentErrorHandler(currentError)
   }
 
   const [photo, setPhoto] = useState<Blob | null>(null)
@@ -128,42 +138,38 @@ export const GeneralInfo = () => {
     reset(profileData)
   }, [isLoadingProfileData])
 
-  if (currentError) {
-    currentErrorHandler(currentError)
+  const updateAvatarHandler = () => {
+    if (isDeleteAvatar) {
+      deleteAvatar()
+        .unwrap()
+        .then(() => {
+          router.push(PROFILE_PATH)
+        })
+        .catch(error => currentErrorHandler(error))
+    }
+    if (photo) {
+      const formData = new FormData()
+
+      formData.set('file', photo as Blob)
+      updateAvatar(formData)
+        .unwrap()
+        .then(() => {
+          router.push(PROFILE_PATH)
+        })
+        .catch(error => currentErrorHandler(error))
+    } else router.push(PROFILE_PATH)
   }
 
   const onSubmit = (data: ProfileUserType) => {
     updateProfile(data)
       .unwrap()
       .then(() => {
-        if (isDeleteAvatar) {
-          deleteAvatar()
-            .unwrap()
-            .then(() => {
-              router.push('/profile')
-            })
-            .catch(error => currentErrorHandler(error))
-        }
-        if (photo) {
-          const formData = new FormData()
-
-          formData.set('file', photo as Blob)
-          updateAvatar(formData)
-            .unwrap()
-            .then(() => {
-              router.push('/profile')
-            })
-            .catch(error => currentErrorHandler(error))
-        } else {
-          router.push('/profile')
-        }
+        updateAvatarHandler()
       })
       .catch(error => currentErrorHandler(error))
   }
 
-  watch()
-
-  const allFields: fieldGeneralInfo[] = [
+  const allFields: GeneralInfoFields = [
     'userName',
     'firstName',
     'lastName',
@@ -171,6 +177,8 @@ export const GeneralInfo = () => {
     'city',
     'aboutMe',
   ]
+
+  watch()
   const isFillField = getValues(allFields).every(e => !!e)
 
   return (
@@ -178,7 +186,7 @@ export const GeneralInfo = () => {
       {currentIsLoading && <LinearLoader />}
       <Toaster position="top-right" />
 
-      {profileData && (
+      {!!profileData && (
         <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.content}>
             <div className={styles.photoContent}>
@@ -199,84 +207,103 @@ export const GeneralInfo = () => {
                 )}
               />
             </div>
-
             <div className={styles.textFieldsContent}>
-              {allFields.map(name => {
-                return (
-                  <Controller
-                    key={name}
-                    name={name}
-                    control={control}
-                    render={
-                      name === 'dateOfBirth'
-                        ? ({ field: { onChange, ref, ...args } }) => (
-                            <>
-                              <label className={styles.labelDate}>{t('DateBirthday')}</label>
-                              <Calendar
-                                data={profileData.dateOfBirth}
-                                outsideOnChange={onChange}
-                                classNameWrap={styles.calendar}
-                                {...args}
-                              />
-                              {errors && (
-                                <p className={styles.error}>
-                                  {(errors as FieldErrors<ProfileUserType>)[name]?.message}
-                                </p>
-                              )}
-                            </>
-                          )
-                        : name === 'city'
-                        ? ({ field }) => (
-                            <>
-                              <label>{t('City')}</label>
-                              <AutocompletionOfCities
-                                error={(errors as FieldErrors<ProfileUserType>).city?.message}
-                                {...field}
-                              />
-                            </>
-                          )
-                        : name === 'aboutMe'
-                        ? ({ field }) => (
-                            <>
-                              <div className={styles.textareaContent}>
-                                <label className={styles.aboutMeLabel}>{t('AboutMe')}</label>
-                                <textarea
-                                  rows={4}
-                                  cols={50}
-                                  placeholder={t('WriteAboutYourself')}
-                                  className={styles.aboutMeTextarea}
-                                  {...field}
-                                />
-                              </div>
-                              {errors && (
-                                <p className={styles.error}>
-                                  {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
-                                </p>
-                              )}
-                            </>
-                          )
-                        : ({ field }) => (
-                            <Input
-                              label={t(name.replace(name[0], name[0].toUpperCase()))}
-                              type={InputType.TEXT}
-                              placeholder={
-                                name === 'userName'
-                                  ? t('EnterUserName')
-                                  : name === 'firstName'
-                                  ? t('EnterFirstName')
-                                  : name === 'lastName'
-                                  ? t('EnterLastName')
-                                  : '...'
-                              }
-                              error={(errors as FieldErrors<ProfileUserType>)[name]?.message}
-                              classNameWrap={'myCustomLabel'}
-                              {...field}
-                            />
-                          )
-                    }
+              <Controller
+                name="userName"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    label={t('UserName')}
+                    type={InputType.TEXT}
+                    placeholder={''}
+                    error={(errors as FieldErrors<ProfileUserType>).userName?.message}
+                    classNameWrap={'myCustomLabel'}
+                    {...field}
                   />
-                )
-              })}
+                )}
+              />
+              <Controller
+                name="firstName"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    label={t('FirstName')}
+                    placeholder={''}
+                    type={InputType.TEXT}
+                    error={(errors as FieldErrors<ProfileUserType>).firstName?.message}
+                    classNameWrap={'myCustomLabel'}
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
+                name="lastName"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    label={t('LastName')}
+                    placeholder={''}
+                    type={InputType.TEXT}
+                    error={(errors as FieldErrors<ProfileUserType>).lastName?.message}
+                    classNameWrap={'myCustomLabel'}
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
+                name="dateOfBirth"
+                control={control}
+                render={({ field: { onChange, ref, ...args } }) => (
+                  <div>
+                    <label>{t('DateBirthday')}</label>
+                    <Calendar
+                      data={profileData.dateOfBirth}
+                      outsideOnChange={onChange}
+                      classNameWrap={styles.calendar}
+                      {...args}
+                    />
+                    {errors && (
+                      <p className={styles.error}>
+                        {(errors as FieldErrors<ProfileUserType>).dateOfBirth?.message}
+                      </p>
+                    )}
+                  </div>
+                )}
+              />
+              <Controller
+                name="city"
+                control={control}
+                render={({ field: { ref, ...args } }) => (
+                  <div>
+                    <label>City</label>
+                    <AutocompletionOfCities
+                      error={(errors as FieldErrors<ProfileUserType>).city?.message}
+                      {...args}
+                    />
+                  </div>
+                )}
+              />
+              <div className={styles.textareaContent}>
+                <label className={styles.aboutMeLabel}>{t('AboutMe')}</label>
+                <Controller
+                  name="aboutMe"
+                  control={control}
+                  render={({ field }) => (
+                    <textarea
+                      rows={4}
+                      cols={50}
+                      placeholder=""
+                      className={styles.aboutMeTextarea}
+                      {...field}
+                    />
+                  )}
+                />
+                {errors && (
+                  <p className={styles.errorTextarea}>
+                    {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
           <div className={styles.footer}>
