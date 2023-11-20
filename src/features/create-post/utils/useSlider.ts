@@ -23,5 +23,6 @@ export const useSlider = (length: number) => {
     currentIndex,
     nextSlide,
     prevSlide,
+    setCurrentIndex,
   }
 }

@@ -20,7 +20,7 @@ import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 export const Cropping = () => {
   const cropContext = useImageCropContext()
-  const { currentIndex, prevSlide, nextSlide } = useSlider(cropContext.photos.length)
+  const { currentIndex, prevSlide, nextSlide, setCurrentIndex } = useSlider(cropContext.photos.length)
   const index = currentIndex
 
   const { nextStep, previousStep } = useWizard()
@@ -104,7 +104,7 @@ export const Cropping = () => {
             </>
           )}
         </div>
-        <ButtonFilterPanel index={index} cropContext={cropContext} />
+        <ButtonFilterPanel setCurrentIndex={setCurrentIndex} index={index} cropContext={cropContext} />
       </div>
     </NewPostModal>
   )

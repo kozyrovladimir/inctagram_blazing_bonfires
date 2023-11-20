@@ -11,10 +11,11 @@ import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 type Props = {
-  cropContext: CropContextType
+  cropContext: CropContextType,
+  setCurrentIndex: (index: number) => void
 }
 
-export const AddPhotoSlider = ({ cropContext }: Props) => {
+export const AddPhotoSlider = ({ cropContext, setCurrentIndex }: Props) => {
   const inputRef = React.useRef<HTMLInputElement>(null)
   const handlerAddImageClick = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -43,6 +44,7 @@ export const AddPhotoSlider = ({ cropContext }: Props) => {
                 height={50}
                 objectFit="cover"
                 className={style.thumbnailImage}
+                onClick={() => setCurrentIndex(index)}
               />
               <button className={style.deleteButton} onClick={() => handleDeleteClick(index)}>
                 x

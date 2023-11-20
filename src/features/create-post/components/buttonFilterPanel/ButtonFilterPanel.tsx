@@ -9,10 +9,12 @@ import { AddPhotoSlider } from '@/features/create-post/steps/addPhotoSlider/AddP
 
 type Props = {
   cropContext: CropContextType
-  index: number
+  index: number,
+  setCurrentIndex: (index: number) => void
+
 }
 
-export const ButtonFilterPanel = ({ cropContext, index }: Props) => {
+export const ButtonFilterPanel = ({ cropContext, index, setCurrentIndex }: Props) => {
   const handleAspectRatio = (aspectRatio: number) => {
     cropContext.handleAspectRatioClick(index)(aspectRatio)
   }
@@ -41,7 +43,7 @@ export const ButtonFilterPanel = ({ cropContext, index }: Props) => {
         </div>
       </div>
       <div className={style.rightButton}>
-        <AddPhotoSlider cropContext={cropContext} />
+        <AddPhotoSlider setCurrentIndex={setCurrentIndex} cropContext={cropContext} />
       </div>
     </div>
   )
