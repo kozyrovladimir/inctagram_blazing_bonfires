@@ -18,11 +18,13 @@ export function calculateImageDimensions(
     // устанавливаем максимальную высоту равную высоте контейнера
     const newHeight = containerHeight
     const newWidth = containerHeight * aspectRatio
+
     return { width: newWidth, height: newHeight }
   } else {
     // Иначе, устанавливаем максимальную ширину равную ширине контейнера
     const newWidth = containerWidth
     const newHeight = containerWidth / aspectRatio
+
     return { width: newWidth, height: newHeight }
   }
 }

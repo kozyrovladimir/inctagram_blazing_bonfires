@@ -11,7 +11,7 @@ import noImage from '@/shared/assets/icons/image/no-image.svg'
 import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 type Props = {
-  cropContext: CropContextType,
+  cropContext: CropContextType
   setCurrentIndex: (index: number) => void
 }
 

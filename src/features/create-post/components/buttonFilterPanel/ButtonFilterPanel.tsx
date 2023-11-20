@@ -9,9 +9,8 @@ import { AddPhotoSlider } from '@/features/create-post/steps/addPhotoSlider/AddP
 
 type Props = {
   cropContext: CropContextType
-  index: number,
+  index: number
   setCurrentIndex: (index: number) => void
-
 }
 
 export const ButtonFilterPanel = ({ cropContext, index, setCurrentIndex }: Props) => {
