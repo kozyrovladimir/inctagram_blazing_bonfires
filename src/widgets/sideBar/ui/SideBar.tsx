@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-import createImage from '../../../shared/assets/icons/sideBar/create.svg'
 import favoritesImage from '../../../shared/assets/icons/sideBar/favorites.svg'
 import homeImage from '../../../shared/assets/icons/sideBar/home.svg'
 import messengerImage from '../../../shared/assets/icons/sideBar/messenger.svg'
@@ -17,6 +16,7 @@ import userListImage from '../../../shared/assets/icons/sideBar/user-list.svg'
 
 import style from './SideBar.module.scss'
 
+import CreatePost from '@/features/create-post'
 import { Logout } from '@/features/logout/ui/logout/Logout'
 import {
   PROFILE_PATH,
@@ -66,7 +66,8 @@ export const SideBar = () => {
             {t('Home')}
           </div>
           <div className={style.linkWrapper}>
-            <Image src={createImage} alt={''} />
+            {/*<Image src={createImage} alt={''} />*/}
+            <CreatePost />
             {t('Create')}
           </div>
           <div

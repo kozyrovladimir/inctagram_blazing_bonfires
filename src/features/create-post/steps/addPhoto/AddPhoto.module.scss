@@ -1,0 +1,28 @@
+.addPhotoContentContainer {
+  padding: 72px 136px 48px;
+
+  .darkBox {
+    width: 222px;
+    height: 228px;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 60px;
+
+    .inputPhoto {
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+}

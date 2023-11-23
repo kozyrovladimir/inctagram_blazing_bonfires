@@ -66,6 +66,11 @@
   left: 12px;
   bottom: 12px;
 }
+.location {
+  position: absolute;
+  left: calc(100% - 36px);
+  bottom: 26px;
+}
 .container ul {
   list-style-type: none;
   height: 200px;

@@ -1,0 +1,38 @@
+.modalWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .modal {
+    min-width: 400px;
+    background-color: #333;
+
+    .modalHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      padding: 12px 24px;
+      border-bottom: 1px solid #4c4c4c;
+
+      .modalTitle {
+        color: #fff;
+        font-size: 20px;
+        margin: 0; // reset Dialog.Title default margin
+        font-style: normal;
+        font-weight: 700;
+        line-height: 36px;
+      }
+    }
+
+    .modalContent {
+      padding: 12px;
+    }
+  }
+}
