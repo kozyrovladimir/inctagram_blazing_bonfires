@@ -1,10 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import { setupListeners } from '@reduxjs/toolkit/query'
+import { EndpointDefinitions, setupListeners } from '@reduxjs/toolkit/query'
 
 import { authApi, profileApi, devicesApi } from '../../../api'
 
+import generalInfoReducer from '@/shared/providers/storeProvider/slices/profileSettings/generalInfoReducer'
+
 export const store = configureStore({
   reducer: {
+    profileSetting: generalInfoReducer,
     [authApi.reducerPath]: authApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [devicesApi.reducerPath]: devicesApi.reducer,

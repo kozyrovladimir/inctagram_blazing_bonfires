@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { GeneralInfo } from '@/features/profile-setting/'
+import { RoutersPath } from '@/shared/constants/paths'
 import { settingLayout } from '@/shared/layouts/profileLayout/SettingLayout'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {

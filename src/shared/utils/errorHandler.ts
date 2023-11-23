@@ -24,9 +24,8 @@ export const errorHandler = (
       notAuthorizationHadler()
     } else {
       const errorMessage =
-        ((error as serverError)?.data?.messages[0]?.message ||
-          (error as serverError)?.data?.error) ??
-        tryAgainMessage
+        // ((error as serverError)?.data?.messages[0]?.message ||
+        (error as serverError)?.data?.error ?? tryAgainMessage
 
       toast.error(errorMessage, { id: errorMessage })
     }

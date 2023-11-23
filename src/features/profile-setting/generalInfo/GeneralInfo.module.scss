@@ -47,6 +47,13 @@
   width: 100%;
   position: relative;
 }
+.agreementLink {
+  position: relative;
+  z-index: 10;
+  &:link {
+    color: var(--color-danger-500);
+  }
+}
 
 .aboutMeTextarea {
   width: 100%;

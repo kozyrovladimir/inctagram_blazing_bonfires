@@ -2,7 +2,7 @@ import React from 'react'
 
 import { GetStaticProps } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
@@ -11,6 +11,7 @@ import styles from './PrivacyPolicy.module.scss'
 import backIcon from '@/shared/assets/icons/icons/arrowBackIcon.svg'
 import { RoutersPath } from '@/shared/constants/paths'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
@@ -23,16 +24,31 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 }
 
 const PrivacyPolicyPage = () => {
-  const { t } = useTranslation('common', { keyPrefix: 'Auth' })
+  const {
+    t,
+    i18n: { t: tRoot },
+  } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t: tProfile } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
+
+  const router = useRouter()
+
+  const previousPage = router.query.previousPage
 
   return (
     <>
       <div className={styles.container}>
-        <Link href={RoutersPath.signUp} className={styles.backContainer}>
+        <Button
+          onClick={() => router.back()}
+          theme={ButtonTheme.NOBORDER}
+          size={ButtonSize.LARGE}
+          className={styles.backBtn}
+        >
           <Image src={backIcon} alt={'icon row back'} />
-          <p>{t('BackToSignUp')}</p>
-        </Link>
-        <p className={styles.articleHeader}>{t('PrivacyPolicy')}</p>
+          {previousPage === RoutersPath.signUp
+            ? t('BackToSignUp')
+            : tProfile('BackToSignUpProfileSettings')}
+        </Button>
+        <p className={styles.articleHeader}>{tRoot('PrivacyPolicy')}</p>
         <div className={styles.articleContainer}>
           <p className={styles.articleText}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor

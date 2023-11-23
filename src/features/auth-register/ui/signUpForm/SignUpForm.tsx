@@ -164,12 +164,18 @@ export const SignUpForm = () => {
               label={
                 <p className={styles.agreementText}>
                   {t('AgreeToThe') + ' '}
-                  <Link href="/auth/terms-of-service" className={styles.agreementLink}>
+                  <Link href={RoutersPath.authTermsOfService} className={styles.agreementLink}>
                     {t('TermsOfService')}
                   </Link>
                   {' ' + tRoot('And') + ' '}
-                  <Link href="/auth/privacy-policy" className={styles.agreementLink}>
-                    {t('PrivacyPolicy')}
+                  <Link
+                    href={{
+                      pathname: `${RoutersPath.authPrivacyPolicy}`,
+                      query: { previousPage: `${RoutersPath.signUp}` },
+                    }}
+                    className={styles.agreementLink}
+                  >
+                    {tRoot('PrivacyPolicy')}
                   </Link>
                 </p>
               }

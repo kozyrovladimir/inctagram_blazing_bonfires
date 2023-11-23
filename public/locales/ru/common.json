@@ -9,12 +9,13 @@
   "Description": "Описание",
   "Save": "Сохранить",
   "SaveChanges": "Сохранить",
-  "AddProfilePhoto": "Добавьте фотографию",
   "SelectFromComputer": "Выбрать на устройстве",
   "ProfileSetting": "Настройки профиля",
   "ErrorTitle": "Ошибка!",
   "AttentionTitle": "Внимание!",
   "Notification": "Уведомление",
+  "PrivacyPolicy": "Политика конфиденциальности",
+  "LeftWithoutSave": "Вы действительно хотите покинуть страницу без сохранения данных?",
   "And": "и",
   "Yes": "Да",
   "No": "Нет",
@@ -41,7 +42,7 @@
     "RequiredField": "Поле обязательное для заполнения",
     "SomethingWentWrong": "Что-то пошло не так",
     "PasswordsMustMatch": "Пароли должны совпадать",
-    "MinAge": "Пользователь младше 13 лет не может создать профиль"
+    "MinAge": "Пользователь младше 13 лет не может создать профиль."
   },
 
   "Auth": {
@@ -62,7 +63,6 @@
     "PasswordSent": "Пароль отправлен",
     "AgreeToThe": "Я согласен с",
     "TermsOfService": "Условия предоставления услуг",
-    "PrivacyPolicy": "Политика конфиденциальности",
     "BackToSignUp": "Назад к регистрации",
     "HaveAccount?": "У вас есть учетная запись?",
     "DontHaveAccount?": "Нет учетной записи?",
@@ -104,7 +104,10 @@
     "City": "Город",
     "EnterCity": "Введите ваш город",
     "AboutMe": "Обо мне",
-    "WriteAboutYourself": "Напишите о себе"
+    "WriteAboutYourself": "Напишите о себе",
+    "AddProfilePhoto": "Добавьте фотографию",
+    "BackToSignUpProfileSettings": "Вернуться на страницу профиля",
+    "ReallyDeletePhoto": "Вы действительно хотите удалить фотографию своего профиля?"
   },
   "Devices": {
     "ThisDevices": "Это устройство",

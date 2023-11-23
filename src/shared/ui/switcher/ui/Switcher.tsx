@@ -18,12 +18,12 @@ type Props = {
 export const Switcher = ({ options, initialValue, changeHandlerExtraFn }: Props) => {
   const refSelect = useRef<HTMLDivElement | null>(null)
   const [isOpenSelect, setIsOpenSelect] = useState(false)
-  const [activeSelect, setActiveSelect] = useState(initialValue)
+  const [selectedValue, setSelectValue] = useState(initialValue)
 
   const openSelectHandler = () => setIsOpenSelect(!isOpenSelect)
 
   const changeHandler = (option: string) => {
-    setActiveSelect(option)
+    setSelectValue(option)
     openSelectHandler()
     changeHandlerExtraFn && changeHandlerExtraFn(option)
   }
@@ -39,7 +39,7 @@ export const Switcher = ({ options, initialValue, changeHandlerExtraFn }: Props)
   }
 
   const { shortDescription, description, icon } =
-    options.find(el => el.shortDescription === activeSelect) || options[0]
+    options.find(el => el.shortDescription === selectedValue) || options[0]
 
   useEffect(() => {
     if (isOpenSelect) {
@@ -53,7 +53,7 @@ export const Switcher = ({ options, initialValue, changeHandlerExtraFn }: Props)
 
   return (
     <div className={style.select} ref={refSelect}>
-      {!!activeSelect && (
+      {!!selectedValue && (
         <div className={style.selectContent} onClick={openSelectHandler}>
           <OptionContent alt={shortDescription} icon={icon} description={description} />
           <Image

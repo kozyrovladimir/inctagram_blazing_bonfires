@@ -11,7 +11,7 @@ export const LanguageSelect = () => {
   const router = useRouter()
   const { pathname, asPath, query } = router
 
-  const [initialValue, setInitialValue] = useState<string>(ShortLangs.EN)
+  const [initialValue, setInitialValue] = useState<string>('')
 
   useEffect(() => {
     const langFromLocal = localStorage.getItem('i18nextLng')
@@ -22,7 +22,6 @@ export const LanguageSelect = () => {
 
     if (langFromLocal) {
       setInitialValue(langFromLocal)
-
       if (
         pathname !==
         (RoutersPath.authRegistrationConfirmation || RoutersPath.authExpirredVerificationLink)
@@ -47,10 +46,14 @@ export const LanguageSelect = () => {
   }
 
   return (
-    <Switcher
-      initialValue={initialValue}
-      options={langOptions}
-      changeHandlerExtraFn={changeHandlerExtraFn}
-    />
+    <>
+      {!!initialValue && (
+        <Switcher
+          initialValue={initialValue}
+          options={langOptions}
+          changeHandlerExtraFn={changeHandlerExtraFn}
+        />
+      )}
+    </>
   )
 }

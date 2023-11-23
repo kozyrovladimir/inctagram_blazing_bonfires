@@ -1,8 +1,9 @@
 import '../shared/styles/globals.scss'
-import { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode, useEffect } from 'react'
 
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import type { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
 import { NextPage } from 'next/types'
 import { appWithTranslation } from 'next-i18next'
 

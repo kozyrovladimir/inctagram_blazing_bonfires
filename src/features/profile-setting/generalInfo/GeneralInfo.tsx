@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SerializedError } from '@reduxjs/toolkit'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
 
 import styles from './GeneralInfo.module.scss'
@@ -18,12 +20,14 @@ import {
   useDeleteAvatarMutation,
   useUpdateAvatarMutation,
 } from '@/shared/api/services/profile/profile.api'
-import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
+import { AvatarsType, ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import { RoutersPath } from '@/shared/constants/paths'
-import { GeneralInfoFields } from '@/shared/types/profileSettingTypes'
+import { RootState } from '@/shared/providers/storeProvider'
+import { setGeneralInfo } from '@/shared/providers/storeProvider/slices/profileSettings/generalInfoReducer'
 import { Button } from '@/shared/ui/button/Button'
 import { Input, InputType } from '@/shared/ui/input/Input'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
+import { Modal } from '@/shared/ui/modal/Modal'
 import { errorHandler } from '@/shared/utils/errorHandler'
 import { Calendar } from '@/widgets/calendar/ui/Calendar'
 
@@ -55,9 +59,6 @@ export const GeneralInfo = () => {
   const [deleteAvatar, { isLoading: isLoadingDeleteAvatar, error: errorDeleteAvatar }] =
     useDeleteAvatarMutation()
 
-  const currentError =
-    error || errorProfileData || errorUpdateProfile || errorUpdateAvatar || errorDeleteAvatar
-
   const currentIsLoading =
     isLoading ||
     isLoadingUpdateProfile ||
@@ -69,12 +70,20 @@ export const GeneralInfo = () => {
     errorHandler(error, tError('NotAuthorization'), tError('TryAgain'), tError('NetworkError'))
   }
 
+  const currentError =
+    error || errorProfileData || errorUpdateProfile || errorUpdateAvatar || errorDeleteAvatar
+
   if (currentError) {
     currentErrorHandler(currentError)
   }
 
   const [photo, setPhoto] = useState<Blob | null>(null)
   const [isDeleteAvatar, setIsDeleteAvatar] = useState(false)
+  const [isModal, setIsModal] = useState(false)
+  const [forwardURL, setForwardURL] = useState('')
+  const [isLeftPage, setIsLeftPage] = useState(false)
+
+  const dispatch = useDispatch()
 
   const profileSchema = yup.object().shape({
     userName: yup
@@ -115,23 +124,88 @@ export const GeneralInfo = () => {
     control,
     reset,
     handleSubmit,
+    formState: { isDirty },
+    trigger,
+    getValues,
     formState: { errors },
   } = useForm<ProfileUserType | any>({
     mode: 'onChange',
     resolver: yupResolver(profileSchema),
     defaultValues: {
-      userName: profileData?.userName ?? '',
-      firstName: profileData?.firstName ?? '',
-      lastName: profileData?.lastName ?? '',
-      city: profileData?.city ?? '',
-      dateOfBirth: profileData?.dateOfBirth ?? '',
-      aboutMe: profileData?.aboutMe ?? '',
+      userName: '',
+      firstName: '',
+      lastName: '',
+      city: '',
+      dateOfBirth: '',
+      aboutMe: '',
     },
   })
 
+  const cacheForm = () => {
+    const currentForm: ProfileUserType = getValues()
+
+    currentForm.dateOfBirth = new Date(currentForm.dateOfBirth as number).toISOString()
+
+    let avatars: AvatarsType = []
+
+    if (photo) {
+      avatars.push({
+        url: URL.createObjectURL(photo as Blob),
+        fileSize: photo.size,
+      })
+    } else if (profileData && profileData?.avatars?.length > 0) {
+      avatars = profileData.avatars
+    }
+    currentForm.avatars = avatars
+
+    dispatch(setGeneralInfo(JSON.stringify(currentForm)))
+  }
+
+  const formStore: string =
+    useSelector(state => (state as RootState).profileSetting.generalInfo) ?? ''
+  const formCache: ProfileUserType = !!formStore && JSON.parse(formStore)
+
+  const handleRouteChange = (url: string, { shallow }: { shallow: boolean }) => {
+    const urlWithoutQuery = url.split('?')[1] ? url.split('?')[0] : url
+    const currentURL = '/' + router.locale + router.asPath
+    const privacyPolicyURL = '/' + router.locale + RoutersPath.authPrivacyPolicy
+
+    if (urlWithoutQuery !== currentURL && urlWithoutQuery !== privacyPolicyURL) {
+      setIsModal(true)
+      setForwardURL(urlWithoutQuery)
+
+      if (!shallow) {
+        router.events.emit('routeChangeError')
+        throw 'Abort route change. Please ignore this error.'
+      }
+    }
+  }
+
   useEffect(() => {
-    reset(profileData)
-  }, [isLoadingProfileData])
+    if (isDirty && !isLeftPage) {
+      router.events.on('routeChangeStart', handleRouteChange)
+
+      return () => {
+        router.events.off('routeChangeStart', handleRouteChange)
+      }
+    }
+  }, [isDirty, isLeftPage])
+
+  useEffect(() => {
+    if (formCache) {
+      reset(formCache)
+    } else if (profileData) {
+      reset(profileData)
+    }
+  }, [isLoadingProfileData, profileData])
+
+  useEffect(() => {
+    const checkValidation = async () => {
+      await trigger()
+    }
+
+    checkValidation()
+  }, [trigger])
 
   const updateAvatarHandler = () => {
     if (isDeleteAvatar) {
@@ -141,8 +215,7 @@ export const GeneralInfo = () => {
           router.push(RoutersPath.profile)
         })
         .catch(error => currentErrorHandler(error))
-    }
-    if (photo) {
+    } else if (photo) {
       const formData = new FormData()
 
       formData.set('file', photo as Blob)
@@ -152,7 +225,9 @@ export const GeneralInfo = () => {
           router.push(RoutersPath.profile)
         })
         .catch(error => currentErrorHandler(error))
-    } else router.push(RoutersPath.profile)
+    } else {
+      router.push(RoutersPath.profile)
+    }
   }
 
   const onSubmit = (data: ProfileUserType) => {
@@ -161,17 +236,21 @@ export const GeneralInfo = () => {
       .then(() => {
         updateAvatarHandler()
       })
+      .then(() => {
+        dispatch(setGeneralInfo(''))
+      })
       .catch(error => currentErrorHandler(error))
   }
-
-  const allFields: GeneralInfoFields = [
-    'userName',
-    'firstName',
-    'lastName',
-    'dateOfBirth',
-    'city',
-    'aboutMe',
-  ]
+  const handleLeftPageWithoutSave = () => {
+    dispatch(setGeneralInfo(''))
+    router.events.off('routeChangeStart', handleRouteChange)
+    setIsLeftPage(true)
+    setIsModal(false)
+    router.push(forwardURL)
+  }
+  const handleCloseModal = () => {
+    setIsModal(false)
+  }
 
   return (
     <>
@@ -185,7 +264,7 @@ export const GeneralInfo = () => {
               <Controller
                 name="avatars"
                 control={control}
-                render={({ field: { ref, ...args } }) => (
+                render={({ field: { ref, value, ...args } }) => (
                   <ProfilePhoto
                     outsideOnChange={data => {
                       setPhoto(data as Blob)
@@ -193,7 +272,7 @@ export const GeneralInfo = () => {
                     deleteAvatar={data => {
                       setIsDeleteAvatar(data)
                     }}
-                    photoFromServer={profileData?.avatars}
+                    uploadPhoto={formCache ? formCache.avatars : profileData.avatars}
                     {...args}
                   />
                 )}
@@ -261,18 +340,28 @@ export const GeneralInfo = () => {
               <Controller
                 name="dateOfBirth"
                 control={control}
-                render={({ field: { onChange, ref, ...args } }) => (
+                render={({ field: { onChange, value, ref, ...args } }) => (
                   <div>
                     <label>{t('DateBirthday')}</label>
                     <Calendar
-                      data={profileData.dateOfBirth}
+                      data={formCache ? formCache.dateOfBirth : profileData.dateOfBirth}
                       outsideOnChange={onChange}
                       classNameWrap={styles.calendar}
                       {...args}
                     />
-                    {errors && (
+                    {(errors as FieldErrors<ProfileUserType>).dateOfBirth && (
                       <p className={styles.errorCalendar}>
-                        {(errors as FieldErrors<ProfileUserType>).dateOfBirth?.message}
+                        {(errors as FieldErrors<ProfileUserType>).dateOfBirth?.message}{' '}
+                        <Link
+                          href={{
+                            pathname: `${RoutersPath.authPrivacyPolicy}`,
+                            query: { previousPage: `${RoutersPath.profileGeneralInformation}` },
+                          }}
+                          className={styles.agreementLink}
+                          onClick={() => cacheForm()}
+                        >
+                          {tRoot('PrivacyPolicy')}
+                        </Link>
                       </p>
                     )}
                   </div>
@@ -306,6 +395,19 @@ export const GeneralInfo = () => {
           <div className={styles.line}></div>
           <Button className={styles.button}>{tRoot('SaveChanges')}</Button>
         </form>
+      )}
+
+      {isModal && (
+        <Modal
+          title={tRoot('Notification')}
+          callBackCloseWindow={handleCloseModal}
+          extraButtonCB={handleLeftPageWithoutSave}
+          mainButtonCB={handleCloseModal}
+          extraButton={tRoot('Yes')}
+          mainButton={tRoot('No')}
+        >
+          {tRoot('LeftWithoutSave')}
+        </Modal>
       )}
     </>
   )

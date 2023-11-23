@@ -5,6 +5,7 @@ import { classNames } from '../../libs/classNames/classNames'
 import cls from './Button.module.scss'
 
 export enum ButtonTheme {
+  NOBORDER = 'noborder',
   CLEAR = 'clear',
   FILLED = 'filled',
 }

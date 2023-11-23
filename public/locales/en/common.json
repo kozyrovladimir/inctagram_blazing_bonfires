@@ -9,12 +9,13 @@
   "Description": "Description",
   "Save": "Save",
   "SaveChanges": "Save Changes",
-  "AddProfilePhoto": "Add a Profile Photo",
   "SelectFromComputer": "Select from Computer",
   "ProfileSetting": "Profile Setting",
   "ErrorTitle": "Error!",
   "AttentionTitle": "Attention!",
   "Notification": "Notification",
+  "PrivacyPolicy": "Privacy Policy",
+  "LeftWithoutSave": "Do you really want to leave the page without saving your data?",
   "And": "and",
   "Yes": "Yes",
   "No": "No",
@@ -41,7 +42,7 @@
     "RequiredField": "Required field",
     "SomethingWentWrong": "Something went wrong",
     "PasswordsMustMatch": "Passwords must match",
-    "MinAge": "A user under 13 cannot create a profile"
+    "MinAge": "A user under 13 cannot create a profile."
   },
   "Auth": {
     "SignUp": "Sign Up",
@@ -61,7 +62,6 @@
     "EnterPasswordConfirmation": "Enter password confirmation",
     "AgreeToThe": "I agree to the",
     "TermsOfService": "Terms of Service",
-    "PrivacyPolicy": "Privacy Policy",
     "BackToSignUp": "Back to sign up",
     "HaveAccount?": "Do you have an account?",
     "DontHaveAccount?": "Don’t have an account?",
@@ -104,7 +104,10 @@
     "City": "City",
     "EnterCity": "Enter your city",
     "AboutMe": "About me",
-    "WriteAboutYourself": "Write about yourself"
+    "WriteAboutYourself": "Write about yourself",
+    "BackToSignUpProfileSettings": "Back to profile setting",
+    "AddProfilePhoto": "Add a Profile Photo",
+    "ReallyDeletePhoto": "Do you really want to delete your profile photo?"
   },
   "Devices": {
     "ThisDevices": "This devices",
