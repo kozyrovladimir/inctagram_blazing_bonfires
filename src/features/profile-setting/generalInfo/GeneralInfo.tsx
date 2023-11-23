@@ -82,6 +82,7 @@ export const GeneralInfo = () => {
   const [isModal, setIsModal] = useState(false)
   const [forwardURL, setForwardURL] = useState('')
   const [isLeftPage, setIsLeftPage] = useState(false)
+  const [isAvatarChanged, setIsAvatarChanged] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -182,14 +183,14 @@ export const GeneralInfo = () => {
   }
 
   useEffect(() => {
-    if (isDirty && !isLeftPage) {
+    if ((isDirty || isAvatarChanged) && !isLeftPage) {
       router.events.on('routeChangeStart', handleRouteChange)
 
       return () => {
         router.events.off('routeChangeStart', handleRouteChange)
       }
     }
-  }, [isDirty, isLeftPage])
+  }, [isDirty, isLeftPage, isAvatarChanged])
 
   useEffect(() => {
     if (formCache) {
@@ -268,11 +269,13 @@ export const GeneralInfo = () => {
                   <ProfilePhoto
                     outsideOnChange={data => {
                       setPhoto(data as Blob)
+                      setIsAvatarChanged(true)
                     }}
                     deleteAvatar={data => {
                       setIsDeleteAvatar(data)
+                      setIsAvatarChanged(true)
                     }}
-                    uploadPhoto={formCache ? formCache.avatars : profileData.avatars}
+                    value={formCache ? formCache.avatars : profileData.avatars}
                     {...args}
                   />
                 )}

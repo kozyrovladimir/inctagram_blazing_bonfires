@@ -15,17 +15,17 @@ import { RemoveAvatarButton } from '@/shared/ui/removeButton/RemoveAvatarButton'
 
 type Props = {
   outsideOnChange: (photo: Blob) => void
-  uploadPhoto: AvatarsType
+  value: AvatarsType
   deleteAvatar: (data: boolean) => void
 }
 
-export const ProfilePhoto = ({ outsideOnChange, uploadPhoto, deleteAvatar }: Props) => {
+export const ProfilePhoto = ({ outsideOnChange, value, deleteAvatar }: Props) => {
   const {
     t,
     i18n: { t: tRoot, language },
   } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
-  const isPhotoFromServer = uploadPhoto?.length > 0
-  const photoDefaultSRC = isPhotoFromServer ? (uploadPhoto[0].url as string) : noImage
+  const isPhotoFromServer = value?.length > 0
+  const photoDefaultSRC = isPhotoFromServer ? (value[0].url as string) : noImage
 
   const [open, setOpen] = useState(false)
   const [photoSRC, setPhotoSRC] = useState<string>(photoDefaultSRC)
