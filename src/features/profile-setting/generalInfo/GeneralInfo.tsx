@@ -133,6 +133,7 @@ export const GeneralInfo = () => {
   const settingsSaved = () => {
     setIsModal(true)
     setIsSaved(true)
+    setIsFormChanged(false)
   }
 
   const handleUpdateAvatar = () => {
