@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
 
-import { GeneralInfoView } from '../ui/generalInfo/GeneralInfo'
+import { GeneralInfoView } from '../ui/generalInfo/GeneralInfoView'
 
 import { useGetProfileQuery, useUpdateProfileMutation, useMeQuery } from '@/shared/api'
 import {
@@ -18,8 +18,9 @@ import {
 } from '@/shared/api/services/profile/profile.api'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import { RoutersPath } from '@/shared/constants/paths'
-import { useFormCache } from '@/shared/hooks/useFormCache'
+import { useFormCache } from '@/shared/hooks/generalInfoPage/useFormCache'
 import { setGeneralInfo } from '@/shared/providers/storeProvider/slices/profileSettings/generalInfoReducer'
+import { ShortLangs } from '@/shared/types/langSwitcherTypes'
 import { errorHandler } from '@/shared/utils/errorHandler'
 
 export const GeneralInfo = () => {
@@ -79,9 +80,11 @@ export const GeneralInfo = () => {
     )
   }
 
-  if (currentError) {
-    currentErrorHandler(currentError)
-  }
+  useEffect(() => {
+    if (currentError) {
+      currentErrorHandler(currentError)
+    }
+  }, [currentError])
 
   const profileSchema = yup.object().shape({
     userName: yup
@@ -157,17 +160,33 @@ export const GeneralInfo = () => {
       await trigger()
     }
 
-    checkValidation()
+    if (profileData || formCache) {
+      checkValidation()
+    }
   }, [trigger])
 
   const handleRouteChange = (url: string, { shallow }: { shallow: boolean }) => {
-    const urlWithoutQuery = url.split('?')[1]
-      ? '/' + router.locale + url.split('?')[0]
-      : '/' + router.locale + url
-    const currentURL = '/' + router.locale + router.asPath
-    const privacyPolicyURL = '/' + router.locale + RoutersPath.authPrivacyPolicy
+    const langPrefix = router.locale === ShortLangs.EN ? '' : '/' + router.locale
 
-    if (urlWithoutQuery !== currentURL && urlWithoutQuery !== privacyPolicyURL) {
+    const urlWithoutQuery = url.split('?')[1] ? url.split('?')[0] : url
+    const currentURL = langPrefix + router.asPath
+    const privacyPolicyURL = langPrefix + RoutersPath.authPrivacyPolicy
+    const conditionLeftPage =
+      urlWithoutQuery !== currentURL &&
+      urlWithoutQuery !== privacyPolicyURL &&
+      (router.locale === ShortLangs.EN
+        ? url !== ShortLangs.RU + router.asPath
+        : url !== router.asPath)
+
+    console.log(router.locale)
+    console.log(url)
+    console.log(router.asPath)
+    console.log(currentURL)
+    console.log(urlWithoutQuery)
+
+    console.log(url !== router.asPath)
+
+    if (conditionLeftPage) {
       setIsModal(true)
       setForwardURL(urlWithoutQuery)
 

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Control, Controller, FieldErrors, UseFormHandleSubmit } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast'
 
-import styles from './GeneralInfo.module.scss'
+import styles from './GeneralInfoView.module.scss'
 
 import { AutocompletionOfCities } from '@/features/profile-setting/generalInfo/autocompletion-of-cities/AutocompletionOfCities'
 import { ProfilePhoto } from '@/features/profile-setting/ui/profilePhoto/ProfilePhoto'

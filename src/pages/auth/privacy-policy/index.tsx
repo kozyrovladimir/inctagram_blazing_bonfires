@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -10,6 +8,7 @@ import styles from './PrivacyPolicy.module.scss'
 
 import backIcon from '@/shared/assets/icons/icons/arrowBackIcon.svg'
 import { RoutersPath } from '@/shared/constants/paths'
+import { useGetQueryParams } from '@/shared/hooks/useGetQueryParams'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 
@@ -31,14 +30,21 @@ const PrivacyPolicyPage = () => {
   const { t: tProfile } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
 
   const router = useRouter()
+  const { query } = useGetQueryParams()
 
-  const previousPage = router.query.previousPage
+  const previousPage = query.previousPage ? query.previousPage : ''
+
+  const handleReturnOnPrevious = () => {
+    if (previousPage) {
+      router.push(previousPage as string)
+    } else router.back()
+  }
 
   return (
     <>
       <div className={styles.container}>
         <Button
-          onClick={() => router.back()}
+          onClick={handleReturnOnPrevious}
           theme={ButtonTheme.NOBORDER}
           size={ButtonSize.LARGE}
           className={styles.backBtn}
