@@ -1,27 +1,30 @@
 import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { SerializedError } from '@reduxjs/toolkit'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useForm } from 'react-hook-form'
+import { Controller, FieldErrors, useForm } from 'react-hook-form'
+import { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import * as yup from 'yup'
 
-import { GeneralInfoView } from '../ui/generalInfo/GeneralInfoView'
+import { ProfilePhoto } from '../ui/profilePhoto/ProfilePhoto'
 
-import { useGetProfileQuery, useUpdateProfileMutation, useMeQuery } from '@/shared/api'
-import {
-  useDeleteAvatarMutation,
-  useUpdateAvatarMutation,
-} from '@/shared/api/services/profile/profile.api'
+import { AutocompletionOfCities } from './autocompletion-of-cities/AutocompletionOfCities'
+import styles from './GeneralInfo.module.scss'
+import { schema } from './yupSchema/schema'
+
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import { RoutersPath } from '@/shared/constants/paths'
+import { useChangeRoute } from '@/shared/hooks/generalInfoPage/useChangeRoute'
 import { useFormCache } from '@/shared/hooks/generalInfoPage/useFormCache'
+import { useServerRequest } from '@/shared/hooks/generalInfoPage/useServerRequest'
 import { setGeneralInfo } from '@/shared/providers/storeProvider/slices/profileSettings/generalInfoReducer'
-import { ShortLangs } from '@/shared/types/langSwitcherTypes'
-import { errorHandler } from '@/shared/utils/errorHandler'
+import { Button } from '@/shared/ui/button/Button'
+import { Input, InputType } from '@/shared/ui/input/Input'
+import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
+import { Modal } from '@/shared/ui/modal/Modal'
+import { Calendar } from '@/widgets/calendar/ui/Calendar'
 
 export const GeneralInfo = () => {
   const router = useRouter()
@@ -42,83 +45,35 @@ export const GeneralInfo = () => {
 
   const dispatch = useDispatch()
 
-  const { data, isError, error, isLoading } = useMeQuery()
-
   const {
-    data: profileData,
-    error: errorProfileData,
-    isLoading: isLoadingProfileData,
-  } = useGetProfileQuery(data?.userId ? data?.userId.toString() : '', {
-    skip: isLoading || isError,
+    profileData,
+    updateProfile,
+    updateAvatar,
+    deleteAvatar,
+    currentIsLoading,
+    isLoadingProfileData,
+    currentErrorHandler,
+  } = useServerRequest({
+    translate: {
+      notAuthorization: tError('NotAuthorization'),
+      serverNotAvailable: tError('ServerNotAvailable'),
+      networkError: tError('NetworkError'),
+    },
   })
 
-  const [updateProfile, { isLoading: isLoadingUpdateProfile, error: errorUpdateProfile }] =
-    useUpdateProfileMutation()
-
-  const [updateAvatar, { isLoading: isLoadingAvatar, error: errorUpdateAvatar }] =
-    useUpdateAvatarMutation()
-
-  const [deleteAvatar, { isLoading: isLoadingDeleteAvatar, error: errorDeleteAvatar }] =
-    useDeleteAvatarMutation()
-
-  const currentIsLoading =
-    isLoading ||
-    isLoadingUpdateProfile ||
-    isLoadingProfileData ||
-    isLoadingAvatar ||
-    isLoadingDeleteAvatar
-
-  const currentError =
-    error || errorProfileData || errorUpdateProfile || errorUpdateAvatar || errorDeleteAvatar
-
-  const currentErrorHandler = (error: FetchBaseQueryError | SerializedError | undefined) => {
-    errorHandler(
-      error,
-      tError('NotAuthorization'),
-      tError('ServerNotAvailable'),
-      tError('NetworkError')
-    )
-  }
-
-  useEffect(() => {
-    if (currentError) {
-      currentErrorHandler(currentError)
-    }
-  }, [currentError])
-
-  const profileSchema = yup.object().shape({
-    userName: yup
-      .string()
-      .min(6, tError('MinCharacters6'))
-      .max(30, tError('MaxCharacters30'))
-      .matches(/[0-9A-Za-z_-]{6,30}$/, tError('UserNameValidationError'))
-      .nullable()
-      .required(tError('RequiredField')),
-    firstName: yup
-      .string()
-      .min(1, tError('MinCharacters1'))
-      .max(50, tError('MaxCharacters50'))
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('StartLatterNotSpecial'))
-      .nullable()
-      .required(tError('RequiredField')),
-    lastName: yup
-      .string()
-      .min(1, tError('MinCharacters1'))
-      .max(50, tError('MaxCharacters50'))
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('StartLatterNotSpecial'))
-      .nullable()
-      .required(tError('RequiredField')),
-    city: yup
-      .string()
-      .min(2, tError('MinCharacters2'))
-      .max(30, tError('MaxCharacters30'))
-      .nullable()
-      .matches(/^[A-ZА-Я][a-zа-я]{2,30}$/, tError('StartLatterNotSpecial')),
-    dateOfBirth: yup
-      .date()
-      .nullable()
-      .max(new Date(new Date().setFullYear(new Date().getFullYear() - 13)), tError('MinAge')),
-    aboutMe: yup.string().nullable().max(200, tError('MaxCharacters200')),
+  const schemaGeneralInfo = schema({
+    translate: {
+      minCharacters6: tError('MinCharacters6'),
+      maxCharacters30: tError('MaxCharacters30'),
+      minCharacters1: tError('MinCharacters1'),
+      minCharacters2: tError('MinCharacters2'),
+      maxCharacters50: tError('MaxCharacters50'),
+      maxCharacters200: tError('MaxCharacters200'),
+      requiredField: tError('RequiredField'),
+      userNameValidationError: tError('UserNameValidationError'),
+      startLatterNotSpecial: tError('StartLatterNotSpecial'),
+      minAge: tError('MinAge'),
+    },
   })
 
   const {
@@ -130,7 +85,7 @@ export const GeneralInfo = () => {
     formState: { errors, isDirty },
   } = useForm<ProfileUserType | any>({
     mode: 'onChange',
-    resolver: yupResolver(profileSchema),
+    resolver: yupResolver(schemaGeneralInfo),
     defaultValues: {
       userName: '',
       firstName: '',
@@ -165,47 +120,15 @@ export const GeneralInfo = () => {
     }
   }, [trigger])
 
-  const handleRouteChange = (url: string, { shallow }: { shallow: boolean }) => {
-    const langPrefix = router.locale === ShortLangs.EN ? '' : '/' + router.locale
-
-    const urlWithoutQuery = url.split('?')[1] ? url.split('?')[0] : url
-    const currentURL = langPrefix + router.asPath
-    const privacyPolicyURL = langPrefix + RoutersPath.authPrivacyPolicy
-    const conditionLeftPage =
-      urlWithoutQuery !== currentURL &&
-      urlWithoutQuery !== privacyPolicyURL &&
-      (router.locale === ShortLangs.EN
-        ? url !== ShortLangs.RU + router.asPath
-        : url !== router.asPath)
-
-    console.log(router.locale)
-    console.log(url)
-    console.log(router.asPath)
-    console.log(currentURL)
-    console.log(urlWithoutQuery)
-
-    console.log(url !== router.asPath)
-
-    if (conditionLeftPage) {
-      setIsModal(true)
-      setForwardURL(urlWithoutQuery)
-
-      if (!shallow) {
-        router.events.emit('routeChangeError')
-        throw 'Abort route change. Please ignore this error.'
-      }
-    }
-  }
-
-  useEffect(() => {
-    if ((isDirty || isFormChanged || !!formCache) && !isLeftPage) {
-      router.events.on('routeChangeStart', handleRouteChange)
-
-      return () => {
-        router.events.off('routeChangeStart', handleRouteChange)
-      }
-    }
-  }, [isDirty, isLeftPage, isFormChanged, formCache])
+  useChangeRoute({
+    router,
+    isDirty,
+    isLeftPage,
+    isFormChanged,
+    formCache,
+    setIsModal,
+    setForwardURL,
+  })
 
   const settingsSaved = () => {
     setIsModal(true)
@@ -267,38 +190,191 @@ export const GeneralInfo = () => {
   }
 
   return (
-    <GeneralInfoView
-      currentIsLoading={currentIsLoading}
-      profileData={profileData}
-      handleSubmit={handleSubmit}
-      onSubmit={onSubmit}
-      control={control}
-      handleChangedAvatar={handleChangedAvatar}
-      handleDeleteAvatar={handleDeleteAvatar}
-      formCache={formCache}
-      errors={errors}
-      cacheForm={cacheForm}
-      translateFields={{
-        userNameLabel: t('UserName'),
-        firstNameLabel: t('FirstName'),
-        lastNameLabel: t('LastName'),
-        cityLabel: t('City'),
-        dateOfBirthLabel: t('DateBirthday'),
-        aboutMeLabel: t('AboutMe'),
-        privacyPolicy: tRoot('PrivacyPolicy'),
-        notification: tRoot('Notification'),
-        yes: tRoot('Yes'),
-        no: tRoot('No'),
-        ok: tRoot('Ok'),
-        saveChanges: tRoot('SaveChanges'),
-        leftWithoutSave: tRoot('LeftWithoutSave'),
-        settingsSaved: t('SettingsSaved'),
-      }}
-      isModal={isModal}
-      isSaved={isSaved}
-      handleCloseModal={handleCloseModal}
-      handleLeftPageWithoutSave={handleLeftPageWithoutSave}
-    />
-    // </>
+    <>
+      {currentIsLoading && <LinearLoader />}
+      <Toaster position="top-right" />
+
+      {!!profileData && (
+        <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.content}>
+            <div className={styles.photoContent}>
+              <Controller
+                name="avatars"
+                control={control}
+                render={({ field: { ref, value, ...args } }) => (
+                  <ProfilePhoto
+                    outsideOnChange={data => handleChangedAvatar(data)}
+                    deleteAvatar={data => handleDeleteAvatar(data)}
+                    value={formCache ? formCache.avatars : profileData.avatars}
+                    {...args}
+                  />
+                )}
+              />
+            </div>
+            <div className={styles.textFieldsContent}>
+              <Controller
+                name="userName"
+                control={control}
+                render={({ field: { ref, value, ...args } }) => (
+                  <Input
+                    label={t('UserName')}
+                    type={InputType.TEXT}
+                    placeholder={''}
+                    error={(errors as FieldErrors<ProfileUserType>).userName?.message}
+                    classNameWrap={styles.myCustomLabel}
+                    value={value ?? ''}
+                    {...args}
+                  />
+                )}
+              />
+              <Controller
+                name="firstName"
+                control={control}
+                render={({ field: { ref, value, ...args } }) => (
+                  <Input
+                    label={t('FirstName')}
+                    placeholder={''}
+                    type={InputType.TEXT}
+                    error={(errors as FieldErrors<ProfileUserType>).firstName?.message}
+                    classNameWrap={styles.myCustomLabel}
+                    value={value ?? ''}
+                    {...args}
+                  />
+                )}
+              />
+              <Controller
+                name="lastName"
+                control={control}
+                render={({ field: { ref, value, ...args } }) => (
+                  <Input
+                    label={t('LastName')}
+                    placeholder={''}
+                    type={InputType.TEXT}
+                    error={(errors as FieldErrors<ProfileUserType>).lastName?.message}
+                    classNameWrap={styles.myCustomLabel}
+                    value={value ?? ''}
+                    {...args}
+                  />
+                )}
+              />
+              <Controller
+                name="city"
+                control={control}
+                render={({ field: { ref, value, ...args } }) => (
+                  <>
+                    <label>{t('City')}</label>
+                    <AutocompletionOfCities
+                      error={(errors as FieldErrors<ProfileUserType>).city?.message}
+                      {...args}
+                    />
+                  </>
+                )}
+              />
+              <Controller
+                name="dateOfBirth"
+                control={control}
+                render={({ field: { onChange, value, ref, ...args } }) => (
+                  <div>
+                    <label>{t('DateBirthday')}</label>
+                    <Calendar
+                      data={formCache ? formCache.dateOfBirth : profileData.dateOfBirth}
+                      outsideOnChange={onChange}
+                      classNameWrap={styles.calendar}
+                      {...args}
+                    />
+                    {(errors as FieldErrors<ProfileUserType>).dateOfBirth && (
+                      <p className={styles.errorCalendar}>
+                        {(errors as FieldErrors<ProfileUserType>).dateOfBirth?.message}{' '}
+                        <Link
+                          href={{
+                            pathname: `${RoutersPath.authPrivacyPolicy}`,
+                            query: { previousPage: `${RoutersPath.profileGeneralInformation}` },
+                          }}
+                          className={styles.agreementLink}
+                          onClick={() => cacheForm()}
+                        >
+                          {tRoot('PrivacyPolicy')}
+                        </Link>
+                      </p>
+                    )}
+                  </div>
+                )}
+              />
+
+              <div className={styles.textareaContent}>
+                <label className={styles.aboutMeLabel}>{t('AboutMe')}</label>
+                <Controller
+                  name="aboutMe"
+                  control={control}
+                  render={({ field: { ref, value, ...args } }) => (
+                    <textarea
+                      rows={4}
+                      cols={50}
+                      placeholder=""
+                      className={styles.aboutMeTextarea}
+                      value={value ?? ''}
+                      {...args}
+                    />
+                  )}
+                />
+                {errors && (
+                  <p className={styles.errorTextarea}>
+                    {(errors as FieldErrors<ProfileUserType>).aboutMe?.message}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className={styles.line}></div>
+          <Button className={styles.button}>{tRoot('SaveChanges')}</Button>
+        </form>
+      )}
+
+      {isModal && (
+        <Modal
+          title={tRoot('Notification')}
+          callBackCloseWindow={handleCloseModal}
+          extraButtonCB={handleLeftPageWithoutSave}
+          mainButtonCB={handleCloseModal}
+          extraButton={isSaved ? undefined : tRoot('Yes')}
+          mainButton={isSaved ? tRoot('Ok') : tRoot('No')}
+        >
+          {isSaved ? tRoot('SaveChanges') : tRoot('LeftWithoutSave')}
+        </Modal>
+      )}
+    </>
+
+    // <GeneralInfoView
+    //   currentIsLoading={currentIsLoading}
+    //   profileData={profileData}
+    //   handleSubmit={handleSubmit}
+    //   onSubmit={onSubmit}
+    //   control={control}
+    //   handleChangedAvatar={handleChangedAvatar}
+    //   handleDeleteAvatar={handleDeleteAvatar}
+    //   formCache={formCache}
+    //   errors={errors}
+    //   cacheForm={cacheForm}
+    //   translateFields={{
+    //     userNameLabel: t('UserName'),
+    //     firstNameLabel: t('FirstName'),
+    //     lastNameLabel: t('LastName'),
+    //     cityLabel: t('City'),
+    //     dateOfBirthLabel: t('DateBirthday'),
+    //     aboutMeLabel: t('AboutMe'),
+    //     privacyPolicy: tRoot('PrivacyPolicy'),
+    //     notification: tRoot('Notification'),
+    //     yes: tRoot('Yes'),
+    //     no: tRoot('No'),
+    //     ok: tRoot('Ok'),
+    //     saveChanges: tRoot('SaveChanges'),
+    //     leftWithoutSave: tRoot('LeftWithoutSave'),
+    //     settingsSaved: t('SettingsSaved'),
+    //   }}
+    //   isModal={isModal}
+    //   isSaved={isSaved}
+    //   handleCloseModal={handleCloseModal}
+    //   handleLeftPageWithoutSave={handleLeftPageWithoutSave}
+    // />
   )
 }
