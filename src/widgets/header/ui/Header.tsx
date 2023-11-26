@@ -31,7 +31,7 @@ export const Header = () => {
             <div className={styles.count}>{count}</div>
           </div>
         )}
-        <div>
+        <div className={styles.langSwitcherContainer}>
           <LanguageSelect />
         </div>
       </div>
