@@ -24,7 +24,7 @@ export const LanguageSelect = () => {
       setInitialValue(langFromLocal)
       if (
         pathname !==
-        (RoutersPath.authRegistrationConfirmation || RoutersPath.authExpirredVerificationLink)
+        (RoutersPath.authRegistrationConfirmation || RoutersPath.authExpiredVerificationLink)
       ) {
         router.push({ pathname, query }, asPath, { locale: langFromLocal })
       }

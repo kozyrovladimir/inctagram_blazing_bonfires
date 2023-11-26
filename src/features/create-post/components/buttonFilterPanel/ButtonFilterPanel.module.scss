@@ -1,0 +1,38 @@
+.filterPanelContainer {
+  width: 100%;
+  display: flex;
+  z-index: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  bottom: 0;
+  position: absolute;
+  padding: 12px;
+  left: 0;
+
+  .leftPanel {
+    display: flex;
+    z-index: 0;
+    gap: 30px;
+  }
+  .zoomInput {
+    position: absolute;
+    top: -36px;
+    background-color: #4c4c4c;
+    padding: 10px;
+    border-radius: 2px;
+  }
+
+  .rightButton {
+  }
+
+  .sizeButton {
+    background-color: #4c4c4c;
+    border: none;
+    width: 36px;
+  }
+  .slider {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+  }
+}

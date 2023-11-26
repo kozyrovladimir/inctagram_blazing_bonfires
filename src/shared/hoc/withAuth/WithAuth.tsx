@@ -12,7 +12,7 @@ import { ShortLangs } from '@/shared/types/langSwitcherTypes'
 // const publicPaths = []
 
 const emailConfirmationPaths = [
-  RoutersPath.authExpirredVerificationLink,
+  RoutersPath.authExpiredVerificationLink,
   RoutersPath.authRegistrationConfirmation,
 ]
 
@@ -51,8 +51,8 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
       case RoutersPath.authConfirmedEmail:
         pageUnautorization = RoutersPath.authConfirmedEmail
         break
-      case RoutersPath.authExpirredVerificationLink:
-        pageUnautorization = RoutersPath.authExpirredVerificationLink
+      case RoutersPath.authExpiredVerificationLink:
+        pageUnautorization = RoutersPath.authExpiredVerificationLink
         break
     }
 

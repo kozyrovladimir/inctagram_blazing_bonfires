@@ -3,8 +3,9 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import router from 'next/router'
 import { toast } from 'react-hot-toast'
 
-import { RoutersPath } from '../constants/paths'
 import { serverError } from '../types/errorTypes'
+
+import { RoutersPath } from '@/shared/constants/paths'
 
 export const errorHandler = (
   error: FetchBaseQueryError | SerializedError | undefined,

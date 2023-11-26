@@ -343,38 +343,5 @@ export const GeneralInfo = () => {
         </Modal>
       )}
     </>
-
-    // <GeneralInfoView
-    //   currentIsLoading={currentIsLoading}
-    //   profileData={profileData}
-    //   handleSubmit={handleSubmit}
-    //   onSubmit={onSubmit}
-    //   control={control}
-    //   handleChangedAvatar={handleChangedAvatar}
-    //   handleDeleteAvatar={handleDeleteAvatar}
-    //   formCache={formCache}
-    //   errors={errors}
-    //   cacheForm={cacheForm}
-    //   translateFields={{
-    //     userNameLabel: t('UserName'),
-    //     firstNameLabel: t('FirstName'),
-    //     lastNameLabel: t('LastName'),
-    //     cityLabel: t('City'),
-    //     dateOfBirthLabel: t('DateBirthday'),
-    //     aboutMeLabel: t('AboutMe'),
-    //     privacyPolicy: tRoot('PrivacyPolicy'),
-    //     notification: tRoot('Notification'),
-    //     yes: tRoot('Yes'),
-    //     no: tRoot('No'),
-    //     ok: tRoot('Ok'),
-    //     saveChanges: tRoot('SaveChanges'),
-    //     leftWithoutSave: tRoot('LeftWithoutSave'),
-    //     settingsSaved: t('SettingsSaved'),
-    //   }}
-    //   isModal={isModal}
-    //   isSaved={isSaved}
-    //   handleCloseModal={handleCloseModal}
-    //   handleLeftPageWithoutSave={handleLeftPageWithoutSave}
-    // />
   )
 }

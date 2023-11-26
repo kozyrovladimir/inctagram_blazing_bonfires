@@ -7,7 +7,7 @@ export const enum RoutersPath {
   forgotPassword = '/forgot-password',
   createNewPassword = '/create-new-password',
   invalidVerificationLink = '/invalid-verification-link',
-  authExpirredVerificationLink = '/auth/expired-verification-link',
+  authExpiredVerificationLink = '/auth/expired-verification-link',
   authRegistrationConfirmation = '/auth/registration-confirmation',
   authTermsOfService = '/auth/terms-of-service',
   authPrivacyPolicy = '/auth/privacy-policy',
@@ -17,5 +17,9 @@ export const enum RoutersPath {
   profileAccountManagement = '/profile/account-management',
   profileMyPayments = '/profile/my-payments',
   folderNextStaticMedia = '/_next/static/media/',
+  superAdminUsersList = '/super-admin/users-list',
+  superAdminStatistics = '/super-admin/statistics',
+  superAdminPaymentsList = '/super-admin/payments-list',
+  superAdminPostsList = '/super-admin/posts-list',
   apiAuthGithubLogin = 'https://inctagram.work/api/v1/auth/github/login',
 }

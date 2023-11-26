@@ -2,7 +2,7 @@ import { RoutersPath } from '../constants/paths'
 
 export const isRenderSidebar = (pathname: string) => {
   const pathWithoutSidebar: string[] = [
-    RoutersPath.authExpirredVerificationLink,
+    RoutersPath.authExpiredVerificationLink,
     RoutersPath.signIn,
     RoutersPath.signUp,
     RoutersPath.sentEmail,
