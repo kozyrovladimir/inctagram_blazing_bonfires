@@ -9,10 +9,10 @@ import { serverError } from '../types/errorTypes'
 export const errorHandler = (
   error: FetchBaseQueryError | SerializedError | undefined,
   notAuthorizationMessage: string,
-  tryAgainMessage: string,
+  ServerErrorMessage: string,
   networkErrorMessage: string
 ) => {
-  const notAuthorizationHadler = () => {
+  const notAuthorizationHandler = () => {
     toast.error(notAuthorizationMessage, { id: notAuthorizationMessage })
     router.push(RoutersPath.signIn)
   }
@@ -21,11 +21,9 @@ export const errorHandler = (
     const { status } = error as FetchBaseQueryError
 
     if (status === 401) {
-      notAuthorizationHadler()
+      notAuthorizationHandler()
     } else {
-      const errorMessage =
-        // ((error as serverError)?.data?.messages[0]?.message ||
-        (error as serverError)?.data?.error ?? tryAgainMessage
+      const errorMessage = (error as serverError)?.data?.error ?? ServerErrorMessage
 
       toast.error(errorMessage, { id: errorMessage })
     }

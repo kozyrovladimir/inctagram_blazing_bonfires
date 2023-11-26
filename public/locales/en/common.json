@@ -19,10 +19,11 @@
   "And": "and",
   "Yes": "Yes",
   "No": "No",
+  "Ok": "Ok",
 
   "Error": {
     "NetworkError": "Network error",
-    "TryAgain": "Error, try again late",
+    "ServerNotAvailable": "Error! Server is not available!",
     "NotAuthorization": "You are not authorization, please enter in your account",
     "NotOfflineMode": "Network error. Sorry, offline mode isn&apos;t ready",
     "PasswordIncorrect": "The password is incorrect. Try again please ",
@@ -107,7 +108,8 @@
     "WriteAboutYourself": "Write about yourself",
     "BackToSignUpProfileSettings": "Back to profile setting",
     "AddProfilePhoto": "Add a Profile Photo",
-    "ReallyDeletePhoto": "Do you really want to delete your profile photo?"
+    "ReallyDeletePhoto": "Do you really want to delete your profile photo?",
+    "SettingsSaved": "Your settings are saved!"
   },
   "Devices": {
     "ThisDevices": "This devices",
