@@ -29,8 +29,9 @@ export const CloseModal = ({ cropContext }: Props) => {
     // преобразование url всех изображений в file
     for (const photo of cropContext.photos) {
       const result = await fetch(photo.filteredUrl)
+
       const blob = await result.blob()
-      const file = new File([blob], 'image', { type: 'image/jpg' })
+      const file = new File([blob], 'image', { type: 'image/jpeg' })
 
       // Добавление file в FormData
       formData.append('file', file)
@@ -43,7 +44,6 @@ export const CloseModal = ({ cropContext }: Props) => {
         const filteredPhoto = filterBestQualityImages(uploadedImages)
 
         localStorage.setItem('uploadedImages', JSON.stringify(filteredPhoto))
-        console.log('image', filteredPhoto)
         cropContext.setIsOpenModal(false)
         cropContext.setIsOpen(false)
       })

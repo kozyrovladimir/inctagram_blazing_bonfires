@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Image from 'next/image'
 import { useWizard } from 'react-use-wizard'
@@ -15,7 +15,6 @@ import { useSlider } from '@/features/create-post/utils/useSlider'
 import backIcon from '@/shared/assets/icons/arrow back/back.svg'
 import next from '@/shared/assets/icons/filterPostPhoto/next.svg'
 import prev from '@/shared/assets/icons/filterPostPhoto/prev.svg'
-import closeIcon from '@/shared/assets/icons/logout/close.svg'
 import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 export const Filters = () => {
@@ -86,9 +85,7 @@ export const Filters = () => {
                     className={style.filterImage}
                     image={cropContext.photos[currentIndex].croppedUrl}
                     filter={filter.filter}
-                    onChange={(filteredImg: string) => {
-                      cropContext.setFilteredUrl(filteredImg, currentIndex)
-                    }}
+                    onChange={() => {}}
                     preserveAspectRatio={'contain'}
                   />
                 </div>
