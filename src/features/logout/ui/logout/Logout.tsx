@@ -9,7 +9,7 @@ import style from './Logout.module.scss'
 
 import { useLogoutMutation, useMeQuery } from '@/shared/api'
 import logoutImg from '@/shared/assets/icons/logout/logout.svg'
-import { SIGN_IN_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { Modal } from '@/shared/ui/modal/Modal'
 
@@ -35,7 +35,7 @@ export const Logout = ({ className, theme, size }: Props) => {
     logout()
       .unwrap()
       .then(() => {
-        router.push(SIGN_IN_PATH)
+        router.push(RoutersPath.signIn)
       })
       .finally(() => {
         closeModal()

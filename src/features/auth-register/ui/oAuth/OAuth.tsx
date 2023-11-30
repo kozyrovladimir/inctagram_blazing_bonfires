@@ -9,20 +9,20 @@ import { toast } from 'react-hot-toast'
 import styles from '@/features/auth-register/ui/oAuth/OAuth.module.scss'
 import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
-import { API_AUTH_GITHUB_LOGIN_PATH, PROFILE_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 
 export const OAuth = () => {
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
   const router = useRouter()
 
   const loginGoogle = useGoogleLogin({
-    onSuccess: () => router.push(PROFILE_PATH),
+    onSuccess: () => router.push(RoutersPath.profile),
     onError: () => toast.error(tError('SomethingWentWrong')),
     flow: 'auth-code',
   })
 
   const onGithubLogin = (): void => {
-    window.location.assign(API_AUTH_GITHUB_LOGIN_PATH)
+    window.location.assign(RoutersPath.apiAuthGithubLogin)
   }
 
   return (

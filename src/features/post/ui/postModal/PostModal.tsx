@@ -9,12 +9,12 @@ import likeIcon from '@/shared/assets/icons/icons/likeIcon.svg'
 import saveIcon from '@/shared/assets/icons/icons/saveIcon.svg'
 import shareIcon from '@/shared/assets/icons/icons/shareIcon.svg'
 import imgExample from '@/shared/assets/icons/image/imgExample.png'
-import { PROFILE_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 
 export const PostModal = () => {
   return (
     <div className={styles.postContainer}>
-      <Link href={PROFILE_PATH}>
+      <Link href={RoutersPath.profile}>
         <div className={styles.closeIconContainer}>
           <Image src={closeIcon} alt={''} />
         </div>

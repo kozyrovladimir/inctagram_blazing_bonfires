@@ -12,7 +12,7 @@ import styles from './SignUpForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
 import { SignUpType, useSignUpMutation } from '@/shared/api'
-import { SIGN_IN_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
 import FormContainer from '@/shared/ui/formContainer/FormContainer'
@@ -43,19 +43,19 @@ export const SignUpForm = () => {
   const schema = yup.object().shape({
     userName: yup
       .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers30'))
+      .min(6, tError('MinCharacters6'))
+      .max(20, tError('MaxCharacters30'))
       .matches(/^[a-zA-Z0-9_-]*$/, tError('UserNameValidationError'))
       .required(tError('RequiredField')),
     email: yup
       .string()
-      .min(2, tError('MinCharactrers2'))
+      .min(2, tError('MinCharacters2'))
       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, tError('EmailValidationError'))
       .required(tError('RequiredField')),
     password: yup
       .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers20'))
+      .min(6, tError('MinCharacters6'))
+      .max(20, tError('MaxCharacters20'))
       .matches(
         /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_{|}~])[A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_{|}~]+$/,
         tError('PasswordValidationError')
@@ -164,12 +164,18 @@ export const SignUpForm = () => {
               label={
                 <p className={styles.agreementText}>
                   {t('AgreeToThe') + ' '}
-                  <Link href="/auth/terms-of-service" className={styles.agreementLink}>
+                  <Link href={RoutersPath.authTermsOfService} className={styles.agreementLink}>
                     {t('TermsOfService')}
                   </Link>
                   {' ' + tRoot('And') + ' '}
-                  <Link href="/auth/privacy-policy" className={styles.agreementLink}>
-                    {t('PrivacyPolicy')}
+                  <Link
+                    href={{
+                      pathname: `${RoutersPath.authPrivacyPolicy}`,
+                      query: { previousPage: `${RoutersPath.signUp}` },
+                    }}
+                    className={styles.agreementLink}
+                  >
+                    {tRoot('PrivacyPolicy')}
                   </Link>
                 </p>
               }
@@ -179,7 +185,7 @@ export const SignUpForm = () => {
             {t('SignUp')}
           </Button>
           <p className={styles.helpText}>{t('HaveAccount?')}</p>
-          <Link href={SIGN_IN_PATH}>
+          <Link href={RoutersPath.signIn}>
             <Button
               className={styles.oppositeBtn}
               theme={ButtonTheme.CLEAR}

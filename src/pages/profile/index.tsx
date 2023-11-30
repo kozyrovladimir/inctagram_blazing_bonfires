@@ -12,8 +12,8 @@ import noImage from '../../shared/assets/icons/avatarProfile/notPhoto.png'
 import style from './profile.module.scss'
 
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
+import { ShortLangs } from '@/shared/types/langSwitcherTypes'
 import { Button } from '@/shared/ui/button/Button'
-import { ShortLangs } from '@/widgets/langSwitcher/ui/LanguageSelect'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()

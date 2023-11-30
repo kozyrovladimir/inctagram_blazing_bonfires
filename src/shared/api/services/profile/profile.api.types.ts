@@ -6,15 +6,15 @@ export type ProfileUserType = {
   firstName?: string
   lastName?: string
   city?: string
-  dateOfBirth?: Date
+  dateOfBirth?: Date | string | number
   aboutMe?: string
   avatars: AvatarsType
 }
 
 export type AvatarsType = {
   url?: string
-  width: number
-  height: number
+  width?: number
+  height?: number
   fileSize: number
 }[]
 

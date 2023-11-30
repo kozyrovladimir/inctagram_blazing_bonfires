@@ -1,30 +1,29 @@
 import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { SerializedError } from '@reduxjs/toolkit'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast'
-import * as yup from 'yup'
+import { useDispatch } from 'react-redux'
 
+import { ProfilePhoto } from '../ui/profilePhoto/ProfilePhoto'
+
+import { AutocompletionOfCities } from './autocompletion-of-cities/AutocompletionOfCities'
 import styles from './GeneralInfo.module.scss'
+import { schema } from './yupSchema/schema'
 
-import { AutocompletionOfCities } from '@/features/profile-setting/generalInfo/autocompletion-of-cities/AutocompletionOfCities'
-import { ProfilePhoto } from '@/features/profile-setting/ui/profilePhoto/ProfilePhoto'
-import { useGetProfileQuery, useUpdateProfileMutation, useMeQuery } from '@/shared/api'
-import {
-  useDeleteAvatarMutation,
-  useUpdateAvatarMutation,
-} from '@/shared/api/services/profile/profile.api'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
-import { PROFILE_PATH } from '@/shared/constants/paths'
-import { GeneralInfoFields } from '@/shared/types/profileSettingTypes'
+import { RoutersPath } from '@/shared/constants/paths'
+import { useChangeRoute } from '@/shared/hooks/generalInfoPage/useChangeRoute'
+import { useFormCache } from '@/shared/hooks/generalInfoPage/useFormCache'
+import { useServerRequest } from '@/shared/hooks/generalInfoPage/useServerRequest'
+import { setGeneralInfo } from '@/shared/providers/storeProvider/slices/profileSettings/generalInfoReducer'
 import { Button } from '@/shared/ui/button/Button'
 import { Input, InputType } from '@/shared/ui/input/Input'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
-import { errorHandler } from '@/shared/utils/errorHandler'
+import { Modal } from '@/shared/ui/modal/Modal'
 import { Calendar } from '@/widgets/calendar/ui/Calendar'
 
 export const GeneralInfo = () => {
@@ -36,150 +35,160 @@ export const GeneralInfo = () => {
   } = useTranslation('common', { keyPrefix: 'ProfileSettings' })
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
 
-  const { data, isError, error, isLoading } = useMeQuery()
-
-  const {
-    data: profileData,
-    error: errorProfileData,
-    isLoading: isLoadingProfileData,
-  } = useGetProfileQuery(data?.userId ? data?.userId.toString() : '', {
-    skip: isLoading || isError,
-  })
-
-  const [updateProfile, { isLoading: isLoadingUpdateProfile, error: errorUpdateProfile }] =
-    useUpdateProfileMutation()
-
-  const [updateAvatar, { isLoading: isLoadingAvatar, error: errorUpdateAvatar }] =
-    useUpdateAvatarMutation()
-
-  const [deleteAvatar, { isLoading: isLoadingDeleteAvatar, error: errorDeleteAvatar }] =
-    useDeleteAvatarMutation()
-
-  const currentError =
-    error || errorProfileData || errorUpdateProfile || errorUpdateAvatar || errorDeleteAvatar
-
-  const currentIsLoading =
-    isLoading ||
-    isLoadingUpdateProfile ||
-    isLoadingProfileData ||
-    isLoadingAvatar ||
-    isLoadingDeleteAvatar
-
-  const currentErrorHandler = (error: FetchBaseQueryError | SerializedError | undefined) => {
-    errorHandler(error, tError('NotAuthorization'), tError('TryAgain'), tError('NetworkError'))
-  }
-
-  if (currentError) {
-    currentErrorHandler(currentError)
-  }
-
   const [photo, setPhoto] = useState<Blob | null>(null)
   const [isDeleteAvatar, setIsDeleteAvatar] = useState(false)
+  const [isModal, setIsModal] = useState(false)
+  const [isSaved, setIsSaved] = useState(false)
+  const [forwardURL, setForwardURL] = useState('')
+  const [isLeftPage, setIsLeftPage] = useState(false)
+  const [isFormChanged, setIsFormChanged] = useState(false)
 
-  const profileSchema = yup.object().shape({
-    userName: yup
-      .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers30'))
-      .matches(/[0-9A-Za-z_-]{6,20}$/, tError('UserNameValidationError'))
-      .required(tError('RequiredField')),
-    firstName: yup
-      .string()
-      .min(1, tError('MinCharactrers1'))
-      .max(50, tError('MaxCharactrers50'))
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial'))
-      .required(tError('RequiredField')),
-    lastName: yup
-      .string()
-      .min(1, tError('MinCharactrers1'))
-      .max(50, tError('MaxCharactrers50'))
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, tError('SrartLatterNotSpecial'))
-      .required(tError('RequiredField')),
-    city: yup
-      .string()
-      .min(2, tError('MinCharactrers2'))
-      .max(30, tError('MaxCharactrers30'))
-      .matches(/^[A-ZА-Я][a-zа-я]{2,30}$/, tError('SrartLatterNotSpecial'))
-      .required(tError('RequiredField')),
-    dateOfBirth: yup
-      .date()
-      .max(new Date(new Date().setFullYear(new Date().getFullYear() - 13)), tError('MinAge'))
-      .required(tError('RequiredField')),
-    aboutMe: yup
-      .string()
-      .min(1, tError('MinCharactrers1'))
-      .max(200, tError('MaxCharactrers200'))
-      .required(tError('RequiredField')),
+  const dispatch = useDispatch()
+
+  const {
+    profileData,
+    updateProfile,
+    updateAvatar,
+    deleteAvatar,
+    currentIsLoading,
+    isLoadingProfileData,
+    currentErrorHandler,
+  } = useServerRequest({
+    translate: {
+      notAuthorization: tError('NotAuthorization'),
+      serverNotAvailable: tError('ServerNotAvailable'),
+      networkError: tError('NetworkError'),
+    },
+  })
+
+  const schemaGeneralInfo = schema({
+    translate: {
+      minCharacters6: tError('MinCharacters6'),
+      maxCharacters30: tError('MaxCharacters30'),
+      minCharacters1: tError('MinCharacters1'),
+      minCharacters2: tError('MinCharacters2'),
+      maxCharacters50: tError('MaxCharacters50'),
+      maxCharacters200: tError('MaxCharacters200'),
+      requiredField: tError('RequiredField'),
+      userNameValidationError: tError('UserNameValidationError'),
+      startLatterNotSpecial: tError('StartLatterNotSpecial'),
+      minAge: tError('MinAge'),
+    },
   })
 
   const {
     control,
     reset,
-    watch,
-    getValues,
     handleSubmit,
-    formState: { errors },
+    trigger,
+    getValues,
+    formState: { errors, isDirty },
   } = useForm<ProfileUserType | any>({
     mode: 'onChange',
-    resolver: yupResolver(profileSchema),
+    resolver: yupResolver(schemaGeneralInfo),
     defaultValues: {
-      userName: profileData?.userName ?? '',
-      email: profileData?.email ?? '',
-      password: profileData?.password ?? '',
-      firstName: profileData?.firstName ?? '',
-      lastName: profileData?.lastName ?? '',
-      city: profileData?.city ?? '',
-      dateOfBirth: profileData?.dateOfBirth ?? '',
-      aboutMe: profileData?.aboutMe ?? '',
+      userName: '',
+      firstName: '',
+      lastName: '',
+      city: '',
+      dateOfBirth: '',
+      aboutMe: '',
     },
+  })
+  const { formCache, cacheForm } = useFormCache({
+    getValues,
+    setIsFormChanged,
+    photo,
+    profileData,
   })
 
   useEffect(() => {
-    reset(profileData)
-  }, [isLoadingProfileData])
+    if (formCache) {
+      reset(formCache)
+    } else if (profileData) {
+      reset(profileData)
+    }
+  }, [isLoadingProfileData, profileData])
 
-  const updateAvatarHandler = () => {
+  useEffect(() => {
+    const checkValidation = async () => {
+      await trigger()
+    }
+
+    if (profileData || formCache) {
+      checkValidation()
+    }
+  }, [trigger])
+
+  useChangeRoute({
+    router,
+    isDirty,
+    isLeftPage,
+    isFormChanged,
+    formCache,
+    setIsModal,
+    setForwardURL,
+  })
+
+  const settingsSaved = () => {
+    setIsModal(true)
+    setIsSaved(true)
+    setIsFormChanged(false)
+  }
+
+  const handleUpdateAvatar = () => {
     if (isDeleteAvatar) {
       deleteAvatar()
         .unwrap()
         .then(() => {
-          router.push(PROFILE_PATH)
+          settingsSaved()
         })
         .catch(error => currentErrorHandler(error))
-    }
-    if (photo) {
+    } else if (photo) {
       const formData = new FormData()
 
       formData.set('file', photo as Blob)
       updateAvatar(formData)
         .unwrap()
         .then(() => {
-          router.push(PROFILE_PATH)
+          settingsSaved()
         })
         .catch(error => currentErrorHandler(error))
-    } else router.push(PROFILE_PATH)
+    } else {
+      settingsSaved()
+    }
+  }
+
+  const handleLeftPageWithoutSave = () => {
+    dispatch(setGeneralInfo(''))
+    setIsLeftPage(true)
+    setIsModal(false)
+    router.push(forwardURL)
+  }
+  const handleCloseModal = () => {
+    setIsModal(false)
+    setIsSaved(false)
+  }
+  const handleDeleteAvatar = (data: boolean) => {
+    setIsDeleteAvatar(data)
+    setIsFormChanged(true)
+  }
+  const handleChangedAvatar = (data: Blob) => {
+    setPhoto(data as Blob)
+    setIsFormChanged(true)
   }
 
   const onSubmit = (data: ProfileUserType) => {
     updateProfile(data)
       .unwrap()
       .then(() => {
-        updateAvatarHandler()
+        handleUpdateAvatar()
+      })
+      .then(() => {
+        dispatch(setGeneralInfo(''))
       })
       .catch(error => currentErrorHandler(error))
   }
-
-  const allFields: GeneralInfoFields = [
-    'userName',
-    'firstName',
-    'lastName',
-    'dateOfBirth',
-    'city',
-    'aboutMe',
-  ]
-
-  watch()
-  const isFillField = getValues(allFields).every(e => !!e)
 
   return (
     <>
@@ -193,15 +202,11 @@ export const GeneralInfo = () => {
               <Controller
                 name="avatars"
                 control={control}
-                render={({ field: { ref, ...args } }) => (
+                render={({ field: { ref, value, ...args } }) => (
                   <ProfilePhoto
-                    outsideOnChange={data => {
-                      setPhoto(data as Blob)
-                    }}
-                    deleteAvatar={data => {
-                      setIsDeleteAvatar(data)
-                    }}
-                    photoFromServer={profileData?.avatars}
+                    outsideOnChange={data => handleChangedAvatar(data)}
+                    deleteAvatar={data => handleDeleteAvatar(data)}
+                    value={formCache ? formCache.avatars : profileData.avatars}
                     {...args}
                   />
                 )}
@@ -211,90 +216,105 @@ export const GeneralInfo = () => {
               <Controller
                 name="userName"
                 control={control}
-                render={({ field }) => (
+                render={({ field: { ref, value, ...args } }) => (
                   <Input
                     label={t('UserName')}
                     type={InputType.TEXT}
                     placeholder={''}
                     error={(errors as FieldErrors<ProfileUserType>).userName?.message}
-                    classNameWrap={'myCustomLabel'}
-                    {...field}
+                    classNameWrap={styles.myCustomLabel}
+                    value={value ?? ''}
+                    {...args}
                   />
                 )}
               />
               <Controller
                 name="firstName"
                 control={control}
-                render={({ field }) => (
+                render={({ field: { ref, value, ...args } }) => (
                   <Input
                     label={t('FirstName')}
                     placeholder={''}
                     type={InputType.TEXT}
                     error={(errors as FieldErrors<ProfileUserType>).firstName?.message}
-                    classNameWrap={'myCustomLabel'}
-                    {...field}
+                    classNameWrap={styles.myCustomLabel}
+                    value={value ?? ''}
+                    {...args}
                   />
                 )}
               />
               <Controller
                 name="lastName"
                 control={control}
-                render={({ field }) => (
+                render={({ field: { ref, value, ...args } }) => (
                   <Input
                     label={t('LastName')}
                     placeholder={''}
                     type={InputType.TEXT}
                     error={(errors as FieldErrors<ProfileUserType>).lastName?.message}
-                    classNameWrap={'myCustomLabel'}
-                    {...field}
+                    classNameWrap={styles.myCustomLabel}
+                    value={value ?? ''}
+                    {...args}
                   />
-                )}
-              />
-              <Controller
-                name="dateOfBirth"
-                control={control}
-                render={({ field: { onChange, ref, ...args } }) => (
-                  <div>
-                    <label>{t('DateBirthday')}</label>
-                    <Calendar
-                      data={profileData.dateOfBirth}
-                      outsideOnChange={onChange}
-                      classNameWrap={styles.calendar}
-                      {...args}
-                    />
-                    {errors && (
-                      <p className={styles.error}>
-                        {(errors as FieldErrors<ProfileUserType>).dateOfBirth?.message}
-                      </p>
-                    )}
-                  </div>
                 )}
               />
               <Controller
                 name="city"
                 control={control}
-                render={({ field: { ref, ...args } }) => (
-                  <div>
-                    <label>City</label>
+                render={({ field: { ref, value, ...args } }) => (
+                  <>
+                    <label>{t('City')}</label>
                     <AutocompletionOfCities
                       error={(errors as FieldErrors<ProfileUserType>).city?.message}
                       {...args}
                     />
+                  </>
+                )}
+              />
+              <Controller
+                name="dateOfBirth"
+                control={control}
+                render={({ field: { onChange, value, ref, ...args } }) => (
+                  <div>
+                    <label>{t('DateBirthday')}</label>
+                    <Calendar
+                      data={formCache ? formCache.dateOfBirth : profileData.dateOfBirth}
+                      outsideOnChange={onChange}
+                      classNameWrap={styles.calendar}
+                      {...args}
+                    />
+                    {(errors as FieldErrors<ProfileUserType>).dateOfBirth && (
+                      <p className={styles.errorCalendar}>
+                        {(errors as FieldErrors<ProfileUserType>).dateOfBirth?.message}{' '}
+                        <Link
+                          href={{
+                            pathname: `${RoutersPath.authPrivacyPolicy}`,
+                            query: { previousPage: `${RoutersPath.profileGeneralInformation}` },
+                          }}
+                          className={styles.agreementLink}
+                          onClick={() => cacheForm()}
+                        >
+                          {tRoot('PrivacyPolicy')}
+                        </Link>
+                      </p>
+                    )}
                   </div>
                 )}
               />
+
               <div className={styles.textareaContent}>
                 <label className={styles.aboutMeLabel}>{t('AboutMe')}</label>
                 <Controller
                   name="aboutMe"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, value, ...args } }) => (
                     <textarea
                       rows={4}
                       cols={50}
                       placeholder=""
                       className={styles.aboutMeTextarea}
-                      {...field}
+                      value={value ?? ''}
+                      {...args}
                     />
                   )}
                 />
@@ -306,13 +326,22 @@ export const GeneralInfo = () => {
               </div>
             </div>
           </div>
-          <div className={styles.footer}>
-            <div className={styles.line}></div>
-          </div>
-          <Button className={styles.button} disabled={!isFillField}>
-            {tRoot('SaveChanges')}
-          </Button>
+          <div className={styles.line}></div>
+          <Button className={styles.button}>{tRoot('SaveChanges')}</Button>
         </form>
+      )}
+
+      {isModal && (
+        <Modal
+          title={tRoot('Notification')}
+          callBackCloseWindow={handleCloseModal}
+          extraButtonCB={handleLeftPageWithoutSave}
+          mainButtonCB={handleCloseModal}
+          extraButton={isSaved ? undefined : tRoot('Yes')}
+          mainButton={isSaved ? tRoot('Ok') : tRoot('No')}
+        >
+          {isSaved ? tRoot('SaveChanges') : tRoot('LeftWithoutSave')}
+        </Modal>
       )}
     </>
   )

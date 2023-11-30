@@ -4,13 +4,13 @@
   position: relative;
 }
 
-.backContainer {
+.backBtn {
   position: absolute;
   left: 64px;
   top: 24px;
   display: flex;
+  align-items: center;
   gap: 12px;
-  text-decoration: none;
 }
 
 .articleHeader {

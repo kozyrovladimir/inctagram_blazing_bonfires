@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
@@ -12,15 +12,21 @@ import calendarOpenIcon from '@/shared/assets/icons/icons/calendarOpen.svg'
 
 type Props = {
   outsideOnChange: (newValue: Value) => void
-  data?: Date
+  data?: Date | string | number
   classNameWrap?: string
 }
 
 export const Calendar = ({ outsideOnChange, classNameWrap, data }: Props) => {
-  const minAge = new Date().setFullYear(new Date().getFullYear() - 10)
-  const defaultValue = data ? new Date(data) : minAge
+  const minAge = new Date().setFullYear(new Date().getFullYear() - 13)
+  const defaultValue = data ? new Date(data) : new Date(minAge)
+
   const { t } = useTranslation('common', { keyPrefix: 'Calendar' })
   const [value, setValue] = useState<Value>(defaultValue)
+
+  useEffect(() => {
+    setValue(defaultValue)
+  }, [data])
+
   const [isOpen, setIsOpen] = useState(false)
   const weekDays = [t('Su'), t('Mo'), t('Tu'), t('We'), t('Th'), t('Fr'), t('Sa')]
   const months = [
@@ -41,7 +47,9 @@ export const Calendar = ({ outsideOnChange, classNameWrap, data }: Props) => {
   return (
     <div className={classNameWrap}>
       <DatePicker
-        inputClass={styles.customInput}
+        inputClass={
+          minAge > Date.parse(value as string) ? styles.customInput : styles.customInputError
+        }
         containerClassName={styles.container}
         value={value}
         monthYearSeparator=" "
@@ -62,7 +70,12 @@ export const Calendar = ({ outsideOnChange, classNameWrap, data }: Props) => {
           outsideOnChange(date)
         }}
         weekStartDayIndex={1}
-        offsetY={-1}
+        offsetY={1}
+        mapDays={({ date }) => {
+          let isWeekend = [0, 6].includes(date.weekDay.index)
+
+          if (isWeekend) return { className: 'weekends' }
+        }}
       />
 
       <Image

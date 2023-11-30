@@ -1,4 +1,4 @@
-import { FOLDER_NEXT_STATIC_MEDIA_PATH } from '../constants/paths'
+import { RoutersPath } from '../constants/paths'
 
 import defaultIconDeviceDark from '@/shared/assets/icons/devices/darkIcons/anyDevices.svg'
 import defaultIconBrowserDark from '@/shared/assets/icons/devices/darkIcons/browser.svg'
@@ -25,7 +25,7 @@ interface svgFile {
 export const findPathSVG = (name: string, isCurrent: boolean, theme?: string): string => {
   const findName = (file: svgFile): string => {
     return file.default.src
-      .replace(FOLDER_NEXT_STATIC_MEDIA_PATH, '')
+      .replace(RoutersPath.folderNextStaticMedia, '')
       .split('.')[0]
       .toLocaleLowerCase()
   }

@@ -13,7 +13,7 @@ import styles from './SignInForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
 import { useLoginMutation, LoginFormType } from '@/shared/api'
-import { PROFILE_PATH, SIGN_UP_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 import { Button, ButtonSize } from '@/shared/ui/button/Button'
 import FormContainer from '@/shared/ui/formContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/input/Input'
@@ -26,13 +26,13 @@ export const SignInForm = () => {
   const schema = yup.object().shape({
     email: yup
       .string()
-      .min(2, tError('MinCharactrers2'))
+      .min(2, tError('MinCharacters2'))
       .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, tError('EmailValidationError'))
       .required(tError('RequiredField')),
     password: yup
       .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers20'))
+      .min(6, tError('MinCharacters6'))
+      .max(20, tError('MaxCharacters20'))
       .required(tError('RequiredField')),
   })
 
@@ -57,7 +57,7 @@ export const SignInForm = () => {
   const onSubmit = (args: LoginFormType) => {
     login(args)
       .unwrap()
-      .then(() => router.push(PROFILE_PATH))
+      .then(() => router.push(RoutersPath.profile))
       .catch(error => {
         if (error && error.data) {
           const { statusCode } = error.data
@@ -65,7 +65,7 @@ export const SignInForm = () => {
           if (statusCode === 400) {
             setPasswordError(tError('PasswordIncorrect'))
           } else if (statusCode === 401) {
-            setEmailError(tError('EmailNotRegidtred'))
+            setEmailError(tError('EmailNotRegistered'))
           }
         } else {
           toast.error(tError('NetworkError'))
@@ -111,7 +111,7 @@ export const SignInForm = () => {
           </Link>
           <Button size={ButtonSize.STRETCHED}>{t('SignIn')}</Button>
           <p className={styles.helpText}>{t('DontHaveAccount?')}</p>
-          <Link href={SIGN_UP_PATH} className={styles.link}>
+          <Link href={RoutersPath.signUp} className={styles.link}>
             <p className={styles.oppositeBtn}>{t('SignUp')}</p>
           </Link>
         </form>

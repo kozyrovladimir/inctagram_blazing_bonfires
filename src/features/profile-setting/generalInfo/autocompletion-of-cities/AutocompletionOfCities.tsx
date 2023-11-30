@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 
 import Autosuggest from 'react-autosuggest'
 
@@ -19,14 +19,16 @@ cities.push(...mergedCitiesBelarus)
 
 type Props = {
   error?: string
+  callbackValue?: (value: string) => void
 }
 
-export const AutocompletionOfCities = ({ error }: Props) => {
+export const AutocompletionOfCities = ({ error, callbackValue }: Props) => {
   const [value, setValue] = useState<string>('')
   const [suggestions, setSuggestions] = useState<string[]>([])
 
   const onChange = (_: FormEvent<HTMLElement>, { newValue }: Autosuggest.ChangeEvent) => {
     setValue(newValue)
+    callbackValue && callbackValue(newValue)
   }
 
   const onSuggestionsFetchRequested = ({ value }: Autosuggest.SuggestionsFetchRequestedParams) => {

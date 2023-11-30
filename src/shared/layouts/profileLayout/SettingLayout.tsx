@@ -4,10 +4,15 @@ import { NextPage } from 'next'
 
 import ProfileLayout from './ProfileLayout'
 
+import { Navbar } from '@/widgets/navbar'
+
 export const SettingLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <>
-      <ProfileLayout>{children}</ProfileLayout>
+      <ProfileLayout>
+        <Navbar />
+        {children}
+      </ProfileLayout>
     </>
   )
 }

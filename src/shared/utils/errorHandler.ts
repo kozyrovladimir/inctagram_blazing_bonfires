@@ -3,30 +3,28 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import router from 'next/router'
 import { toast } from 'react-hot-toast'
 
-import { SIGN_IN_PATH } from '../constants/paths'
 import { serverError } from '../types/errorTypes'
+
+import { RoutersPath } from '@/shared/constants/paths'
 
 export const errorHandler = (
   error: FetchBaseQueryError | SerializedError | undefined,
   notAuthorizationMessage: string,
-  tryAgainMessage: string,
+  ServerErrorMessage: string,
   networkErrorMessage: string
 ) => {
-  const notAuthorizationHadler = () => {
+  const notAuthorizationHandler = () => {
     toast.error(notAuthorizationMessage, { id: notAuthorizationMessage })
-    router.push(SIGN_IN_PATH)
+    router.push(RoutersPath.signIn)
   }
 
   if (error) {
     const { status } = error as FetchBaseQueryError
 
     if (status === 401) {
-      notAuthorizationHadler()
+      notAuthorizationHandler()
     } else {
-      const errorMessage =
-        ((error as serverError)?.data?.messages[0]?.message ||
-          (error as serverError)?.data?.error) ??
-        tryAgainMessage
+      const errorMessage = (error as serverError)?.data?.error ?? ServerErrorMessage
 
       toast.error(errorMessage, { id: errorMessage })
     }
