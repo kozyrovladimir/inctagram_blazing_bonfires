@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Image from 'next/image'
+import { useTranslation } from 'next-i18next'
 import { useWizard } from 'react-use-wizard'
 
 import style from './Filters.module.scss'
@@ -22,19 +23,20 @@ export const Filters = () => {
   const cropContext = useImageCropContext()
   const { currentIndex, prevSlide, nextSlide } = useSlider(cropContext.photos.length)
   const setFilter = cropContext.setFilter(currentIndex)
+  const { t } = useTranslation('common', { keyPrefix: 'AddPost' })
 
   return (
     <>
       <NewPostModal
         isOpen={cropContext.isOpen}
-        title={'Filters'}
+        title={t('Filters')}
         setIsOpen={() => cropContext.setIsOpenModal(true)}
         left={
           <Image style={{ cursor: 'pointer' }} src={backIcon} alt={''} onClick={previousStep} />
         }
         right={
           <span style={{ cursor: 'pointer' }} onClick={nextStep}>
-            Next
+            {t('Next')}
           </span>
         }
       >
@@ -89,7 +91,7 @@ export const Filters = () => {
                     preserveAspectRatio={'contain'}
                   />
                 </div>
-                <div className={style.filterLabel}>{filter.name}</div>
+                <div className={style.filterLabel}>{t(`FiltersList.${filter.name}`)}</div>
               </div>
             ))}
           </div>

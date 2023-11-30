@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
 
 import Image from 'next/image'
+import { useTranslation } from 'next-i18next'
 import { toast, Toaster } from 'react-hot-toast'
 import { useWizard } from 'react-use-wizard'
 
@@ -32,6 +33,8 @@ export const Publication = () => {
   const [createPost, { isLoading: isCreatePostLoading }] = useCreatePostMutation()
   const savedImagesString = localStorage.getItem('uploadedImages')
   const savedImages: ImageDataType[] = savedImagesString ? JSON.parse(savedImagesString) : null
+
+  const { t } = useTranslation('common', { keyPrefix: 'AddPost' })
 
   const avatar = profileData?.avatars[1]?.url || ''
 
@@ -103,7 +106,7 @@ export const Publication = () => {
       {isLoading && <LinearLoader />}
       <NewPostModal
         isOpen={isOpen}
-        title={'Publication'}
+        title={t('Publication')}
         setIsOpen={setIsOpen}
         left={
           <Image style={{ cursor: 'pointer' }} src={backIcon} alt={''} onClick={previousStep} />
@@ -113,7 +116,7 @@ export const Publication = () => {
             style={{ cursor: 'pointer' }}
             onClick={savedImages ? handleSavedImagePublish : handlePublish}
           >
-            Publish
+            {t('Publish')}
           </span>
         }
       >
@@ -140,7 +143,7 @@ export const Publication = () => {
                 <div className={style.userName}>{profileData?.userName}</div>
               </div>
               <div className={style.description}>
-                <label className={style.label}>Add publication descriptions</label>
+                <label className={style.label}>{t('Descriptions')}</label>
                 <textarea
                   rows={6}
                   cols={60}
@@ -151,7 +154,7 @@ export const Publication = () => {
                 />
                 <div className={style.maxLength}> {text.length}/500</div>
                 <Input
-                  label={'Add location'}
+                  label={t('AddLocation')}
                   placeholder={''}
                   type={InputType.LOCATION}
                   style={{ marginBottom: '20px' }}

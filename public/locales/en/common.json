@@ -11,6 +11,7 @@
   "SaveChanges": "Save Changes",
   "AddProfilePhoto": "Add a Profile Photo",
   "SelectFromComputer": "Select from Computer",
+  "OpenDraft": "Open Draft",
   "ProfileSetting": "Profile Setting",
   "ErrorTitle": "Error!",
   "AttentionTitle": "Attention!",
@@ -133,5 +134,30 @@
     "Th": "Th",
     "Fr": "Fr",
     "Sa": "Sa"
+  },
+  "AddPost": {
+    "AddPhoto": "Add Photo",
+    "Cropping":"Cropping",
+    "Filters": "Filters",
+    "Publication": "Publication",
+    "Publish": "Publish",
+    "Next": "Next",
+    "FiltersList": {
+      "None": "None",
+      "Warm": "Warm",
+      "Cool": "Cool",
+      "Sepia": "Sepia",
+      "Black&White": "Black & White",
+      "Vintage": "Vintage",
+      "Grayscale": "Grayscale",
+      "Contrast": "Contrast",
+      "Blur": "Blur"
+    },
+    "Descriptions": "Add publication descriptions",
+    "AddLocation": "Add location",
+    "ClosePublication": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+    "Discard": "Discard",
+    "SaveDraft": "SaveDraft",
+    "Close": "Close"
   }
 }

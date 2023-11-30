@@ -1,6 +1,7 @@
 import React from 'react'
 
 import NextImage from 'next/image'
+import { useTranslation } from 'next-i18next'
 import { toast } from 'react-hot-toast'
 
 import style from './CloseModal.module.scss'
@@ -18,6 +19,7 @@ type Props = {
 }
 export const CloseModal = ({ cropContext }: Props) => {
   const [uploadImage, { isLoading }] = useUploadImageMutation()
+  const { t } = useTranslation('common', { keyPrefix: 'AddPost' })
   const handleDiscard = () => {
     cropContext.resetData()
     cropContext.setIsOpenModal(false)
@@ -57,7 +59,7 @@ export const CloseModal = ({ cropContext }: Props) => {
       {isLoading && <LinearLoader />}
       <NewPostModal
         isOpen={cropContext.isOpenModal}
-        title={'Close'}
+        title={t('Close')}
         setIsOpen={() => cropContext.setIsOpenModal(false)}
         right={
           <NextImage
@@ -70,19 +72,16 @@ export const CloseModal = ({ cropContext }: Props) => {
       >
         <div className={style.modalWrapper}>
           <div className={style.textWrapper}>
-            <p className={style.text}>
-              Do you really want to close the creation of a publication? If you close everything
-              will be deleted
-            </p>
+            <p className={style.text}>{t('ClosePublication')}</p>
           </div>
 
           <div className={style.buttonsContainer}>
             <Button theme={ButtonTheme.CLEAR} className={style.button} onClick={handleDiscard}>
-              Discard
+              {t('Discard')}
             </Button>
             <Button className={style.button} onClick={handleSave}>
               {' '}
-              Save Draft
+              {t('SaveDraft')}
             </Button>
           </div>
         </div>

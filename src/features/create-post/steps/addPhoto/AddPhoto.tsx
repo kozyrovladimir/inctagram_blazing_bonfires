@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import NextImage from 'next/image'
+import { useTranslation } from 'next-i18next'
 import { toast, Toaster } from 'react-hot-toast'
 import { useWizard } from 'react-use-wizard'
 
@@ -22,6 +23,11 @@ export const AddPhoto = () => {
 
   const [isPublicationOpen, setIsPublicationOpen] = useState(false)
   const [savedImage, setSavedImage] = useState<ImageDataType[]>([])
+
+  const {
+    t,
+    i18n: { t: tRoot },
+  } = useTranslation('common', { keyPrefix: 'AddPost' })
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
@@ -71,16 +77,7 @@ export const AddPhoto = () => {
   }
 
   const handleOpenDraft = () => {
-    if (typeof localStorage !== 'undefined') {
-      const savedImagesString = localStorage.getItem('uploadedImages')
-      const savedImages = savedImagesString ? JSON.parse(savedImagesString) : null
-
-      if (savedImages) {
-        setSavedImage(savedImages)
-
-        setIsPublicationOpen(true)
-      }
-    }
+    setIsPublicationOpen(true)
   }
 
   return (
@@ -88,7 +85,7 @@ export const AddPhoto = () => {
       <Toaster position={'bottom-center'} />
       <NewPostModal
         isOpen={isOpen}
-        title={'Add photo'}
+        title={t('AddPhoto')}
         setIsOpen={setIsOpen}
         right={
           <NextImage
@@ -113,11 +110,11 @@ export const AddPhoto = () => {
               className={styles.inputPhoto}
             />
             <Button onClick={openSelectHandler} className={styles.button}>
-              Select from Computer
+              {tRoot('SelectFromComputer')}
             </Button>
             {savedImage.length > 0 && (
               <Button onClick={handleOpenDraft} className={styles.button}>
-                Open Draft
+                {tRoot('OpenDraft')}
               </Button>
             )}
           </div>
