@@ -141,6 +141,8 @@
     "Filters": "Фильтры",
     "Publication": "Публикация",
     "Next": "Далее",
+    "SelectFromComputer": "Выбрать на устройстве",
+    "OpenDraft": "Открыть черновик",
     "Publish": "Опубликовать",
     "FiltersList": {
       "None": "Нет",
