@@ -142,6 +142,8 @@
     "Publication": "Publication",
     "Publish": "Publish",
     "Next": "Next",
+    "SelectFromComputer": "Select from Computer",
+    "OpenDraft": "Open Draft",
     "FiltersList": {
       "None": "None",
       "Warm": "Warm",

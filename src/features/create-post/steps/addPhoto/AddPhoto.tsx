@@ -24,10 +24,7 @@ export const AddPhoto = () => {
   const [isPublicationOpen, setIsPublicationOpen] = useState(false)
   const [savedImage, setSavedImage] = useState<ImageDataType[]>([])
 
-  const {
-    t,
-    i18n: { t: tRoot },
-  } = useTranslation('common', { keyPrefix: 'AddPost' })
+  const { t } = useTranslation('common', { keyPrefix: 'AddPost' })
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
@@ -110,11 +107,11 @@ export const AddPhoto = () => {
               className={styles.inputPhoto}
             />
             <Button onClick={openSelectHandler} className={styles.button}>
-              {tRoot('SelectFromComputer')}
+              {t('SelectFromComputer')}
             </Button>
             {savedImage.length > 0 && (
               <Button onClick={handleOpenDraft} className={styles.button}>
-                {tRoot('OpenDraft')}
+                {t('OpenDraft')}
               </Button>
             )}
           </div>
