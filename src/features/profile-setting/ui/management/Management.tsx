@@ -105,14 +105,6 @@ export const Management = () => {
       })
   }
 
-  // const {
-  //   data: profileData,
-  //   error: errorProfileData,
-  //   isLoading: isLoadingProfileData,
-  // } = useGetProfileQuery(data?.userId ? data?.userId.toString() : '', {
-  //   skip: isLoading || isError,
-  // })
-
   const wrapper =
     styles.wrapper + ' ' + (currentSubscriptions?.data?.length === 0 ? styles.wrapperTop : '')
 
@@ -121,7 +113,6 @@ export const Management = () => {
   const [currentLocalSubs, setCurrentLocalSubs] = useState<SubscriptionDataType[]>([])
 
   useEffect(() => {
-    console.log('useEffect must update current subs: ', currentSubscriptions)
     currentSubscriptions?.data?.length && setCurrentLocalSubs(currentSubscriptions.data)
   }, [currentSubscriptions]) // don't work with PayPal
 
