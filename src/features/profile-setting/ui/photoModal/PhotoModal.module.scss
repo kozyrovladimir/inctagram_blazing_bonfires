@@ -1,0 +1,48 @@
+.contentWrapper {
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  .modalWindow {
+    width: 1000px;
+    height: 600px;
+  }
+
+  .emptyContainer {
+    margin-top: 3rem;
+    width: 222px;
+    height: 228px;
+    background: var(--color-dark-800);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .inputPhoto {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  .buttonSelect {
+    margin-top: 60px;
+    width: 222px;
+  }
+
+  .avatar {
+    object-fit: cover;
+    mask-image: radial-gradient(circle, black 67%, rgba(0, 0, 0, 0.2) 50%);
+  }
+
+  .buttonSave {
+    align-self: end;
+    margin-right: 20px;
+  }
+
+  .error {
+    font-size: 16px;
+    color: var(--color-danger-500);
+    line-height: 24px;
+  }
+}

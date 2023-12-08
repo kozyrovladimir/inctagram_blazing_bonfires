@@ -1,0 +1,54 @@
+.formContainer {
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.agreementContainer {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.agreementText {
+  width: 17rem;
+  color: var(--color-light-100);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+.agreementLink {
+  color: var(--color-info-300);
+}
+
+.socialIconContainer {
+  display: flex;
+  gap: 3.75rem;
+  justify-content: center;
+}
+
+.signUpBtn {
+  margin-top: 1rem;
+  &:hover {
+    background-color: var(--color-info-700);
+  }
+  &:disabled {
+    background-color: var(--color-info-100);
+    cursor: auto;
+  }
+}
+
+.signUpBtnDisable {
+  cursor: default;
+  margin-top: 1rem;
+  background-color: var(--color-info-100);
+}
+
+.helpText {
+  margin-top: -0.3rem;
+}
+.oppositeBtn {
+  border: none !important;
+  margin-top: -1rem;
+}

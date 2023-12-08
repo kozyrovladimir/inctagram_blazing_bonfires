@@ -1,0 +1,29 @@
+.formContainer {
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.signInForgotText {
+  width: 100%;
+  text-align: right;
+  margin-top: 1.5rem;
+  text-decoration: none;
+}
+.forgotHelpText {
+  color: var(--color-light-1000);
+  margin-top: -1rem;
+}
+.helpText {
+  margin-top: -0.3rem;
+}
+.oppositeBtn {
+  border: none !important;
+  margin-top: -1rem;
+
+  color: var(--color-info-500);
+}
+.link {
+  text-decoration: none;
+}
