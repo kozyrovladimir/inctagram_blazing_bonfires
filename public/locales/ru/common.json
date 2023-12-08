@@ -10,6 +10,7 @@
   "Save": "Сохранить",
   "SaveChanges": "Сохранить",
   "SelectFromComputer": "Выбрать на устройстве",
+  "OpenDraft": "Открыть черновик",
   "ProfileSetting": "Настройки профиля",
   "ErrorTitle": "Ошибка!",
   "AttentionTitle": "Внимание!",
@@ -138,5 +139,33 @@
     "Th": "Чт",
     "Fr": "Пт",
     "Sa": "Сб"
+  },
+  "AddPost": {
+    "AddPhoto": "Добавить фотографию",
+    "Cropping": "Обрезка",
+    "Filters": "Фильтры",
+    "Publication": "Публикация",
+    "Next": "Далее",
+    "SelectFromComputer": "Выбрать на устройстве",
+    "OpenDraft": "Открыть черновик",
+    "Publish": "Опубликовать",
+    "FiltersList": {
+      "None": "Нет",
+      "Warm": "Теплый",
+      "Cool": "Холодный",
+      "Sepia": "Сепия",
+      "Black&White": "Черно-белый",
+      "Vintage": "Винтаж",
+      "Grayscale": "Оттенки серого",
+      "Contrast": "Контраст",
+      "Blur": "Размытие"
+    },
+    "Descriptions": "Добавьте описания публикаций",
+    "AddLocation": "Добавьте локацию",
+    "ClosePublication": "Вы действительно хотите закрыть создание публикации? Если закрыть, все будет удалено",
+    "Discard": "Сбросить",
+    "SaveDraft":"Сохранить черновик",
+    "Close": "Закрыть"
+
   }
 }
