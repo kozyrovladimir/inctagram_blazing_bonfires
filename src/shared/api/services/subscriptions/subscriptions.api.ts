@@ -25,13 +25,17 @@ export const subscriptionsApi = createApi({
         }),
       }),
       getCurrentSubscriptions: build.query<CurrentSubscriptionType, void>({
-        query: () => ({
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-          },
-          url: `subscriptions/current-subscriptions`,
-          method: 'GET',
-        }),
+        query: () => {
+          console.log('api getCurrentSubscription')
+
+          return {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+            url: `subscriptions/current-subscriptions`,
+            method: 'GET',
+          }
+        },
       }),
       createNewSubscription: build.mutation<ResponseNewSubscriptionType, NewSubscriptionType>({
         query: body => ({

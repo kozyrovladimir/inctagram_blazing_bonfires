@@ -12,11 +12,12 @@ type Props = {
   disabled?: boolean
   error?: string
   labelStyle?: string
+  checked?: boolean
   onChange?: (value: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, Props>(
-  ({ label, disabled, error, value, labelStyle, onChange, ...rest }: Props, ref) => {
+  ({ label, disabled, error, value, labelStyle, onChange, checked, ...rest }: Props, ref) => {
     const checkbox = styles.checkbox + ' ' + (disabled ? styles.checkboxDisabled : '')
 
     return (

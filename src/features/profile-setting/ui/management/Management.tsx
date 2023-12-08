@@ -40,19 +40,16 @@ const schema = yup.object({
 export const Management = () => {
   const router = useRouter()
 
-  const { t } = useTranslation('common', { keyPrefix: 'AccountManagement' })
+  const {
+    t,
+    i18n: { t: tRoot },
+  } = useTranslation('common', { keyPrefix: 'AccountManagement' })
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
 
   const { success } = router.query
 
   const [subscribed, setSubscribed] = useState(false)
   const callBackCloseWindow = () => setSubscribed(false)
-
-  useEffect(() => {
-    if (success === 'true') {
-      setSubscribed(true)
-    }
-  }, [success])
 
   const [accType, setAccType] = useState('personal')
 
@@ -61,7 +58,7 @@ export const Management = () => {
 
   const [cancelAutoRenewal] = useCancelAutoRenewalMutation()
 
-  const { data: currentSubscriptions, isLoading: currentSubscriptionLoading } =
+  const { data: currentSubscriptions, isLoading: currentSubscriptionsLoading } =
     useGetCurrentSubscriptionsQuery()
 
   const [createNewSubscription, { isLoading }] = useCreateNewSubscriptionMutation()
@@ -87,7 +84,7 @@ export const Management = () => {
   }
 
   const onSubmit: SubmitHandler<NewSubscriptionType> = async (data: NewSubscriptionType) => {
-    createNewSubscription(data)
+    await createNewSubscription(data)
       .unwrap()
       .then(data => {
         router.replace(data.url)
@@ -108,21 +105,37 @@ export const Management = () => {
       })
   }
 
-  const [currentSubs, setCurrentSubs] = useState<SubscriptionDataType[]>([])
-
-  useEffect(() => {
-    currentSubscriptions?.data?.length && setCurrentSubs(currentSubscriptions.data)
-  }, [onSubmit])
+  // const {
+  //   data: profileData,
+  //   error: errorProfileData,
+  //   isLoading: isLoadingProfileData,
+  // } = useGetProfileQuery(data?.userId ? data?.userId.toString() : '', {
+  //   skip: isLoading || isError,
+  // })
 
   const wrapper =
     styles.wrapper + ' ' + (currentSubscriptions?.data?.length === 0 ? styles.wrapperTop : '')
 
   const setAccountType = () => setAccType('personal')
 
+  const [currentLocalSubs, setCurrentLocalSubs] = useState<SubscriptionDataType[]>([])
+
+  useEffect(() => {
+    console.log('useEffect must update current subs: ', currentSubscriptions)
+    currentSubscriptions?.data?.length && setCurrentLocalSubs(currentSubscriptions.data)
+  }, [currentSubscriptions]) // don't work with PayPal
+
+  useEffect(() => {
+    if (success === 'true') {
+      setSubscribed(true)
+      router.push('/profile/account-management')
+    }
+  }, [success])
+
   return (
     <>
       {isLoading && <LinearLoader />}
-      {currentSubscriptionLoading && <LinearLoader />}
+      {currentSubscriptionsLoading && <LinearLoader />}
       {error && (
         <Modal title={'Error'} mainButton={' Back '} callBackCloseWindow={callBackCloseErrorWindow}>
           <p>{tError('TransactionFailed')}</p>
@@ -134,7 +147,7 @@ export const Management = () => {
         </Modal>
       )}
       {/*current subscription*/}
-      {currentSubs.length! > 0 && (
+      {currentLocalSubs.length! > 0 && (
         <div className={styles.wrapper} style={{ marginTop: '-30px' }}>
           <div>
             <h3 className={styles.title}> {t('CurrentSubscription')}:</h3>
@@ -145,16 +158,15 @@ export const Management = () => {
                   {t('NextPayment')}:
                 </p>
               </div>
-              {currentSubs.map((item: SubscriptionDataType, index) => {
+              {currentLocalSubs.map((item: SubscriptionDataType, index) => {
                 return (
                   <div key={index}>
                     <div className={styles.currentSubscriptionRow}>
-                      <p>{index + 1}</p>
                       <p className={styles.currentSubscriptionColumnData}>
-                        {formatDate(item.endDateOfSubscription, 'dd.mm.yyyy')}
+                        {formatDate(item.endDateOfSubscription, 'mm.dd.yyyy')}
                       </p>
                       <p className={styles.currentSubscriptionColumnData}>
-                        {formatDate(item.dateOfPayment, 'dd.mm.yyyy')}
+                        {formatDate(item.dateOfPayment, 'mm.dd.yyyy')}
                       </p>
                     </div>
                   </div>
@@ -167,6 +179,7 @@ export const Management = () => {
                 label={t('AutoRenewal')}
                 labelStyle={styles.autoRenewalLabelStyle}
                 onChange={handleHasAutoRenewal}
+                checked={currentSubscriptions?.hasAutoRenewal}
               />
             </div>
           </div>
@@ -187,12 +200,12 @@ export const Management = () => {
               name={'accType'}
               onChange={() => setAccType('business')}
               label={<p className={styles.listItem}>{t('Business')}</p>}
-              checked={currentSubs && currentSubs.length > 0}
+              checked={accType === 'business' || (currentLocalSubs && currentLocalSubs.length > 0)}
             />
           </div>
         </div>
         {/*due date*/}
-        {currentSubscriptions && (
+        {(accType === 'business' || (currentLocalSubs && currentLocalSubs.length > 0)) && (
           <form onSubmit={handleSubmitSubscriptions(onSubmit)}>
             <h3 className={styles.title}>{t('YourSubscriptionCosts')}:</h3>
             <div className={styles.listWrapper}>

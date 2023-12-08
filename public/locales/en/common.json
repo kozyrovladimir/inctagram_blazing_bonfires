@@ -41,7 +41,8 @@
     "RequiredField": "Required field",
     "SomethingWentWrong": "Something went wrong",
     "PasswordsMustMatch": "Passwords must match",
-    "MinAge": "You must be over 13 years old"
+    "MinAge": "You must be over 13 years old",
+    "TransactionFailed": "Transaction failed, please try later"
   },
   "Auth": {
     "SignUp": "Sign Up",

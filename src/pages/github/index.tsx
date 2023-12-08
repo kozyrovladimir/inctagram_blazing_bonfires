@@ -19,12 +19,15 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   }
 }
 
-const ForgotPasswordPage = () => {
+const GithubLoginPage = () => {
   const router = useRouter()
-  const { accessToken } = router.query
+  const { accessToken, email } = router.query
+
+  console.log(accessToken)
+  console.log(email)
 
   useEffect(() => {
-    if (accessToken) {
+    if (accessToken && email) {
       localStorage.setItem('accessToken', accessToken as string)
       router.push(`/profile`)
     } else {
@@ -39,5 +42,7 @@ const ForgotPasswordPage = () => {
   )
 }
 
-ForgotPasswordPage.getLayout = getLayout
-export default ForgotPasswordPage
+// http://localhost:3000/github?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3OCwiaWF0IjoxNzAxODgxOTY3LCJleHAiOjE3MDE4ODU1Njd9.LcVt3fDlCTmAd0VLbYJoUBkv4pz2qLBFMds8xAhECA0&email=borashek@inbox.ru
+
+GithubLoginPage.getLayout = getLayout
+export default GithubLoginPage

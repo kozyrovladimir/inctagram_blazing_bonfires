@@ -66,9 +66,7 @@ export const Payments = () => {
             <tbody className={styles.body}>
               {currentPayments.map((item: SubscriptionDataType, index: number) => (
                 <tr key={index} className={styles.line}>
-                  <td className={styles.item}>
-                    {index + 1}, {formatDate(item.dateOfPayment, 'mm.dd.yyyy')}
-                  </td>
+                  <td className={styles.item}>{formatDate(item.dateOfPayment, 'mm.dd.yyyy')}</td>
                   <td className={styles.item}>
                     {formatDate(item.endDateOfSubscription, 'mm.dd.yyyy')}
                   </td>
