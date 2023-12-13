@@ -49,7 +49,7 @@ export const Publication = () => {
 
     // преобразование url всех изображений в file
     for (const photo of cropContext.photos) {
-      const result = await fetch(photo.url)
+      const result = await fetch(photo.filteredUrl)
       const blob = await result.blob()
       const file = new File([blob], 'image', { type: 'image/jpg' })
 
