@@ -2,6 +2,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 
 import { baseURL } from '@/shared/api'
 import {
+  GetPostsResponseType,
+  GetUserPostsRequestType,
+  GetUserPostsResponseType,
   ImagesResponse,
   PostsResponseType,
   PostsType,
@@ -10,7 +13,7 @@ import {
 export const postsApi = createApi({
   reducerPath: 'postsApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
-  tagTypes: ['createPost'],
+  tagTypes: ['deletePost', 'createPost'],
   endpoints: build => {
     return {
       createPost: build.mutation<PostsResponseType, PostsType>({
@@ -25,6 +28,33 @@ export const postsApi = createApi({
           }
         },
         invalidatesTags: ['createPost'],
+      }),
+      getPost: build.query<GetPostsResponseType, number>({
+        query: postId => {
+          return {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+            url: `posts/p/${postId}`,
+          }
+        },
+      }),
+      getUserPost: build.query<GetUserPostsResponseType, GetUserPostsRequestType>({
+        query: ({ userId, pageNumber, pageSize }) => {
+          return {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+            url: `public-posts/user/${userId}`,
+            params: {
+              pageSize,
+              pageNumber,
+            },
+          }
+        },
+        providesTags: ['deletePost', 'createPost'],
       }),
       uploadImage: build.mutation<ImagesResponse, FormData>({
         query: body => {
@@ -42,4 +72,11 @@ export const postsApi = createApi({
   },
 })
 
-export const { useCreatePostMutation, useUploadImageMutation } = postsApi
+export const {
+  useCreatePostMutation,
+  useUploadImageMutation,
+  useLazyGetPostQuery,
+  useLazyGetUserPostQuery,
+  useGetPostQuery,
+  useGetUserPostQuery,
+} = postsApi
