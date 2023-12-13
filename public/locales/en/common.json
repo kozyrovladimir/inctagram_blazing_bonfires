@@ -21,7 +21,6 @@
   "Yes": "Yes",
   "No": "No",
   "Ok": "Ok",
-
   "Error": {
     "NetworkError": "Network error",
     "ServerNotAvailable": "Error! Server is not available!",
@@ -30,8 +29,8 @@
     "PasswordIncorrect": "The password is incorrect. Try again please ",
     "EmailNotRegistered": "This email address is not registered. Please register",
     "UserNameValidationError": "Only Latin letters, numbers and \"_\", \"-\"",
-    "EmailValidationError": "Email must contain A-Z, a-z , @",
-    "PasswordValidationError": "Uppercase, lowercase letters, a number and a symbol",
+    "EmailValidationError": "The email must match the format example@example.com",
+    "PasswordValidationError": "Password must contain a-z, A-Z,  ! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~",
     "MinCharacters1": "Minimum 1 characters",
     "MinCharacters2": "Minimum 2 characters",
     "MinCharacters6": "Minimum 6 characters",
@@ -89,7 +88,6 @@
     "AccountManagement": "Account Management",
     "MyPayments": "My payments"
   },
-
   "Profile": {
     "Following": "Following",
     "Followers": "Followers",
@@ -142,7 +140,7 @@
   },
   "AddPost": {
     "AddPhoto": "Add Photo",
-    "Cropping":"Cropping",
+    "Cropping": "Cropping",
     "Filters": "Filters",
     "Publication": "Publication",
     "Publish": "Publish",
