@@ -23,9 +23,6 @@ const GithubLoginPage = () => {
   const router = useRouter()
   const { accessToken, email } = router.query
 
-  console.log(accessToken)
-  console.log(email)
-
   useEffect(() => {
     if (accessToken && email) {
       localStorage.setItem('accessToken', accessToken as string)
@@ -41,8 +38,6 @@ const GithubLoginPage = () => {
     </div>
   )
 }
-
-// http://localhost:3000/github?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3OCwiaWF0IjoxNzAxODgxOTY3LCJleHAiOjE3MDE4ODU1Njd9.LcVt3fDlCTmAd0VLbYJoUBkv4pz2qLBFMds8xAhECA0&email=borashek@inbox.ru
 
 GithubLoginPage.getLayout = getLayout
 export default GithubLoginPage
