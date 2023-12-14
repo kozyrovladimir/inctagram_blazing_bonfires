@@ -17,13 +17,9 @@
   position: relative;
 }
 
-
 .active {
   width: 180px;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 2px 2px 0 0;
 }
 
 .select:focus {
@@ -43,19 +39,23 @@
   border-left: 1px solid #C2C2C2;
   transition: all .3s ease;
 }
+
 .option:last-child {
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
+
 .option:hover {
   color: #0066CC;
   cursor: pointer;
 }
+
 .activeOption {
   border: none;
   background-color: #0066CC;
   color: var(--color-text);
 }
+
 .activeOption:hover {
   color: var(--color-text);
   background-color: #0066CC;
@@ -81,4 +81,38 @@
   position: absolute;
   top: 34px;
   left: -1px;
-}
+
+  .root {
+    position: inherit;
+    z-index: 100;
+
+    .activeSelect {
+      border: 1px solid #4c4c4c;
+      width: 100%;
+      height: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      color: #8d9094;
+      cursor: pointer;
+    }
+
+    .selectOptionsBlock {
+      width: inherit;
+      border: 1px solid #fff;
+      padding: 0 10px;
+      font-size: var(--font-size-m);
+      font-weight: 400;
+      line-height: var(--line-height-m);
+      letter-spacing: 0;
+      position: absolute;
+      top: 34px;
+      background-color: #0d0d0d;
+
+      .selectItem {
+        margin: 10px 0;
+        cursor: pointer;
+      }
+    }
+  }

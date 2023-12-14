@@ -1,32 +1,38 @@
 .navbar {
   display: flex;
-  padding-left: 15.25rem;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
-  margin: 2.25rem auto 1.875rem;
+  padding: 0 4rem 0 1.5rem;
 }
 
-.navbar div {
+.navbar h3 {
   display: inline-block;
+  margin-top: 2.25rem;
+  margin-bottom: 0;
+  width: 100%;
   text-decoration: none;
   color: var(--color-dark-300);
   font-size: var(--font-size-l);
+  font-weight: 600;
   position: relative;
-  width: 182px;
-  height: 36px;
   border-bottom: 1px solid var(--color-dark-300);
-  margin: 0;
+  padding-bottom: 0.25rem;
+}
+.navbar > * {
+  flex-grow: 1;
+  flex-basis: 0;
 }
 
-.navbar div:hover,
-.navbar div:focus,
-.navbar div.current-page {
+.navbar h3:hover,
+.navbar h3:focus,
+.navbar h3.current-page {
   color: var(--color-info-500);
 }
 
-.navbar div:hover::after,
-.navbar div:focus::after,
-.navbar div.current-page::after {
+.navbar h3:hover::after,
+.navbar h3:focus::after,
+.navbar h3.current-page::after {
   content: '';
   position: absolute;
   bottom: -0.2vh;

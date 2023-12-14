@@ -12,6 +12,13 @@
   border: 1px solid var(--color-info-500);
   color: var(--color-info-500);
 }
+.noborder {
+  border: none;
+  outline: none;
+  background: none;
+  color: var(--color-light-100);
+  font-weight: var(--font-weight-regular);
+}
 
 .filled {
   color: var(--color-light-100);

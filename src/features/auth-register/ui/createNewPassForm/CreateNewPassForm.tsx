@@ -10,7 +10,7 @@ import styles from './CreateNewPassForm.module.scss'
 
 import { useCreateNewPasswordMutation } from '@/shared/api/services/auth/auth.api'
 import { NewPasswordType } from '@/shared/api/services/auth/auth.api.types'
-import { SIGN_IN_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 import { Button, ButtonSize } from '@/shared/ui/button/Button'
 import FormContainer from '@/shared/ui/formContainer/FormContainer'
 import { Input, InputType } from '@/shared/ui/input/Input'
@@ -39,8 +39,8 @@ export function CreateNewPassForm() {
   const schema = yup.object().shape({
     newPassword: yup
       .string()
-      .min(6, tError('MinCharactrers6'))
-      .max(20, tError('MaxCharactrers20'))
+      .min(6, tError('MinCharacters6'))
+      .max(20, tError('MaxCharacters20'))
       .matches(
         /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_{|}~])[A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_{|}~]+$/,
         tError('PasswordValidationError')
@@ -78,7 +78,7 @@ export function CreateNewPassForm() {
       .unwrap()
       .then(() => {
         reset()
-        router.push(SIGN_IN_PATH)
+        router.push(RoutersPath.signIn)
       })
       .catch(error => {
         if (error.data.messages[0].field === 'newPassword') {

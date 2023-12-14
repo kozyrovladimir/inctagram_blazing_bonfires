@@ -15,7 +15,7 @@ import {
   useTerminateAllMutation,
 } from '@/shared/api/services/devices/devices.api'
 import { UserSessionsType } from '@/shared/api/services/devices/devices.api.types'
-import { SIGN_IN_PATH } from '@/shared/constants/paths'
+import { RoutersPath } from '@/shared/constants/paths'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
 import { Modal } from '@/shared/ui/modal/Modal'
@@ -72,7 +72,7 @@ export function Devices() {
     logout()
       .unwrap()
       .then(() => {
-        router.push(SIGN_IN_PATH)
+        router.push(RoutersPath.signIn)
       })
       .catch((error: FetchBaseQueryError | SerializedError | undefined) =>
         currentErrorHandler(error)

@@ -1,14 +1,24 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useEffect } from 'react'
 
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
+import style from './BaseLayout.module.scss'
+
+import { isRenderSidebar } from '@/shared/utils/isRenderSidebar'
 import { Header } from '@/widgets/header'
+import { SideBar } from '@/widgets/sideBar'
 
 const BaseLayout: NextPage<PropsWithChildren> = ({ children }) => {
+  const { pathname } = useRouter()
+
+  const isSidebar = isRenderSidebar(pathname)
+
   return (
     <>
       <Header />
-      {children}
+      {isSidebar && <SideBar />}
+      <main className={isSidebar ? style.mainWithSidebar : style.main}>{children}</main>
     </>
   )
 }

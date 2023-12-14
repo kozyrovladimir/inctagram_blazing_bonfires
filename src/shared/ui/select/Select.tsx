@@ -1,4 +1,4 @@
-import React, { SelectHTMLAttributes, DetailedHTMLProps, ChangeEvent, CSSProperties } from 'react'
+import React, { ChangeEvent, CSSProperties, DetailedHTMLProps, SelectHTMLAttributes } from 'react'
 
 import styles from './Select.module.scss'
 

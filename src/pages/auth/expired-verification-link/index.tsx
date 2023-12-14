@@ -14,10 +14,10 @@ import { useResendVerificationLinkMutation } from '@/shared/api/services/auth/au
 import { ResendVerificationLinkType } from '@/shared/api/services/auth/auth.api.types'
 import broResend from '@/shared/assets/icons/login/broResend.svg'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
+import { ShortLangs } from '@/shared/types/langSwitcherTypes'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
 import { CircularLoader } from '@/shared/ui/loaders/CircularLoader'
 import { Modal } from '@/shared/ui/modal/Modal'
-import { ShortLangs } from '@/widgets/langSwitcher/ui/LanguageSelect'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
