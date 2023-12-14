@@ -9,6 +9,7 @@
   "Description": "Description",
   "Save": "Save",
   "SaveChanges": "Save Changes",
+  "AddProfilePhoto": "Add a Profile Photo",
   "SelectFromComputer": "Select from Computer",
   "OpenDraft": "Open Draft",
   "ProfileSetting": "Profile Setting",
@@ -21,7 +22,6 @@
   "Yes": "Yes",
   "No": "No",
   "Ok": "Ok",
-
   "Error": {
     "NetworkError": "Network error",
     "TryAgain": "Error, try again late",
@@ -66,6 +66,7 @@
     "EnterPasswordConfirmation": "Enter password confirmation",
     "AgreeToThe": "I agree to the",
     "TermsOfService": "Terms of Service",
+    "PrivacyPolicy": "Privacy Policy",
     "BackToSignUp": "Back to sign up",
     "HaveAccount?": "Do you have an account?",
     "DontHaveAccount?": "Don’t have an account?",
@@ -91,7 +92,6 @@
     "AccountManagement": "Account Management",
     "MyPayments": "My payments"
   },
-
   "Profile": {
     "Following": "Following",
     "Followers": "Followers",

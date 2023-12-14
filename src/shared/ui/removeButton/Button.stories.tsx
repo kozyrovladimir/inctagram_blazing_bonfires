@@ -4,7 +4,7 @@ import { RemoveAvatarButton } from '@/shared/ui/removeButton/RemoveAvatarButton'
 
 const meta: Meta<typeof RemoveAvatarButton> = {
   component: RemoveAvatarButton,
-  title: 'Example/roundRedBtn',
+  title: 'Example/RemoveAvatarButton',
 }
 
 export default meta

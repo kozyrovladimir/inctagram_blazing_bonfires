@@ -26,8 +26,6 @@ export const subscriptionsApi = createApi({
       }),
       getCurrentSubscriptions: build.query<CurrentSubscriptionType, void>({
         query: () => {
-          console.log('api getCurrentSubscription')
-
           return {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
