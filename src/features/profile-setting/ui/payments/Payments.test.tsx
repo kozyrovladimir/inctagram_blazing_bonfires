@@ -9,7 +9,7 @@ import { payments } from '@/shared/ui/table/constants'
 
 jest.mock('@/shared/api/services/subscriptions/subscriptions.api', () => ({
   ...jest.requireActual('@/shared/api/services/subscriptions/subscriptions.api'),
-  create: jest.fn(),
+  useGetSubscriptionsQuery: jest.fn(),
 }))
 
 describe('Payments', () => {
