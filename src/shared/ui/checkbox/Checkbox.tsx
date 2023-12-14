@@ -1,4 +1,4 @@
-import {forwardRef, ReactNode, Ref} from 'react'
+import { forwardRef, ReactNode, Ref } from 'react'
 
 import styles from './Checkbox.module.scss'
 
@@ -11,7 +11,7 @@ type Props = {
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, Props>(
-  ({children, disabled, error, value, ...rest}: Props, ref) => {
+  ({ children, disabled, error, value, ...rest }: Props, ref) => {
     return (
       <div className={styles.checkboxWrapper}>
         <div className={styles.checkboxLabel}>
@@ -25,9 +25,7 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>(
           />
           <span className={styles.check}></span>
         </div>
-        <label>
-          {children}
-        </label>
+        <label>{children}</label>
         <p className={styles.error}>{error && !value ? error : ''}</p>
       </div>
     )

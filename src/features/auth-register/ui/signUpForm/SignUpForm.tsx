@@ -1,39 +1,41 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-import {yupResolver} from '@hookform/resolvers/yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
-import {useTranslation} from 'next-i18next'
-import {Controller, SubmitHandler, useForm} from 'react-hook-form'
-
-import {toast, Toaster} from 'react-hot-toast'
+import { useTranslation } from 'next-i18next'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { toast, Toaster } from 'react-hot-toast'
 import * as yup from 'yup'
 
 import styles from './SignUpForm.module.scss'
 
-import {OAuth} from '@/features/auth-register/ui/oAuth/OAuth'
-import {SignUpType, useSignUpMutation} from '@/shared/api'
-import {RoutersPath} from '@/shared/constants/paths'
-import {Button, ButtonSize, ButtonTheme} from '@/shared/ui/button/Button'
-import {Checkbox} from '@/shared/ui/checkbox/Checkbox'
+import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
+import { SignUpType, useSignUpMutation } from '@/shared/api'
+import { RoutersPath } from '@/shared/constants/paths'
+import { registrationSchema } from '@/shared/constants/validation-schema/registrationSchema'
+import { RegistrationFormType } from '@/shared/types/schemaTypes'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
+import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
 import FormContainer from '@/shared/ui/formContainer/FormContainer'
-import {Input, InputType} from '@/shared/ui/input/Input'
-import {LinearLoader} from '@/shared/ui/loaders/LinearLoader'
-import {Modal} from '@/shared/ui/modal/Modal'
-import {
-  registrationSchema
-} from "@/shared/constants/validation-schema/registrationSchema";
-import {RegistrationFormType} from "@/shared/types/schemaTypes";
+import { Input, InputType } from '@/shared/ui/input/Input'
+import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
+import { Modal } from '@/shared/ui/modal/Modal'
 
 export const SignUpForm = () => {
-  const {t} = useTranslation('common')
+  const { t } = useTranslation('common')
 
-  const [signUp, {isLoading}] = useSignUpMutation()
+  const [signUp, { isLoading }] = useSignUpMutation()
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
 
   const callBackCloseWindow = () => setRegistrationSuccess(false)
 
   const {
-    handleSubmit, control, watch, trigger, formState: {isValid}, reset,
+    handleSubmit,
+    control,
+    watch,
+    trigger,
+    formState: { isValid },
+    reset,
   } = useForm<RegistrationFormType>({
     resolver: yupResolver(registrationSchema(t)) as yup.InferType<yup.Schema>,
     defaultValues: {
@@ -44,7 +46,7 @@ export const SignUpForm = () => {
       agreement: false,
     },
     mode: 'onBlur',
-    reValidateMode: 'onChange'
+    reValidateMode: 'onChange',
   })
   const passwordConfirm = watch('passwordConfirmation')
 
@@ -60,38 +62,36 @@ export const SignUpForm = () => {
 
   return (
     <>
-      <Toaster position="top-right"/>
-      {isLoading && <LinearLoader/>}
-
+      <Toaster position="top-right" />
+      {isLoading && <LinearLoader />}
       {registrationSuccess && (
-        <Modal title={t('EmailSent')} mainButton={'OK'}
-               callBackCloseWindow={callBackCloseWindow}>
+        <Modal title={t('EmailSent')} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
           <p>{t('LinkConfirmYourEmail')} </p>
         </Modal>
       )}
       <FormContainer title={t('Auth.SignUp')}>
-        <form onSubmit={handleSubmit(onSubmit)}
-              className={styles.formContainer}
-              noValidate>
-          <div className={styles.oAuth}><OAuth/></div>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer} noValidate>
+          <div className={styles.oAuth}>
+            <OAuth />
+          </div>
           <Controller
             control={control}
             name="userName"
-            render={({field, fieldState: {error}}) =>
-              (<Input
+            render={({ field, fieldState: { error } }) => (
+              <Input
                 type={InputType.TEXT}
                 label={t('Auth.UserName')}
                 placeholder={t('Auth.EnterName')}
                 error={error && error?.message}
                 classNameWrap={error ? '' : styles.inputUserName}
                 {...field}
-              />)
-            }
+              />
+            )}
           />
           <Controller
             control={control}
             name="email"
-            render={({field, fieldState: {error}}) => (
+            render={({ field, fieldState: { error } }) => (
               <Input
                 label={t('Auth.Email')}
                 placeholder={t('Auth.EnterEmail')}
@@ -105,10 +105,7 @@ export const SignUpForm = () => {
           <Controller
             control={control}
             name="password"
-            render={({
-                       field: {onChange, onBlur, value, ref},
-                       fieldState: {error}
-                     }) => (
+            render={({ field: { onChange, onBlur, value, ref }, fieldState: { error } }) => (
               <Input
                 label={t('Auth.Password')}
                 placeholder={t('Auth.EnterPassword')}
@@ -130,10 +127,7 @@ export const SignUpForm = () => {
           <Controller
             control={control}
             name="passwordConfirmation"
-            render={({
-                       field: {value, onChange, onBlur, ref},
-                       fieldState: {error}
-                     }) => (
+            render={({ field: { value, onChange, onBlur, ref }, fieldState: { error } }) => (
               <Input
                 label={t('Auth.PasswordConfirmation')}
                 placeholder={t('Auth.PasswordConfirmation')}
@@ -147,27 +141,22 @@ export const SignUpForm = () => {
               />
             )}
           />
-
           <div className={styles.agreementContainer}>
             <Controller
               control={control}
               name="agreement"
-              render={({field}) => (
-                <Checkbox
-                  {...field}
-                >
+              render={({ field }) => (
+                <Checkbox {...field}>
                   <p className={styles.agreementText}>
                     {t('Auth.AgreeToThe') + ' '}
-                    <Link href={RoutersPath.authTermsOfService}
-                          className={styles.agreementLink}
-                    >
+                    <Link href={RoutersPath.authTermsOfService} className={styles.agreementLink}>
                       {t('Auth.TermsOfService')}
                     </Link>
                     {' ' + t('And') + ' '}
                     <Link
                       href={{
                         pathname: `${RoutersPath.authPrivacyPolicy}`,
-                        query: {previousPage: `${RoutersPath.signUp}`},
+                        query: { previousPage: `${RoutersPath.signUp}` },
                       }}
                       className={styles.agreementLink}
                     >
@@ -178,23 +167,16 @@ export const SignUpForm = () => {
               )}
             />
           </div>
-
-          <Button className={styles.signUpBtn}
-                  size={ButtonSize.STRETCHED}
-                  disabled={!isValid}>
+          <Button className={styles.signUpBtn} size={ButtonSize.STRETCHED} disabled={!isValid}>
             {t('Auth.SignUp')}
           </Button>
-
           <p className={styles.helpText}>{t('Auth.HaveAccount?')}</p>
-
           <Button
             className={styles.oppositeBtn}
             theme={ButtonTheme.NOBORDER}
             size={ButtonSize.SMALL}
           >
-            <Link href={RoutersPath.signIn}
-                  className={styles.linkOppositeBtn}
-                  tabIndex={-1}>
+            <Link href={RoutersPath.signIn} className={styles.linkOppositeBtn} tabIndex={-1}>
               {t('Auth.SignIn')}
             </Link>
           </Button>
