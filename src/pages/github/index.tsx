@@ -25,12 +25,14 @@ const GithubLoginPage = () => {
 
   useEffect(() => {
     if (accessToken && email) {
-      localStorage.setItem('accessToken', accessToken as string)
+      // localStorage.setItem('accessToken', accessToken as string)
       router.push(`/profile`)
     } else {
       router.push(`/sign-in`)
     }
   }, [accessToken])
+
+  // http://localhost:3000/github?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3OCwiaWF0IjoxNzAxODgxOTY3LCJleHAiOjE3MDE4ODU1Njd9.LcVt3fDlCTmAd0VLbYJoUBkv4pz2qLBFMds8xAhECA0&email=borashek@inbox.ru
 
   return (
     <div className={styles.loaderWrapper}>
