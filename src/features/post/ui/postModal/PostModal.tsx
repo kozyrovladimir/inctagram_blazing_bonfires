@@ -1,27 +1,43 @@
+import React, { useState } from 'react'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { EditDeletePost } from '@/features/post/ui/editDeletePost/EditDeletePost'
+import { PostImages } from '@/features/post/ui/postImagesModal/PostImages'
 import styles from '@/features/post/ui/postModal/PostModal.module.scss'
 import style from '@/pages/profile/profile.module.scss'
+import { GetPostByIdResponseType } from '@/shared/api/services/posts/posts.api.types'
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
+import editDeleteButton from '@/shared/assets/icons/editDeletePost/editDeleteButton.svg'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
 import likeIcon from '@/shared/assets/icons/icons/likeIcon.svg'
 import saveIcon from '@/shared/assets/icons/icons/saveIcon.svg'
 import shareIcon from '@/shared/assets/icons/icons/shareIcon.svg'
-import imgExample from '@/shared/assets/icons/image/imgExample.png'
 import { RoutersPath } from '@/shared/constants/paths'
+import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
-export const PostModal = () => {
+type Props = {
+  postData: GetPostByIdResponseType | undefined
+  setIsPostActive: (isPostActive: boolean) => void
+}
+export const PostModal = ({ postData, setIsPostActive }: Props) => {
+  const { profile, posts } = postData || {}
+  const [openBtn, setOpenBtn] = useState(false)
+  const handleButtonClick = () => {
+    setOpenBtn(prevState => !prevState)
+  }
+
   return (
     <div className={styles.postContainer}>
       <Link href={RoutersPath.profile}>
         <div className={styles.closeIconContainer}>
-          <Image src={closeIcon} alt={''} />
+          <Image src={closeIcon} alt={''} onClick={() => setIsPostActive(false)} />
         </div>
       </Link>
       <div className={styles.post}>
         <div className={styles.postPhotoContainer}>
-          <Image src={imgExample} alt={'post photo'} className={styles.postPhoto} />
+          <PostImages postData={postData} />
         </div>
         <div className={styles.descriptionContainer}>
           <div className={styles.headerContainer}>
@@ -34,7 +50,15 @@ export const PostModal = () => {
                 style={{ cursor: 'pointer' }}
               />
             </div>
-            <p className={styles.userName}>Jack</p>
+            <p className={styles.userName}>{profile?.userName}</p>
+            <Button
+              theme={ButtonTheme.CLEAR}
+              className={styles.editDeleteButton}
+              onClick={handleButtonClick}
+            >
+              <Image src={editDeleteButton} alt={''} />
+            </Button>
+            {openBtn && <EditDeletePost posts={posts} setIsPostActive={setIsPostActive} />}
           </div>
           <div className={styles.commentsContainer}>
             <div className={styles.commentContainer}>

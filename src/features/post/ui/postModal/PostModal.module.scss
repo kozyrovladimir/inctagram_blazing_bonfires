@@ -31,7 +31,10 @@
 
 .postPhotoContainer {
   width: 490px;
-  background-color: var(--color-dark-700);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .postPhoto {
@@ -51,6 +54,15 @@
   border-bottom: 1px solid var(--color-dark-100);
   padding: 0 24px;
   height: 59px;
+
+  .editDeleteButton {
+    border: none;
+    margin-left: 290px;
+    position: relative;
+    //.editDeleteButton:active {
+    //  background-color: blue;
+    //}
+  }
 }
 
 .userName {

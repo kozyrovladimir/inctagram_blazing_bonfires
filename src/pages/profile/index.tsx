@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { GetStaticProps } from 'next'
 import Image from 'next/image'
@@ -10,9 +10,9 @@ import noImage from '../../shared/assets/icons/avatarProfile/notPhoto.png'
 
 import style from './profile.module.scss'
 
+import { Posts } from '@/features/post/ui/posts/Posts'
 import { useMeQuery } from '@/shared/api'
-import { useLazyGetPostQuery, useLazyGetUserPostQuery } from '@/shared/api/services/posts/posts.api'
-import { GetPostsResponseType } from '@/shared/api/services/posts/posts.api.types'
+import { useLazyGetUserPostsQuery } from '@/shared/api/services/posts/posts.api'
 import { useLazyGetProfileQuery } from '@/shared/api/services/profile/profile.api'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 import { ShortLangs } from '@/shared/types/langSwitcherTypes'
@@ -38,10 +38,7 @@ function Profile() {
   const router = useRouter()
   const { data } = useMeQuery()
   const [getProfile, { data: profileData }] = useLazyGetProfileQuery()
-  const [getPost, { data: postData }] = useLazyGetPostQuery()
-  const [getUserPost, { data: userPost }] = useLazyGetUserPostQuery()
-
-  const [isPostActive, setIsPostActive] = useState(false)
+  const [getUserPosts, { data: userPost }] = useLazyGetUserPostsQuery()
 
   const [pageNumber, setPageNumber] = useState(1)
   const [pageSize, setPageSize] = useState(postsAmount)
@@ -68,7 +65,7 @@ function Profile() {
 
   useEffect(() => {
     if (userId && isFetching && posts.length < totalCount) {
-      getUserPost({ userId, pageNumber, pageSize })
+      getUserPosts({ userId, pageNumber, pageSize })
         .unwrap()
         .then(res => {
           setPageCount(res.posts.pagesCount)
@@ -103,7 +100,7 @@ function Profile() {
         </div>
         <div className={style.profileInfoContainer}>
           <div className={style.profileTitleContainer}>
-            <div>URLProfile</div>
+            <div>{profileData?.userName}</div>
             <Button
               className={style.buttonProfileSetting}
               style={language === ShortLangs.RU ? { fontSize: '0.875rem' } : undefined}
@@ -132,30 +129,5 @@ function Profile() {
   )
 }
 
-type PostsProps = {
-  posts: GetPostsResponseType[]
-}
-const Posts: FC<PostsProps> = ({ posts }) => {
-  return (
-    <div className={style.photoWrapper}>
-      {posts.map(p => {
-        return <img key={p.id} src={p?.images[0]?.url} alt={'photo'} className={style.photo} />
-      })}
-    </div>
-  )
-}
-
 Profile.getLayout = getLayout
 export default Profile
-
-// <img
-// style={{ width: '234px', height: '228px' }}
-// key={p.id}
-// alt={''}
-// src={p?.images[0]?.url}
-// onClick={() =>
-// getPost(p.id)
-//   .unwrap()
-//   .then(() => setIsPostActive(true))
-// }
-// />
