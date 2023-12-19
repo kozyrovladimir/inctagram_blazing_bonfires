@@ -36,7 +36,7 @@ export type GetPostsResponseType = PostsResponseType & {
 }
 
 export type GetUserPostsResponseType = {
-  profile: PostsResponseType
+  profile: ProfileUserType
   posts: {
     page: number
     pageSize: number
@@ -50,4 +50,9 @@ export type GetUserPostsRequestType = {
   userId: number
   pageSize: number
   pageNumber: number
+}
+
+export type GetPostByIdResponseType = {
+  profile: ProfileUserType
+  posts: PostsResponseType
 }

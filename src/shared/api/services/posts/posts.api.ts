@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 
 import { baseURL } from '@/shared/api'
 import {
-  GetPostsResponseType,
+  GetPostByIdResponseType,
   GetUserPostsRequestType,
   GetUserPostsResponseType,
   ImagesResponse,
@@ -29,18 +29,30 @@ export const postsApi = createApi({
         },
         invalidatesTags: ['createPost'],
       }),
-      getPost: build.query<GetPostsResponseType, number>({
+      getPost: build.query<GetPostByIdResponseType, number>({
         query: postId => {
           return {
             method: 'GET',
             headers: {
               Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
             },
-            url: `posts/p/${postId}`,
+            url: `public-posts/p/${postId}`,
           }
         },
       }),
-      getUserPost: build.query<GetUserPostsResponseType, GetUserPostsRequestType>({
+      deletePost: build.mutation<void, number>({
+        query: postId => {
+          return {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+            url: `posts/${postId}`,
+          }
+        },
+        invalidatesTags: ['deletePost'],
+      }),
+      getUserPosts: build.query<GetUserPostsResponseType, GetUserPostsRequestType>({
         query: ({ userId, pageNumber, pageSize }) => {
           return {
             method: 'GET',
@@ -76,7 +88,6 @@ export const {
   useCreatePostMutation,
   useUploadImageMutation,
   useLazyGetPostQuery,
-  useLazyGetUserPostQuery,
-  useGetPostQuery,
-  useGetUserPostQuery,
+  useLazyGetUserPostsQuery,
+  useDeletePostMutation,
 } = postsApi
