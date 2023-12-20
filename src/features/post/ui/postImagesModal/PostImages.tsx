@@ -7,24 +7,23 @@ import style from './PostImages.module.scss'
 import { DotsBar } from '@/features/create-post/ui/dotsBar/DotsBar'
 import { filterBestQualityImages } from '@/features/create-post/utils/filterBestQualityImages'
 import { useSlider } from '@/features/create-post/utils/useSlider'
-import { GetPostByIdResponseType, ImageDataType } from '@/shared/api/services/posts/posts.api.types'
+import { ImageDataType, PostsResponseType } from '@/shared/api/services/posts/posts.api.types'
 import next from '@/shared/assets/icons/filterPostPhoto/next.svg'
 import prev from '@/shared/assets/icons/filterPostPhoto/prev.svg'
 import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 type Props = {
-  postData: GetPostByIdResponseType | undefined
+  postData: PostsResponseType | undefined
 }
 export const PostImages = ({ postData }: Props) => {
-  const { posts } = postData || {}
   const [images, setImages] = useState<ImageDataType[]>([])
   const { currentIndex, prevSlide, nextSlide } = useSlider(images.length)
 
   useEffect(() => {
-    if (posts?.images && posts.images.length > 0) {
-      setImages(filterBestQualityImages(posts.images))
+    if (postData?.images && postData.images.length > 0) {
+      setImages(filterBestQualityImages(postData.images))
     }
-  }, [posts])
+  }, [postData])
 
   return (
     <div className={style.sliderWrapper}>

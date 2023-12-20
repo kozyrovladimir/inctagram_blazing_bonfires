@@ -7,7 +7,7 @@ import { EditDeletePost } from '@/features/post/ui/editDeletePost/EditDeletePost
 import { PostImages } from '@/features/post/ui/postImagesModal/PostImages'
 import styles from '@/features/post/ui/postModal/PostModal.module.scss'
 import style from '@/pages/profile/profile.module.scss'
-import { GetPostByIdResponseType } from '@/shared/api/services/posts/posts.api.types'
+import { PostsResponseType } from '@/shared/api/services/posts/posts.api.types'
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import editDeleteButton from '@/shared/assets/icons/editDeletePost/editDeleteButton.svg'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
@@ -18,11 +18,10 @@ import { RoutersPath } from '@/shared/constants/paths'
 import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 type Props = {
-  postData: GetPostByIdResponseType | undefined
+  postData: PostsResponseType | undefined
   setIsPostActive: (isPostActive: boolean) => void
 }
 export const PostModal = ({ postData, setIsPostActive }: Props) => {
-  const { profile, posts } = postData || {}
   const [openBtn, setOpenBtn] = useState(false)
   const handleButtonClick = () => {
     setOpenBtn(prevState => !prevState)
@@ -50,7 +49,7 @@ export const PostModal = ({ postData, setIsPostActive }: Props) => {
                 style={{ cursor: 'pointer' }}
               />
             </div>
-            <p className={styles.userName}>{profile?.userName}</p>
+            <p className={styles.userName}>Jack</p>
             <Button
               theme={ButtonTheme.CLEAR}
               className={styles.editDeleteButton}
@@ -58,7 +57,13 @@ export const PostModal = ({ postData, setIsPostActive }: Props) => {
             >
               <Image src={editDeleteButton} alt={''} />
             </Button>
-            {openBtn && <EditDeletePost posts={posts} setIsPostActive={setIsPostActive} />}
+            {openBtn && (
+              <EditDeletePost
+                posts={postData}
+                setIsPostActive={setIsPostActive}
+                setOpenBtn={setOpenBtn}
+              />
+            )}
           </div>
           <div className={styles.commentsContainer}>
             <div className={styles.commentContainer}>

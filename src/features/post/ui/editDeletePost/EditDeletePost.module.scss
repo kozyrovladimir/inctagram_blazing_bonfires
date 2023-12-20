@@ -19,3 +19,37 @@
     }
   }
 }
+
+.modalWrapper {
+  width: 380px;
+  height: 152px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .textWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+    height: 72px;
+    margin-top: 8px;
+
+    .text {
+      font-size: 16px;
+    }
+  }
+
+  .buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 90px;
+    margin-top: 17px;
+
+    .button {
+      width: 108px;
+      height: 36px;
+      font-size: var(--font-size-s);
+    }
+  }
+}

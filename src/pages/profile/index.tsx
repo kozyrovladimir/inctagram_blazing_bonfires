@@ -11,9 +11,8 @@ import noImage from '../../shared/assets/icons/avatarProfile/notPhoto.png'
 import style from './profile.module.scss'
 
 import { Posts } from '@/features/post/ui/posts/Posts'
-import { useMeQuery } from '@/shared/api'
 import { useLazyGetUserPostsQuery } from '@/shared/api/services/posts/posts.api'
-import { useLazyGetProfileQuery } from '@/shared/api/services/profile/profile.api'
+import { useLazyGetProfileUserQuery } from '@/shared/api/services/profile/profile.api'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 import { ShortLangs } from '@/shared/types/langSwitcherTypes'
 import { Button } from '@/shared/ui/button/Button'
@@ -36,8 +35,7 @@ function Profile() {
     i18n: { t: tRoot, language },
   } = useTranslation('common', { keyPrefix: 'Profile' })
   const router = useRouter()
-  const { data } = useMeQuery()
-  const [getProfile, { data: profileData }] = useLazyGetProfileQuery()
+  const [getProfile, { data: profileData }] = useLazyGetProfileUserQuery()
   const [getUserPosts, { data: userPost }] = useLazyGetUserPostsQuery()
 
   const [pageNumber, setPageNumber] = useState(1)
@@ -45,33 +43,31 @@ function Profile() {
   const [pageCount, setPageCount] = useState(1)
   const [userId, setUserId] = useState<number | null>(null)
   const [totalCount, setTotalCount] = useState(postsAmount)
-
+  const [endCursorPostId, setEndCursorPostId] = useState(0)
   const [isFetching, setIsFetching] = useState(true)
 
-  const posts = userPost?.posts.items || []
+  const posts = userPost?.items || []
 
   useEffect(() => {
-    if (data?.userId) {
-      getProfile(data.userId.toString())
-        .unwrap()
-        .then(res => {
-          if (res.id) {
-            setUserId(res.id)
-          }
-        })
-        .catch(() => {})
-    }
-  }, [data?.userId])
+    getProfile()
+      .unwrap()
+      .then(res => {
+        if (res.id) {
+          setUserId(res.id)
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   useEffect(() => {
     if (userId && isFetching && posts.length < totalCount) {
-      getUserPosts({ userId, pageNumber, pageSize })
+      getUserPosts({ userId, pageNumber, pageSize, endCursorPostId })
         .unwrap()
         .then(res => {
-          setPageCount(res.posts.pagesCount)
+          setPageCount(res.pagesCount)
           setPageSize(prev => prev + postsAmount)
           setIsFetching(false)
-          setTotalCount(res.posts.totalCount)
+          setTotalCount(res.totalCount)
         })
     }
   }, [isFetching, userId])

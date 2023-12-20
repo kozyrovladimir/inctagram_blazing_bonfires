@@ -36,23 +36,16 @@ export type GetPostsResponseType = PostsResponseType & {
 }
 
 export type GetUserPostsResponseType = {
-  profile: ProfileUserType
-  posts: {
-    page: number
-    pageSize: number
-    pagesCount: number
-    totalCount: number
-    items: GetPostsResponseType[]
-  }
+  page: number
+  pageSize: number
+  pagesCount: number
+  totalCount: number
+  items: GetPostsResponseType[]
 }
 
 export type GetUserPostsRequestType = {
   userId: number
   pageSize: number
   pageNumber: number
-}
-
-export type GetPostByIdResponseType = {
-  profile: ProfileUserType
-  posts: PostsResponseType
+  endCursorPostId: number
 }

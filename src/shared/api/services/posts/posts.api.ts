@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 
 import { baseURL } from '@/shared/api'
 import {
-  GetPostByIdResponseType,
   GetUserPostsRequestType,
   GetUserPostsResponseType,
   ImagesResponse,
@@ -29,14 +28,14 @@ export const postsApi = createApi({
         },
         invalidatesTags: ['createPost'],
       }),
-      getPost: build.query<GetPostByIdResponseType, number>({
+      getPost: build.query<PostsResponseType, number>({
         query: postId => {
           return {
             method: 'GET',
             headers: {
               Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
             },
-            url: `public-posts/p/${postId}`,
+            url: `public-posts/${postId}`,
           }
         },
       }),
@@ -53,13 +52,13 @@ export const postsApi = createApi({
         invalidatesTags: ['deletePost'],
       }),
       getUserPosts: build.query<GetUserPostsResponseType, GetUserPostsRequestType>({
-        query: ({ userId, pageNumber, pageSize }) => {
+        query: ({ userId, pageNumber, pageSize, endCursorPostId }) => {
           return {
             method: 'GET',
             headers: {
               Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
             },
-            url: `public-posts/user/${userId}`,
+            url: `public-posts/user/${userId}/${endCursorPostId}`,
             params: {
               pageSize,
               pageNumber,

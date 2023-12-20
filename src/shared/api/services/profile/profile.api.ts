@@ -32,6 +32,18 @@ export const profileApi = createApi({
         },
         providesTags: ['dataProfile'],
       }),
+      getProfileUser: build.query<ProfileUserType, void>({
+        query: () => {
+          return {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+            url: `users/profile`,
+          }
+        },
+        providesTags: ['dataProfile'],
+      }),
       updateProfile: build.mutation<ProfileUserType, ProfileUserType>({
         query: (data: ProfileUserType) => {
           const { ...body } = data
@@ -83,4 +95,5 @@ export const {
   useUpdateAvatarMutation,
   useDeleteAvatarMutation,
   useLazyGetProfileQuery,
+  useLazyGetProfileUserQuery,
 } = profileApi
