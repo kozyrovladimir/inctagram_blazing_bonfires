@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { SubmitHandler, useForm, Controller } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import styles from './Management.module.scss'
@@ -97,9 +97,7 @@ export const Management = () => {
   const handleHasAutoRenewal = () => {
     cancelAutoRenewal()
       .unwrap()
-      .then(() => {
-        console.log('cancelled')
-      })
+      .then(() => {})
       .catch(error => {
         setError(error)
       })
@@ -167,11 +165,11 @@ export const Management = () => {
             {/*auto-renewal*/}
             <div className={styles.autoRenewalWrapper}>
               <Checkbox
-                label={t('AutoRenewal')}
-                labelStyle={styles.autoRenewalLabelStyle}
                 onChange={handleHasAutoRenewal}
-                checked={currentSubscriptions?.hasAutoRenewal}
-              />
+                value={currentSubscriptions?.hasAutoRenewal}
+              >
+                <p className={styles.autoRenewalLabelStyle}> {t('AutoRenewal')}</p>
+              </Checkbox>
             </div>
           </div>
         </div>
