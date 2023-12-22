@@ -4,8 +4,7 @@ import { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import styles from './Github.module.scss'
-
+import styles from '@/pages/payment/access/Payment.module.scss'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 import { CircularLoader } from '@/shared/ui/loaders/CircularLoader'
 
@@ -19,18 +18,16 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   }
 }
 
-const GithubLoginPage = () => {
+const PaymentAccess = () => {
   const router = useRouter()
-  const { accessToken, email } = router.query
+  const { token } = router.query
 
   useEffect(() => {
-    if (accessToken && email) {
-      localStorage.setItem('accessToken', accessToken as string)
-      router.push(`/profile`)
-    } else {
-      router.push(`/sign-in`)
+    if (token) {
+      localStorage.setItem('paymentAccessToken', token as string)
+      router.push(`/profile/account-management?success=true`)
     }
-  }, [accessToken])
+  }, [token])
 
   return (
     <div className={styles.loaderWrapper}>
@@ -39,5 +36,5 @@ const GithubLoginPage = () => {
   )
 }
 
-GithubLoginPage.getLayout = getLayout
-export default GithubLoginPage
+PaymentAccess.getLayout = getLayout
+export default PaymentAccess
