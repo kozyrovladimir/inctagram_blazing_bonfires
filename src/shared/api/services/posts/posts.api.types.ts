@@ -1,5 +1,3 @@
-import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
-
 export type PostsResponseType = {
   id: number
   description: string
@@ -48,4 +46,12 @@ export type GetUserPostsRequestType = {
   pageSize: number
   pageNumber: number
   endCursorPostId: number
+}
+
+export type CreatePostRequest = {
+  description: string
+}
+export type UpdatePostRequestType = {
+  postId: number
+  body: CreatePostRequest
 }

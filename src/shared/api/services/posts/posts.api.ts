@@ -7,12 +7,13 @@ import {
   ImagesResponse,
   PostsResponseType,
   PostsType,
+  UpdatePostRequestType,
 } from '@/shared/api/services/posts/posts.api.types'
 
 export const postsApi = createApi({
   reducerPath: 'postsApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
-  tagTypes: ['deletePost', 'createPost'],
+  tagTypes: ['editPost', 'deletePost', 'createPost'],
   endpoints: build => {
     return {
       createPost: build.mutation<PostsResponseType, PostsType>({
@@ -38,6 +39,7 @@ export const postsApi = createApi({
             url: `public-posts/${postId}`,
           }
         },
+        providesTags: ['editPost'],
       }),
       deletePost: build.mutation<void, number>({
         query: postId => {
@@ -79,6 +81,19 @@ export const postsApi = createApi({
           }
         },
       }),
+      updatePost: build.mutation<void, UpdatePostRequestType>({
+        query: ({ postId, body }) => {
+          return {
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+            url: `posts/${postId}`,
+            body,
+          }
+        },
+        invalidatesTags: ['editPost'],
+      }),
     }
   },
 })
@@ -89,4 +104,5 @@ export const {
   useLazyGetPostQuery,
   useLazyGetUserPostsQuery,
   useDeletePostMutation,
+  useUpdatePostMutation,
 } = postsApi
