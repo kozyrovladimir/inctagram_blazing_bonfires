@@ -5,11 +5,13 @@ import style from './Posts.module.scss'
 import { PostModal } from '@/features/post/ui/postModal/PostModal'
 import { useLazyGetPostQuery } from '@/shared/api/services/posts/posts.api'
 import { GetPostsResponseType } from '@/shared/api/services/posts/posts.api.types'
+import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 
 type PostsProps = {
   posts: GetPostsResponseType[]
+  profileData: ProfileUserType | undefined
 }
-export const Posts: FC<PostsProps> = ({ posts }) => {
+export const Posts: FC<PostsProps> = ({ posts, profileData }) => {
   const [getPost, { data: postData }] = useLazyGetPostQuery()
   const [isPostActive, setIsPostActive] = useState(false)
 
@@ -30,7 +32,13 @@ export const Posts: FC<PostsProps> = ({ posts }) => {
           />
         )
       })}
-      {isPostActive && <PostModal postData={postData} setIsPostActive={setIsPostActive} />}
+      {isPostActive && (
+        <PostModal
+          postData={postData}
+          setIsPostActive={setIsPostActive}
+          profileData={profileData}
+        />
+      )}
     </div>
   )
 }

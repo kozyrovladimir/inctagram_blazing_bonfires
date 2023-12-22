@@ -9,20 +9,23 @@ import { DeletePost } from '@/features/post/ui/icons/DeletePost'
 import { EditPost } from '@/features/post/ui/icons/EditPost'
 import { useDeletePostMutation } from '@/shared/api/services/posts/posts.api'
 import { PostsResponseType } from '@/shared/api/services/posts/posts.api.types'
+import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import closeIcon from '@/shared/assets/icons/logout/close.svg'
 import { Button, ButtonTheme } from '@/shared/ui/button/Button'
 
 type Props = {
-  posts: PostsResponseType | undefined
+  postData: PostsResponseType | undefined
   setIsPostActive: (isPostActive: boolean) => void
   setOpenBtn: (openBtn: boolean) => void
+  profileData: ProfileUserType | undefined
+  setIsOpenEdit: (isOpenEdit: boolean) => void
 }
-export const EditDeletePost = ({ posts, setIsPostActive, setOpenBtn }: Props) => {
+export const EditDeletePost = ({ postData, setIsPostActive, setOpenBtn, setIsOpenEdit }: Props) => {
   const [deletePost] = useDeletePostMutation()
   const [isOpen, setIsOpen] = useState(false)
   const removePostHandler = () => {
-    if (posts) {
-      deletePost(posts.id)
+    if (postData) {
+      deletePost(postData.id)
         .unwrap()
         .then(() => setIsPostActive(false))
     }
@@ -36,11 +39,16 @@ export const EditDeletePost = ({ posts, setIsPostActive, setOpenBtn }: Props) =>
     setIsOpen(false)
   }
 
+  const openEditModal = () => {
+    setIsOpenEdit(true)
+    setOpenBtn(false)
+  }
+
   return (
     <>
       <div className={styles.editDeleteButtonContainer}>
         <div className={styles.buttonsContainer}>
-          <button className={styles.button} onClick={() => {}}>
+          <button className={styles.button} onClick={openEditModal}>
             <EditPost color={'#fff'} />
           </button>
           <button className={styles.button} onClick={openDeleteModal}>

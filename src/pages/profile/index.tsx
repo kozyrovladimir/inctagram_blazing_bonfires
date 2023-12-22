@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { GetStaticProps } from 'next'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import noImage from '../../shared/assets/icons/avatarProfile/notPhoto.png'
-
 import style from './profile.module.scss'
 
-import { Posts } from '@/features/post/ui/posts/Posts'
-import { useLazyGetUserPostsQuery } from '@/shared/api/services/posts/posts.api'
+import { PostModal } from '@/features/post/ui/postModal/PostModal'
+import { ProfileData } from '@/features/profileData/ProfileData'
+import {
+  useLazyGetPostQuery,
+  useLazyGetUserPostsQuery,
+} from '@/shared/api/services/posts/posts.api'
 import { useLazyGetProfileUserQuery } from '@/shared/api/services/profile/profile.api'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
-import { ShortLangs } from '@/shared/types/langSwitcherTypes'
-import { Button } from '@/shared/ui/button/Button'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
@@ -30,13 +28,10 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 const postsAmount = 9
 
 function Profile() {
-  const {
-    t,
-    i18n: { t: tRoot, language },
-  } = useTranslation('common', { keyPrefix: 'Profile' })
-  const router = useRouter()
   const [getProfile, { data: profileData }] = useLazyGetProfileUserQuery()
   const [getUserPosts, { data: userPost }] = useLazyGetUserPostsQuery()
+  const [getPost, { data: postData }] = useLazyGetPostQuery()
+  const [isPostActive, setIsPostActive] = useState(false)
 
   const [pageNumber, setPageNumber] = useState(1)
   const [pageSize, setPageSize] = useState(postsAmount)
@@ -90,36 +85,32 @@ function Profile() {
 
   return (
     <div className={style.profileContainer}>
-      <div className={style.headerContainer}>
-        <div className={style.avatarContainer}>
-          <Image src={noImage} alt={'avatar'} width={48} height={48} />
-        </div>
-        <div className={style.profileInfoContainer}>
-          <div className={style.profileTitleContainer}>
-            <div>{profileData?.userName}</div>
-            <Button
-              className={style.buttonProfileSetting}
-              style={language === ShortLangs.RU ? { fontSize: '0.875rem' } : undefined}
-              onClick={() => router.push(`profile/general-information`)}
-            >
-              {tRoot('ProfileSetting')}
-            </Button>
-          </div>
-          <div className={style.subscribersContainer}>
-            <div>
-              <span className={style.countSubscribers}>2128</span> <br /> {t('Following')}
-            </div>
-            <div>
-              <span className={style.countSubscribers}>2128</span> <br /> {t('Followers')}
-            </div>
-            <div>
-              <span className={style.countSubscribers}>2128</span> <br /> {t('Publications')}
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProfileData profileData={profileData} />
       <div className={style.photosContainer}>
-        <Posts posts={posts} />
+        <div className={style.photoWrapper}>
+          {posts.map(p => {
+            return (
+              <img
+                key={p.id}
+                src={p?.images[0]?.url}
+                alt={'photo'}
+                className={style.photo}
+                onClick={() =>
+                  getPost(p.id)
+                    .unwrap()
+                    .then(() => setIsPostActive(true))
+                }
+              />
+            )
+          })}
+          {isPostActive && (
+            <PostModal
+              postData={postData}
+              setIsPostActive={setIsPostActive}
+              profileData={profileData}
+            />
+          )}
+        </div>
       </div>
     </div>
   )
