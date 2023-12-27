@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { PostModal } from '@/features/post/ui/postModal/PostModal'
 import { settingLayout } from '@/shared/layouts/profileLayout/SettingLayout'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
@@ -14,7 +13,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   }
 }
 function Post() {
-  return <PostModal />
+  return <div>Пост</div>
 }
 
 Post.getLayout = settingLayout
