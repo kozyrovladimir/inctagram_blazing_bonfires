@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 
-import { baseURL } from '@/shared/api'
+import { baseURL } from '../baseUrl.api'
+
 import {
   GetUserPostsRequestType,
   GetUserPostsResponseType,
