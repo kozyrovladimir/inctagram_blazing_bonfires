@@ -1,6 +1,6 @@
 .editDeleteButtonContainer {
   position: absolute;
-  width: 137px;
+  min-width: 137px;
   height: 85px;
   background-color: var(--color-dark-500);
   margin-left: 290px;
@@ -14,8 +14,13 @@
       cursor: pointer;
       border: 0;
       background-color: transparent;
-
       width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .button span {
+      white-space: nowrap;
+      margin-left: 5px;
     }
   }
 }

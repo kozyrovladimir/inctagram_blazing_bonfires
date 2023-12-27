@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import NextImage from 'next/image'
+import { useTranslation } from 'next-i18next'
 
 import styles from './EditDeletePost.module.scss'
 
@@ -23,6 +24,7 @@ type Props = {
 export const EditDeletePost = ({ postData, setIsPostActive, setOpenBtn, setIsOpenEdit }: Props) => {
   const [deletePost] = useDeletePostMutation()
   const [isOpen, setIsOpen] = useState(false)
+  const { t } = useTranslation('common', { keyPrefix: 'Post' })
   const removePostHandler = () => {
     if (postData) {
       deletePost(postData.id)
@@ -37,6 +39,7 @@ export const EditDeletePost = ({ postData, setIsPostActive, setOpenBtn, setIsOpe
 
   const closeDeleteModal = () => {
     setIsOpen(false)
+    setOpenBtn(false)
   }
 
   const openEditModal = () => {
@@ -49,18 +52,20 @@ export const EditDeletePost = ({ postData, setIsPostActive, setOpenBtn, setIsOpe
       <div className={styles.editDeleteButtonContainer}>
         <div className={styles.buttonsContainer}>
           <button className={styles.button} onClick={openEditModal}>
-            <EditPost color={'#fff'} />
+            <EditPost color="#fff" />
+            <span>{t('EditPost')}</span>
           </button>
           <button className={styles.button} onClick={openDeleteModal}>
             <DeletePost color={'#fff'} />
+            <span>{t('DeletePost')}</span>
           </button>
         </div>
       </div>
       {isOpen && (
         <NewPostModal
           isOpen={isOpen}
-          setIsOpen={() => setIsOpen(false)}
-          title={'Delete Post'}
+          setIsOpen={closeDeleteModal}
+          title={t('DeletePost')}
           right={
             <NextImage
               style={{ cursor: 'pointer' }}
@@ -72,7 +77,7 @@ export const EditDeletePost = ({ postData, setIsPostActive, setOpenBtn, setIsOpe
         >
           <div className={styles.modalWrapper}>
             <div className={styles.textWrapper}>
-              <p className={styles.text}>Are you sure want to delete this post?</p>
+              <p className={styles.text}>{t('DeleteUserPost')}</p>
             </div>
 
             <div className={styles.buttonsContainer}>
@@ -81,10 +86,10 @@ export const EditDeletePost = ({ postData, setIsPostActive, setOpenBtn, setIsOpe
                 className={styles.button}
                 onClick={removePostHandler}
               >
-                Yes
+                {t('Yes')}
               </Button>
               <Button className={styles.button} onClick={closeDeleteModal}>
-                No
+                {t('No')}
               </Button>
             </div>
           </div>

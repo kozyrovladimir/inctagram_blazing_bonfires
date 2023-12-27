@@ -2,6 +2,7 @@ import React from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 
 import styles from '@/features/post/ui/postModal/PostModal.module.scss'
 import style from '@/pages/profile/profile.module.scss'
@@ -15,6 +16,8 @@ type Props = {
   postData: PostsResponseType | undefined
 }
 export const Comments = ({ postData }: Props) => {
+  const { t } = useTranslation('common', { keyPrefix: 'Post' })
+
   return (
     <>
       <div className={styles.commentsContainer}>
@@ -230,8 +233,8 @@ export const Comments = ({ postData }: Props) => {
       </div>
       <div className={styles.addCommentContainer}>
         <form className={styles.addCommentForm}>
-          <input className={styles.addCommentInput} placeholder={'Add a Comment...'} type="text" />
-          <button className={styles.addCommentButton}>Publish</button>
+          <input className={styles.addCommentInput} placeholder={t('AddComment')} type="text" />
+          <button className={styles.addCommentButton}>{t('Publish')}</button>
         </form>
       </div>
     </>
