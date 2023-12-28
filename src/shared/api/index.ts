@@ -60,4 +60,12 @@ export type {
 export { devicesApi, useGetSessionsQuery } from './services/devices/devices.api'
 export type { UserSessionsType } from './services/devices/devices.api.types'
 
+export {
+  subscriptionsApi,
+  useGetSubscriptionsQuery,
+  useGetCurrentSubscriptionsQuery,
+  useCreateNewSubscriptionMutation,
+  useCancelAutoRenewalMutation,
+} from './services/subscriptions/subscriptions.api'
+
 export { baseURL } from './services/baseUrl.api'
