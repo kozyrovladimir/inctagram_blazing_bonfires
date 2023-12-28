@@ -11,12 +11,12 @@ import { useImageCropContext } from '@/features/create-post/context/CropProvider
 import { ImagePublication } from '@/features/create-post/steps/imagePablication/ImagePublication'
 import { SavedImage } from '@/features/create-post/steps/savedImage/SavedImage'
 import NewPostModal from '@/features/create-post/ui/newPostModal/NewPostModal'
-import { useGetProfileQuery, useMeQuery } from '@/shared/api'
 import {
   useCreatePostMutation,
   useUploadImageMutation,
 } from '@/shared/api/services/posts/posts.api'
 import { ImageDataType } from '@/shared/api/services/posts/posts.api.types'
+import { useGetProfileUserQuery } from '@/shared/api/services/profile/profile.api'
 import backIcon from '@/shared/assets/icons/arrow back/back.svg'
 import { Input, InputType } from '@/shared/ui/input/Input'
 import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
@@ -27,8 +27,7 @@ export const Publication = () => {
   const { previousStep } = useWizard()
   const cropContext = useImageCropContext()
 
-  const { data } = useMeQuery()
-  const { data: profileData } = useGetProfileQuery(data?.userId ? data?.userId.toString() : '')
+  const { data: profileData } = useGetProfileUserQuery()
   const [uploadImage, { isLoading: isUploadLoading }] = useUploadImageMutation()
   const [createPost, { isLoading: isCreatePostLoading }] = useCreatePostMutation()
   const savedImagesString = localStorage.getItem('uploadedImages')
@@ -49,7 +48,7 @@ export const Publication = () => {
 
     // преобразование url всех изображений в file
     for (const photo of cropContext.photos) {
-      const result = await fetch(photo.url)
+      const result = await fetch(photo.filteredUrl)
       const blob = await result.blob()
       const file = new File([blob], 'image', { type: 'image/jpg' })
 
