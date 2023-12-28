@@ -198,7 +198,7 @@
   "Post": {
     "Yes": "Yes",
     "No": "No",
-    "EditPost":"Edit Post",
+    "EditPost": "Edit Post",
     "DeletePost": "Delete Post",
     "ClosePost": "Close Post",
     "Descriptions": "Add publication descriptions",
@@ -207,4 +207,5 @@
     "DeleteUserPost": "Are you sure want to delete this post?",
     "CloseEditPost": "Do you really want to finish editing? If you close the changes you have made will not be saved.",
     "AddComment": "Add a Comment..."
+  }
 }
