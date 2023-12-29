@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
@@ -73,8 +73,9 @@ export const SignUpForm = () => {
     register,
     handleSubmit,
     getValues,
-    formState: { errors },
+    formState: { errors, touchedFields },
     reset,
+    trigger,
   } = useForm<FormType | any>({
     mode: 'onChange',
     resolver: yupResolver(schema),
@@ -85,8 +86,8 @@ export const SignUpForm = () => {
       passwordConfirmation: '',
       agreement: false,
     },
+    delayError: 1000,
   })
-  const password = watch('password')
   const onSubmit: SubmitHandler<SignUpType> = (data: SignUpType) => {
     signUp(data)
       .unwrap()
@@ -105,6 +106,16 @@ export const SignUpForm = () => {
     'passwordConfirmation',
     'agreement',
   ]).every(e => !!e)
+
+  useEffect(() => {
+    const touchedFieldsList = Object.keys(touchedFields)
+
+    touchedFieldsList.forEach(field => {
+      if (errors[field]) {
+        trigger(field)
+      }
+    })
+  }, [tError])
 
   return (
     <>
