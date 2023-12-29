@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 import { GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import style from './profile.module.scss'

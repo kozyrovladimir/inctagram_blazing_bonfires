@@ -163,7 +163,7 @@ export const authApi = createApi({
           }
         },
       }),
-      me: build.query<BaseUserType, void>({
+      me: build.query<BaseUserType, { skip: boolean } | void>({
         query: () => {
           return {
             method: 'GET',
