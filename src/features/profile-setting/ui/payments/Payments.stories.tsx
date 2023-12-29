@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Payments } from './Payments'
 
-import { payments } from '@/shared/ui/table/constants'
-import { Table } from '@/shared/ui/table/Table'
+import { Table, payments } from '@/shared/ui'
 
 const meta: Meta<typeof Payments> = {
   component: Payments,

@@ -12,7 +12,7 @@ import { useDeletePostMutation } from '@/shared/api/services/posts/posts.api'
 import { PostsResponseType } from '@/shared/api/services/posts/posts.api.types'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import closeIcon from '@/shared/assets/icons/logout/close.svg'
-import { Button, ButtonTheme } from '@/shared/ui/button/Button'
+import { Button, ButtonTheme } from '@/shared/ui/'
 
 type Props = {
   postData: PostsResponseType | undefined
