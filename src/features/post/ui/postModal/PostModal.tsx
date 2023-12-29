@@ -15,7 +15,7 @@ import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import editDeleteButton from '@/shared/assets/icons/editDeletePost/editDeleteButton.svg'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
 import { RoutersPath } from '@/shared/constants/paths'
-import { Button, ButtonTheme } from '@/shared/ui/button/Button'
+import { Button, ButtonTheme } from '@/shared/ui'
 
 type Props = {
   postData: PostsResponseType | undefined

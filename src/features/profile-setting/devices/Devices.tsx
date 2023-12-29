@@ -16,9 +16,7 @@ import {
 } from '@/shared/api/services/devices/devices.api'
 import { UserSessionsType } from '@/shared/api/services/devices/devices.api.types'
 import { RoutersPath } from '@/shared/constants/paths'
-import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
-import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
-import { Modal } from '@/shared/ui/modal/Modal'
+import { Modal, LinearLoader, Button, ButtonSize, ButtonTheme } from '@/shared/ui'
 import { errorHandler } from '@/shared/utils/errorHandler'
 
 export function Devices() {

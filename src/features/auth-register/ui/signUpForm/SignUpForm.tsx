@@ -14,12 +14,17 @@ import { SignUpType, useSignUpMutation } from '@/shared/api'
 import { RoutersPath } from '@/shared/constants/paths'
 import { registrationSchema } from '@/shared/constants/validation-schema/registrationSchema'
 import { RegistrationFormType } from '@/shared/types/schemaTypes'
-import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
-import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
-import FormContainer from '@/shared/ui/formContainer/FormContainer'
-import { Input, InputType } from '@/shared/ui/input/Input'
-import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
-import { Modal } from '@/shared/ui/modal/Modal'
+import {
+  LinearLoader,
+  Modal,
+  Checkbox,
+  FormContainer,
+  Input,
+  InputType,
+  Button,
+  ButtonSize,
+  ButtonTheme,
+} from '@/shared/ui'
 
 export const SignUpForm = () => {
   const { t } = useTranslation('common')

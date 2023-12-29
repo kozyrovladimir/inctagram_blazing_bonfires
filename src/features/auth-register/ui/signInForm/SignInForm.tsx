@@ -14,10 +14,7 @@ import styles from './SignInForm.module.scss'
 import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
 import { useLoginMutation, LoginFormType } from '@/shared/api'
 import { RoutersPath } from '@/shared/constants/paths'
-import { Button, ButtonSize } from '@/shared/ui/button/Button'
-import FormContainer from '@/shared/ui/formContainer/FormContainer'
-import { Input, InputType } from '@/shared/ui/input/Input'
-import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
+import { LinearLoader, Input, InputType, FormContainer, Button, ButtonSize } from '@/shared/ui'
 
 export const SignInForm = () => {
   const { t, i18n } = useTranslation('common', { keyPrefix: 'Auth' })

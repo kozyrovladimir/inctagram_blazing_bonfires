@@ -6,7 +6,7 @@ import styles from './Device.module.scss'
 import desctopImage from '@/shared/assets/icons/devices/lightIcons/desktop.svg'
 import mobileImage from '@/shared/assets/icons/devices/lightIcons/mobile.svg'
 import logoutImg from '@/shared/assets/icons/logout/logout.svg'
-import { Button, ButtonSize, ButtonTheme } from '@/shared/ui/button/Button'
+import { Button, ButtonSize, ButtonTheme } from '@/shared/ui'
 import { IconDevice } from '@/shared/ui/iconDevice/IconDevice'
 
 type Props = {
