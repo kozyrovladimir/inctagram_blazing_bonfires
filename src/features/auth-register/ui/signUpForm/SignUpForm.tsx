@@ -10,20 +10,20 @@ import * as yup from 'yup'
 import styles from './SignUpForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
-import { SignUpType, useSignUpMutation } from '@/shared/api'
+import { SignUpType, useMeQuery, useSignUpMutation } from '@/shared/api'
 import { RoutersPath } from '@/shared/constants/paths'
 import { registrationSchema } from '@/shared/constants/validation-schema/registrationSchema'
 import { RegistrationFormType } from '@/shared/types/schemaTypes'
 import {
-  LinearLoader,
-  Modal,
+  Button,
+  ButtonSize,
+  ButtonTheme,
   Checkbox,
   FormContainer,
   Input,
   InputType,
-  Button,
-  ButtonSize,
-  ButtonTheme,
+  LinearLoader,
+  Modal,
 } from '@/shared/ui'
 
 export const SignUpForm = () => {
@@ -31,6 +31,7 @@ export const SignUpForm = () => {
 
   const [signUp, { isLoading }] = useSignUpMutation()
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
+  const [email, setEmail] = useState('')
 
   const callBackCloseWindow = () => setRegistrationSuccess(false)
 
@@ -59,6 +60,7 @@ export const SignUpForm = () => {
     signUp(data)
       .unwrap()
       .then(() => {
+        setEmail(data.email)
         reset()
         setRegistrationSuccess(true)
       })
@@ -70,8 +72,14 @@ export const SignUpForm = () => {
       <Toaster position="top-right" />
       {isLoading && <LinearLoader />}
       {registrationSuccess && (
-        <Modal title={t('EmailSent')} mainButton={'OK'} callBackCloseWindow={callBackCloseWindow}>
-          <p>{t('LinkConfirmYourEmail')} </p>
+        <Modal
+          title={t('Auth.EmailSent')}
+          mainButton={'OK'}
+          callBackCloseWindow={callBackCloseWindow}
+        >
+          <p>
+            {t('Auth.LinkConfirmYourEmail')} {email}
+          </p>
         </Modal>
       )}
       <FormContainer title={t('Auth.SignUp')}>
