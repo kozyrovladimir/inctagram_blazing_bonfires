@@ -125,16 +125,7 @@ export function Devices() {
           {currentDevice && (
             <section>
               <h4> {t('ThisDevices')}</h4>
-              <Device
-                osName={currentDevice.osName}
-                deviceName={currentDevice.deviceName}
-                browserName={currentDevice.browserName}
-                ip={currentDevice.ip}
-                isCurrent={true}
-                lastActive={currentDevice.lastActive}
-                deviceId={currentDevice.deviceId}
-                deviceType={currentDevice.deviceType}
-              />
+              <Device sessionData={currentDevice} isCurrent={true} />
             </section>
           )}
           <Button
@@ -151,16 +142,10 @@ export function Devices() {
             {sessions.map(session => {
               return (
                 <Device
+                  sessionData={session}
                   key={session.deviceId}
                   isCurrent={false}
-                  osName={session.osName}
-                  browserName={session.browserName}
-                  deviceName={session.deviceName}
-                  ip={session.ip}
-                  lastActive={session.lastActive}
                   logoutCallback={id => logoutHandler(id)}
-                  deviceId={session.deviceId}
-                  deviceType={session.deviceType}
                 />
               )
             })}
