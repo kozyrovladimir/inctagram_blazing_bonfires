@@ -116,7 +116,7 @@
   },
   "Devices": {
     "ThisDevices": "This devices",
-    "TerminateAllSession": "Terminate all other session",
+    "TerminateAllSession": "Terminate all other sessions",
     "ActiveSessions": "Active sessions",
     "ReallyLogout": "This is your device, do you really want to exit?",
     "AllSessionsTerminated": "All your sessions on other devices are terminated"
