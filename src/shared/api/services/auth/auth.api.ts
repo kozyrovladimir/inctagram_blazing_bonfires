@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { algByDecodingToken } from '../../utils/algByDecodingToken'
 import { baseURL } from '../baseUrl.api'
-import { BaseUserType } from '../profile/profile.api.types'
 
 import {
+  BaseUserType,
   LoginFormType,
   LoginType,
   LogoutType,
@@ -14,7 +14,7 @@ import {
   SignUpType,
   UserType,
   ResendVerificationLinkType,
-} from './auth.api.types'
+} from '@/shared/api'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
@@ -88,6 +88,7 @@ export const authApi = createApi({
           return {
             method: 'POST',
             url: 'auth/login',
+            credentials: 'include', // keep include for login. Otherwise the set-cookie that comes from server would not set cookie to your browser.
             body: {
               email,
               password,
@@ -113,6 +114,7 @@ export const authApi = createApi({
         query: () => ({
           method: 'POST',
           url: 'auth/logout',
+          credentials: 'include',
         }),
         invalidatesTags: ['Me'],
       }),
