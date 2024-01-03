@@ -97,6 +97,17 @@ export const authApi = createApi({
         },
         invalidatesTags: ['Me'],
       }),
+      loginViaGoogle: build.mutation<any, any>({
+        query: ({ code }) => {
+          return {
+            method: 'POST',
+            url: 'auth/google/login',
+            credentials: 'include', // keep include for login. Otherwise the set-cookie that comes from server would not set cookie to your browser.
+            body: { code: code },
+          }
+        },
+        invalidatesTags: ['Me'],
+      }),
       signUp: build.mutation<UserType, SignUpType>({
         query: ({ userName, email, password }: UserType) => {
           return {
@@ -197,4 +208,5 @@ export const {
   useMeQuery,
   useLazyMeQuery,
   useUpdateTokenMutation,
+  useLoginViaGoogleMutation,
 } = authApi

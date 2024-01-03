@@ -42,6 +42,8 @@ function Profile() {
 
   const posts = userPost?.items || []
 
+  console.log(profileData, 'profileData')
+
   useEffect(() => {
     getProfile()
       .unwrap()

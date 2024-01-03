@@ -7,6 +7,7 @@ import { useTranslation } from 'next-i18next'
 import { toast } from 'react-hot-toast'
 
 import styles from '@/features/auth-register/ui/oAuth/OAuth.module.scss'
+import { useLoginViaGoogleMutation } from '@/shared/api/services/auth/auth.api'
 import githubIcon from '@/shared/assets/icons/socialIcons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
 import { RoutersPath } from '@/shared/constants/paths'
@@ -14,15 +15,21 @@ import { RoutersPath } from '@/shared/constants/paths'
 export const OAuth = () => {
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
   const router = useRouter()
+  const [loginViaGoogle] = useLoginViaGoogleMutation()
 
   const loginGoogle = useGoogleLogin({
-    onSuccess: () => router.push(RoutersPath.profile),
+    onSuccess: tokenResponse => {
+      // window.location.assign(RoutersPath.apiAuthGithubLogin)
+      loginViaGoogle(tokenResponse)
+      router.push(RoutersPath.profile) // /profile was before
+    },
     onError: () => toast.error(tError('SomethingWentWrong')),
     flow: 'auth-code',
   })
 
-  const onGithubLogin = (): void => {
-    window.location.assign(RoutersPath.apiAuthGithubLogin)
+  const onGithubLogin = () => {
+    // window.location.assign(RoutersPath.apiAuthGithubLogin)
+    router.push(RoutersPath.apiAuthGithubLogin)
   }
 
   return (

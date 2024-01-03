@@ -4,29 +4,31 @@ import { baseURL } from '../baseUrl.api'
 
 import { AvatarsType, BaseUserType, ProfileUserType } from './profile.api.types'
 
+import { algByDecodingToken } from '@/shared/api/utils/algByDecodingToken'
+
 export const profileApi = createApi({
   reducerPath: 'profileApi',
-  baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'same-origin' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: baseURL,
+    credentials: 'same-origin',
+    prepareHeaders: headers => {
+      const token = localStorage.getItem('accessToken')
+
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`)
+        algByDecodingToken(token)
+      }
+
+      return headers
+    },
+  }),
   tagTypes: ['dataProfile'],
   endpoints: build => {
     return {
-      getAuthMe: build.query<BaseUserType, void>({
-        query: () => {
-          return {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-            },
-            url: 'auth/me',
-          }
-        },
-      }),
       getProfileUser: build.query<ProfileUserType, void>({
         query: () => {
           return {
             method: 'GET',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-            },
             url: `users/profile`,
           }
         },
@@ -39,9 +41,6 @@ export const profileApi = createApi({
           return {
             method: 'PUT',
             url: 'users/profile',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-            },
             body,
           }
         },
@@ -52,9 +51,6 @@ export const profileApi = createApi({
           return {
             method: 'POST',
             url: 'users/profile/avatar',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-            },
             body: data,
           }
         },
@@ -65,9 +61,6 @@ export const profileApi = createApi({
           return {
             method: 'DELETE',
             url: 'users/profile/avatar',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-            },
           }
         },
         invalidatesTags: ['dataProfile'],
