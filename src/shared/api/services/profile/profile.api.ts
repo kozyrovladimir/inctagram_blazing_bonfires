@@ -11,16 +11,6 @@ export const profileApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
     credentials: 'same-origin',
-    prepareHeaders: headers => {
-      const token = localStorage.getItem('accessToken')
-
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`)
-        algByDecodingToken(token)
-      }
-
-      return headers
-    },
   }),
   tagTypes: ['dataProfile'],
   endpoints: build => {
@@ -29,6 +19,9 @@ export const profileApi = createApi({
         query: () => {
           return {
             method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
             url: `users/profile`,
           }
         },
@@ -41,6 +34,9 @@ export const profileApi = createApi({
           return {
             method: 'PUT',
             url: 'users/profile',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
             body,
           }
         },
@@ -51,6 +47,9 @@ export const profileApi = createApi({
           return {
             method: 'POST',
             url: 'users/profile/avatar',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
             body: data,
           }
         },
@@ -61,6 +60,9 @@ export const profileApi = createApi({
           return {
             method: 'DELETE',
             url: 'users/profile/avatar',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
           }
         },
         invalidatesTags: ['dataProfile'],

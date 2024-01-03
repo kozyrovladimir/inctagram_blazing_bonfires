@@ -70,7 +70,6 @@ export function CreateNewPassForm() {
     } else {
       data.recoveryCode = codeRecovery
     }
-
     createNewPassword(data)
       .unwrap()
       .then(() => {

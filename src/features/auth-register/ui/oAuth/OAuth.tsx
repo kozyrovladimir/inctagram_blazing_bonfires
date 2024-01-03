@@ -18,17 +18,25 @@ export const OAuth = () => {
   const [loginViaGoogle] = useLoginViaGoogleMutation()
 
   const loginGoogle = useGoogleLogin({
-    onSuccess: tokenResponse => {
-      // window.location.assign(RoutersPath.apiAuthGithubLogin)
-      loginViaGoogle(tokenResponse)
-      router.push(RoutersPath.profile) // /profile was before
+    // UseGoogleLogin handles login via Google. After we send request to log in via Google we
+    // call send request to our server Code provided by google. Server responds with AccessToken and email.
+    // We set accessToken to localStorage and redirect to ProfilePage, which handles further logic of fetching data
+    onSuccess: async tokenResponse => {
+      // @ts-ignore ignore TS typization
+      const { data } = await loginViaGoogle(tokenResponse)
+
+      if (data.accessToken && data.email) {
+        localStorage.setItem('accessToken', data.accessToken as string)
+        router.push(`/profile`)
+      } else {
+        router.push(`/sign-in`)
+      }
     },
     onError: () => toast.error(tError('SomethingWentWrong')),
     flow: 'auth-code',
   })
 
   const onGithubLogin = () => {
-    // window.location.assign(RoutersPath.apiAuthGithubLogin)
     router.push(RoutersPath.apiAuthGithubLogin)
   }
 
