@@ -15,7 +15,6 @@ import {
   UserType,
   ResendVerificationLinkType,
 } from '@/shared/api'
-
 import { LoginViaGoogleResponseType } from '@/shared/api/services/auth/auth.api.types'
 
 const baseQuery = fetchBaseQuery({
