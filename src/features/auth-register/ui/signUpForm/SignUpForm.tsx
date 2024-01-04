@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import * as yup from 'yup'
 import styles from './SignUpForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
-import { SignUpType, useMeQuery, useSignUpMutation } from '@/shared/api'
+import { SignUpType, useSignUpMutation } from '@/shared/api'
 import { RoutersPath } from '@/shared/constants/paths'
 import { registrationSchema } from '@/shared/constants/validation-schema/registrationSchema'
 import { RegistrationFormType } from '@/shared/types/schemaTypes'
@@ -40,7 +40,7 @@ export const SignUpForm = () => {
     control,
     watch,
     trigger,
-    formState: { isValid },
+    formState: { isValid, errors, touchedFields },
     reset,
   } = useForm<RegistrationFormType>({
     resolver: yupResolver(registrationSchema(t)) as yup.InferType<yup.Schema>,
@@ -54,6 +54,7 @@ export const SignUpForm = () => {
     mode: 'onBlur',
     reValidateMode: 'onChange',
   })
+
   const passwordConfirm = watch('passwordConfirmation')
 
   const onSubmit: SubmitHandler<SignUpType> = (data: SignUpType) => {
@@ -66,6 +67,16 @@ export const SignUpForm = () => {
       })
       .catch(error => toast.error(error.data.messages[0].message))
   }
+
+  useEffect(() => {
+    const touchedFieldsList = Object.keys(touchedFields) as Array<keyof RegistrationFormType>
+
+    touchedFieldsList.forEach((field: keyof RegistrationFormType) => {
+      if (errors[field]) {
+        trigger(field)
+      }
+    })
+  }, [t])
 
   return (
     <>
