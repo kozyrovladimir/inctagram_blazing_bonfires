@@ -11,9 +11,9 @@ import {
   LogoutType,
   NewPasswordType,
   PasswordRecoveryType,
+  ResendVerificationLinkType,
   SignUpType,
   UserType,
-  ResendVerificationLinkType,
 } from '@/shared/api'
 import { LoginViaGoogleResponseType } from '@/shared/api/services/auth/auth.api.types'
 
@@ -128,7 +128,6 @@ export const authApi = createApi({
           url: 'auth/logout',
           credentials: 'include',
         }),
-        invalidatesTags: ['Me'],
       }),
       verifyEmail: build.mutation<any, any>({
         query: (confirmationCode: string) => {

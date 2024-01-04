@@ -109,7 +109,8 @@ export function Devices() {
     })
 
     if (foundDevice === undefined) {
-      logout()
+      router.push(RoutersPath.signIn)
+      localStorage.removeItem('accessToken')
     }
 
     return foundDevice
