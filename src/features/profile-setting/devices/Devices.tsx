@@ -16,7 +16,7 @@ import {
 } from '@/shared/api/services/devices/devices.api'
 import { UserSessionsType } from '@/shared/api/services/devices/devices.api.types'
 import { RoutersPath } from '@/shared/constants/paths'
-import { Modal, LinearLoader, Button, ButtonSize, ButtonTheme } from '@/shared/ui'
+import { Button, ButtonSize, ButtonTheme, LinearLoader, Modal } from '@/shared/ui'
 import { errorHandler } from '@/shared/utils/errorHandler'
 
 export function Devices() {
@@ -98,7 +98,7 @@ export function Devices() {
   const getCurrentDevice = (sessions: UserSessionsType[]): UserSessionsType | undefined => {
     const currentDeviceUA = new UAParser().getResult()
 
-    return sessions.find(session => {
+    const foundDevice = sessions.find(session => {
       return (
         session.browserName === currentDeviceUA.browser.name &&
         session.browserVersion === currentDeviceUA.browser.version &&
@@ -107,6 +107,12 @@ export function Devices() {
         session.deviceType === currentDeviceUA.device.type
       )
     })
+
+    if (foundDevice === undefined) {
+      logout()
+    }
+
+    return foundDevice
   }
 
   const logoutHandler = (id: number) => {
