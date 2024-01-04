@@ -15,6 +15,7 @@ import {
   UserType,
   ResendVerificationLinkType,
 } from '@/shared/api'
+import { LoginViaGoogleResponseType } from '@/shared/api/services/auth/auth.api.types'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
@@ -88,10 +89,22 @@ export const authApi = createApi({
           return {
             method: 'POST',
             url: 'auth/login',
+            credentials: 'include', // keep include for login. Otherwise the set-cookie that comes from server would not set cookie to your browser.
             body: {
               email,
               password,
             },
+          }
+        },
+        invalidatesTags: ['Me'],
+      }),
+      loginViaGoogle: build.mutation<LoginViaGoogleResponseType, { code: string }>({
+        query: ({ code }) => {
+          return {
+            method: 'POST',
+            url: 'auth/google/login',
+            credentials: 'include',
+            body: { code: code },
           }
         },
         invalidatesTags: ['Me'],
@@ -115,7 +128,6 @@ export const authApi = createApi({
           url: 'auth/logout',
           credentials: 'include',
         }),
-        invalidatesTags: ['Me'],
       }),
       verifyEmail: build.mutation<any, any>({
         query: (confirmationCode: string) => {
@@ -196,4 +208,5 @@ export const {
   useMeQuery,
   useLazyMeQuery,
   useUpdateTokenMutation,
+  useLoginViaGoogleMutation,
 } = authApi
