@@ -16,6 +16,6 @@ const meta: Meta<typeof Payments> = {
 export default meta
 type Story = StoryObj<typeof Payments>
 
-export const payment = () => {
+export const PaymentStory = () => {
   return <Table items={payments} />
 }
