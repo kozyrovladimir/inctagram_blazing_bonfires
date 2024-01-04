@@ -54,6 +54,7 @@ export const SignUpForm = () => {
     mode: 'onBlur',
     reValidateMode: 'onChange',
   })
+
   const passwordConfirm = watch('passwordConfirmation')
 
   const onSubmit: SubmitHandler<SignUpType> = (data: SignUpType) => {
@@ -68,9 +69,9 @@ export const SignUpForm = () => {
   }
 
   useEffect(() => {
-    const touchedFieldsList = Object.keys(touchedFields)
+    const touchedFieldsList = Object.keys(touchedFields) as Array<keyof RegistrationFormType>
 
-    touchedFieldsList.forEach(field => {
+    touchedFieldsList.forEach((field: keyof RegistrationFormType) => {
       if (errors[field]) {
         trigger(field)
       }
