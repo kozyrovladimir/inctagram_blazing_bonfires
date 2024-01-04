@@ -21,6 +21,9 @@ export const Device = ({ isCurrent, logoutCallback, sessionData }: Props) => {
 
   const { t } = useTranslation('common', { keyPrefix: 'Auth' })
 
+  const lastActiveDate = new Date(lastActive).toLocaleDateString()
+  const deviceInfo = `${osName} ${osVersion} ${deviceName || ''} ${browserName}`
+
   return (
     <>
       <div className={styles.container}>
@@ -37,9 +40,9 @@ export const Device = ({ isCurrent, logoutCallback, sessionData }: Props) => {
             <>
               <Image src={deviceType === 'mobile' ? mobileImage : desktopImage} alt="device" />
               <div className={styles.description}>
-                <h4>{`${osName} ${osVersion} ${deviceName ? deviceName : ''}`}</h4>
+                <h4>{deviceInfo}</h4>
                 <p>IP: {ip}</p>
-                <p>Last visit: {new Date(lastActive).toLocaleDateString()}</p>
+                <p>Last visit: {lastActiveDate}</p>
               </div>
             </>
           )}
