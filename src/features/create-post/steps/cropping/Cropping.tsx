@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 
 import Image from 'next/image'
-import NextImage from 'next/image'
+import { useTranslation } from 'next-i18next'
 import AvatarEditor from 'react-avatar-editor'
 import { useWizard } from 'react-use-wizard'
 
@@ -16,7 +16,7 @@ import { calculateImageDimensions } from '@/features/create-post/utils/calculate
 import backIcon from '@/shared/assets/icons/arrow back/back.svg'
 import next from '@/shared/assets/icons/filterPostPhoto/next.svg'
 import prev from '@/shared/assets/icons/filterPostPhoto/prev.svg'
-import { Button, ButtonTheme } from '@/shared/ui/button/Button'
+import { Button, ButtonTheme } from '@/shared/ui'
 
 export const Cropping = () => {
   const cropContext = useImageCropContext()
@@ -26,6 +26,7 @@ export const Cropping = () => {
   const index = currentIndex
 
   const { nextStep, previousStep } = useWizard()
+  const { t } = useTranslation('common', { keyPrefix: 'AddPost' })
   const positionChange = (position: { x: number; y: number }) => {
     cropContext.setPosition(index)(position)
   }
@@ -62,10 +63,10 @@ export const Cropping = () => {
       isOpen={cropContext.isOpen}
       setIsOpen={cropContext.setIsOpen}
       left={<Image style={{ cursor: 'pointer' }} src={backIcon} alt={''} onClick={previousStep} />}
-      title={'Cropping'}
+      title={t('Cropping')}
       right={
         <span style={{ cursor: 'pointer' }} onClick={nextStepHandler}>
-          Next
+          {t('Next')}
         </span>
       }
     >

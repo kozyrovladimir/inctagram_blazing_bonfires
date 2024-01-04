@@ -8,12 +8,11 @@ import style from './usersLists.module.scss'
 
 import searchImg from '@/shared/assets/icons/input/search.svg'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
-import { Select } from '@/shared/ui/select/Select'
-import { TableUsersList } from '@/shared/ui/tableUsersList/TableUsersList'
+import { Select, TableUsersList } from '@/shared/ui'
 
 const UsersList = () => {
   const selectOptions = ['Not selected', 'Blocked', 'Not blocked']
-  const usersPageSelect = ['5', '10', '30', '50', '100']
+  //const usersPageSelect = ['5', '10', '30', '50', '100']
 
   return (
     <div className={style.root}>
@@ -22,7 +21,7 @@ const UsersList = () => {
           <Image src={searchImg} alt="" className={style.searchImg} />
           <input className={style.inputSearch} placeholder="Search" />
         </div>
-        <Select selectionOptions={selectOptions} widthSelect={'234px'} />
+        <Select options={selectOptions} st={{ width: '234px' }} />
       </div>
       <div className={style.tableBlock}>
         <TableUsersList />
