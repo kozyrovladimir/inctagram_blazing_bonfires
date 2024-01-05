@@ -42,12 +42,12 @@ export const PostModal = ({ postData, setIsPostActive, profileData }: Props) => 
         />
       ) : (
         <div className={styles.postContainer}>
-          <Link href={RoutersPath.profile}>
-            <div className={styles.closeIconContainer}>
-              <Image src={closeIcon} alt={''} onClick={() => setIsPostActive(false)} />
-            </div>
-          </Link>
           <div className={styles.post}>
+            <Link href={RoutersPath.profile}>
+              <div className={styles.closeIconContainer}>
+                <Image src={closeIcon} alt={''} onClick={() => setIsPostActive(false)} />
+              </div>
+            </Link>
             <div className={styles.postPhotoContainer}>
               <PostImages postData={postData} />
             </div>
