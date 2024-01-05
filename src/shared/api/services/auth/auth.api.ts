@@ -11,9 +11,9 @@ import {
   LogoutType,
   NewPasswordType,
   PasswordRecoveryType,
+  ResendVerificationLinkType,
   SignUpType,
   UserType,
-  ResendVerificationLinkType,
 } from '@/shared/api'
 import { LoginViaGoogleResponseType } from '@/shared/api/services/auth/auth.api.types'
 
