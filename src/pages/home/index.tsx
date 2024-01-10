@@ -13,15 +13,15 @@ import { useGetAllPublicPostsQuery } from '@/shared/api/services/posts/posts.api
 import { makePublicPageLayout } from '@/shared/layouts'
 import { ContentWrapper, LinearLoader } from '@/shared/ui'
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  if (locale === undefined) throw new Error()
-
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, 'common')),
-    },
-  }
-}
+// export const getStaticProps: GetStaticProps = async ({ locale }) => {
+//   if (locale === undefined) throw new Error()
+//
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, 'common')),
+//     },
+//   }
+// }
 
 function Home() {
   const { t } = useTranslation()

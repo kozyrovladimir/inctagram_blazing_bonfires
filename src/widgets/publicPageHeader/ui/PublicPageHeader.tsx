@@ -1,8 +1,10 @@
 'use client'
 import React from 'react'
 
+import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'react-i18next'
 
 import s from './PublicPageHeader.module.scss'
@@ -11,6 +13,16 @@ import styles from '@/features/auth-register/ui/forgotPassForm/ForgotPassForm.mo
 import { RoutersPath } from '@/shared/constants/paths'
 import { Button, ButtonSize, ButtonTheme } from '@/shared/ui'
 import { LanguageSelect } from '@/widgets/langSwitcher'
+
+// export const getStaticProps: GetStaticProps = async ({ locale }) => {
+//   if (locale === undefined) throw new Error()
+//
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, 'common')),
+//     },
+//   }
+// }
 
 export const PublicPageHeader = () => {
   const { t } = useTranslation('common', { keyPrefix: 'Auth' })
@@ -27,11 +39,15 @@ export const PublicPageHeader = () => {
         <div className={s.headerBtns}>
           <Link href={RoutersPath.signIn}>
             <Button size={ButtonSize.CLEAN} theme={ButtonTheme.CLEAR}>
-              {t('SignIn')}
+              {/*{t('SignIn')}*/}
+              SignIn
             </Button>
           </Link>
           <Link href={RoutersPath.signUp}>
-            <Button size={ButtonSize.CLEAN}>{t('SignUp')}</Button>
+            <Button size={ButtonSize.CLEAN}>
+              {/*{t('SignUp')}*/}
+              SignUp
+            </Button>
           </Link>
         </div>
       </div>
