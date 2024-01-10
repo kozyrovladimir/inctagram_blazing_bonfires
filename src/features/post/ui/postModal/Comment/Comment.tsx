@@ -6,7 +6,7 @@ import { useTranslation } from 'next-i18next'
 
 import styles from './Comment.module.scss'
 
-import { PostsResponseType } from '@/shared/api/services/posts/posts.api.types'
+import { PostResponseType } from '@/shared/api/services/posts/posts.api.types'
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import likeIcon from '@/shared/assets/icons/icons/likeIcon.svg'
 import saveIcon from '@/shared/assets/icons/icons/saveIcon.svg'
@@ -14,7 +14,7 @@ import shareIcon from '@/shared/assets/icons/icons/shareIcon.svg'
 import { findDate } from '@/shared/utils/findDate'
 
 type Props = {
-  postData: PostsResponseType
+  postData: PostResponseType
 }
 
 export const Comment = ({ postData }: Props) => {

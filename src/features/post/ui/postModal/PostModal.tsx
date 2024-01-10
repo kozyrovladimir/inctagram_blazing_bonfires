@@ -12,7 +12,7 @@ import { EditPost } from '@/features/post/ui/icons/EditPost'
 import { PostImages } from '@/features/post/ui/postImagesModal/PostImages'
 import { Comment } from '@/features/post/ui/postModal/Comment/Comment'
 import styles from '@/features/post/ui/postModal/PostModal.module.scss'
-import { PostsResponseType } from '@/shared/api/services/posts/posts.api.types'
+import { PostResponseType } from '@/shared/api/services/posts/posts.api.types'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
@@ -21,7 +21,7 @@ import { RoutersPath } from '@/shared/constants/paths'
 import { DropdownMenu } from '@/shared/ui'
 
 type Props = {
-  postData: PostsResponseType
+  postData: PostResponseType
   profileData: ProfileUserType | undefined
   setIsPostActive: (isPostActive: boolean) => void
 }

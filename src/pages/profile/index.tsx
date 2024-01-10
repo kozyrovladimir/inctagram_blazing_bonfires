@@ -7,10 +7,10 @@ import style from './profile.module.scss'
 
 import { PostModal } from '@/features/post/ui/postModal/PostModal'
 import { ProfileData } from '@/features/profileData/ProfileData'
-import { PostsResponseType } from '@/shared/api'
+import { PostResponseType } from '@/shared/api'
 import {
-  useLazyGetPostQuery,
-  useLazyGetUserPostsQuery,
+  useLazyGetPublicPostQuery,
+  useLazyGetPublicUserPostsQuery,
 } from '@/shared/api/services/posts/posts.api'
 import { useLazyGetProfileUserQuery } from '@/shared/api/services/profile/profile.api'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
@@ -29,8 +29,8 @@ const postsAmount = 9
 
 function Profile() {
   const [getProfile, { data: profileData }] = useLazyGetProfileUserQuery()
-  const [getUserPosts, { data: userPost }] = useLazyGetUserPostsQuery()
-  const [getPost, { data: postData = {} as PostsResponseType }] = useLazyGetPostQuery()
+  const [getUserPosts, { data: userPost }] = useLazyGetPublicUserPostsQuery()
+  const [getPost, { data: postData = {} as PostResponseType }] = useLazyGetPublicPostQuery()
   const [isPostActive, setIsPostActive] = useState(false)
 
   const [pageNumber, setPageNumber] = useState(1)
