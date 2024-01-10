@@ -12,15 +12,13 @@
 
 .closeIconContainer {
   position: absolute;
-  z-index: 200;
-  top: 60px;
-  right: 24px;
-
-  width: 24px;
-  height: 24px;
+  top: -50px;
+  right: -80px;
 }
 
 .post {
+  position: relative;
+
   display: flex;
   flex-direction: row;
 
@@ -82,7 +80,7 @@
     }
 
     button {
-      margin-right: -6px;
+      margin-right: -7px;
     }
   }
 }

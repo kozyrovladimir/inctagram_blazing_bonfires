@@ -22,6 +22,8 @@ export const Comment = ({ postData }: Props) => {
   const postCreatedAt = findDate.format(postData.createdAt)
   const postUpdatedAt = findDate.difference(postData.updatedAt)
 
+  console.log(postUpdatedAt, 'updatedAt')
+
   return (
     <>
       <div className={styles.commentContainerWrapper}>

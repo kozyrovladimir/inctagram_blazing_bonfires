@@ -27,6 +27,7 @@ export const findDate = {
     const monthsDifference = Math.floor(weeksDifference / 4)
     const yearsDifference = Math.floor(monthsDifference / 12)
 
+    //Pluralize depending on the selected language
     const pluralize = (count: number, unit: string, locale: string) => {
       const rules = new Intl.PluralRules(locale)
       const pluralForm = rules.select(count)
