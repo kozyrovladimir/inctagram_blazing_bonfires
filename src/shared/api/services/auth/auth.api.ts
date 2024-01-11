@@ -1,4 +1,4 @@
-import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError, retry } from '@reduxjs/toolkit/query'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { algByDecodingToken } from '../../utils/algByDecodingToken'
@@ -38,7 +38,9 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   api,
   extraOptions
 ) => {
-  let result = await baseQuery(args, api, extraOptions)
+  // Retry function allows to retry sending the request if response came with error
+  const baseQueryWithRetry = retry(baseQuery, { maxRetries: 2 })
+  let result = await baseQueryWithRetry(args, api, extraOptions)
 
   if (result.error && result.error.status === 401) {
     const token = localStorage.getItem('accessToken')
@@ -82,6 +84,7 @@ export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: baseQueryWithReauth,
   tagTypes: ['Me'],
+
   endpoints: build => {
     return {
       login: build.mutation<LoginType, LoginFormType>({
