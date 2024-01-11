@@ -1,13 +1,18 @@
 
 .home {
   width: 100%;
+  max-width: 972px;
+  margin-top: 24px;
+
+  .homeContentWrapper {
+    gap: 36px;
 
     .postsContainer {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      align-items: center;
-      justify-content: space-around;
+      justify-content: center;
 
     }
+  }
 }

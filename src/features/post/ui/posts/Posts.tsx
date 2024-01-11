@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 
 import style from './Posts.module.scss'
 
-import { PostModal } from '@/features/post/ui/postModal/PostModal'
+import { PostModal } from '@/entities/postModal/PostModal'
 import { useLazyGetPublicPostQuery } from '@/shared/api/services/posts/posts.api'
 import { GetPostsResponseType, PostResponseType } from '@/shared/api/services/posts/posts.api.types'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'

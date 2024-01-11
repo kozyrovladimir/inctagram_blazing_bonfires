@@ -2,13 +2,15 @@ import React, { PropsWithChildren, ReactElement } from 'react'
 
 import { NextPage } from 'next'
 
+import s from './PublicPageLayout.module.scss'
+
 import { PublicPageHeader } from '@/widgets/publicPageHeader'
 
 const PublicPageLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <PublicPageHeader />
-      <main>{children}</main>
+      <main className={s.main}>{children}</main>
     </>
   )
 }

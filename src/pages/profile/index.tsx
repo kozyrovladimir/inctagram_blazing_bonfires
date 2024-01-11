@@ -5,7 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import style from './profile.module.scss'
 
-import { PostModal } from '@/features/post/ui/postModal/PostModal'
+import { PostModal } from '@/entities/postModal/PostModal'
 import { ProfileData } from '@/features/profileData/ProfileData'
 import { PostResponseType } from '@/shared/api'
 import {

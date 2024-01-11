@@ -42,10 +42,10 @@ export type GetAllPublicPostsResponseType = {
 }
 
 export type GetAllPostsArgs = {
-  endCursorPostId: string // ID of the last uploaded post. If endCursorPostId not provided, the first set of posts is returned.
-  pageSize: string
-  sortBy: string // 'id', 'description', 'location', 'createdAt
-  sortDirection: 'desc' | 'asc'
+  endCursorPostId?: string // ID of the last uploaded publicPost. If endCursorPostId not provided, the first set of posts is returned.
+  pageSize?: string
+  sortBy?: string // 'id', 'description', 'location', 'createdAt
+  sortDirection?: 'desc' | 'asc' // default desc
 }
 export type GetUserPostsResponseType = {
   page: number
