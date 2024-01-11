@@ -3,10 +3,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 import { baseURL } from '../baseUrl.api'
 
 import {
+  GetAllPostsArgs,
+  GetAllPublicPostsResponseType,
   GetUserPostsRequestType,
   GetUserPostsResponseType,
   ImagesResponse,
-  PostsResponseType,
+  PostResponseType,
   PostsType,
   UpdatePostRequestType,
 } from '@/shared/api/services/posts/posts.api.types'
@@ -17,7 +19,7 @@ export const postsApi = createApi({
   tagTypes: ['editPost', 'deletePost', 'createPost'],
   endpoints: build => {
     return {
-      createPost: build.mutation<PostsResponseType, PostsType>({
+      createPost: build.mutation<PostResponseType, PostsType>({
         query: body => {
           return {
             method: 'POST',
@@ -30,7 +32,7 @@ export const postsApi = createApi({
         },
         invalidatesTags: ['createPost'],
       }),
-      getPost: build.query<PostsResponseType, number>({
+      getPublicPost: build.query<PostResponseType, number>({
         query: postId => {
           return {
             method: 'GET',
@@ -41,6 +43,18 @@ export const postsApi = createApi({
           }
         },
         providesTags: ['editPost'],
+      }),
+      getAllPublicPosts: build.query<GetAllPublicPostsResponseType, GetAllPostsArgs>({
+        query: params => {
+          return {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+            url: `public-posts/all`,
+            params,
+          }
+        },
       }),
       deletePost: build.mutation<void, number>({
         query: postId => {
@@ -54,7 +68,7 @@ export const postsApi = createApi({
         },
         invalidatesTags: ['deletePost'],
       }),
-      getUserPosts: build.query<GetUserPostsResponseType, GetUserPostsRequestType>({
+      getPublicUserPosts: build.query<GetUserPostsResponseType, GetUserPostsRequestType>({
         query: ({ userId, pageNumber, pageSize, endCursorPostId }) => {
           return {
             method: 'GET',
@@ -102,8 +116,9 @@ export const postsApi = createApi({
 export const {
   useCreatePostMutation,
   useUploadImageMutation,
-  useLazyGetPostQuery,
-  useLazyGetUserPostsQuery,
+  useLazyGetPublicPostQuery,
+  useLazyGetPublicUserPostsQuery,
   useDeletePostMutation,
   useUpdatePostMutation,
+  useGetAllPublicPostsQuery,
 } = postsApi

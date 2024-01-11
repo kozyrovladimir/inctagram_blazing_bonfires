@@ -2,12 +2,9 @@ import React, { FC, useState } from 'react'
 
 import style from './Posts.module.scss'
 
-import { PostModal } from '@/features/post/ui/postModal/PostModal'
-import { useLazyGetPostQuery } from '@/shared/api/services/posts/posts.api'
-import {
-  GetPostsResponseType,
-  PostsResponseType,
-} from '@/shared/api/services/posts/posts.api.types'
+import { PostModal } from '@/entities/postModal/PostModal'
+import { useLazyGetPublicPostQuery } from '@/shared/api/services/posts/posts.api'
+import { GetPostsResponseType, PostResponseType } from '@/shared/api/services/posts/posts.api.types'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 
 type PostsProps = {
@@ -15,7 +12,7 @@ type PostsProps = {
   profileData: ProfileUserType | undefined
 }
 export const Posts: FC<PostsProps> = ({ posts, profileData }) => {
-  const [getPost, { data: postData = {} as PostsResponseType }] = useLazyGetPostQuery()
+  const [getPost, { data: postData = {} as PostResponseType }] = useLazyGetPublicPostQuery()
   const [isPostActive, setIsPostActive] = useState(false)
 
   return (

@@ -37,8 +37,8 @@ export type {
 
 export {
   postsApi,
-  useLazyGetPostQuery,
-  useLazyGetUserPostsQuery,
+  useLazyGetPublicPostQuery,
+  useLazyGetPublicUserPostsQuery,
   useDeletePostMutation,
   useUpdatePostMutation,
   useCreatePostMutation,
@@ -46,7 +46,7 @@ export {
 } from './services/posts/posts.api'
 
 export type {
-  PostsResponseType,
+  PostResponseType,
   PostsType,
   ImageDataType,
   ImagesResponse,
