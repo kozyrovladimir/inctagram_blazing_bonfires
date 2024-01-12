@@ -25,9 +25,16 @@ type Props = {
 }
 
 export const PostModal = ({ postData, setIsPostActive, profileData }: Props) => {
+  const {
+    avatarOwner,
+    owner: { firstName, lastName },
+  } = postData
+
   const { t } = useTranslation('common', { keyPrefix: 'Post' })
   const [isOpenEdit, setIsOpenEdit] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+
+  const onCloseModalHandle = () => setIsPostActive(false)
 
   return (
     <>
@@ -42,7 +49,7 @@ export const PostModal = ({ postData, setIsPostActive, profileData }: Props) => 
         <div className={styles.postContainer}>
           <div className={styles.post}>
             <div className={styles.closeIconContainer}>
-              <Image src={closeIcon} alt={''} onClick={() => setIsPostActive(false)} />
+              <Image src={closeIcon} alt={''} onClick={onCloseModalHandle} />
             </div>
             <div className={styles.postPhotoContainer}>
               <PostImages postData={postData} />
@@ -52,13 +59,15 @@ export const PostModal = ({ postData, setIsPostActive, profileData }: Props) => 
                 <div className={styles.avatarContainer}>
                   <div className={styles.imgContainer}>
                     <Image
-                      src={profileData?.avatars[0].url ?? noImage}
+                      src={avatarOwner ?? noImage}
                       alt={'avatar'}
                       layout="fill"
                       objectFit="cover"
                     />
                   </div>
-                  <p className={styles.userName}>{profileData?.userName}</p>
+                  <p className={styles.userName}>
+                    {firstName} {lastName}
+                  </p>
                 </div>
                 {profileData && (
                   // Show dropdown if you are logged in
