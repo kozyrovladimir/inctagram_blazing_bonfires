@@ -14,6 +14,7 @@
   position: absolute;
   top: -50px;
   right: -80px;
+  cursor: pointer;
 }
 
 .post {
@@ -61,8 +62,8 @@
 
     .avatarContainer {
       display: flex;
-        gap: 12px;
-        align-items: center;
+      gap: 12px;
+      align-items: center;
 
       .imgContainer {
         cursor: pointer;

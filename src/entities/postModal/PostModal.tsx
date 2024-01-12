@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 
 import { Comment } from '@/entities/postModal/Comment/Comment'
@@ -17,7 +16,6 @@ import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
 import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
-import { RoutersPath } from '@/shared/constants/paths'
 import { DropdownMenu } from '@/shared/ui'
 
 type Props = {
@@ -43,11 +41,9 @@ export const PostModal = ({ postData, setIsPostActive, profileData }: Props) => 
       ) : (
         <div className={styles.postContainer}>
           <div className={styles.post}>
-            <Link href={RoutersPath.profile}>
-              <div className={styles.closeIconContainer}>
-                <Image src={closeIcon} alt={''} onClick={() => setIsPostActive(false)} />
-              </div>
-            </Link>
+            <div className={styles.closeIconContainer}>
+              <Image src={closeIcon} alt={''} onClick={() => setIsPostActive(false)} />
+            </div>
             <div className={styles.postPhotoContainer}>
               <PostImages postData={postData} />
             </div>
