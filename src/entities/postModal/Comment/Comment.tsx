@@ -22,17 +22,18 @@ export const Comment = ({ postData }: Props) => {
   const {
     owner: { lastName, firstName },
     avatarOwner,
-    images,
     updatedAt,
     createdAt,
     description,
   } = postData
 
+  const { data: me } = useMeQuery()
+
   const { t } = useTranslation('common', { keyPrefix: 'Post' })
   const postCreatedAt = findDate.format(createdAt)
   const postUpdatedAt = findDate.difference(updatedAt)
 
-  const { data: me } = useMeQuery()
+  const postLikes = 2435
 
   return (
     <div className={styles.commentContainerWrapper}>
@@ -97,7 +98,9 @@ export const Comment = ({ postData }: Props) => {
               height={24}
             />
           </div>
-          <p className={styles.totalLikesCount}>2435 {t('Likes')}</p>
+          <p className={styles.totalLikesCount}>
+            {postLikes.toLocaleString()} {t('Likes')}
+          </p>
         </div>
         <div className={styles.postDate}>{postCreatedAt}</div>
       </div>

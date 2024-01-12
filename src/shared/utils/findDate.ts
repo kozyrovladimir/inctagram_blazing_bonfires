@@ -9,8 +9,9 @@ export const findDate = {
       month: 'long',
       day: 'numeric',
     }
+    const currentLang = localStorage.getItem('i18nextLng')
 
-    return originalDate.toLocaleDateString('en', options)
+    return originalDate.toLocaleDateString(currentLang || 'en', options)
   },
   // Find how much time passed from the date passed as arguments
   difference: (date: string) => {
