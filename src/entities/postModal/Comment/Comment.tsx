@@ -44,9 +44,9 @@ export const Comment = ({ postData }: Props) => {
           <div className={styles.commentTextAndLikeWrapper}>
             <div className={styles.commentTextContainer}>
               <p className={styles.commentText}>
-                <strong>
+                <span className={styles.commentTextName}>
                   {firstName} {lastName}
-                </strong>{' '}
+                </span>{' '}
                 {description}
               </p>
               {me && (
@@ -89,7 +89,13 @@ export const Comment = ({ postData }: Props) => {
         )}
         <div className={styles.totalLikes}>
           <div className={styles.avatarContainer}>
-            <Image src={noImage} alt={'avatar'} width={36} height={36} />
+            <Image
+              className={styles.totalLikesAvatar}
+              src={avatarOwner}
+              alt={'avatar'}
+              width={24}
+              height={24}
+            />
           </div>
           <p className={styles.totalLikesCount}>2435 {t('Likes')}</p>
         </div>

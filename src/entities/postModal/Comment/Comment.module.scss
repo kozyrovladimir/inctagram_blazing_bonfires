@@ -6,12 +6,14 @@
   .commentContainerInner {
     display: flex;
     gap: 15px;
-
     padding: 19px 24px 8px;
+    overflow-y: scroll;
 
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .commentContainer {
-      overflow: hidden;
       display: flex;
       gap: 12px;
       width: 100%;
@@ -40,14 +42,19 @@
           justify-content: space-between;
 
           .commentText {
-            word-break: break-all;
+            font-size: var(--font-size-s);
+            word-break: break-word;
+          }
+
+          .commentTextName {
+            font-weight: var(--font-weight-bold);
           }
         }
 
         .commentInfoContainer {
           display: inline-flex;
           gap: 12px;
-          font-size: var(--font-size-s);
+          font-size: var(--font-size-xs);
 
           .commentTime,
           .commentLikes,
@@ -72,10 +79,12 @@
     .actionsContainer {
       display: flex;
       justify-content: space-between;
+      height: 24px;
+      margin-bottom: 20px;
 
       .likeShareContainer {
         display: flex;
-        gap: 7px;
+        gap: 24px;
       }
     }
 
@@ -83,12 +92,21 @@
       display: flex;
       gap: 12px;
       align-items: center;
+
+      .totalLikesCount {
+        color: var(--color-light-100);
+        font-size: var(--font-size-s);
+        line-height: var(--line-height-m);
+      }
+
+      .totalLikesAvatar {
+        border-radius: 24px;
+      }
     }
 
     .postDate {
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 16px;
+      font-size: var(--font-size-xs);
+      line-height: var(--line-height-s);
       color: var(--color-light-900);
     }
   }
@@ -107,7 +125,7 @@
 
       .addCommentInput {
         flex-grow: 1;
-
+        font-size: var(--font-size-s);
         color: var(--color-light-100);
 
         background-color: inherit;
@@ -117,10 +135,8 @@
 
       .addCommentButton {
         cursor: pointer;
-
-        font-size: 16px;
+        font-size: var(--font-size-m);
         font-weight: 600;
-        line-height: 24px;
         color: var(--color-info-500);
 
         background-color: inherit;
