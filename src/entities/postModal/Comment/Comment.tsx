@@ -38,37 +38,39 @@ export const Comment = ({ postData }: Props) => {
   return (
     <div className={styles.commentContainerWrapper}>
       <div className={styles.commentContainerInner}>
-        <div className={styles.commentContainer}>
-          <div className={styles.avatarContainer}>
-            <Image src={avatarOwner || noImage} alt={'avatar'} layout="fill" objectFit="cover" />
-          </div>
-          <div className={styles.commentTextAndLikeWrapper}>
-            <div className={styles.commentTextContainer}>
-              <p className={styles.commentText}>
-                <span className={styles.commentTextName}>
-                  {firstName} {lastName}
-                </span>{' '}
-                {description}
-              </p>
-              {me && (
-                <div className={styles.commentLikeContainer}>
-                  <Link href={'#'}>
-                    <Image src={likeIcon} alt={''} />
-                  </Link>
-                </div>
-              )}
+        {description && (
+          <div className={styles.commentContainer}>
+            <div className={styles.avatarContainer}>
+              <Image src={avatarOwner || noImage} alt={'avatar'} layout="fill" objectFit="cover" />
             </div>
-            <div className={styles.commentInfoContainer}>
-              <p className={styles.commentTime}>{postUpdatedAt}</p>
-              {me && (
-                <>
-                  <p className={styles.commentLikes}>{t('Likes')}: 12</p>
-                  <p className={styles.commentAnswer}>{t('Answer')}</p>
-                </>
-              )}
+            <div className={styles.commentTextAndLikeWrapper}>
+              <div className={styles.commentTextContainer}>
+                <p className={styles.commentText}>
+                  <span className={styles.commentTextName}>
+                    {firstName} {lastName}
+                  </span>{' '}
+                  {description}
+                </p>
+                {me && (
+                  <div className={styles.commentLikeContainer}>
+                    <Link href={'#'}>
+                      <Image src={likeIcon} alt={''} />
+                    </Link>
+                  </div>
+                )}
+              </div>
+              <div className={styles.commentInfoContainer}>
+                <p className={styles.commentTime}>{postUpdatedAt}</p>
+                {me && (
+                  <>
+                    <p className={styles.commentLikes}>{t('Likes')}: 12</p>
+                    <p className={styles.commentAnswer}>{t('Answer')}</p>
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <div className={styles.summaryContainer}>
         {me && (

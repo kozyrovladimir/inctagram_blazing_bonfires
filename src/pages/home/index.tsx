@@ -11,7 +11,7 @@ import { RegisteredUsersTablo } from '@/shared/ui/registeredUsersTablo/ui/Regist
 
 function Home() {
   const { data: publicPosts } = useGetAllPublicPostsQuery({
-    pageSize: '4',
+    pageSize: '42',
   })
 
   if (!publicPosts) return <LinearLoader />
