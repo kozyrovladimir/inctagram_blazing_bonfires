@@ -18,14 +18,18 @@ export const PublicPost = (post: PostResponseType) => {
   const displayShowMore = post.description.length > 80
   const fullText = displayShowMore && isShowMoreActive ? post.description : truncatedText
 
+  const togglePostModal = () => setIsPostActive(prevState => !prevState)
+
   return (
     <div className={s.post} key={post.id}>
-      <Image src={post.images[0].url} width={234} height={240} alt="Picture of the post" />
-      <div className={s.postContentWrapper}>
-        <Image src={post.avatarOwner ?? noImage} width={36} height={36} alt={'Avatar picture'} />
-        <h3 onClick={() => setIsPostActive(true)} className={s.profileUrl}>
-          {post.owner.firstName} {post.owner.lastName}
-        </h3>
+      <div className={s.postLinkWrapper} onClick={togglePostModal}>
+        <Image src={post.images[0].url} width={234} height={240} alt="Picture of the post" />
+        <div className={s.postContentWrapper}>
+          <Image src={post.avatarOwner ?? noImage} width={36} height={36} alt={'Avatar picture'} />
+          <h3 className={s.profileUrl}>
+            {post.owner.firstName} {post.owner.lastName}
+          </h3>
+        </div>
       </div>
       <div>{postCreatedAt}</div>
       <p className={s.postDescription}>
@@ -37,7 +41,7 @@ export const PublicPost = (post: PostResponseType) => {
         )}
       </p>
 
-      {isPostActive && <PostModal postData={post} setIsPostActive={setIsPostActive} />}
+      {isPostActive && <PostModal postData={post} togglePostModal={togglePostModal} />}
     </div>
   )
 }
