@@ -3,15 +3,24 @@
   max-width: 972px;
   margin-top: 24px;
 
+  .publicProfileContainer {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
   .homeContentWrapper {
     gap: 36px;
+
+    .publicContainer {
+      margin-bottom: 48px;
+    }
 
     .postsContainer {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       justify-content: center;
-
     }
   }
 }

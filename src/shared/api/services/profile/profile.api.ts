@@ -2,9 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { baseURL } from '../baseUrl.api'
 
-import { AvatarsType, BaseUserType, ProfileUserType } from './profile.api.types'
-
-import { algByDecodingToken } from '@/shared/api/utils/algByDecodingToken'
+import { AvatarsType, ProfileUserType } from './profile.api.types'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
@@ -67,6 +65,18 @@ export const profileApi = createApi({
         },
         invalidatesTags: ['dataProfile'],
       }),
+      // getPublicProfile: build.query<PublicProfileType, { profileId: number }>({
+      //   query: profileId => {
+      //     return {
+      //       method: 'GET',
+      //       url: `public-user/profile/${profileId}`,
+      //       headers: {
+      //         Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+      //       },
+      //     }
+      //   },
+      //   providesTags: ['dataProfile'],
+      // }),
     }
   },
 })
