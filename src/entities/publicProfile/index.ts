@@ -1,1 +1,2 @@
-export { PublicProfile } from './ui/PublicProfile'
+export { PublicProfileData } from './ui/publicProfileData/PublicProfileData'
+export { PublicProfilePosts } from './ui/publicProfilePosts/PublicProfilePosts'

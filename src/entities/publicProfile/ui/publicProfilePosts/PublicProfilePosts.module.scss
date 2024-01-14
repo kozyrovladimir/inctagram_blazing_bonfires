@@ -1,0 +1,34 @@
+@import '@/shared/styles/mediaQueries';
+
+.post {
+  .postImage {
+    object-fit: cover;
+    display: block;
+    width: 100%;
+
+    @include media-large {
+      width: 224px;
+      height: 224px;
+    }
+    @include media-medium {
+      width: 198px;
+      height: 198px;
+    }
+    @include media-s-medium {
+      width: 160px;
+      height: 160px;
+    }
+    @include media-small {
+      width: 132px;
+      height: 132px;
+    }
+    @include media-extra-small {
+      width: 108px;
+      height: 108px;
+    }
+  }
+
+  .postNotImage {
+    box-shadow: 0 0 1px var(--color-light-100);
+  }
+}

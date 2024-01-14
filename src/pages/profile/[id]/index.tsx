@@ -1,12 +1,12 @@
 import React from 'react'
 
 import { GetServerSideProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Toaster } from 'react-hot-toast'
 
 import style from './ProfileId.module.scss'
 
-import { PublicPost } from '@/entities/publicPost'
-import { PublicProfile } from '@/entities/publicProfile'
+import { PublicProfilePosts, PublicProfileData } from '@/entities/publicProfile'
 import { publicApi } from '@/shared/api'
 import {
   PublicProfilePostsResponseType,
@@ -24,6 +24,9 @@ type PropsType = {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.query
+  const locale = context.locale
+
+  if (locale === undefined) throw new Error()
 
   // get data about user
   store.dispatch(
@@ -67,25 +70,32 @@ export const getServerSideProps: GetServerSideProps = async context => {
     })
 
   return {
-    props: { profileData: data[0].data, postData: post[0].data },
+    props: {
+      profileData: data[0].data,
+      postData: post[0].data,
+      ...(await serverSideTranslations(locale as string, 'common')),
+    },
   }
 }
 
 function PublicProfilePage(props: PropsType) {
   const { profileData, postData } = props
+
+  const amountPost = postData.items.length
   const isAuth = false /* todo не залогинен */
 
   return (
-    <div className={style.home}>
+    <div className={style.publicProfileWrapper}>
       <Toaster position={'bottom-center'} />
-      <ContentWrapper className={style.homeContentWrapper}>
+      <ContentWrapper className={style.contentWrapper}>
         {!isAuth && (
           <div className={style.publicProfileContainer}>
-            <div className={style.publicContainer}>
-              <PublicProfile data={profileData} />
+            <div className={style.profileContainer}>
+              <PublicProfileData data={profileData} amountPost={amountPost} />
             </div>
             <div className={style.postsContainer}>
-              {postData && postData.items.map(post => <PublicPost key={post.id} {...post} />)}
+              {postData &&
+                postData.items.map(post => <PublicProfilePosts key={post.id} {...post} />)}
             </div>
           </div>
         )}

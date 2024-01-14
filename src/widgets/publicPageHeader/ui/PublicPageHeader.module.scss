@@ -1,4 +1,4 @@
-@import "@/shared/styles/mediaQueries";
+@import '@/shared/styles/mediaQueries';
 
 .header {
   display: flex;
@@ -13,6 +13,10 @@
 
   background: var(--color-dark-900);
   border-bottom: 1px solid #333;
+
+  @include media-extra-small {
+    padding: 0 0.2rem 0 0.2rem;
+  }
 
   .logo {
     font-size: var(--font-size-xxl);

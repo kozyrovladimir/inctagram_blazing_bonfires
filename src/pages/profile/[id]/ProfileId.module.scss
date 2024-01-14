@@ -1,26 +1,50 @@
-.home {
+@import '@/shared/styles/mediaQueries';
+
+.publicProfileWrapper {
   width: 100%;
   max-width: 972px;
   margin-top: 24px;
+}
 
-  .publicProfileContainer {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
+.publicProfileContainer {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentWrapper {
+  gap: 36px;
+
+  .profileContainer {
+    margin-bottom: 48px;
   }
 
-  .homeContentWrapper {
-    gap: 36px;
+  .postsContainer {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-template-rows: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 
-    .publicContainer {
-      margin-bottom: 48px;
+    @include media-large {
+      gap: 10px;
     }
 
-    .postsContainer {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
+    @include media-medium {
+      gap: 10px;
+    }
+
+    @include media-s-medium {
+      gap: 8px;
+    }
+
+    @include media-small {
+      gap: 6px;
+    }
+
+    @include media-extra-small {
+      gap: 3px;
     }
   }
 }
