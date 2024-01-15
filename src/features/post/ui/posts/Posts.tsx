@@ -15,6 +15,8 @@ export const Posts: FC<PostsProps> = ({ posts, profileData }) => {
   const [getPost, { data: postData = {} as PostResponseType }] = useLazyGetPublicPostQuery()
   const [isPostActive, setIsPostActive] = useState(false)
 
+  const togglePostModal = () => setIsPostActive(prevState => !prevState)
+
   return (
     <div className={style.photoWrapper}>
       {posts.map(p => {
@@ -24,18 +26,14 @@ export const Posts: FC<PostsProps> = ({ posts, profileData }) => {
             src={p?.images[0]?.url}
             alt={'photo'}
             className={style.photo}
-            onClick={() =>
-              getPost(p.id)
-                .unwrap()
-                .then(() => setIsPostActive(true))
-            }
+            onClick={() => getPost(p.id).unwrap().then(togglePostModal)}
           />
         )
       })}
       {isPostActive && (
         <PostModal
           postData={postData}
-          setIsPostActive={setIsPostActive}
+          togglePostModal={togglePostModal}
           profileData={profileData}
         />
       )}
