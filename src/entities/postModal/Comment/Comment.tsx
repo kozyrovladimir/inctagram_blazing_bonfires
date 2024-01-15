@@ -92,7 +92,7 @@ export const Comment = ({ postData }: Props) => {
           <div className={styles.avatarContainer}>
             <Image
               className={styles.totalLikesAvatar}
-              src={avatarOwner}
+              src={avatarOwner || noImage}
               alt={'avatar'}
               width={24}
               height={24}
