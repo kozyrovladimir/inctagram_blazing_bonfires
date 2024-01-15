@@ -34,6 +34,8 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
   const [isOpenEdit, setIsOpenEdit] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
+  const userName = firstName && lastName ? `${firstName} ${lastName}` : `${t('AnonymousUser')}`
+
   return (
     <>
       {isOpenEdit ? (
@@ -63,9 +65,7 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
                       objectFit="cover"
                     />
                   </div>
-                  <p className={styles.userName}>
-                    {firstName} {lastName}
-                  </p>
+                  <p className={styles.userName}>{userName}</p>
                 </div>
                 {profileData && (
                   // Show dropdown if you are logged in

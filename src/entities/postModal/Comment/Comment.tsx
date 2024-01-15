@@ -34,6 +34,7 @@ export const Comment = ({ postData }: Props) => {
   const postUpdatedAt = findDate.difference(updatedAt)
 
   const postLikes = 2435
+  const userName = firstName && lastName ? `${firstName} ${lastName}` : `${t('AnonymousUser')}`
 
   return (
     <div className={styles.commentContainerWrapper}>
@@ -46,10 +47,7 @@ export const Comment = ({ postData }: Props) => {
             <div className={styles.commentTextAndLikeWrapper}>
               <div className={styles.commentTextContainer}>
                 <p className={styles.commentText}>
-                  <span className={styles.commentTextName}>
-                    {firstName} {lastName}
-                  </span>{' '}
-                  {description}
+                  <span className={styles.commentTextName}>{userName}</span> {description}
                 </p>
                 {me && (
                   <div className={styles.commentLikeContainer}>
