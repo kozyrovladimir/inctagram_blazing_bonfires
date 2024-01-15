@@ -65,18 +65,6 @@ export const profileApi = createApi({
         },
         invalidatesTags: ['dataProfile'],
       }),
-      // getPublicProfile: build.query<PublicProfileType, { profileId: number }>({
-      //   query: profileId => {
-      //     return {
-      //       method: 'GET',
-      //       url: `public-user/profile/${profileId}`,
-      //       headers: {
-      //         Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-      //       },
-      //     }
-      //   },
-      //   providesTags: ['dataProfile'],
-      // }),
     }
   },
 })

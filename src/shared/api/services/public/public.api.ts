@@ -52,5 +52,6 @@ export const publicApi = createApi({
 })
 
 export const {
+  useGetPublicProfilePostsQuery,
   useGetPublicProfileQuery
 } = publicApi
