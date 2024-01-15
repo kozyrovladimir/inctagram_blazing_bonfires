@@ -77,6 +77,8 @@ function Profile() {
     }
   }
 
+  const togglePostModal = () => setIsPostActive(prevState => !prevState)
+
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler)
 
@@ -95,18 +97,14 @@ function Profile() {
                 src={p?.images[0]?.url}
                 alt={'photo'}
                 className={style.photo}
-                onClick={() =>
-                  getPost(p.id)
-                    .unwrap()
-                    .then(() => setIsPostActive(true))
-                }
+                onClick={() => getPost(p.id).unwrap().then(togglePostModal)}
               />
             )
           })}
           {isPostActive && (
             <PostModal
               postData={postData}
-              setIsPostActive={setIsPostActive}
+              togglePostModal={togglePostModal}
               profileData={profileData}
             />
           )}
