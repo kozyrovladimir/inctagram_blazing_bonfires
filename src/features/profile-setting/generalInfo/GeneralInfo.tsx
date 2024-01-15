@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
-import { toast, Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 
 import { ProfilePhoto } from '../ui/profilePhoto/ProfilePhoto'
@@ -145,26 +145,9 @@ export const GeneralInfo = () => {
         })
         .catch(error => currentErrorHandler(error))
     } else if (photo) {
-      const file = photo as File
-      const allowedFormats = ['image/jpeg', 'image/png']
-      const maxSizeInBytes = 20 * 1024 * 1024
-
-      if (!allowedFormats.includes(file.type)) {
-        toast.error('Invalid file format. Please upload a JPEG or PNG image.')
-
-        return
-      }
-
-      if (file.size > maxSizeInBytes) {
-        toast.error('File size exceeds the limit. Please upload a file smaller than 20MB.')
-
-        return
-      }
-
       const formData = new FormData()
 
-      formData.set('file', file)
-
+      formData.set('file', photo as Blob)
       updateAvatar(formData)
         .unwrap()
         .then(() => {
