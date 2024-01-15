@@ -1,4 +1,4 @@
-@import "@/shared/styles/mediaQueries";
+@import '@/shared/styles/mediaQueries';
 
 .header {
   display: flex;
@@ -11,7 +11,7 @@
 
   color: white;
 
-  background: var(--color-dark-900);
+  background: var(--color-dark-700);
   border-bottom: 1px solid #333;
 
   .logo {
