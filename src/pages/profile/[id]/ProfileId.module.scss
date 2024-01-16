@@ -1,50 +1,70 @@
 @import '@/shared/styles/mediaQueries';
 
 .publicProfileWrapper {
-  width: 100%;
-  max-width: 972px;
-  margin-top: 24px;
-}
-
-.publicProfileContainer {
-  margin: 0 auto;
+  margin: 24px auto 0;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
 
 .contentWrapper {
   gap: 36px;
 
-  .profileContainer {
-    margin-bottom: 48px;
+  @include media-medium {
+    max-width: 822px;
   }
 
-  .postsContainer {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    grid-template-rows: auto;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
+  @include media-s-medium {
+    max-width: 664px;
+  }
 
-    @include media-large {
-      gap: 10px;
-    }
+  @include media-small {
+    max-width: 546px;
+  }
 
-    @include media-medium {
-      gap: 10px;
-    }
+  @include media-extra-small {
+    max-width: 441px;
+  }
+}
 
-    @include media-s-medium {
-      gap: 8px;
-    }
+.publicProfileContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 
-    @include media-small {
-      gap: 6px;
-    }
+.profileContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 48px;
+}
 
-    @include media-extra-small {
-      gap: 3px;
-    }
+.postsContainer {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-template-rows: auto;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  @include media-large {
+    gap: 10px;
+  }
+
+  @include media-medium {
+    gap: 10px;
+  }
+
+  @include media-s-medium {
+    grid-template-columns: repeat(3, auto);
+    gap: 8px;
+  }
+
+  @include media-small {
+    gap: 6px;
+  }
+
+  @include media-extra-small {
+    gap: 3px;
   }
 }

@@ -11,7 +11,7 @@ import noImage from '@/shared/assets/icons/image/no-image.svg'
 
 export const PublicProfilePosts = (post: PostResponseType) => {
   const [isPostActive, setIsPostActive] = useState(false)
-
+  const togglePostModal = () => setIsPostActive(prevState => !prevState)
   const notImageClass = clsx(style.postImage, !post.images[0]?.url && style.postNotImage)
 
   return (
@@ -24,7 +24,7 @@ export const PublicProfilePosts = (post: PostResponseType) => {
         alt="Picture of the post"
         onClick={() => setIsPostActive(!isPostActive)}
       />
-      {isPostActive && <PostModal postData={post} setIsPostActive={setIsPostActive} />}
+      {isPostActive && <PostModal postData={post} togglePostModal={togglePostModal} />}
     </div>
   )
 }

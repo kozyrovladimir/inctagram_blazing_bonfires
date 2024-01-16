@@ -4,9 +4,10 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Toaster } from 'react-hot-toast'
 
+import { PublicProfileData, PublicProfilePosts } from '../../../features/publicProfile'
+
 import style from './ProfileId.module.scss'
 
-import { PublicProfilePosts, PublicProfileData } from '@/entities/publicProfile'
 import { publicApi } from '@/shared/api'
 import {
   PublicProfilePostsResponseType,
@@ -81,7 +82,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 function PublicProfilePage(props: PropsType) {
   const { profileData, postData } = props
 
-  const amountPost = postData.items.length
+  const amountPost = postData.items?.length
   const isAuth = false /* todo не залогинен */
 
   return (

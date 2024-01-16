@@ -2,27 +2,31 @@
 
 .post {
   .postImage {
+    cursor: pointer;
     object-fit: cover;
     display: block;
-    width: 100%;
 
-    @include media-large {
-      width: 224px;
-      height: 224px;
-    }
     @include media-medium {
-      width: 198px;
-      height: 198px;
+      width: 202px;
+      height: 202px;
     }
     @include media-s-medium {
-      width: 160px;
-      height: 160px;
+      width: 188px;
+      height: 188px;
     }
     @include media-small {
+      width: 168px;
+      height: 168px;
+    }
+    @include media-extra-small {
       width: 132px;
       height: 132px;
     }
     @include media-extra-small {
+      width: 122px;
+      height: 122px;
+    }
+    @include media-mobile {
       width: 108px;
       height: 108px;
     }

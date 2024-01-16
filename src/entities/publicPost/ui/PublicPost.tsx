@@ -26,7 +26,7 @@ export const PublicPost = (post: PostResponseType) => {
   const postCreatedAt = findDate.difference(createdAt)
 
   const { displayShowMore, isShowMoreActive, setIsShowMoreActive, fullText } = UseGetShowHideText(
-    post.description,
+    description,
     80
   )
   const togglePostModal = () => setIsPostActive(prevState => !prevState)

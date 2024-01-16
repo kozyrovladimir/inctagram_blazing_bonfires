@@ -1,11 +1,18 @@
 // mediaQueries.scss
 $breakpoints: (
-        extrasmall: 545px,
-        small: 768px,
-        s-medium: 960px,
-        medium: 1024px,
-        large: 1200px,
+  mobile: 360px,
+  extrasmall: 545px,
+  small: 768px,
+  s-medium: 960px,
+  medium: 1024px,
+  large: 1200px,
 );
+
+@mixin media-mobile {
+  @media (max-width: #{map-get($breakpoints, mobile)}) {
+    @content;
+  }
+}
 
 @mixin media-extra-small {
   @media (max-width: #{map-get($breakpoints, extrasmall)}) {
