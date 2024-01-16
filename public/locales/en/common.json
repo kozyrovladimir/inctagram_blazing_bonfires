@@ -209,6 +209,7 @@
     "AddComment": "Add a Comment...",
     "Answer": "Answer",
     "Likes": "Likes",
+    "AnonymousUser": "Anonymous User",
     "SecondsAgo": {
       "one": "second ago",
       "other": "seconds ago"

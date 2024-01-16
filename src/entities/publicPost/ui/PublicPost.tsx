@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import Image from 'next/image'
+import { useTranslation } from 'next-i18next'
 
 import s from './PublicPost.module.scss'
 
@@ -11,7 +12,18 @@ import { UseGetShowHideText } from '@/shared/hooks'
 import { findDate } from '@/shared/utils/findDate'
 
 export const PublicPost = (post: PostResponseType) => {
+  const {
+    images,
+    owner: { lastName, firstName },
+    avatarOwner,
+    description,
+    createdAt,
+    id,
+  } = post
+
+  const { t } = useTranslation('common', { keyPrefix: 'Post' })
   const [isPostActive, setIsPostActive] = useState(false)
+
   const postCreatedAt = findDate.difference(post.createdAt)
 
   const { displayShowMore, isShowMoreActive, setIsShowMoreActive, fullText } = UseGetShowHideText(
@@ -38,7 +50,7 @@ export const PublicPost = (post: PostResponseType) => {
         )}
       </p>
 
-      {isPostActive && <PostModal postData={post} setIsPostActive={setIsPostActive} />}
+      {isPostActive && <PostModal postData={post} togglePostModal={togglePostModal} />}
     </div>
   )
 }

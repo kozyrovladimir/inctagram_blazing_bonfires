@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 
 import { Comment } from '@/entities/postModal/Comment/Comment'
@@ -17,19 +16,25 @@ import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
 import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
-import { RoutersPath } from '@/shared/constants/paths'
 import { DropdownMenu } from '@/shared/ui'
 
 type Props = {
   postData: PostResponseType
   profileData?: ProfileUserType | undefined
-  setIsPostActive: (isPostActive: boolean) => void
+  togglePostModal: () => void
 }
 
-export const PostModal = ({ postData, setIsPostActive, profileData }: Props) => {
+export const PostModal = ({ postData, togglePostModal, profileData }: Props) => {
+  const {
+    avatarOwner,
+    owner: { firstName, lastName },
+  } = postData
+
   const { t } = useTranslation('common', { keyPrefix: 'Post' })
   const [isOpenEdit, setIsOpenEdit] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+
+  const userName = firstName && lastName ? `${firstName} ${lastName}` : `${t('AnonymousUser')}`
 
   return (
     <>
@@ -43,11 +48,9 @@ export const PostModal = ({ postData, setIsPostActive, profileData }: Props) => 
       ) : (
         <div className={styles.postContainer}>
           <div className={styles.post}>
-            <Link href={RoutersPath.profile}>
-              <div className={styles.closeIconContainer}>
-                <Image src={closeIcon} alt={''} onClick={() => setIsPostActive(false)} />
-              </div>
-            </Link>
+            <div className={styles.closeIconContainer}>
+              <Image src={closeIcon} alt={''} onClick={togglePostModal} />
+            </div>
             <div className={styles.postPhotoContainer}>
               <PostImages postData={postData} />
             </div>
@@ -56,22 +59,22 @@ export const PostModal = ({ postData, setIsPostActive, profileData }: Props) => 
                 <div className={styles.avatarContainer}>
                   <div className={styles.imgContainer}>
                     <Image
-                      src={profileData?.avatars[0].url ?? noImage}
+                      src={avatarOwner ?? noImage}
                       alt={'avatar'}
                       layout="fill"
                       objectFit="cover"
                     />
                   </div>
-                  <p className={styles.userName}>{profileData?.userName}</p>
+                  <p className={styles.userName}>{userName}</p>
                 </div>
                 {profileData && (
                   // Show dropdown if you are logged in
                   <DropdownMenu triggerIcon={<ThreeDots />}>
-                    <RDropdownMenu.Item onSelect={() => setIsOpenEdit(true)}>
+                    <RDropdownMenu.Item onSelect={togglePostModal}>
                       <EditPost />
                       <p>{t('EditPost')}</p>
                     </RDropdownMenu.Item>
-                    <RDropdownMenu.Item onSelect={() => setIsDeleteModalOpen(true)}>
+                    <RDropdownMenu.Item onSelect={togglePostModal}>
                       <DeletePost />
                       <p>{t('DeletePost')}</p>
                     </RDropdownMenu.Item>
@@ -80,7 +83,7 @@ export const PostModal = ({ postData, setIsPostActive, profileData }: Props) => 
                 {isDeleteModalOpen && (
                   <EditDeletePost
                     postData={postData}
-                    setIsPostActive={setIsPostActive}
+                    setIsPostActive={togglePostModal}
                     setIsOpenEdit={setIsOpenEdit}
                     profileData={profileData}
                     setIsDeleteModalOpen={setIsDeleteModalOpen}
