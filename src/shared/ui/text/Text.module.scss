@@ -1,65 +1,67 @@
+@import '@/shared/styles/mediaQueries';
+
 .default {
   line-height: 100%;
 }
 
 // font-weight
 
-.medium {
+.fw_medium {
   font-weight: var(--font-weight-medium); // 500
 }
 
-.regular {
+.fw_regular {
   font-weight: var(--font-weight-regular); // 400
 }
 
-.semi_bold {
+.fw_semi_bold {
   font-weight: var(--font-weight-semi-bold); // 600
 }
 
-.bold {
+.fw_bold {
   font-weight: var(--font-weight-bold); // 700
 }
 
 //font-size
 
-.xxl {
+.fs_xxl {
   font-size: var(--font-size-26);
   line-height: var(--line-height-l);
 }
 
-.xl {
+.fs_xl {
   font-size: var(--font-size-20);
   line-height: var(--line-height-l);
 }
 
-.large {
+.fs_large {
   font-size: var(--font-size-18);
   line-height: var(--line-height-m);
 }
 
-.regular {
+.fs_regular {
   font-size: var(--font-size-16);
   line-height: var(--line-height-m);
 }
 
-.medium {
+.fs_medium {
   font-size: var(--font-size-14);
   line-height: var(--line-height-m);
 }
 
-.small {
+.fs_small {
   font-size: var(--font-size-12);
   line-height: var(--line-height-s);
 }
 
 //link
-.link {
+.fs_link {
   text-decoration: underline;
   font-size: var(--font-size-14);
   line-height: var(--line-height-m);
 }
 
-.small_link {
+.fs_small_link {
   text-decoration: underline;
   font-size: var(--font-size-12);
   line-height: var(--line-height-s);

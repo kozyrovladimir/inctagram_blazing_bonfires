@@ -1,7 +1,7 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
-import { authApi, devicesApi, profileApi, subscriptionsApi } from '../../../api'
+import { authApi, devicesApi, profileApi, publicApi, subscriptionsApi } from '../../../api'
 
 import { postsApi } from '@/shared/api/services/posts/posts.api'
 import generalInfoReducer from '@/shared/providers/storeProvider/slices/profileSettings/generalInfoReducer'
@@ -14,6 +14,7 @@ export const store = configureStore({
     [devicesApi.reducerPath]: devicesApi.reducer,
     [postsApi.reducerPath]: postsApi.reducer,
     [subscriptionsApi.reducerPath]: subscriptionsApi.reducer,
+    [publicApi.reducerPath]: publicApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -21,7 +22,8 @@ export const store = configureStore({
       profileApi.middleware,
       devicesApi.middleware,
       postsApi.middleware,
-      subscriptionsApi.middleware
+      subscriptionsApi.middleware,
+      publicApi.middleware
     ),
 })
 

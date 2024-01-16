@@ -2,9 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { baseURL } from '../baseUrl.api'
 
-import { AvatarsType, BaseUserType, ProfileUserType } from './profile.api.types'
-
-import { algByDecodingToken } from '@/shared/api/utils/algByDecodingToken'
+import { AvatarsType, ProfileUserType } from './profile.api.types'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',

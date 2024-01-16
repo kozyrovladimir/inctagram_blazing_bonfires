@@ -67,3 +67,5 @@ export {
   useCreateNewSubscriptionMutation,
   useCancelAutoRenewalMutation,
 } from './services/subscriptions/subscriptions.api'
+
+export { publicApi } from './services/public/public.api'

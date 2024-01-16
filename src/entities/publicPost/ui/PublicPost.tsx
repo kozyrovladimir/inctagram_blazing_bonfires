@@ -8,6 +8,7 @@ import s from './PublicPost.module.scss'
 import { PostModal } from '@/entities/postModal/PostModal'
 import { PostResponseType } from '@/shared/api'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
+import { UseGetShowHideText } from '@/shared/hooks'
 import { findDate } from '@/shared/utils/findDate'
 
 export const PublicPost = (post: PostResponseType) => {
@@ -23,12 +24,11 @@ export const PublicPost = (post: PostResponseType) => {
   const { t } = useTranslation('common', { keyPrefix: 'Post' })
   const [isPostActive, setIsPostActive] = useState(false)
   const postCreatedAt = findDate.difference(createdAt)
-  const [isShowMoreActive, setIsShowMoreActive] = useState(false)
 
-  const truncatedText = `${description.substring(0, 80)}..`
-  const displayShowMore = description.length > 80
-  const fullText = displayShowMore && isShowMoreActive ? description : truncatedText
-
+  const { displayShowMore, isShowMoreActive, setIsShowMoreActive, fullText } = UseGetShowHideText(
+    description,
+    80
+  )
   const togglePostModal = () => setIsPostActive(prevState => !prevState)
 
   const userName = firstName && lastName ? `${firstName} ${lastName}` : t('AnonymousUser')
@@ -51,7 +51,6 @@ export const PublicPost = (post: PostResponseType) => {
           </span>
         )}
       </p>
-
       {isPostActive && <PostModal postData={post} togglePostModal={togglePostModal} />}
     </div>
   )

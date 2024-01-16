@@ -1,0 +1,1 @@
+export { UseGetShowHideText } from './useGetShowHideText'
