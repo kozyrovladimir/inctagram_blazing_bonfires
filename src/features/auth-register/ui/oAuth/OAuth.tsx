@@ -15,7 +15,7 @@ import { RoutersPath } from '@/shared/constants/paths'
 export const OAuth = () => {
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
   const router = useRouter()
-  const [loginViaGoogle] = useLoginViaGoogleMutation()
+  const [loginViaGoogle, { data }] = useLoginViaGoogleMutation()
 
   const loginGoogle = useGoogleLogin({
     // UseGoogleLogin handles login via Google. After we send request to log in via Google we

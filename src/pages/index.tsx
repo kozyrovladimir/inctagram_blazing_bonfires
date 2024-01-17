@@ -1,80 +1,64 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { Toaster } from 'react-hot-toast'
 
-import Home from './home'
+import s from './index.module.scss'
 
+import { PublicPost } from '@/entities/publicPost'
+import { postsApi } from '@/shared/api'
+import { GetAllPublicPostsResponseType } from '@/shared/api/services/posts/posts.api.types'
 import { makePublicPageLayout } from '@/shared/layouts'
+import { wrapper } from '@/shared/providers/storeProvider/model/store'
+import { ServerSidePropsType } from '@/shared/types/commonTypes'
+import { ContentWrapper, LinearLoader } from '@/shared/ui'
+import { RegisteredUsersTablo } from '@/shared/ui/registeredUsersTablo/ui/RegisteredUsersTablo'
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  if (locale === undefined) throw new Error()
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
+  store => async context => {
+    //fetch publicPosts
+    store.dispatch(postsApi.endpoints?.getAllPublicPosts.initiate({ pageSize: '4' }))
 
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, 'common')),
-    },
+    const data: Array<ServerSidePropsType<GetAllPublicPostsResponseType>> = await Promise.all(
+      store.dispatch(postsApi.util?.getRunningQueriesThunk())
+    )
+      .then(res => {
+        return res
+      })
+      .catch(error => {
+        return error
+      })
+
+    return {
+      props: {
+        publicPostsData: data,
+        ...(await serverSideTranslations(context.locale as string, 'common')),
+      },
+    }
   }
+)
+type HomeProps = {
+  publicPostsData: Array<ServerSidePropsType<GetAllPublicPostsResponseType>>
 }
 
-function Landing() {
-  return <Home />
+function Home(props: HomeProps) {
+  const publicPosts = props.publicPostsData[0].data
+
+  return (
+    <div className={s.home}>
+      <Toaster position={'bottom-center'} />
+      <ContentWrapper className={s.homeContentWrapper}>
+        <RegisteredUsersTablo registeredUsers={publicPosts.totalUsers} />
+        <div className={s.postsContainer}>
+          {publicPosts.items.map(post => (
+            <PublicPost key={post.id} {...post} />
+          ))}
+        </div>
+      </ContentWrapper>
+    </div>
+  )
 }
 
-Landing.getLayout = makePublicPageLayout
-export default Landing
-
-// const TempNavigationLinks = () => {
-//   return (
-//     <ul
-//       style={{
-//         opacity: '0.5',
-//         listStyleType: 'none',
-//         position: 'relative',
-//         left: '50%',
-//         transform: 'translateX(-50%)',
-//         width: 'fit-content',
-//         marginTop: '120px',
-//         paddingLeft: '0',
-//       }}
-//     >
-//       !! only for development
-//       <li>
-//         <Link href="/sign-in">sign-in</Link>
-//       </li>
-//       <li>
-//         <Link href="/sign-up">sign-up</Link>
-//       </li>
-//       <li>
-//         <Link href="/sent-email">sent-email</Link>
-//       </li>
-//       <li>
-//         <Link href="/merge-accounts">merge-accounts</Link>
-//       </li>
-//       <li>
-//         <Link href="/invalid-verification-link">invalid-verification-link</Link>
-//       </li>
-//       <li>
-//         <Link href="/forgot-password">forgot-password</Link>
-//       </li>
-//       <li>
-//         <Link href="/auth/expired-verification-link">expired-verification-link</Link>
-//       </li>
-//       <li>
-//         <Link href="/create-new-password">create-new-password</Link>
-//       </li>
-//       <li>
-//         <Link href="/auth/confirmed-email">confirmed-email</Link>
-//       </li>
-//       <li>
-//         <Link href="/auth/terms-of-service">terms of service</Link>
-//       </li>
-//       <li>
-//         <Link href="/auth/privacy-policy">privacy policy</Link>
-//       </li>
-//       <li>
-//         <Link href="/super-admin/users-list">Super Admin</Link>
-//       </li>
-//     </ul>
-//   )
-// }
+Home.getLayout = makePublicPageLayout
+export default Home

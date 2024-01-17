@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
+import { HYDRATE } from 'next-redux-wrapper'
 
 import { baseURL } from '../baseUrl.api'
 
@@ -16,6 +17,13 @@ import {
 export const postsApi = createApi({
   reducerPath: 'postsApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      console.log(action, 'action')
+
+      return action.payload[reducerPath]
+    }
+  },
   tagTypes: ['editPost', 'deletePost', 'createPost'],
   endpoints: build => {
     return {
@@ -48,9 +56,9 @@ export const postsApi = createApi({
         query: params => {
           return {
             method: 'GET',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-            },
+            // headers: {
+            //   Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            // },
             url: `public-posts/all`,
             params,
           }

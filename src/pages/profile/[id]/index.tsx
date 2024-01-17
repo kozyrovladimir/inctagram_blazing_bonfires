@@ -30,9 +30,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   if (locale === undefined) throw new Error()
 
   // get data about user
-  store.dispatch(
-    publicApi.endpoints?.getPublicProfile.initiate(Number(id) as number, { forceRefetch: true })
-  )
+  store.dispatch(publicApi.endpoints?.getPublicProfile.initiate(Number(id), { forceRefetch: true }))
 
   const data: Array<ServerSidePropsType<PublicProfileType>> = await Promise.all(
     store.dispatch(publicApi.util?.getRunningQueriesThunk())
