@@ -6,7 +6,7 @@ import { authApi, devicesApi, profileApi, publicApi, subscriptionsApi } from '..
 import { postsApi } from '@/shared/api/services/posts/posts.api'
 import generalInfoReducer from '@/shared/providers/storeProvider/slices/profileSettings/generalInfoReducer'
 
-const makeStore = () => {
+export const makeStore = () => {
   return configureStore({
     reducer: {
       profileSetting: generalInfoReducer,

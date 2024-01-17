@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const UseGetShowHideText = (text: string | undefined, value: number) => {
+export const useTruncateText = (text: string | undefined, value: number) => {
   const [isShowMoreActive, setIsShowMoreActive] = useState(false)
 
   const truncatedText = `${text?.substring(0, value)}`

@@ -8,7 +8,7 @@ import s from './PublicPost.module.scss'
 import { PostModal } from '@/entities/postModal/PostModal'
 import { PostResponseType } from '@/shared/api'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
-import { UseGetShowHideText } from '@/shared/hooks'
+import { useTruncateText } from '@/shared/hooks'
 import { findDate } from '@/shared/utils/findDate'
 
 export const PublicPost = (post: PostResponseType) => {
@@ -25,7 +25,7 @@ export const PublicPost = (post: PostResponseType) => {
   const [isPostActive, setIsPostActive] = useState(false)
   const postCreatedAt = findDate.difference(createdAt)
 
-  const { displayShowMore, isShowMoreActive, setIsShowMoreActive, fullText } = UseGetShowHideText(
+  const { displayShowMore, isShowMoreActive, setIsShowMoreActive, fullText } = useTruncateText(
     description,
     80
   )

@@ -19,8 +19,6 @@ export const postsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'include' }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
-      console.log(action, 'action')
-
       return action.payload[reducerPath]
     }
   },
