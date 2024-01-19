@@ -48,4 +48,5 @@ function myApp(props: AppProps) {
   )
 }
 
-export default wrapper.withRedux(appWithTranslation(myApp))
+// export default wrapper.withRedux(appWithTranslation(myApp))
+export default wrapper.withRedux(myApp)
