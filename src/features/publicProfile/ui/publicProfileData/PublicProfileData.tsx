@@ -8,7 +8,7 @@ import style from './PublicProfileData.module.scss'
 import { ProfileFollowing } from '@/entities/profileFollowing'
 import { PublicProfileType } from '@/shared/api/services/public/public.api.types'
 import noImage from '@/shared/assets/icons/image/no-image.svg'
-import { UseGetShowHideText } from '@/shared/hooks'
+import { useTruncateText } from '@/shared/hooks'
 import { Text } from '@/shared/ui'
 
 type PropsType = {
@@ -22,7 +22,7 @@ export const PublicProfileData = (props: PropsType) => {
     amountPost,
   } = props
 
-  const { displayShowMore, isShowMoreActive, setIsShowMoreActive, fullText } = UseGetShowHideText(
+  const { displayShowMore, isShowMoreActive, setIsShowMoreActive, fullText } = useTruncateText(
     aboutMe,
     150
   )

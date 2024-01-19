@@ -1,1 +1,1 @@
-export { UseGetShowHideText } from './useGetShowHideText'
+export { useTruncateText } from './useTruncateText'

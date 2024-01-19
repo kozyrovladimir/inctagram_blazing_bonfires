@@ -16,9 +16,10 @@ import { findDate } from '@/shared/utils/findDate'
 
 type Props = {
   postData: PostResponseType
+  isLoggedIn: boolean
 }
 
-export const Comment = ({ postData }: Props) => {
+export const Comment = ({ postData, isLoggedIn }: Props) => {
   const {
     owner: { lastName, firstName },
     avatarOwner,
@@ -27,7 +28,7 @@ export const Comment = ({ postData }: Props) => {
     description,
   } = postData
 
-  const { data: me } = useMeQuery()
+  // const { data: me } = useMeQuery()
 
   const { t } = useTranslation('common', { keyPrefix: 'Post' })
   const postCreatedAt = findDate.format(createdAt)
@@ -49,7 +50,7 @@ export const Comment = ({ postData }: Props) => {
                 <p className={styles.commentText}>
                   <span className={styles.commentTextName}>{userName}</span> {description}
                 </p>
-                {me && (
+                {isLoggedIn && (
                   <div className={styles.commentLikeContainer}>
                     <Link href={'#'}>
                       <Image src={likeIcon} alt={''} />
@@ -59,7 +60,7 @@ export const Comment = ({ postData }: Props) => {
               </div>
               <div className={styles.commentInfoContainer}>
                 <p className={styles.commentTime}>{postUpdatedAt}</p>
-                {me && (
+                {isLoggedIn && (
                   <>
                     <p className={styles.commentLikes}>{t('Likes')}: 12</p>
                     <p className={styles.commentAnswer}>{t('Answer')}</p>
@@ -71,7 +72,7 @@ export const Comment = ({ postData }: Props) => {
         )}
       </div>
       <div className={styles.summaryContainer}>
-        {me && (
+        {isLoggedIn && (
           <div className={styles.actionsContainer}>
             <div className={styles.likeShareContainer}>
               <Image src={likeIcon} width={24} height={24} style={{ cursor: 'pointer' }} alt={''} />
@@ -104,7 +105,7 @@ export const Comment = ({ postData }: Props) => {
         </div>
         <div className={styles.postDate}>{postCreatedAt}</div>
       </div>
-      {me && (
+      {isLoggedIn && (
         <div className={styles.addCommentContainer}>
           <form className={styles.addCommentForm}>
             <input className={styles.addCommentInput} placeholder={t('AddComment')} type="text" />

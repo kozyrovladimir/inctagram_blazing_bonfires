@@ -18,15 +18,15 @@ function Home() {
 
   return (
     <div className={s.home}>
-      <Toaster position={'bottom-center'} />
-      <ContentWrapper className={s.homeContentWrapper}>
-        <RegisteredUsersTablo registeredUsers={publicPosts.totalUsers} />
-        <div className={s.postsContainer}>
-          {publicPosts.items.map(post => (
-            <PublicPost key={post.id} {...post} />
-          ))}
-        </div>
-      </ContentWrapper>
+      {/*<Toaster position={'bottom-center'} />*/}
+      {/*<ContentWrapper className={s.homeContentWrapper}>*/}
+      {/*  <RegisteredUsersTablo registeredUsers={publicPosts.totalUsers} />*/}
+      {/*  <div className={s.postsContainer}>*/}
+      {/*    {publicPosts.items.map(post => (*/}
+      {/*      <PublicPost key={post.id} {...post} />*/}
+      {/*    ))}*/}
+      {/*  </div>*/}
+      {/*</ContentWrapper>*/}
     </div>
   )
 }
