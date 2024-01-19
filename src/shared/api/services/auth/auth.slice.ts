@@ -18,6 +18,9 @@ const authSlice = createSlice({
     builder.addMatcher(authApi.endpoints.me.matchFulfilled, state => {
       state.isLoggedIn = true
     })
+    builder.addMatcher(authApi.endpoints.loginViaGoogle.matchFulfilled, state => {
+      state.isLoggedIn = true
+    })
   },
 })
 
