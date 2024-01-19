@@ -15,6 +15,8 @@ const emailConfirmationPaths = [
   RoutersPath.authRegistrationConfirmation,
 ]
 
+const publicPaths = [RoutersPath.home]
+
 export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
   const { pathname } = router
@@ -29,7 +31,9 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   // }
   const { data, error, isLoading, isError } = useMeQuery()
 
-  if (isError) {
+  //TODO creat Authed Slice
+
+  if (isError && !publicPaths) {
     // if to use router.push will be infinite rerenders. Instead of it needs to use window.history.pushState to prevent rerenders
 
     let pageUnautorization = RoutersPath.signIn

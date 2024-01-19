@@ -26,13 +26,13 @@ export const PublicPageHeader = () => {
           <Link href={RoutersPath.signIn}>
             <Button size={ButtonSize.CLEAN} theme={ButtonTheme.CLEAR}>
               {/*{t('SignIn')}*/}
-              SignIn
+              Sign in
             </Button>
           </Link>
           <Link href={RoutersPath.signUp}>
             <Button size={ButtonSize.CLEAN}>
               {/*{t('SignUp')}*/}
-              SignUp
+              Sign up
             </Button>
           </Link>
         </div>

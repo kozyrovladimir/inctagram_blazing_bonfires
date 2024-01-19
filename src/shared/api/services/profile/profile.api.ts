@@ -3,7 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper'
 
 import { baseURL } from '../baseUrl.api'
 
-import { AvatarsType, ProfileUserType } from './profile.api.types'
+import { AvatarsType, ProfileUserType } from '@/shared/api'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',

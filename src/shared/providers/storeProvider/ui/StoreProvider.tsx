@@ -15,5 +15,3 @@ export const StoreProvider: FC<StoreProviderProps> = ({ children }) => {
 // export const StoreProvider: FC<StoreProviderProps> = ({ children, pageProps, Component }) => {
 //   return <Component {...pageProps}>{children}</Component>
 // }
-
-// export default wrapper.withRedux(StoreProvider)

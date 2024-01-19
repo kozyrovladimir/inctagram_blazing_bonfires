@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { Comment } from '@/entities/postModal/Comment/Comment'
@@ -16,6 +17,7 @@ import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
 import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
+import { RoutersPath } from '@/shared/constants/paths'
 import { DropdownMenu } from '@/shared/ui'
 
 type Props = {
@@ -28,13 +30,14 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
   const {
     avatarOwner,
     owner: { firstName, lastName },
+    ownerId,
   } = postData
 
   const { t } = useTranslation('common', { keyPrefix: 'Post' })
+  const router = useRouter()
   const [isOpenEdit, setIsOpenEdit] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-
-  const userName = firstName && lastName ? `${firstName} ${lastName}` : `${t('AnonymousUser')}`
+  const userName = `${firstName} ${lastName}` || t('AnonymousUser')
 
   return (
     <>
@@ -56,7 +59,10 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
             </div>
             <div className={styles.descriptionContainer}>
               <div className={styles.headerContainer}>
-                <div className={styles.avatarContainer}>
+                <div
+                  className={styles.avatarContainer}
+                  onClick={() => router.push(`${RoutersPath.profile}/${ownerId}`)}
+                >
                   <div className={styles.imgContainer}>
                     <Image
                       src={avatarOwner ?? noImage}

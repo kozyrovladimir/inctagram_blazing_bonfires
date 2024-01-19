@@ -9,7 +9,6 @@ import { appWithTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { WithAuth } from '@/shared/hoc/withAuth/WithAuth'
-import { StoreProvider } from '@/shared/providers/storeProvider'
 import { wrapper } from '@/shared/providers/storeProvider/model/store'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

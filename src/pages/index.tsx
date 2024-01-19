@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -10,9 +10,10 @@ import { PublicPost } from '@/entities/publicPost'
 import { postsApi } from '@/shared/api'
 import { GetAllPublicPostsResponseType } from '@/shared/api/services/posts/posts.api.types'
 import { makePublicPageLayout } from '@/shared/layouts'
+import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 import { wrapper } from '@/shared/providers/storeProvider/model/store'
 import { ServerSidePropsType } from '@/shared/types/commonTypes'
-import { ContentWrapper, LinearLoader } from '@/shared/ui'
+import { ContentWrapper } from '@/shared/ui'
 import { RegisteredUsersTablo } from '@/shared/ui/registeredUsersTablo/ui/RegisteredUsersTablo'
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
@@ -60,5 +61,5 @@ function Home(props: HomeProps) {
   )
 }
 
-Home.getLayout = makePublicPageLayout
+Home.getLayout = getLayout
 export default Home
