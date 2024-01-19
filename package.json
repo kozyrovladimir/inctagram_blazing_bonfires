@@ -36,7 +36,7 @@
     "i18next": "^23.4.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
-    "next": "^13.5.4",
+    "next": "13.5.4",
     "next-i18next": "^14.0.0",
     "next-redux-wrapper": "^8.1.0",
     "next-router-mock": "^0.9.10",
