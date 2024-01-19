@@ -23,6 +23,8 @@ export type {
   NewPasswordType,
 } from './services/auth/auth.api.types'
 
+export * from './services/auth/auth.selectors'
+
 export {
   profileApi,
   useGetProfileUserQuery,

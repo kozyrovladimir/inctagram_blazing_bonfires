@@ -8,8 +8,6 @@ import { useMeQuery } from '@/shared/api'
 import { RoutersPath } from '@/shared/constants/paths'
 import { ShortLangs } from '@/shared/types/langSwitcherTypes'
 
-// const publicPaths = []
-
 const emailConfirmationPaths = [
   RoutersPath.authExpiredVerificationLink,
   RoutersPath.authRegistrationConfirmation,
@@ -30,8 +28,6 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   //   return children
   // }
   const { data, error, isLoading, isError } = useMeQuery()
-
-  //TODO creat Authed Slice
 
   if (isError && !publicPaths) {
     // if to use router.push will be infinite rerenders. Instead of it needs to use window.history.pushState to prevent rerenders

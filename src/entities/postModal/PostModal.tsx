@@ -4,6 +4,7 @@ import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useSelector } from 'react-redux'
 
 import { Comment } from '@/entities/postModal/Comment/Comment'
 import styles from '@/entities/postModal/PostModal.module.scss'
@@ -12,6 +13,7 @@ import { EditDescriptionPost } from '@/features/post/ui/editDescriptionModal/Edi
 import { DeletePost } from '@/features/post/ui/icons/DeletePost'
 import { EditPost } from '@/features/post/ui/icons/EditPost'
 import { PostImages } from '@/features/post/ui/postImagesModal/PostImages'
+import { selectIsLoggedIn } from '@/shared/api'
 import { PostResponseType } from '@/shared/api/services/posts/posts.api.types'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
@@ -27,6 +29,7 @@ type Props = {
 }
 
 export const PostModal = ({ postData, togglePostModal, profileData }: Props) => {
+  const isLoggedIn = useSelector(selectIsLoggedIn)
   const {
     avatarOwner,
     owner: { firstName, lastName },
@@ -73,8 +76,7 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
                   </div>
                   <p className={styles.userName}>{userName}</p>
                 </div>
-                {profileData && (
-                  // Show dropdown if you are logged in
+                {isLoggedIn && (
                   <DropdownMenu triggerIcon={<ThreeDots />}>
                     <RDropdownMenu.Item onSelect={togglePostModal}>
                       <EditPost />
@@ -97,7 +99,7 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
                   />
                 )}
               </div>
-              <Comment postData={postData} />
+              <Comment postData={postData} isLoggedIn={isLoggedIn} />
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
 
 import styles from '@/features/auth-register/ui/oAuth/OAuth.module.scss'
 import { useLoginViaGoogleMutation } from '@/shared/api/services/auth/auth.api'
@@ -13,6 +14,7 @@ import googleIcon from '@/shared/assets/icons/socialIcons/google-icon.svg'
 import { RoutersPath } from '@/shared/constants/paths'
 
 export const OAuth = () => {
+  const dispatch = useDispatch()
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
   const router = useRouter()
   const [loginViaGoogle, { data }] = useLoginViaGoogleMutation()
