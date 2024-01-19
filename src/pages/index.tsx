@@ -50,7 +50,6 @@ function Home(props: HomeProps) {
     <div className={s.home}>
       <Toaster position={'bottom-center'} />
       <ContentWrapper className={s.homeContentWrapper}>
-        hey
         <RegisteredUsersTablo registeredUsers={publicPosts.totalUsers} />
         <div className={s.postsContainer}>
           {publicPosts.items.map(post => (
