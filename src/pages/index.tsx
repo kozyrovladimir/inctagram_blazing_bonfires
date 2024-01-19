@@ -21,21 +21,22 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     //fetch publicPosts
     store.dispatch(postsApi.endpoints?.getAllPublicPosts.initiate({ pageSize: '4' }))
 
-    const data: Array<ServerSidePropsType<GetAllPublicPostsResponseType>> = await Promise.all(
-      store.dispatch(postsApi.util?.getRunningQueriesThunk())
-    )
-      .then(res => {
-        return res
-      })
-      .catch(error => {
-        return error
-      })
+    // const data: Array<ServerSidePropsType<GetAllPublicPostsResponseType>> = await Promise.all(
+    //   store.dispatch(postsApi.util?.getRunningQueriesThunk())
+    // )
+    //   .then(res => {
+    //     return res
+    //   })
+    //   .catch(error => {
+    //     return error
+    //   })
 
     return {
-      props: {
-        publicPostsData: data,
-        ...(await serverSideTranslations(context.locale as string, 'common')),
-      },
+      // props: {
+      //   publicPostsData: data,
+      //   ...(await serverSideTranslations(context.locale as string, 'common')),
+      // },
+      props: {},
     }
   }
 )
@@ -43,19 +44,20 @@ type HomeProps = {
   publicPostsData: Array<ServerSidePropsType<GetAllPublicPostsResponseType>>
 }
 
-function Home(props: HomeProps) {
-  const publicPosts = props.publicPostsData[0].data
+function Home(props: any) {
+  // const publicPosts = props.publicPostsData[0].data
 
   return (
     <div className={s.home}>
       <Toaster position={'bottom-center'} />
       <ContentWrapper className={s.homeContentWrapper}>
-        <RegisteredUsersTablo registeredUsers={publicPosts.totalUsers} />
-        <div className={s.postsContainer}>
-          {publicPosts.items.map(post => (
-            <PublicPost key={post.id} {...post} />
-          ))}
-        </div>
+        hey
+        {/*<RegisteredUsersTablo registeredUsers={publicPosts.totalUsers} />*/}
+        {/*<div className={s.postsContainer}>*/}
+        {/*  {publicPosts.items.map(post => (*/}
+        {/*    <PublicPost key={post.id} {...post} />*/}
+        {/*  ))}*/}
+        {/*</div>*/}
       </ContentWrapper>
     </div>
   )
