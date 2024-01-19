@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     return {
       props: {
         publicPostsData: data,
-        ...(await serverSideTranslations(context.locale as string, 'common')),
+        // ...(await serverSideTranslations(context.locale as string, 'common')),
       },
     }
   }
