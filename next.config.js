@@ -16,6 +16,7 @@ const nextConfig = {
     locales: ['en', 'ru'],
     localeDetection: false,
   },
+  pageExtensions: ['tsx'],
 }
 
 module.exports = nextConfig

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 
 import style from './usersLists.module.scss'
 
-import { ADMIN_LOGIN } from '@/pages/super-admin/modal/graphql-query-constants/graphql-query-constanst'
+import { ADMIN_LOGIN } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { selectIsLoggedIn } from '@/shared/api'
 import searchImg from '@/shared/assets/icons/input/search.svg'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
