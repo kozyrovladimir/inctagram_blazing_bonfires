@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
+import { useMutation } from '@apollo/client'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import Image from 'next/image'
+import { useSelector } from 'react-redux'
 
 import style from './usersLists.module.scss'
 
+import { ADMIN_LOGIN } from '@/pages/super-admin/modal/graphql-query-constants/graphql-query-constanst'
+import { selectIsLoggedIn } from '@/shared/api'
 import searchImg from '@/shared/assets/icons/input/search.svg'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 import { Select, TableUsersList } from '@/shared/ui'
 
 const UsersList = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+
+  const [loginAdmin, { data }] = useMutation(ADMIN_LOGIN)
+
+  useEffect(() => {
+    loginAdmin({ variables: { email: 'admin@gmail.com', password: 'admin' } })
+  }, [])
+
   const selectOptions = ['Not selected', 'Blocked', 'Not blocked']
   //const usersPageSelect = ['5', '10', '30', '50', '100']
 
