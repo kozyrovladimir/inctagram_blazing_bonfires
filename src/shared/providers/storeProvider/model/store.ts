@@ -1,6 +1,5 @@
 import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
-import { useDispatch } from 'react-redux'
 
 import { authApi, devicesApi, profileApi, publicApi, subscriptionsApi } from '../../../api'
 

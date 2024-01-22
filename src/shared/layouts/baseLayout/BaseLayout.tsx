@@ -22,8 +22,10 @@ const BaseLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <>
       {isLoggedIn ? <Header /> : <PublicPageHeader />}
-      {isLoggedIn && isSidebar && <SideBar />}
-      <main className={isSidebar ? style.mainWithSidebar : style.main}>{children}</main>
+      <div className={style.contentBody}>
+        {isLoggedIn && isSidebar && <SideBar />}
+        <main className={isSidebar ? style.mainWithSidebar : style.main}>{children}</main>
+      </div>
     </>
   )
 }
