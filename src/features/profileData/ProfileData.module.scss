@@ -1,24 +1,24 @@
 .headerContainer {
   display: flex;
   margin-top: 40px;
-  padding-left: 20px;
 
   .avatarContainer {
-    min-width: 204px;
-    min-height: 204px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background-color: var(--color-dark-700);
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .profileInfoContainer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-left: 50px;
+
     width: calc(100% - 204px);
+    margin-left: 50px;
 
     .profileTitleContainer {
       display: flex;
@@ -28,18 +28,20 @@
       .buttonProfileSetting {
         width: 167px;
         height: 36px;
-        background: #333333;
-        color: #ffffff;
-        font-size: 16px;
         margin-left: auto;
+
+        font-size: 16px;
+        color: #fff;
+
+        background: #333;
       }
     }
 
     .description {
-      font-size: 16px;
-      line-height: 24px;
-      font-weight: 400;
       width: 90%;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
     }
   }
 }
