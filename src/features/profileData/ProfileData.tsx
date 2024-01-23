@@ -10,12 +10,15 @@ import { ProfileFollowing } from '@/entities/profileFollowing'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import { ShortLangs } from '@/shared/types/langSwitcherTypes'
-import { Button } from '@/shared/ui'
+import { Button, Text } from '@/shared/ui'
 
 type Props = {
   profileData: ProfileUserType | undefined
 }
 export const ProfileData = ({ profileData }: Props) => {
+  const lastAddedAvatar = profileData?.avatars[profileData?.avatars.length - 1].url
+
+  console.log(profileData, 'profileData')
   const {
     i18n: { t: tRoot, language },
   } = useTranslation('common', { keyPrefix: 'Profile' })
@@ -23,7 +26,7 @@ export const ProfileData = ({ profileData }: Props) => {
   return (
     <div className={style.headerContainer}>
       <div className={style.avatarContainer}>
-        <Image src={noImage} alt={'avatar'} width={48} height={48} />
+        <Image src={lastAddedAvatar ?? noImage} alt={'avatar'} width={204} height={204} />
       </div>
       <div className={style.profileInfoContainer}>
         <div className={style.profileTitleContainer}>
@@ -37,6 +40,7 @@ export const ProfileData = ({ profileData }: Props) => {
           </Button>
         </div>
         <ProfileFollowing amountFollowing={2128} amountFollowers={2128} amountPublications={2128} />
+        <Text>{profileData?.aboutMe}</Text>
       </div>
     </div>
   )

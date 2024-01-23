@@ -5,8 +5,8 @@
 .profileContainer {
   display: flex;
   flex-flow: column wrap;
-  margin-right: 60px;
-  margin-bottom: 30px;
+  align-items: center;
+  max-width: 972px;
 
   .photosContainer {
     display: flex;
@@ -15,19 +15,17 @@
     justify-content: flex-start;
 
     margin-top: 60px;
-    margin-left: 20px;
   }
 }
 
 .photoWrapper {
-  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .photo {
   cursor: pointer;
-  width: 350px;
-  height: 350px;
-  margin-left: 6px;
 }
 
 .postsContainer {

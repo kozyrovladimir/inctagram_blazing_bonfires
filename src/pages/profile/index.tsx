@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { GetStaticProps } from 'next'
+import Image from 'next/image'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import style from './profile.module.scss'
@@ -92,12 +93,14 @@ function Profile() {
         <div className={style.photoWrapper}>
           {posts.map(p => {
             return (
-              <img
+              <Image
                 key={p.id}
                 src={p?.images[0]?.url}
-                alt={'photo'}
+                alt={'post image'}
                 className={style.photo}
                 onClick={() => getPost(p.id).unwrap().then(togglePostModal)}
+                width={234}
+                height={228}
               />
             )
           })}

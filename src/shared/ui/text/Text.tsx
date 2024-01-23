@@ -7,7 +7,7 @@ import style from './Text.module.scss'
 export type TextType<T extends ElementType> = {
   size?: 'small' | 'medium' | 'regular' | 'large' | 'xl' | 'xxl' | 'link' | 'small_link'
   weight?: 'regular' | 'medium' | 'semi_bold' | 'bold'
-  as: T
+  as?: T
   className?: string
   color?: 'light' | 'primary' | 'error' | 'info'
 } & ComponentPropsWithoutRef<T>
