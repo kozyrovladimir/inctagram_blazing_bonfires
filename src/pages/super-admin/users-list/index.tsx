@@ -1,23 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useMutation } from '@apollo/client'
-import Pagination from '@mui/material/Pagination'
-import Stack from '@mui/material/Stack'
-import Image from 'next/image'
+import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
 import { useSelector } from 'react-redux'
 
-import style from './usersLists.module.scss'
+import s from './usersLists.module.scss'
 
 import { UsersListTable } from '@/entities/usersListTable/UsersListTable'
 import { ADMIN_LOGIN } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { selectIsLoggedIn } from '@/shared/api'
-import searchImg from '@/shared/assets/icons/input/search.svg'
+import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
 import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
-import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
-import { Select, TableUsersList } from '@/shared/ui'
+import { DropdownMenu, Input, InputType, Pagination, RadixSelect } from '@/shared/ui'
 
 const UsersList = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState<number | string>(10)
+
+  const handleSetItemsPerPage = (numOfItemsPerPage: number | string) => {
+    setItemsPerPage(numOfItemsPerPage)
+  }
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber)
+  }
 
   const [loginAdmin, { data }] = useMutation(ADMIN_LOGIN)
 
@@ -35,11 +42,29 @@ const UsersList = () => {
   ]
 
   return (
-    <div>
+    <div className={s.usersListPage}>
+      <div className={s.inputAndSelect}>
+        <Input type={InputType.SEARCH} className={s.search} placeholder={'Search'} />
+        <div className={s.iconsContainer}>
+          <RadixSelect className={s.triggerBtn} onChangeOption={() => {}} options={selectOptions} />
+        </div>
+      </div>
       <UsersListTable selectedDeckTableData={rows} userId={'1'} />
+      {/*<Pagination/>*/}
+      <Pagination
+        handlePageChange={handlePageChange}
+        totalPages={1}
+        totalCount={100}
+        itemsPerPage={10}
+        currentPage={currentPage}
+        handleSetItemsPerPage={handleSetItemsPerPage}
+        selectOptions={selectOptionsOfDecksToDisplay}
+      />
     </div>
   )
 }
+
+const selectOptionsOfDecksToDisplay = ['10', '20', '30', '50', '100']
 
 UsersList.getLayout = getAdminLayout
 export default UsersList
@@ -49,27 +74,3 @@ function createData(userID: string, userName: string, profileLink: string, dateA
 }
 
 export type DummyRowsType = ReturnType<typeof createData>
-
-//<div className={style.root}>
-//       <div className={style.searchBlock}>
-//         <div className={style.inputWrapper}>
-//           <Image src={searchImg} alt="" className={style.searchImg} />
-//           <input className={style.inputSearch} placeholder="Search" />
-//         </div>
-//         <Select options={selectOptions} st={{ width: '234px' }} />
-//       </div>
-//       <div className={style.tableBlock}>
-//         <TableUsersList />
-//       </div>
-//       <div className={style.paginationBlock}>
-//         <Stack spacing={1}>
-//           <Pagination
-//             count={10}
-//             shape="rounded"
-//             className={style.pagination}
-//             sx={{ '&& .Mui-selected': { background: 'white', color: 'black' } }}
-//           />
-//         </Stack>
-//         <div className={style.paginationText}>Show 100 on page</div>
-//       </div>
-//     </div>

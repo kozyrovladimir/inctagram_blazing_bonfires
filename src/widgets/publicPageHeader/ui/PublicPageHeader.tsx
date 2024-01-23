@@ -16,7 +16,7 @@ export const PublicPageHeader = () => {
   return (
     <header className={s.header}>
       <Link href="/" className={s.logo}>
-        Instagram
+        Inctagram
       </Link>
       <div className={s.headerRightSide}>
         <div className={s.langSwitcherContainer}>

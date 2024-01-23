@@ -1,43 +1,11 @@
-.root {
+.usersListPage {
   width: 100%;
-  padding-top: 60px;
-  padding-left: 30px;
-  padding-right: 30px;
-  .searchBlock {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
 
-    .inputSearch {
-      width: 644px;
-      height: 32px;
-      padding-left: 50px;
-      background-color: var(--color-dark-700);
-      border: 1px solid var(--color-dark-300);
-      color: var(--color-dark-500);
-      border-radius: 2px;
-    }
-    .searchImg {
-      position: relative;
-      left: 30px;
-      top: 2px;
-    }
-  }
-  .tableBlock {
-    margin-top: 50px;
-    margin-bottom: 40px;
-  }
-  .paginationBlock {
+  .inputAndSelect {
     display: flex;
-    align-items: center;
-    .paginationText {
-      margin-left: 40px;
-      display: flex;
-      align-items: center;
+
+    & button > span:first-child {
+      text-wrap: nowrap;
     }
-  }
-  .pagination button,
-  .pagination div {
-    color: var(--color-light-100);
   }
 }
