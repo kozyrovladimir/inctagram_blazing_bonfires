@@ -16,9 +16,8 @@ type Props = {
   profileData: ProfileUserType | undefined
 }
 export const ProfileData = ({ profileData }: Props) => {
-  const lastAddedAvatar = profileData?.avatars[profileData?.avatars.length - 1].url
+  const lastAddedAvatar = profileData?.avatars?.[profileData?.avatars.length - 1]?.url ?? noImage
 
-  console.log(profileData, 'profileData')
   const {
     i18n: { t: tRoot, language },
   } = useTranslation('common', { keyPrefix: 'Profile' })
