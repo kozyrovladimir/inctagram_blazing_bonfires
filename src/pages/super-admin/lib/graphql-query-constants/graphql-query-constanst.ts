@@ -7,3 +7,78 @@ export const ADMIN_LOGIN = gql(`
   }
 }
 `)
+
+// GetUsers fragments
+export const AVATARS_FRAGMENT = gql(`
+  fragment AvatarsFragment on Avatar {
+    url
+    width
+    height
+    fileSize
+  }
+`)
+
+export const PROFILE_FRAGMENT = gql(`
+  fragment ProfileFragment on Profile {
+    id
+    userName
+    firstName
+    lastName
+    city
+    dateOfBirth
+    aboutMe
+    createdAt
+    avatars {
+      ...AvatarsFragment
+    }
+  }
+  ${AVATARS_FRAGMENT}
+`)
+
+export const USER_FRAGMENT = gql(`
+  fragment UserFragment on User {
+    id
+    userName
+    email
+    createdAt
+    profile {
+      ...ProfileFragment
+    }
+    userBan {
+       reason
+       createdAt
+    }
+  }
+  ${PROFILE_FRAGMENT}
+`)
+
+// Query with fragments
+export const GET_USERS_LIST = gql(`
+  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String, $blockStatus: BlockStatus ) {
+  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm, blockStatus: $blockStatus) {
+    users {
+      id,
+      userName,
+      email,
+      createdAt,
+      profile {
+        id, 
+        userName,
+        firstName,
+        lastName,
+        city,
+        dateOfBirth,
+        aboutMe, 
+        createdAt, 
+        avatars {
+        	url, width, height, fileSize 
+        }
+      },
+      userBan {
+        reason, createdAt
+      } 
+    },
+    pagination {pagesCount, page, pageSize, totalCount}
+  }
+}
+`)

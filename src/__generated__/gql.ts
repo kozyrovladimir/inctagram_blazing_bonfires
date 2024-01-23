@@ -14,6 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  mutation LoginAdmin($email: String!, $password: String!) {\n  loginAdmin(email: $email, password: $password) {\n    logged\n  }\n}\n": types.LoginAdminDocument,
+    "\n  fragment AvatarsFragment on Avatar {\n    url\n    width\n    height\n    fileSize\n  }\n": types.AvatarsFragmentFragmentDoc,
+    "\n  fragment ProfileFragment on Profile {\n    id\n    userName\n    firstName\n    lastName\n    city\n    dateOfBirth\n    aboutMe\n    createdAt\n    avatars {\n      ...AvatarsFragment\n    }\n  }\n  \n": types.ProfileFragmentFragmentDoc,
+    "\n  fragment UserFragment on User {\n    id\n    userName\n    email\n    createdAt\n    profile {\n      ...ProfileFragment\n    }\n    userBan {\n       reason\n       createdAt\n    }\n  }\n  \n": types.UserFragmentFragmentDoc,
+    "\n  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String, $blockStatus: BlockStatus ) {\n  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm, blockStatus: $blockStatus) {\n    users {\n      id,\n      userName,\n      email,\n      createdAt,\n      profile {\n        id, \n        userName,\n        firstName,\n        lastName,\n        city,\n        dateOfBirth,\n        aboutMe, \n        createdAt, \n        avatars {\n        \turl, width, height, fileSize \n        }\n      },\n      userBan {\n        reason, createdAt\n      } \n    },\n    pagination {pagesCount, page, pageSize, totalCount}\n  }\n}\n": types.GetUsersDocument,
 };
 
 /**
@@ -34,6 +38,22 @@ export function gql(source: string): unknown;
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation LoginAdmin($email: String!, $password: String!) {\n  loginAdmin(email: $email, password: $password) {\n    logged\n  }\n}\n"): (typeof documents)["\n  mutation LoginAdmin($email: String!, $password: String!) {\n  loginAdmin(email: $email, password: $password) {\n    logged\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  fragment AvatarsFragment on Avatar {\n    url\n    width\n    height\n    fileSize\n  }\n"): (typeof documents)["\n  fragment AvatarsFragment on Avatar {\n    url\n    width\n    height\n    fileSize\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  fragment ProfileFragment on Profile {\n    id\n    userName\n    firstName\n    lastName\n    city\n    dateOfBirth\n    aboutMe\n    createdAt\n    avatars {\n      ...AvatarsFragment\n    }\n  }\n  \n"): (typeof documents)["\n  fragment ProfileFragment on Profile {\n    id\n    userName\n    firstName\n    lastName\n    city\n    dateOfBirth\n    aboutMe\n    createdAt\n    avatars {\n      ...AvatarsFragment\n    }\n  }\n  \n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  fragment UserFragment on User {\n    id\n    userName\n    email\n    createdAt\n    profile {\n      ...ProfileFragment\n    }\n    userBan {\n       reason\n       createdAt\n    }\n  }\n  \n"): (typeof documents)["\n  fragment UserFragment on User {\n    id\n    userName\n    email\n    createdAt\n    profile {\n      ...ProfileFragment\n    }\n    userBan {\n       reason\n       createdAt\n    }\n  }\n  \n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String, $blockStatus: BlockStatus ) {\n  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm, blockStatus: $blockStatus) {\n    users {\n      id,\n      userName,\n      email,\n      createdAt,\n      profile {\n        id, \n        userName,\n        firstName,\n        lastName,\n        city,\n        dateOfBirth,\n        aboutMe, \n        createdAt, \n        avatars {\n        \turl, width, height, fileSize \n        }\n      },\n      userBan {\n        reason, createdAt\n      } \n    },\n    pagination {pagesCount, page, pageSize, totalCount}\n  }\n}\n"): (typeof documents)["\n  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String, $blockStatus: BlockStatus ) {\n  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm, blockStatus: $blockStatus) {\n    users {\n      id,\n      userName,\n      email,\n      createdAt,\n      profile {\n        id, \n        userName,\n        firstName,\n        lastName,\n        city,\n        dateOfBirth,\n        aboutMe, \n        createdAt, \n        avatars {\n        \turl, width, height, fileSize \n        }\n      },\n      userBan {\n        reason, createdAt\n      } \n    },\n    pagination {pagesCount, page, pageSize, totalCount}\n  }\n}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

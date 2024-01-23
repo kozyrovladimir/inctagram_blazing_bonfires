@@ -4,35 +4,36 @@ import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import s from './UsersListTable.module.scss'
 
-import { DummyRowsType } from '@/pages/super-admin/users-list'
+import { UserFragmentFragment, UsersPaginationModel } from '@/__generated__/graphql'
 import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
 import { DropdownMenu, NewTable, TBody, TCell, THead, THeader, TRow } from '@/shared/ui'
 
-type SelectedDeckTableType = {
-  selectedDeckTableData: DummyRowsType[]
-  userId: string
+type UsersListTableType = {
+  users: UserFragmentFragment[]
 }
 
-export const UsersListTable = ({ selectedDeckTableData, userId }: SelectedDeckTableType) => {
+export const UsersListTable = ({ users }: UsersListTableType) => {
   return (
     <NewTable>
       <THead>
         <TRow>
           <THeader>UserID</THeader>
-          <THeader>Username</THeader>
+          <THeader>Name</THeader>
           <THeader>Profile link</THeader>
           <THeader>Date added</THeader>
           <THeader colSpan={2}></THeader>
         </TRow>
       </THead>
       <TBody>
-        {selectedDeckTableData.map(user => {
+        {users.map(user => {
           return (
-            <TRow key={user.userID}>
-              <TCell>{user.userID}</TCell>
-              <TCell>{user.profileLink}</TCell>
+            <TRow key={user.id}>
+              <TCell>{user.id}</TCell>
+              <TCell>
+                {user.profile.userName} {user.profile.lastName}
+              </TCell>
               <TCell>{user.userName}</TCell>
-              <TCell>{new Date(user?.dateAdded).toLocaleDateString()}</TCell>
+              <TCell>{new Date(user.createdAt).toLocaleDateString()}</TCell>
               <TCell>
                 <div className={s.iconsContainer}>
                   <DropdownMenu triggerIcon={<ThreeDots />}>
