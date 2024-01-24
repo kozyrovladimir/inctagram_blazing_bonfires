@@ -8,7 +8,6 @@ import s from './index.module.scss'
 
 import { PublicPost } from '@/entities/publicPost'
 import { postsApi } from '@/shared/api'
-import { useGetAllPublicPostsQuery } from '@/shared/api/services/posts/posts.api'
 import { GetAllPublicPostsResponseType } from '@/shared/api/services/posts/posts.api.types'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 import { wrapper } from '@/shared/providers/storeProvider/model/store'
@@ -19,6 +18,9 @@ import { RegisteredUsersTablo } from '@/shared/ui/registeredUsersTablo/ui/Regist
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   store => async context => {
     //fetch publicPosts
+
+    if (context.locale === undefined) throw new Error()
+
     store.dispatch(postsApi.endpoints?.getAllPublicPosts.initiate({ pageSize: '4' }))
 
     const data: Array<ServerSidePropsType<GetAllPublicPostsResponseType>> = await Promise.all(
@@ -31,10 +33,19 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
         return error
       })
 
+    if (!data[0].data) {
+      return {
+        redirect: {
+          destination: '/404' /*  todo Редирект на 404  */,
+          permanent: false,
+        },
+      }
+    }
+
     return {
       props: {
-        publicPostsData: data,
         ...(await serverSideTranslations(context.locale as string, 'common')),
+        publicPostsData: data,
       },
     }
   }

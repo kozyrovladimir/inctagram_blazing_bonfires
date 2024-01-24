@@ -1,4 +1,5 @@
-import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/query'
 import { createWrapper } from 'next-redux-wrapper'
 
 import { authApi, devicesApi, profileApi, publicApi, subscriptionsApi } from '../../../api'
@@ -35,15 +36,10 @@ export const makeStore = () => {
   })
 }
 
-// setupListeners(store.dispatch)
+setupListeners(makeStore().dispatch)
 
-type AppStore = ReturnType<typeof makeStore>
-export type AppDispatch = ReturnType<AppStore['dispatch']>
+export type AppStore = ReturnType<typeof makeStore>
 export type RootState = ReturnType<AppStore['getState']>
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->
+export type AppDispatch = AppStore['dispatch']
+
 export const wrapper = createWrapper<AppStore>(makeStore, { debug: true })
