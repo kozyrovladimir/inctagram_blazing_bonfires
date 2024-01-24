@@ -42,6 +42,14 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const userName = `${firstName} ${lastName}` || t('AnonymousUser')
 
+  const openEditModal = () => {
+    setIsOpenEdit(true)
+  }
+
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true)
+  }
+
   return (
     <>
       {isOpenEdit ? (
@@ -78,11 +86,11 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
                 </div>
                 {isLoggedIn && (
                   <DropdownMenu triggerIcon={<ThreeDots />}>
-                    <RDropdownMenu.Item onSelect={togglePostModal}>
+                    <RDropdownMenu.Item onSelect={openEditModal}>
                       <EditPost />
                       <p>{t('EditPost')}</p>
                     </RDropdownMenu.Item>
-                    <RDropdownMenu.Item onSelect={togglePostModal}>
+                    <RDropdownMenu.Item onSelect={openDeleteModal}>
                       <DeletePost />
                       <p>{t('DeletePost')}</p>
                     </RDropdownMenu.Item>

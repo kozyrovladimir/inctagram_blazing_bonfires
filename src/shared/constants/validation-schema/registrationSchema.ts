@@ -15,10 +15,7 @@ export const registrationSchema = (t: TFunction) =>
       .trim()
       .required(t('Error.RequiredField'))
       .email(t('Error.EmailValidationError'))
-      .matches(
-        /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,4})$/,
-        t('Error.EmailValidationError')
-      ),
+      .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, t('Error.EmailValidationError')),
     password: yup
       .string()
       .trim()
