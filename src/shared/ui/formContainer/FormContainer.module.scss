@@ -1,15 +1,18 @@
 .formContainer {
   display: flex;
-  gap: 0.8125rem;
   flex-direction: column;
+  gap: 0.8125rem;
   align-items: center;
-  padding: 1.5rem;
+
   width: 23.625rem;
-  background-color: #171717;
-  border: solid 1px #333333;
-  margin: 1.5rem auto;
   height: max-content;
+  margin: 1.5rem auto;
+  padding: 1.5rem;
+
+  background-color: #171717;
+  border: solid 1px #333;
+
   h3 {
-    line-height: 2rem;
+    line-height: 2rem
   }
 }

@@ -4,33 +4,28 @@ import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import s from './UsersListTable.module.scss'
 
-import { UserFragmentFragment, UsersPaginationModel } from '@/__generated__/graphql'
+import { User } from '@/__generated__/graphql'
 import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
-import { DropdownMenu, NewTable, TBody, TCell, THead, THeader, TRow } from '@/shared/ui'
+import { DropdownMenu, NewTable, TBody, TCell, TRow } from '@/shared/ui'
+import { SortType, TableHeader } from '@/shared/ui/_table/Table'
 
 type UsersListTableType = {
-  users: UserFragmentFragment[]
+  users: User[]
+  setSort: (sort: SortType) => void
+  sort: SortType
 }
 
-export const UsersListTable = ({ users }: UsersListTableType) => {
+export const UsersListTable = ({ users, sort, setSort }: UsersListTableType) => {
   return (
     <NewTable>
-      <THead>
-        <TRow>
-          <THeader>UserID</THeader>
-          <THeader>Name</THeader>
-          <THeader>Profile link</THeader>
-          <THeader>Date added</THeader>
-          <THeader colSpan={2}></THeader>
-        </TRow>
-      </THead>
+      <TableHeader columns={columns} sort={sort} onSort={setSort} />
       <TBody>
         {users.map(user => {
           return (
             <TRow key={user.id}>
               <TCell>{user.id}</TCell>
               <TCell>
-                {user.profile.userName} {user.profile.lastName}
+                {user.profile.firstName} {user.profile.lastName}
               </TCell>
               <TCell>{user.userName}</TCell>
               <TCell>{new Date(user.createdAt).toLocaleDateString()}</TCell>
@@ -55,3 +50,24 @@ export const UsersListTable = ({ users }: UsersListTableType) => {
     </NewTable>
   )
 }
+
+const columns = [
+  {
+    key: 'id',
+    title: 'UserID',
+    sortable: false,
+  },
+  {
+    key: 'name',
+    title: 'Name',
+    sortable: false,
+  },
+  {
+    key: 'userName',
+    title: 'Profile link',
+  },
+  {
+    key: 'createdAt',
+    title: 'Date added',
+  },
+]

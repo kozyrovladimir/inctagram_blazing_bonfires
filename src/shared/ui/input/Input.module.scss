@@ -1,6 +1,6 @@
 .wrapper {
-  width: 100%;
   position: relative;
+  width: 100%;
 }
 
 .label {
@@ -10,22 +10,27 @@
 
 .inputSearch {
   padding: 6px 12px 6px 36px;
+  color: black;
 }
 
 .input,
 .label {
-  font-size: var(--font-size-s);
   width: 100%;
-  color: var(--color-dark-100);
+
+  font-size: var(--font-size-s);
   line-height: var(--line-height-m);
-  background: rgba(0, 0, 0, 0);
+  color: var(--color-dark-100);
+
+  background: rgb(0 0 0 / 0%);
 }
 
 .input {
-  font-size: var(--font-size-m);
-  color: var(--color-dark-100);
   height: 36px;
   padding: 6px 12px;
+
+  font-size: var(--font-size-m);
+  color: var(--color-dark-100);
+
   border: 1px solid var(--color-dark-100);
   border-radius: 2px;
   outline: none;
@@ -40,93 +45,97 @@
   }
 
   &:hover {
-    border-color: var(--color-light-900);
     color: var(--color-light-900);
+    border-color: var(--color-light-900);
   }
 
   &:focus {
-    border-color: var(--color-light-100);
     color: var(--color-light-100);
+    border-color: var(--color-light-100);
   }
 
   &:active {
-    border-color: var(--color-info-500);
     color: var(--color-light-100);
+    border-color: var(--color-info-500);
   }
 
   &:disabled {
-    border-color: var(--color-dark-500);
     color: var(--color-dark-500);
+    border-color: var(--color-dark-500);
   }
 }
 
 .error {
   margin: 0;
   padding: 0;
+
   font-size: var(--font-size-s);
-  color: var(--color-danger-500);
   line-height: 24px;
+  color: var(--color-danger-500);
 }
 
 .erroredInput {
   border-color: var(--color-danger-500);
 
   &:hover {
-    border-color: var(--color-danger-500);
     color: var(--color-dark-100);
+    border-color: var(--color-danger-500);
   }
 
   &:focus,
   &:active,
   &:not(:placeholder-shown) {
-    border-color: var(--color-danger-500);
     color: var(--color-light-100);
+    border-color: var(--color-danger-500);
   }
 
   &:active,
   &:not(:placeholder-shown) {
-    border-color: var(--color-danger-500);
     color: var(--color-light-100);
+    border-color: var(--color-danger-500);
   }
 }
 
 .eye {
-  position: absolute;
-  left: calc(100% - 36px);
-  top: 29px;
   cursor: pointer;
+  position: absolute;
+  top: 29px;
+  left: calc(100% - 36px);
 }
 
 .eyeCrossLine {
-  position: absolute;
-  height: 4px;
-  width: 25px;
-  border-radius: 2px;
-  border-bottom: solid 1px #171717;
-  background-color: var(--color-light-100);
-  transform: rotate(45deg);
-  left: calc(100% - 36px);
-  top: 39px;
   cursor: pointer;
+
+  position: absolute;
+  top: 39px;
+  left: calc(100% - 36px);
+  transform: rotate(45deg);
+
+  width: 25px;
+  height: 4px;
+
+  background-color: var(--color-light-100);
+  border-bottom: solid 1px #171717;
+  border-radius: 2px;
 }
 
 .search {
   position: absolute;
-  left: 12px;
   bottom: 12px;
+  left: 12px;
 }
 
 .location {
   position: absolute;
-  left: calc(100% - 36px);
   bottom: 26px;
+  left: calc(100% - 36px);
 }
 
 .container ul {
-  list-style-type: none;
-  height: 200px;
   overflow: hidden;
   overflow-y: scroll;
+  height: 200px;
+  list-style-type: none;
 
   & li {
     cursor: pointer;

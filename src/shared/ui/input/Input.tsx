@@ -36,7 +36,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     { label, classNameWrap, value, placeholder, error, type, callback, onChange, ...restProps },
     ref
   ) => {
-    const [passwordInvisible, setPasswordInvisible] = useState<boolean>(true)
+    const [passwordInvisible, setPasswordInvisible] = useState(true)
 
     const inputStyles = classNames(styles.input, {
       [styles.erroredInput]: error,

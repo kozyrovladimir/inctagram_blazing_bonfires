@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import { useMutation, useQuery } from '@apollo/client'
 import { useSelector } from 'react-redux'
@@ -17,6 +17,8 @@ import { Input, InputType, RadixSelect } from '@/shared/ui'
 
 const UsersList = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn)
+  const inputValue = useRef<HTMLInputElement | null>(null)
+  const [searchValue, setSearchValue] = useState('')
 
   const [loginAdmin, { data }] = useMutation(ADMIN_LOGIN)
 
@@ -24,15 +26,32 @@ const UsersList = () => {
   //   loginAdmin({ variables: { email: 'admin@gmail.com', password: 'admin' } })
   // }, [])
 
+  console.log(inputValue, 'ref')
+  let timeoutId: NodeJS.Timeout
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+    }
+    timeoutId = setTimeout(() => {
+      setSearchValue(e.target.value)
+    }, 500)
+  }
+
   return (
     <div className={s.usersListPage}>
       <div className={s.inputAndSelect}>
-        <Input type={InputType.SEARCH} className={s.search} placeholder={'Search'} />
+        <Input
+          ref={inputValue}
+          type={InputType.SEARCH}
+          className={s.search}
+          placeholder={'Search'}
+          onChange={handleSearchChange}
+        />
         <div className={s.iconsContainer}>
           <RadixSelect className={s.triggerBtn} onChangeOption={() => {}} options={selectOptions} />
         </div>
       </div>
-      <UsersTableListWithPagination />
+      <UsersTableListWithPagination searchValue={searchValue} />
     </div>
   )
 }

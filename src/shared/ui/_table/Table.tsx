@@ -82,16 +82,16 @@ export const Table = forwardRef<HTMLTableElement, ComponentPropsWithoutRef<'tabl
 // ComponentPropsWithoutRef<'table'>
 // is used to define the allowed props for the Table component,
 
-export type SortType = {
-  key: string
-  direction: 'asc' | 'desc'
-} | null
-
 export type Column = {
   key: string
   sortable?: boolean
   title: string
 }
+
+export type SortType = {
+  key: string
+  direction: 'asc' | 'desc'
+} | null
 
 export const TableHeader: FC<
   Omit<
@@ -129,10 +129,8 @@ export const TableHeader: FC<
           <THeader key={key} onClick={handleSort(key, sortable)}>
             <div className={s.titleAndSortIcon}>
               {title}
-              {!sort && title !== 'Created by' && <Sort />}
-              {sort && sort.key === key && (
-                <span>{sort.direction === 'asc' ? <SortAsc /> : <SortDesc />}</span>
-              )}
+              {/*{!sort && title !== 'created by' && 'sort'}*/}
+              {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
             </div>
           </THeader>
         ))}

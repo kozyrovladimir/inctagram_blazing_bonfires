@@ -1,34 +1,35 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import { useQuery } from '@apollo/client'
 
 import { BlockStatus, GetUsersQuery, SortDirection } from '@/__generated__/graphql'
 import { UsersListTable } from '@/entities/usersListTable/UsersListTableType'
 import { GET_USERS_LIST } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
+import { getAdminBasicCredentials } from '@/pages/super-admin/lib/utils/utils'
 import { Pagination } from '@/shared/ui'
+import { SortType } from '@/shared/ui/_table/Table'
 
-export const UsersTableListWithPagination = () => {
+type UsersTableListWithPaginationType = {
+  searchValue: string
+}
+
+export const UsersTableListWithPagination = ({ searchValue }: UsersTableListWithPaginationType) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState<number | string>(10)
-  const [sortBy, setSortBy] = useState('createdAt')
-
-  const username = 'admin@gmail.com'
-  const password = 'admin'
-
-  const base64Credentials = btoa(`${username}:${password}`)
+  const [sort, setSort] = useState<SortType>(null)
 
   const { data: usersTableData } = useQuery(GET_USERS_LIST, {
     variables: {
       pageSize: Number(itemsPerPage),
       pageNumber: currentPage,
-      sortBy: 'createdAt',
-      sortDirection: 'desc' as SortDirection,
-      // searchTerm: '',
+      sortBy: sort?.key,
+      sortDirection: sort?.direction as SortDirection,
+      searchTerm: searchValue, // searches only by userName
       // blockStatus: 'blocked' as BlockStatus,
     },
     context: {
       headers: {
-        Authorization: `Basic ${base64Credentials}`,
+        Authorization: `Basic ${getAdminBasicCredentials()}`,
       },
     },
   })
@@ -45,7 +46,7 @@ export const UsersTableListWithPagination = () => {
 
   return (
     <>
-      <UsersListTable users={usersTableData.getUsers.users} />
+      <UsersListTable users={usersTableData.getUsers.users} setSort={setSort} sort={sort} />
       <Pagination
         handlePageChange={handlePageChange}
         totalPages={usersTableData.getUsers.pagination.pagesCount}
