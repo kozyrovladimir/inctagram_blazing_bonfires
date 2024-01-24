@@ -30,7 +30,7 @@ export const Button = (props: Props) => {
     className,
     children,
     theme = ButtonTheme.FILLED,
-    size = ButtonSize.MIDDLE,
+    size = ButtonSize.CLEAN,
     ...otherProps
   } = props
 
