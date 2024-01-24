@@ -143,8 +143,6 @@ export const TableHeader: FC<
     return `${sort.key}-${sort.direction}`
   }, [sort])
 
-  console.log(sortedString)
-
   return (
     <THead {...restProps}>
       <TRow>

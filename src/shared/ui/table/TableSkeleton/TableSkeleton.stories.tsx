@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { TableSkeleton as TSkeleton } from '@/view/ui/Table/TableSkeleton/TableSkeleton'
+
+import { TableSkeleton as TSkeleton } from '@/shared/ui'
 
 const meta = {
   component: TSkeleton,

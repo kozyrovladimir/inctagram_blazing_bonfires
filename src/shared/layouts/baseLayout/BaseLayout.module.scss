@@ -2,12 +2,15 @@
   display: flex;
 
   .main {
+    width: 100%;
     padding-top: 3.75rem;
   }
 
   .mainWithSidebar {
-    //width: 100%;
+
+    /* stylelint-disable */
     margin: 0 auto;
+    width: 100%;
   }
 
   .superAdminBody {

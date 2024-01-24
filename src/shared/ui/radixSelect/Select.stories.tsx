@@ -1,15 +1,15 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Select } from '@/view/ui/Select/Select'
+import { RadixSelect } from '@/shared/ui'
 
 const meta = {
   argTypes: {
     title: { control: { type: 'text' } },
   },
-  component: Select,
+  component: RadixSelect,
   tags: ['autodocs'],
   title: 'UI/SelectMenu',
-} satisfies Meta<typeof Select>
+} satisfies Meta<typeof RadixSelect>
 
 export default meta
 type Story = StoryObj<typeof meta>

@@ -188,7 +188,7 @@ export const GeneralInfo = () => {
   }
 
   return (
-    <>
+    <div className={styles.generalInfoContainer}>
       {currentIsLoading && <LinearLoader />}
       <Toaster position="top-right" />
 
@@ -342,6 +342,6 @@ export const GeneralInfo = () => {
           {isSaved ? tRoot('SaveChanges') : tRoot('LeftWithoutSave')}
         </Modal>
       )}
-    </>
+    </div>
   )
 }
