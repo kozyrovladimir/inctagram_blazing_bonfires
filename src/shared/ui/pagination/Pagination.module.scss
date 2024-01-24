@@ -1,6 +1,11 @@
 .paginationContainer {
+  all: unset;
+
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+
+  margin-top: 36px;
+
   list-style-type: none;
 
   .paginationItem {
@@ -41,8 +46,8 @@
         /* By using an em scale, the arrows will size with the font */
         display: inline-block;
 
-        width: 0.4em;
-        height: 0.4em;
+        width: 0.5rem;
+        height: 0.5rem;
 
         border-top: 0.12em solid var(--color-light-100);
         border-right: 0.12em solid var(--color-light-100);
@@ -85,6 +90,14 @@
   .numOfPages {
     display: flex;
     align-items: center;
+
+    .show {
+      margin-right: 10px;
+    }
+
+    .perPage {
+      margin-left: 10px;
+    }
 
     span {
       margin: 0 5px;

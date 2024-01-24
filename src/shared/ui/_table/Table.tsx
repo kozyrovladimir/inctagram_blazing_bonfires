@@ -4,6 +4,7 @@ import { clsx } from 'clsx'
 
 import s from './Table.module.scss'
 
+import { SortDirection } from '@/__generated__/graphql'
 import { Sort, SortAsc, SortDesc } from '@/shared/assets/icons'
 
 export const THead = forwardRef<HTMLTableSectionElement, ComponentPropsWithoutRef<'thead'>>(
@@ -90,14 +91,14 @@ export type Column = {
 
 export type SortType = {
   key: string
-  direction: 'asc' | 'desc'
+  direction: SortDirection
 } | null
 
 export const TableHeader: FC<
   Omit<
     ComponentPropsWithoutRef<'thead'> & {
       columns: Column[]
-      onSort?: (sort: SortType) => void
+      onSort?: (sort: SortType | null) => void
       sort?: SortType
     },
     'children'
@@ -109,15 +110,15 @@ export const TableHeader: FC<
     }
 
     if (sort?.key !== key) {
-      return onSort({ direction: 'asc', key })
+      return onSort({ direction: SortDirection.Asc, key })
     }
 
-    if (sort.direction === 'desc') {
+    if (sort.direction === SortDirection.Desc) {
       return onSort(null)
     }
 
     return onSort({
-      direction: sort?.direction === 'asc' ? 'desc' : 'asc',
+      direction: sort?.direction === SortDirection.Asc ? SortDirection.Desc : SortDirection.Asc,
       key,
     })
   }
@@ -129,8 +130,10 @@ export const TableHeader: FC<
           <THeader key={key} onClick={handleSort(key, sortable)}>
             <div className={s.titleAndSortIcon}>
               {title}
-              {/*{!sort && title !== 'created by' && 'sort'}*/}
-              {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
+              {!sort && (title === 'Profile link' || title === 'Date added') && <Sort />}
+              {sort && sort.key === key && (
+                <span>{sort.direction === SortDirection.Asc ? <SortAsc /> : <SortDesc />}</span>
+              )}
             </div>
           </THeader>
         ))}

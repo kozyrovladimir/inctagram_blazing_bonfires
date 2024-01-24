@@ -1,11 +1,16 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 
 import { useQuery } from '@apollo/client'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { BlockStatus, GetUsersQuery, SortDirection } from '@/__generated__/graphql'
 import { UsersListTable } from '@/entities/usersListTable/UsersListTableType'
 import { GET_USERS_LIST } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { getAdminBasicCredentials } from '@/pages/super-admin/lib/utils/utils'
+import {
+  selectPageNumber,
+  selectPageSize,
+} from '@/pages/super-admin/modal/selectors/admin-selectors'
+import { setPageNumber, setPageSize } from '@/pages/super-admin/modal/slices/admin-reducer'
 import { BlockedStatusType } from '@/pages/super-admin/users-list'
 import { Pagination } from '@/shared/ui'
 import { SortType } from '@/shared/ui/_table/Table'
@@ -19,17 +24,18 @@ export const UsersTableListWithPagination = ({
   searchValue,
   blockStatus,
 }: UsersTableListWithPaginationType) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState<number | string>(10)
-  const [sort, setSort] = useState<SortType>(null)
+  const dispatch = useDispatch()
+  const pageNumber = useSelector(selectPageNumber) // its currently selected page
+  const itemsPerPage = useSelector(selectPageSize)
+  const [sort, setSort] = useState<SortType | null>(null)
 
   const { data: usersTableData } = useQuery(GET_USERS_LIST, {
     variables: {
-      pageSize: Number(itemsPerPage),
-      pageNumber: currentPage,
+      pageSize: itemsPerPage,
+      pageNumber: pageNumber,
       sortBy: sort?.key,
-      sortDirection: sort?.direction as SortDirection,
-      searchTerm: searchValue, // searches only by userName
+      sortDirection: sort?.direction,
+      searchTerm: searchValue, // searches only by userName. This is handled with local state, not redux.
       ...(blockStatus === 'blocked' ? { blockStatus: blockStatus } : {}),
     },
     context: {
@@ -41,23 +47,31 @@ export const UsersTableListWithPagination = ({
 
   if (!usersTableData) return null
 
-  const handleSetItemsPerPage = (numOfItemsPerPage: number | string) => {
-    setItemsPerPage(numOfItemsPerPage)
+  const handleSetItemsPerPage = (numOfItemsPerPage: number) => {
+    dispatch(setPageSize(Number(numOfItemsPerPage)))
   }
 
   const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber)
+    dispatch(setPageNumber(pageNumber))
+  }
+  const handleSort = (sort: SortType) => {
+    setSort(sort)
   }
 
   return (
     <>
-      <UsersListTable users={usersTableData.getUsers.users} setSort={setSort} sort={sort} />
+      <UsersListTable
+        skeletonRowsNum={usersTableData.getUsers.pagination.pageSize}
+        users={usersTableData.getUsers.users}
+        handleSort={handleSort}
+        sort={sort}
+      />
       <Pagination
         handlePageChange={handlePageChange}
         totalPages={usersTableData.getUsers.pagination.pagesCount}
         totalCount={usersTableData.getUsers.pagination.totalCount}
         itemsPerPage={usersTableData.getUsers.pagination.pageSize}
-        currentPage={currentPage}
+        currentPage={pageNumber}
         handleSetItemsPerPage={handleSetItemsPerPage}
         selectOptions={selectOptionsOfDecksToDisplay}
       />

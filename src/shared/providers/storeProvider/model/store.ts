@@ -3,6 +3,7 @@ import { createWrapper } from 'next-redux-wrapper'
 
 import { authApi, devicesApi, profileApi, publicApi, subscriptionsApi } from '../../../api'
 
+import adminReducer from '@/pages/super-admin/modal/slices/admin-reducer'
 import { authReducer } from '@/shared/api/services/auth/auth.slice'
 import { postsApi } from '@/shared/api/services/posts/posts.api'
 import generalInfoReducer from '@/shared/providers/storeProvider/slices/profileSettings/generalInfoReducer'
@@ -10,6 +11,7 @@ import generalInfoReducer from '@/shared/providers/storeProvider/slices/profileS
 const rootReducer = combineReducers({
   auth: authReducer,
   profileSetting: generalInfoReducer,
+  admin: adminReducer,
   [authApi.reducerPath]: authApi.reducer,
   [profileApi.reducerPath]: profileApi.reducer,
   [devicesApi.reducerPath]: devicesApi.reducer,

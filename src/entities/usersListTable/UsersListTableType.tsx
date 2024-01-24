@@ -6,20 +6,27 @@ import s from './UsersListTable.module.scss'
 
 import { User } from '@/__generated__/graphql'
 import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
-import { DropdownMenu, NewTable, TBody, TCell, TRow } from '@/shared/ui'
+import { DropdownMenu, NewTable, TBody, TCell, TRow, TableSkeleton } from '@/shared/ui'
 import { SortType, TableHeader } from '@/shared/ui/_table/Table'
 
 type UsersListTableType = {
   users: User[]
-  setSort: (sort: SortType) => void
+  handleSort: (sort: SortType) => void
   sort: SortType
+  skeletonRowsNum: number
 }
 
-export const UsersListTable = ({ users, sort, setSort }: UsersListTableType) => {
+export const UsersListTable = ({
+  users,
+  sort,
+  handleSort,
+  skeletonRowsNum,
+}: UsersListTableType) => {
   return (
     <NewTable>
-      <TableHeader columns={columns} sort={sort} onSort={setSort} />
+      <TableHeader columns={columns} sort={sort} onSort={handleSort} />
       <TBody>
+        {!users && <TableSkeleton numRows={skeletonRowsNum} />}
         {users.map(user => {
           return (
             <TRow key={user.id}>

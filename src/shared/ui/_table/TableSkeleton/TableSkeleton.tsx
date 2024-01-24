@@ -4,10 +4,6 @@ import { Table, TCell, THeader, TRow } from '../Table'
 
 import s from './TableSkeleton.module.scss'
 
-import { FilterWidgetSkeleton } from '@/view/assets'
-import { Header } from '@/view/modules'
-import { Page } from '@/view/ui'
-
 type CellComponent = (idx?: number) => ReactNode
 
 export const TableWithPageLoadingSkeleton = ({ numRows }: { numRows: number }) => {

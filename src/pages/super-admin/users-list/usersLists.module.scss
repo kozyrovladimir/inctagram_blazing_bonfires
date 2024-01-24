@@ -3,6 +3,11 @@
 
   .inputAndSelect {
     display: flex;
+    margin-bottom: 24px;
+
+    & button {
+      padding: 6px 12px;
+    }
 
     & button > span:first-child {
       text-wrap: nowrap;

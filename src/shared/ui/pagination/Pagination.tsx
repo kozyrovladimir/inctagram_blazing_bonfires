@@ -7,7 +7,7 @@ import { Text, RadixSelect } from '@/shared/ui'
 
 export type PaginatorPropsType = {
   handlePageChange: (pageNumber: number) => void
-  handleSetItemsPerPage: (numItemsPerPage: string | number) => void
+  handleSetItemsPerPage: (numItemsPerPage: number) => void
   totalPages: number | undefined
   totalCount: number | undefined
   itemsPerPage: number | undefined
@@ -98,7 +98,7 @@ export const Pagination = (props: PaginatorPropsType) => {
         </li>
         <li>
           <div className={s.numOfPages}>
-            <Text>Show</Text>
+            <Text className={s.show}>Show</Text>
             <RadixSelect
               placeholder={'10'}
               className={s.triggerBtn}
@@ -106,7 +106,7 @@ export const Pagination = (props: PaginatorPropsType) => {
               options={selectOptions}
               itemsPerPage={itemsPerPage}
             />
-            <Text>per page</Text>
+            <Text className={s.perPage}>per page</Text>
           </div>
         </li>
       </ul>

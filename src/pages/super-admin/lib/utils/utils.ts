@@ -18,9 +18,11 @@ let timeoutId: NodeJS.Timeout
 
 export const handleSearchChange = (setSearchValue: (value: string) => void, delay: number) => {
   return (e: ChangeEvent<HTMLInputElement>) => {
+    // 2. If i add another symbol -> previous timeout is cleared, and new added
     if (timeoutId) {
       clearTimeout(timeoutId)
     }
+    // 1. If i add symbol to input -> creates timeoutId, add delay
     timeoutId = setTimeout(() => {
       setSearchValue(e.target.value)
     }, delay)

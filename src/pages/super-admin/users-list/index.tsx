@@ -1,22 +1,25 @@
 import React, { useRef, useState } from 'react'
 
 import { useMutation } from '@apollo/client'
+import { useDispatch, useSelector } from 'react-redux'
 
 import s from './usersLists.module.scss'
 
 import { BlockStatus } from '@/__generated__/graphql'
 import { ADMIN_LOGIN } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { handleSearchChange } from '@/pages/super-admin/lib/utils/utils'
+import { selectBlockStatus } from '@/pages/super-admin/modal/selectors/admin-selectors'
+import { setBlockStatus } from '@/pages/super-admin/modal/slices/admin-reducer'
 import { UsersTableListWithPagination } from '@/pages/super-admin/users-list/ui/usersListTableWithPagination/UsersTableListWithPagination'
 import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
 import { Input, InputType, RadixSelect } from '@/shared/ui'
 
 const UsersList = () => {
+  const dispatch = useDispatch()
+  const blockStatus = useSelector(selectBlockStatus)
+
   const inputValue = useRef<HTMLInputElement | null>(null)
   const [searchValue, setSearchValue] = useState('')
-  const [blockStatus, setBlockStatus] = useState<BlockStatus | 'Not blocked'>('Not blocked')
-
-  console.log(blockStatus, 'blockedSTaTUS!!')
 
   const [loginAdmin, { data }] = useMutation(ADMIN_LOGIN)
 
@@ -25,6 +28,10 @@ const UsersList = () => {
   // }, [])
 
   const handleSearch = handleSearchChange(setSearchValue, 500)
+
+  const handleBlockStatusChange = (blockStatus: BlockedStatusType) => {
+    dispatch(setBlockStatus(blockStatus))
+  }
 
   return (
     <div className={s.usersListPage}>
@@ -39,7 +46,7 @@ const UsersList = () => {
         <div className={s.iconsContainer}>
           <RadixSelect
             className={s.triggerBtn}
-            onChangeOption={setBlockStatus}
+            onChangeOption={handleBlockStatusChange}
             options={selectOptions}
             placeholder={'Not selected'}
           />
