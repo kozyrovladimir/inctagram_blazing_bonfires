@@ -2,9 +2,10 @@
   --font-family-primary: 'Inter', sans-serif;
 
   // line heights
-  --line-height-s: 16px;
-  --line-height-m: 24px;
-  --line-height-l: 36px;
+  --line-height-s: 1rem; /* Equivalent to 16px */
+  --line-height-m: 1.5rem; /* Equivalent to 24px */
+  --line-height-l: 2.25rem; /* Equivalent to 36px */
+
 
   // font sizes
   --font-size-xs: 0.75rem;

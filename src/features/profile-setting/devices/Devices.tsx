@@ -138,7 +138,6 @@ export function Devices() {
           <Button
             className={styles.terminateBtn}
             theme={ButtonTheme.CLEAR}
-            size={ButtonSize.LARGE}
             onClick={() => allTerminateHandler()}
           >
             {t('TerminateAllSession')}

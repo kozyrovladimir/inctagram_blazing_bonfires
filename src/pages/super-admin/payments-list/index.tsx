@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
+import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
 
 const PaymentsList = () => {
   return <div>Payments List</div>
 }
 
-PaymentsList.getLayout = getLayout
+PaymentsList.getLayout = getAdminLayout
 export default PaymentsList

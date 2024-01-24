@@ -29,7 +29,7 @@ export const SideBar = () => {
   return (
     <aside className={style.sideBarContainer}>
       {mainPath[1] === 'super-admin' ? (
-        <>
+        <div className={style.superAdminContainer}>
           <div
             className={style.linkWrapper}
             onClick={() => router.push(RoutersPath.superAdminUsersList)}
@@ -58,7 +58,7 @@ export const SideBar = () => {
             <Image src={postsImage} alt={''} />
             {t('Posts list')}
           </div>
-        </>
+        </div>
       ) : (
         <>
           <div

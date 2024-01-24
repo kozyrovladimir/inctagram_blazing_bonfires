@@ -17,7 +17,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <Link href="/" className={styles.logo}>
-        Instagram
+        Inctagram
         {mainPath[1] === 'super-admin' && (
           <span className={styles.adminDescription}>
             <span className={styles.adminDescriptionThin}>Super</span>Admin
