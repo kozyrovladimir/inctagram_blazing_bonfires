@@ -1,9 +1,5 @@
 .wrapper {
   display: flex;
-
-  //margin-bottom: 20px;
-
-  //margin: 0 9px 0 6px;
 }
 
 .title {
@@ -17,8 +13,6 @@
   justify-content: space-between;
 
   width: 100%;
-
-  //margin: 0 10px;
   padding: 6px 12px;
 
   font-size: var(--font-size-m);
@@ -76,8 +70,8 @@
   background: var(--color-dark-900);
 
   &:hover {
-    color: var(--color-accent-300);
-    background: var(--color-accent-900);
+    cursor: pointer;
+    background: var(--color-dark-100);
   }
 }
 

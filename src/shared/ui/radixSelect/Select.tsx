@@ -8,14 +8,13 @@ import s from './Select.module.scss'
 import { ArrowDownOutline } from '@/shared/assets/icons/arrows/Arrow-down'
 
 export type SelectMenuProps = {
-  onChangeOption: (value: string | number) => void
+  onChangeOption: (value: any) => void
   options: string[]
   placeholder?: string
   title?: string
   itemsPerPage?: number
   value?: string
   icon?: ReactNode
-  setQuestionForm?: (value: string) => void
   className?: string
 } & ComponentPropsWithoutRef<typeof RSelect.Root>
 
@@ -27,7 +26,6 @@ export const Select = forwardRef<ElementRef<typeof RSelect.Root>, SelectMenuProp
       placeholder = options[0],
       title,
       itemsPerPage,
-      setQuestionForm,
       icon,
       className,
       ...rest
@@ -37,7 +35,6 @@ export const Select = forwardRef<ElementRef<typeof RSelect.Root>, SelectMenuProp
     const [isOpened, setIsOpened] = useState<boolean>(false)
 
     const onChangeCallback = (value: string) => {
-      setQuestionForm?.(value)
       onChangeOption && onChangeOption(value)
     }
 

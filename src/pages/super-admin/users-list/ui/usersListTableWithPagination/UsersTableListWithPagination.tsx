@@ -6,14 +6,19 @@ import { BlockStatus, GetUsersQuery, SortDirection } from '@/__generated__/graph
 import { UsersListTable } from '@/entities/usersListTable/UsersListTableType'
 import { GET_USERS_LIST } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { getAdminBasicCredentials } from '@/pages/super-admin/lib/utils/utils'
+import { BlockedStatusType } from '@/pages/super-admin/users-list'
 import { Pagination } from '@/shared/ui'
 import { SortType } from '@/shared/ui/_table/Table'
 
 type UsersTableListWithPaginationType = {
   searchValue: string
+  blockStatus: BlockedStatusType
 }
 
-export const UsersTableListWithPagination = ({ searchValue }: UsersTableListWithPaginationType) => {
+export const UsersTableListWithPagination = ({
+  searchValue,
+  blockStatus,
+}: UsersTableListWithPaginationType) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState<number | string>(10)
   const [sort, setSort] = useState<SortType>(null)
@@ -25,7 +30,7 @@ export const UsersTableListWithPagination = ({ searchValue }: UsersTableListWith
       sortBy: sort?.key,
       sortDirection: sort?.direction as SortDirection,
       searchTerm: searchValue, // searches only by userName
-      // blockStatus: 'blocked' as BlockStatus,
+      ...(blockStatus === 'blocked' ? { blockStatus: blockStatus } : {}),
     },
     context: {
       headers: {
