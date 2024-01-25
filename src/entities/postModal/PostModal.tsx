@@ -84,7 +84,7 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
                   </div>
                   <p className={styles.userName}>{userName}</p>
                 </div>
-                {isLoggedIn && (
+                {isLoggedIn && postData.ownerId === profileData?.id && (
                   <DropdownMenu triggerIcon={<ThreeDots />}>
                     <RDropdownMenu.Item onSelect={openEditModal}>
                       <EditPost />
