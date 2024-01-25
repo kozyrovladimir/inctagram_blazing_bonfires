@@ -8,9 +8,9 @@ import type { AppProps } from 'next/app'
 import { NextPage } from 'next/types'
 import { appWithTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { Provider } from 'react-redux'
 
 import { WithAuth } from '@/shared/hoc/withAuth/WithAuth'
-import { StoreProvider } from '@/shared/providers/storeProvider'
 import { wrapper } from '@/shared/providers/storeProvider/model/store'
 
 const client = new ApolloClient({
@@ -39,24 +39,27 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page)
 
   return getLayout(
-    <StoreProvider>
-      <WithAuth>
-        <Component {...pageProps} />
-      </WithAuth>
-    </StoreProvider>
+    <WithAuth>
+      <Component {...pageProps} />
+    </WithAuth>
   )
 }
+const TranslateApp = appWithTranslation(App)
 
 function myApp(props: AppProps) {
+  const { store } = wrapper.useWrappedStore({ ...props })
+
   return (
     <ApolloProvider client={client}>
       <GoogleOAuthProvider
         clientId={'617342613759-f3kbvgm8l310fn40vh6qna2pv8u2uccr.apps.googleusercontent.com'}
       >
-        <App {...props} />
+        <Provider store={store}>
+          <TranslateApp {...props} />
+        </Provider>
       </GoogleOAuthProvider>
     </ApolloProvider>
   )
 }
 
-export default wrapper.withRedux(appWithTranslation(myApp))
+export default myApp
