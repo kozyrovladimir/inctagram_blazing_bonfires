@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import styles from './Management.module.scss'
 
@@ -17,22 +16,13 @@ import {
 } from '@/shared/api/services/subscriptions/subscriptions.api'
 import {
   NewSubscriptionType,
-  PaymentType,
   SubscriptionDataType,
-  SubscriptionType,
 } from '@/shared/api/services/subscriptions/subscriptions.api.types'
 import payPal from '@/shared/assets/icons/payments/payPal.svg'
 import stripe from '@/shared/assets/icons/payments/stripe.svg'
+import { paymentSchema } from '@/shared/constants/validation-schema/paymentSchema'
 import { formatDate } from '@/shared/libs/formatDates/formatDates'
-import { LinearLoader, Modal, RoundCheckbox, Checkbox } from '@/shared/ui'
-
-// create new subscription
-const schema = yup.object({
-  typeSubscription: yup.string<SubscriptionType>().required(),
-  paymentType: yup.string<PaymentType>().required(),
-  amount: yup.number().default(1).required(),
-  baseUrl: yup.string().default('http://localhost:3000/').required(),
-})
+import { Checkbox, LinearLoader, Modal, RoundCheckbox } from '@/shared/ui'
 
 export const Management = () => {
   const router = useRouter()
@@ -58,13 +48,15 @@ export const Management = () => {
   const { data: currentSubscriptions, isLoading: currentSubscriptionsLoading } =
     useGetCurrentSubscriptionsQuery()
 
+  const URL = typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+
   const [createNewSubscription, { isLoading }] = useCreateNewSubscriptionMutation()
   const {
     handleSubmit: handleSubmitSubscriptions,
     setValue,
     control,
   } = useForm<NewSubscriptionType>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(paymentSchema(URL)),
     defaultValues: { typeSubscription: 'DAY' },
     mode: 'onChange',
   })
@@ -100,6 +92,7 @@ export const Management = () => {
       })
   }
 
+  console.log(success)
   const wrapper =
     styles.wrapper + ' ' + (currentSubscriptions?.data?.length === 0 ? styles.wrapperTop : '')
 
