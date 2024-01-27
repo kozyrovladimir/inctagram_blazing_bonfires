@@ -1,6 +1,5 @@
-import React, { ComponentType, PropsWithChildren, ReactElement, useEffect, useState } from 'react'
+import React, { PropsWithChildren, ReactElement, useEffect } from 'react'
 
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { NextPage } from 'next/types'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,7 +9,6 @@ import s from './AdminLayout.module.scss'
 import { signInAdmin } from '@/pages/super-admin/modal/slices/admin-auth-reducer'
 import { RoutersPath } from '@/shared/constants/paths'
 import { RootState } from '@/shared/providers/storeProvider'
-import { LinearLoader } from '@/shared/ui'
 import { Header } from '@/widgets/header'
 import { SideBar } from '@/widgets/sideBar'
 
@@ -31,7 +29,6 @@ const AdminLayout: NextPage<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      {!isAdminLogged && <LinearLoader />}
       <Header />
       <div className={s.AdminLayoutBody}>
         {isAdminLogged && <SideBar />}

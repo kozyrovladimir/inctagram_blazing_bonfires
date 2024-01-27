@@ -39,7 +39,7 @@ export const AdminSignInForm = () => {
 
   const [loginAdmin] = useMutation(ADMIN_LOGIN, {
     onCompleted: ({ loginAdmin }) => {
-      // loginAadmin is taken from data object which comes as second argument in useMutation hook after loginAdmin function
+      // loginAdmin is taken from data object which comes as second argument in useMutation hook after loginAdmin function
       const isAdminLogged = loginAdmin?.logged
 
       // Since graphql will never return error ala "Wrong credentials" but always returns { logged: true/false }
@@ -79,7 +79,7 @@ export const AdminSignInForm = () => {
   return (
     <>
       <Toaster position="top-right" />
-      <FormContainer title={'adminSignIn'}>
+      <FormContainer title={t('SignIn')}>
         <form className={styles.formContainer} onSubmit={onSubmit}>
           <Controller
             name="email"

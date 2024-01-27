@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react'
 
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useDispatch, useSelector } from 'react-redux'
 
 import s from './usersLists.module.scss'
@@ -11,6 +14,16 @@ import { selectBlockStatus } from '@/pages/super-admin/modal/selectors/admin-sel
 import { setBlockStatus } from '@/pages/super-admin/modal/slices/admin-reducer'
 import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
 import { Input, InputType, RadixSelect } from '@/shared/ui'
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
+}
 
 const UsersList = () => {
   const dispatch = useDispatch()
@@ -24,6 +37,8 @@ const UsersList = () => {
   const handleBlockStatusChange = (blockStatus: BlockedStatusType) => {
     dispatch(setBlockStatus(blockStatus))
   }
+  const { t } = useTranslation('common', { keyPrefix: 'UserListTable' })
+  const selectOptions = [t('NotBlocked'), t('Blocked')]
 
   return (
     <div className={s.usersListPage}>
@@ -32,7 +47,7 @@ const UsersList = () => {
           ref={inputValue}
           type={InputType.SEARCH}
           className={s.search}
-          placeholder={'Search'}
+          placeholder={t('Search')}
           onChange={handleSearch}
         />
         <div className={s.iconsContainer}>
@@ -40,7 +55,7 @@ const UsersList = () => {
             className={s.triggerBtn}
             onChangeOption={handleBlockStatusChange}
             options={selectOptions}
-            placeholder={'Not selected'}
+            placeholder={t('NotSelected')}
           />
         </div>
       </div>
@@ -53,7 +68,6 @@ const UsersList = () => {
 }
 
 export type BlockedStatusType = BlockStatus | 'not blocked'
-const selectOptions = ['Not blocked', 'Blocked']
 
 UsersList.getLayout = getAdminLayout
 export default UsersList

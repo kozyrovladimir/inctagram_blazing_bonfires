@@ -11,15 +11,6 @@ import { authReducer } from '@/shared/api/services/auth/auth.slice'
 import { postsApi } from '@/shared/api/services/posts/posts.api'
 import generalInfoReducer from '@/shared/providers/storeProvider/slices/profileSettings/generalInfoReducer'
 
-const httpLink = createHttpLink({
-  uri: 'https://inctagram.work/api/v1/graphql',
-})
-
-export const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-})
-
 const rootReducer = combineReducers({
   auth: authReducer,
   profileSetting: generalInfoReducer,

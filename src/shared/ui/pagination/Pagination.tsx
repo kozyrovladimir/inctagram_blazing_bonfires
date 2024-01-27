@@ -1,4 +1,5 @@
 import { clsx } from 'clsx'
+import { useTranslation } from 'next-i18next'
 
 import s from './Pagination.module.scss'
 import { DOTS, usePagination } from './usePagination'
@@ -18,6 +19,7 @@ export type PaginatorPropsType = {
 }
 
 export const Pagination = (props: PaginatorPropsType) => {
+  const { t } = useTranslation('common', { keyPrefix: 'TablePagination' })
   const {
     handlePageChange,
     handleSetItemsPerPage,
@@ -98,7 +100,7 @@ export const Pagination = (props: PaginatorPropsType) => {
         </li>
         <li>
           <div className={s.numOfPages}>
-            <Text className={s.show}>Show</Text>
+            <Text className={s.show}>{t('Show')}</Text>
             <RadixSelect
               placeholder={'10'}
               className={s.triggerBtn}
@@ -106,7 +108,7 @@ export const Pagination = (props: PaginatorPropsType) => {
               options={selectOptions}
               itemsPerPage={itemsPerPage}
             />
-            <Text className={s.perPage}>per page</Text>
+            <Text className={s.perPage}>{t('PerPage')}</Text>
           </div>
         </li>
       </ul>
