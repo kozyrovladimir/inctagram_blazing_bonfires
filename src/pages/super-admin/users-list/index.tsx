@@ -1,13 +1,11 @@
 import React, { useRef, useState } from 'react'
 
-import { useMutation } from '@apollo/client'
 import { useDispatch, useSelector } from 'react-redux'
 
 import s from './usersLists.module.scss'
 
 import { BlockStatus } from '@/__generated__/graphql'
 import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/UsersTableListWithPagination'
-import { ADMIN_LOGIN } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { handleSearchChange } from '@/pages/super-admin/lib/utils/utils'
 import { selectBlockStatus } from '@/pages/super-admin/modal/selectors/admin-selectors'
 import { setBlockStatus } from '@/pages/super-admin/modal/slices/admin-reducer'
@@ -20,12 +18,6 @@ const UsersList = () => {
 
   const inputValue = useRef<HTMLInputElement | null>(null)
   const [searchValue, setSearchValue] = useState('')
-
-  const [loginAdmin, { data }] = useMutation(ADMIN_LOGIN)
-
-  // useEffect(() => {
-  //   loginAdmin({ variables: { email: 'admin@gmail.com', password: 'admin' } })
-  // }, [])
 
   const handleSearch = handleSearchChange(setSearchValue, 500)
 

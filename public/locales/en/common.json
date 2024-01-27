@@ -49,6 +49,7 @@
     "TransactionFailed": "Transaction failed, please try later"
   },
   "Auth": {
+    "InvalidEmail": "You have entered invalid email",
     "SignUp": "Sign Up",
     "SignIn": "Sign In",
     "LogOut": "Log Out",

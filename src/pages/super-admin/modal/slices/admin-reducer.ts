@@ -10,6 +10,7 @@ type AdminInitialStateType = {
   sortBy: SortType | null
   sortDirection: SortDirection
   blockStatus: BlockedStatusType
+  adminLoading: boolean
 }
 
 const adminSlice = createSlice({
@@ -20,6 +21,7 @@ const adminSlice = createSlice({
     sortBy: null,
     sortDirection: 'desc',
     blockStatus: 'not blocked',
+    adminLoading: true,
   },
   reducers: {
     setPageSize(state, action: PayloadAction<number>) {
@@ -27,6 +29,9 @@ const adminSlice = createSlice({
     },
     setPageNumber(state, action: PayloadAction<number>) {
       state.pageNumber = action.payload
+    },
+    setAdminLoading(state, action: PayloadAction<boolean>) {
+      state.adminLoading = action.payload
     },
     // setSort(state, action: PayloadAction<SortType>) {
     //   if (action.payload && action.payload.key === null) {
@@ -44,5 +49,5 @@ const adminSlice = createSlice({
   },
 })
 
-export const { setPageSize, setPageNumber, setBlockStatus } = adminSlice.actions
+export const { setPageSize, setPageNumber, setBlockStatus, setAdminLoading } = adminSlice.actions
 export default adminSlice.reducer

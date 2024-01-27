@@ -18,6 +18,8 @@ export const enum RoutersPath {
   profileAccountManagement = '/profile/account-management',
   profileMyPayments = '/profile/my-payments',
   folderNextStaticMedia = '/_next/static/media/',
+  superAdmin = '/super-admin',
+  superAdminSignIn = '/super-admin/sign-in',
   superAdminUsersList = '/super-admin/users-list',
   superAdminStatistics = '/super-admin/statistics',
   superAdminPaymentsList = '/super-admin/payments-list',
