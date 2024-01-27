@@ -1,9 +1,12 @@
+import React from 'react'
+
 import { clsx } from 'clsx'
+import { useTranslation } from 'next-i18next'
 
 import s from './Pagination.module.scss'
 import { DOTS, usePagination } from './usePagination'
 
-import { Text, RadixSelect } from '@/shared/ui'
+import { RadixSelect, Text } from '@/shared/ui'
 
 export type PaginatorPropsType = {
   handlePageChange: (pageNumber: number) => void
@@ -34,6 +37,7 @@ export const Pagination = (props: PaginatorPropsType) => {
     arrowLeft: clsx(s.arrow, s.left),
     arrowRight: clsx(s.arrow, s.right),
   }
+  const { t } = useTranslation('common', { keyPrefix: 'TablePagination' })
 
   const paginationRange = usePagination({
     currentPage,
@@ -98,7 +102,7 @@ export const Pagination = (props: PaginatorPropsType) => {
         </li>
         <li>
           <div className={s.numOfPages}>
-            <Text className={s.show}>Show</Text>
+            <Text className={s.show}>{t('Show')}</Text>
             <RadixSelect
               placeholder={'10'}
               className={s.triggerBtn}
@@ -106,7 +110,7 @@ export const Pagination = (props: PaginatorPropsType) => {
               options={selectOptions}
               itemsPerPage={itemsPerPage}
             />
-            <Text className={s.perPage}>per page</Text>
+            <Text className={s.perPage}>{t('OnPage')}</Text>
           </div>
         </li>
       </ul>

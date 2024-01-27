@@ -8,7 +8,8 @@ import styles from './Payments.module.scss'
 import { useGetSubscriptionsQuery } from '@/shared/api'
 import { SubscriptionDataType } from '@/shared/api/services/subscriptions/subscriptions.api.types'
 import { formatDate } from '@/shared/libs/formatDates/formatDates'
-import { LinearLoader, Modal, TablePagination } from '@/shared/ui'
+import { LinearLoader, Modal, Pagination, TBody, TCell, THead, THeader, TRow } from '@/shared/ui'
+import { Table } from '@/shared/ui/_table/Table'
 
 export const Payments = () => {
   const { data: payments, isLoading, isError } = useGetSubscriptionsQuery(undefined)
@@ -28,9 +29,8 @@ export const Payments = () => {
     lastPaymentIndex
   )
 
-  const onChangePagination = (newPage: number, newCount: number) => {
-    setPage(newPage)
-    setItemsCountForPage(newCount)
+  const handlePageChange = (page: number) => {
+    setPage(page)
   }
 
   useEffect(() => {
@@ -51,25 +51,27 @@ export const Payments = () => {
       )}
       <div className={styles.wrapper} data-testid="table">
         {currentPayments && (
-          <table className={styles.table}>
-            <thead className={styles.head}>
-              <tr>
-                <th className={styles.item}>{t('DateOfPayment')}</th>
-                <th className={styles.item}>{t('EndDateOfSubscription')}</th>
-                <th className={styles.item}>{t('Price')}</th>
-                <th className={styles.item}>{t('SubscriptionType')}</th>
-                <th className={styles.item}>{t('PaymentType')}</th>
-              </tr>
-            </thead>
-            <tbody className={styles.body}>
+          <Table className={styles.table}>
+            <THead className={styles.head}>
+              <TRow>
+                <THeader className={styles.item}>{t('DateOfPayment')}</THeader>
+                <THeader className={styles.item}>{t('EndDateOfSubscription')}</THeader>
+                <THeader className={styles.item}>{t('Price')}</THeader>
+                <THeader className={styles.item}>{t('SubscriptionType')}</THeader>
+                <THeader className={styles.item}>{t('PaymentType')}</THeader>
+              </TRow>
+            </THead>
+            <TBody className={styles.body}>
               {currentPayments.map((item: SubscriptionDataType, index: number) => (
-                <tr key={index} className={styles.line}>
-                  <td className={styles.item}>{formatDate(item.dateOfPayment, 'mm.dd.yyyy')}</td>
-                  <td className={styles.item}>
+                <TRow key={index} className={styles.line}>
+                  <TCell className={styles.item}>
+                    {formatDate(item.dateOfPayment, 'mm.dd.yyyy')}
+                  </TCell>
+                  <TCell className={styles.item}>
                     {formatDate(item.endDateOfSubscription, 'mm.dd.yyyy')}
-                  </td>
-                  <td className={styles.item}>{item.price}</td>
-                  <td className={styles.item}>
+                  </TCell>
+                  <TCell className={styles.item}>{item.price}</TCell>
+                  <TCell className={styles.item}>
                     {(() => {
                       if (item.subscriptionType === 'DAY') {
                         return '1 day'
@@ -81,8 +83,8 @@ export const Payments = () => {
                         return ''
                       }
                     })()}
-                  </td>
-                  <td className={styles.item}>
+                  </TCell>
+                  <TCell className={styles.item}>
                     {(() => {
                       if (item.paymentType === 'PAYPAL') {
                         return 'PayPal'
@@ -90,17 +92,21 @@ export const Payments = () => {
                         return 'Stripe'
                       }
                     })()}
-                  </td>
-                </tr>
+                  </TCell>
+                </TRow>
               ))}
-            </tbody>
-          </table>
+            </TBody>
+          </Table>
         )}
-        <TablePagination
-          page={page}
-          itemsCountForPage={itemsCountForPage}
+
+        <Pagination
+          handlePageChange={handlePageChange}
+          totalPages={totalCount}
           totalCount={totalCount}
-          onChange={onChangePagination}
+          itemsPerPage={itemsCountForPage}
+          currentPage={page}
+          handleSetItemsPerPage={setItemsCountForPage}
+          selectOptions={['10', '20', '30', '40', '50']}
         />
       </div>
     </>

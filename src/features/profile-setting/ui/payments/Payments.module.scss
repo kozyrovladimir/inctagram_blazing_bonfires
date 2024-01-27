@@ -30,3 +30,10 @@
   padding-left: 24px;
   text-align: left;
 }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  color: white;
+}

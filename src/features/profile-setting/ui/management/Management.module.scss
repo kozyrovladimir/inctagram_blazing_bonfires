@@ -4,7 +4,7 @@
   gap: 42px;
 
   width: 100%;
-  padding: 0 4rem 0 1.5rem;
+  padding: 0 20px 10px 24px;
 }
 
 .title {
@@ -23,39 +23,6 @@
   background-color: var(--color-dark-500);
   border: 1px solid var(--color-dark-700);
   border-radius: 2px;
-}
-
-.listItem {}
-
-.footerWrapper {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 24px;
-}
-
-.footer {
-  display: flex;
-  gap: 54px;
-  align-items: center;
-}
-
-.imgWrapper {
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 96px;
-  height: 64px;
-
-  background-color: var(--color-dark-500);
-  border: 1px solid var(--color-dark-700);
-  border-radius: 2px;
-}
-
-.img {
-  width: auto;
 }
 
 .currentSubscriptionRow {
@@ -86,5 +53,3 @@
   font-weight: 400;
   line-height: 24px;
 }
-
-.wrapperTop {}
