@@ -53,6 +53,12 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
       case RoutersPath.authExpiredVerificationLink:
         pageUnautorization = RoutersPath.authExpiredVerificationLink
         break
+      case RoutersPath.profileAccountManagement:
+        pageUnautorization = RoutersPath.profileAccountManagement
+        break
+      case RoutersPath.profileGeneralInformation:
+        pageUnautorization = RoutersPath.profileGeneralInformation
+        break
     }
 
     const newUrl =

@@ -23,10 +23,14 @@ const StripePayment = () => {
   const { query } = router
 
   useEffect(() => {
+    if (router.asPath.endsWith('?error')) {
+      void router.replace(router.asPath.replace('?error', ''), undefined, { shallow: true })
+    }
+
     if (query.success === 'true') {
       router.push(`/profile/account-management?success=true`)
     }
-  }, [query.success])
+  }, [query.success, router.asPath, router])
 
   return (
     <div className={styles.loaderWrapper}>
