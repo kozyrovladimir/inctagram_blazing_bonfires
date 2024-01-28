@@ -1,6 +1,7 @@
-import PaymentsList from '@/pages/super-admin/payments-list'
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
-import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
 
 const SuperAdminHome = () => {
   return <div>SuperAdmin home</div>

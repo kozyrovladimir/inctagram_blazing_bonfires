@@ -1,12 +1,13 @@
 import React from 'react'
 
 import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
+import { useTranslation } from 'next-i18next'
 
 import s from './UsersListTable.module.scss'
 
 import { User } from '@/__generated__/graphql'
 import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
-import { DropdownMenu, NewTable, TBody, TCell, TRow, TableSkeleton } from '@/shared/ui'
+import { DropdownMenu, NewTable, TableSkeleton, TBody, TCell, TRow } from '@/shared/ui'
 import { SortType, TableHeader } from '@/shared/ui/_table/Table'
 
 type UsersListTableType = {
@@ -22,6 +23,29 @@ export const UsersListTable = ({
   handleSort,
   skeletonRowsNum,
 }: UsersListTableType) => {
+  const { t } = useTranslation('common', { keyPrefix: 'UserListTable' })
+
+  const columns = [
+    {
+      key: 'id',
+      title: t('UserID'),
+      sortable: false,
+    },
+    {
+      key: 'name',
+      title: t('Name'),
+      sortable: false,
+    },
+    {
+      key: 'userName',
+      title: t('ProfileLink'),
+    },
+    {
+      key: 'createdAt',
+      title: t('CreatedAt'),
+    },
+  ]
+
   return (
     <NewTable>
       <TableHeader columns={columns} sort={sort} onSort={handleSort} />
@@ -57,24 +81,3 @@ export const UsersListTable = ({
     </NewTable>
   )
 }
-
-const columns = [
-  {
-    key: 'id',
-    title: 'UserID',
-    sortable: false,
-  },
-  {
-    key: 'name',
-    title: 'Name',
-    sortable: false,
-  },
-  {
-    key: 'userName',
-    title: 'Profile link',
-  },
-  {
-    key: 'createdAt',
-    title: 'Date added',
-  },
-]
