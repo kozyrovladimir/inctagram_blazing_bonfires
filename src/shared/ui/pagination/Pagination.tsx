@@ -108,7 +108,7 @@ export const Pagination = (props: PaginatorPropsType) => {
               options={selectOptions}
               itemsPerPage={itemsPerPage}
             />
-            <Text className={s.perPage}>{t('onPage')}</Text>
+            <Text className={s.perPage}>{t('PerPage')}</Text>
           </div>
         </li>
       </ul>
