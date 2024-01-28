@@ -35,7 +35,7 @@ export const SideBar = () => {
             onClick={() => router.push(RoutersPath.superAdminUsersList)}
           >
             <Image src={userListImage} alt={''} />
-            {t('User list')}
+            {t('UserList')}
           </div>
           <div
             className={style.linkWrapper}
@@ -49,14 +49,14 @@ export const SideBar = () => {
             onClick={() => router.push(RoutersPath.superAdminPaymentsList)}
           >
             <Image src={paymentsImage} alt={''} />
-            {t('Payments list')}
+            {t('PaymentsList')}
           </div>
           <div
             className={`${style.linkWrapper} ${style.linkWrapperLast}`}
             onClick={() => router.push(RoutersPath.superAdminPostsList)}
           >
             <Image src={postsImage} alt={''} />
-            {t('Posts list')}
+            {t('PostsList')}
           </div>
         </div>
       ) : (

@@ -39,7 +39,7 @@ export const ProfileData = ({ profileData }: Props) => {
           </Button>
         </div>
         <ProfileFollowing amountFollowing={2128} amountFollowers={2128} amountPublications={2128} />
-        <Text>{profileData?.aboutMe}</Text>
+        <Text size={'regular'}>{profileData?.aboutMe}</Text>
       </div>
     </div>
   )

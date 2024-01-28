@@ -1,22 +1,37 @@
-import React, { PropsWithChildren, ReactElement } from 'react'
+import React, { PropsWithChildren, ReactElement, useEffect } from 'react'
 
+import { useRouter } from 'next/router'
 import { NextPage } from 'next/types'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import s from './AdminLayout.module.scss'
 
-import { selectIsLoggedIn } from '@/shared/api'
+import { signInAdmin } from '@/pages/super-admin/modal/slices/admin-auth-reducer'
+import { RoutersPath } from '@/shared/constants/paths'
+import { RootState } from '@/shared/providers/storeProvider'
 import { Header } from '@/widgets/header'
 import { SideBar } from '@/widgets/sideBar'
 
 const AdminLayout: NextPage<PropsWithChildren> = ({ children }) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const isAdminLogged = useSelector((state: RootState) => state.adminAuth.isAdminLogged)
+
+  useEffect(() => {
+    const adminAuthenticated = Boolean(sessionStorage.getItem('adminAuth'))
+
+    if (!adminAuthenticated) {
+      router.replace(RoutersPath.superAdminSignIn)
+    } else {
+      dispatch(signInAdmin(Boolean(adminAuthenticated)))
+    }
+  }, [])
 
   return (
     <>
       <Header />
       <div className={s.AdminLayoutBody}>
-        <SideBar />
+        {isAdminLogged && <SideBar />}
         <main className={s.superAdminBody}>{children}</main>
       </div>
     </>

@@ -21,6 +21,7 @@ export type PaginatorPropsType = {
 }
 
 export const Pagination = (props: PaginatorPropsType) => {
+  const { t } = useTranslation('common', { keyPrefix: 'TablePagination' })
   const {
     handlePageChange,
     handleSetItemsPerPage,
@@ -110,7 +111,7 @@ export const Pagination = (props: PaginatorPropsType) => {
               options={selectOptions}
               itemsPerPage={itemsPerPage}
             />
-            <Text className={s.perPage}>{t('OnPage')}</Text>
+            <Text className={s.perPage}>{t('PerPage')}</Text>
           </div>
         </li>
       </ul>

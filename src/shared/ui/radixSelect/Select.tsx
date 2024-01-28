@@ -32,7 +32,7 @@ export const Select = forwardRef<ElementRef<typeof RSelect.Root>, SelectMenuProp
     }: SelectMenuProps,
     ref
   ) => {
-    const [isOpened, setIsOpened] = useState<boolean>(false)
+    const [isOpened, setIsOpened] = useState(false)
 
     const onChangeCallback = (value: string) => {
       onChangeOption && onChangeOption(value)

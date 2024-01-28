@@ -4,6 +4,9 @@
   "MyProfile": "Профиль",
   "Messenger": "Сообщения",
   "Search": "Поиск",
+  "UserList": "Список пользователей",
+  "PaymentsList": "Список платежей",
+  "PostsList": "Список постов",
   "Statistics": "Статистика",
   "Favorites": "Избранное",
   "Description": "Описание",
@@ -48,6 +51,7 @@
     "TransactionFailed": "Транзакция не прошла, пожалуйста, попробуйте позже"
   },
   "Auth": {
+    "InvalidEmail": "Вы ввели не корректный эмейл",
     "SignUp": "Регистрация",
     "SignIn": "Вход",
     "LogOut": "Выход",
@@ -165,7 +169,17 @@
   },
   "TablePagination": {
     "Show": "Показать",
-    "OnPage": "на странице"
+    "PerPage": "на странице"
+  },
+  "UserListTable": {
+    "UserID": "ID пользователя",
+    "Name": "Имя",
+    "ProfileLink": "Никнейм пользователя",
+    "CreatedAt": "Дата создания",
+    "NotBlocked": "Не заблокирован",
+    "Blocked": "Заблокирован",
+    "NotSelected": "Не выбрано",
+    "Search": "Поиск"
   },
   "AddPost": {
     "AddPhoto": "Добавить фотографию",
