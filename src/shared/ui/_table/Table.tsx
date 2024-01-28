@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, FC, forwardRef } from 'react'
 
 import { clsx } from 'clsx'
+import { useTranslation } from 'next-i18next'
 
 import s from './Table.module.scss'
 
@@ -104,6 +105,7 @@ export const TableHeader: FC<
     'children'
   >
 > = ({ columns, onSort, sort, ...restProps }) => {
+  const { t } = useTranslation('common', { keyPrefix: 'UserListTable' })
   const handleSort = (key: string, sortable?: boolean) => () => {
     if (!onSort || !sortable) {
       return

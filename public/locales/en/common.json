@@ -3,6 +3,9 @@
   "Create": "Create",
   "MyProfile": "My Profile",
   "Messenger": "Messenger",
+  "UserList": "User list",
+  "PaymentsList": "Payments list",
+  "PostsList": "Posts list",
   "Search": "Search",
   "Statistics": "Statistics",
   "Favorites": "Favorites",
@@ -49,6 +52,7 @@
     "TransactionFailed": "Transaction failed, please try later"
   },
   "Auth": {
+    "InvalidEmail": "You have entered invalid email",
     "SignUp": "Sign Up",
     "SignIn": "Sign In",
     "LogOut": "Log Out",
@@ -193,7 +197,17 @@
   },
   "TablePagination": {
     "Show": "Show",
-    "OnPage": "on page"
+    "PerPage": "per page"
+  },
+  "UserListTable": {
+    "UserID": "User ID",
+    "Name": "Name",
+    "ProfileLink": "Username",
+    "CreatedAt": "Date added",
+    "NotBlocked": "Not blocked",
+    "Blocked": "Blocked",
+    "NotSelected": "Not selected",
+    "Search": "Search"
   },
   "Post": {
     "Yes": "Yes",

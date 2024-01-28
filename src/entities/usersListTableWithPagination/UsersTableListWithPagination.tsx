@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
 import { useQuery } from '@apollo/client'
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { UsersListTable } from '@/entities/usersListTableWithPagination/usersListTable/UsersListTable'
