@@ -9,20 +9,19 @@ import * as yup from 'yup'
 
 import styles from './AdminSignInForm.module.scss'
 
+import { emailRegex } from '@/entities/admin/admin-sign-in-form/lib'
 import { ADMIN_LOGIN } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { signInAdmin } from '@/pages/super-admin/modal/slices/admin-auth-reducer'
 import { LoginFormType } from '@/shared/api'
 import { RoutersPath } from '@/shared/constants/paths'
 import { RootState } from '@/shared/providers/storeProvider'
-import { Button, ButtonSize, FormContainer, Input, InputType, LinearLoader } from '@/shared/ui'
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+import { Button, ButtonSize, FormContainer, Input, InputType } from '@/shared/ui'
 
 export const AdminSignInForm = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const { t } = useTranslation('common', { keyPrefix: 'Auth' })
-  const { t: tError } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
   const isAdminLogged = useSelector((state: RootState) => state.adminAuth.isAdminLogged)
 
   if (isAdminLogged) {
@@ -30,10 +29,7 @@ export const AdminSignInForm = () => {
   }
 
   const schema = yup.object().shape({
-    email: yup
-      .string()
-      .required(tError('RequiredField'))
-      .matches(emailRegex, tError('InvalidEmail')),
+    email: yup.string().required(tError('RequiredField')).matches(emailRegex, t('InvalidEmail')),
     password: yup.string().required(tError('RequiredField')),
   })
 
@@ -46,7 +42,7 @@ export const AdminSignInForm = () => {
       // we cannot add validation before loginAdmin request. Thus we always send request to backend and if "logged" is false ->
       // show toast.error.
       if (!isAdminLogged) {
-        toast.error(tError('Wrong email or password!'))
+        toast.error(t('Wrong email or password!'))
       } else {
         sessionStorage.setItem('adminAuth', String(loginAdmin?.logged))
         // Since all components are SSR ( I can't make them client-side for some reason) we have to dispatch "logged" value to store.
