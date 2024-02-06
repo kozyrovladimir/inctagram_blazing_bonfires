@@ -9,14 +9,13 @@ import * as yup from 'yup'
 
 import styles from './AdminSignInForm.module.scss'
 
+import { emailRegex } from '@/entities/admin/admin-sign-in-form/lib'
 import { ADMIN_LOGIN } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { signInAdmin } from '@/pages/super-admin/modal/slices/admin-auth-reducer'
 import { LoginFormType } from '@/shared/api'
 import { RoutersPath } from '@/shared/constants/paths'
 import { RootState } from '@/shared/providers/storeProvider'
-import { Button, ButtonSize, FormContainer, Input, InputType, LinearLoader } from '@/shared/ui'
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+import { Button, ButtonSize, FormContainer, Input, InputType } from '@/shared/ui'
 
 export const AdminSignInForm = () => {
   const dispatch = useDispatch()

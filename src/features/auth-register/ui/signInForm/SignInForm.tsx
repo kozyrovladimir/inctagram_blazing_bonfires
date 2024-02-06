@@ -9,6 +9,7 @@ import { toast, Toaster } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import * as yup from 'yup'
 
+import { emailRegex } from './lib'
 import styles from './SignInForm.module.scss'
 
 import { OAuth } from '@/features/auth-register/ui/oAuth/OAuth'
