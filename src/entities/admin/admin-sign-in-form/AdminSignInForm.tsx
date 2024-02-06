@@ -20,8 +20,9 @@ import { Button, ButtonSize, FormContainer, Input, InputType } from '@/shared/ui
 export const AdminSignInForm = () => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { t } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t: tAuth } = useTranslation('common', { keyPrefix: 'Auth' })
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
+  const { t } = useTranslation('common')
   const isAdminLogged = useSelector((state: RootState) => state.adminAuth.isAdminLogged)
 
   if (isAdminLogged) {
@@ -29,8 +30,8 @@ export const AdminSignInForm = () => {
   }
 
   const schema = yup.object().shape({
-    email: yup.string().required(tError('RequiredField')).matches(emailRegex, t('InvalidEmail')),
-    password: yup.string().required(tError('RequiredField')),
+    email: yup.string().required('Error.RequiredField').matches(emailRegex, 'Auth.InvalidEmail'),
+    password: yup.string().required(tError('Error.RequiredField')),
   })
 
   const [loginAdmin] = useMutation(ADMIN_LOGIN, {
@@ -42,7 +43,7 @@ export const AdminSignInForm = () => {
       // we cannot add validation before loginAdmin request. Thus we always send request to backend and if "logged" is false ->
       // show toast.error.
       if (!isAdminLogged) {
-        toast.error(t('Wrong email or password!'))
+        toast.error(tAuth('InvalidCredentials'))
       } else {
         sessionStorage.setItem('adminAuth', String(loginAdmin?.logged))
         // Since all components are SSR ( I can't make them client-side for some reason) we have to dispatch "logged" value to store.
@@ -54,11 +55,11 @@ export const AdminSignInForm = () => {
   })
 
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormType>({
-    mode: 'onTouched',
+    mode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: {
       email: '',
@@ -75,35 +76,23 @@ export const AdminSignInForm = () => {
   return (
     <>
       <Toaster position="top-right" />
-      <FormContainer title={t('SignIn')}>
+      <FormContainer title={tAuth('SignIn')}>
         <form className={styles.formContainer} onSubmit={onSubmit}>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <Input
-                label={t('Email')}
-                type={InputType.EMAIL}
-                placeholder={t('EnterEmail')}
-                error={errors.email?.message}
-                {...field}
-              />
-            )}
+          <Input
+            label={tAuth('Email')}
+            type={InputType.EMAIL}
+            placeholder={tAuth('EnterEmail')}
+            error={t(errors.email?.message || '')}
+            {...register('email')}
           />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <Input
-                label={t('Password')}
-                type={InputType.PASSWORD}
-                placeholder={t('EnterPassword')}
-                error={errors.password?.message}
-                {...field}
-              />
-            )}
+          <Input
+            label={tAuth('Password')}
+            type={InputType.PASSWORD}
+            placeholder={tAuth('EnterPassword')}
+            error={t(errors.password?.message || '')}
+            {...register('password')}
           />
-          <Button size={ButtonSize.STRETCHED}>{t('SignIn')}</Button>
+          <Button size={ButtonSize.STRETCHED}>{tAuth('SignIn')}</Button>
         </form>
       </FormContainer>
     </>

@@ -38,6 +38,8 @@ export const Input = forwardRef<HTMLInputElement, Props>(
   ) => {
     const [passwordInvisible, setPasswordInvisible] = useState(true)
 
+    console.log(error, 'ERROR RERENDERED')
+
     const inputStyles = classNames(styles.input, {
       [styles.erroredInput]: error,
       [styles.inputSearch]: type === InputType.SEARCH,

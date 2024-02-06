@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
@@ -18,13 +18,13 @@ import { RoutersPath } from '@/shared/constants/paths'
 import { LinearLoader, Input, InputType, FormContainer, Button, ButtonSize } from '@/shared/ui'
 
 export const SignInForm = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn)
-  const { t } = useTranslation('common', { keyPrefix: 'Auth' })
+  const { t: tAuth } = useTranslation('common', { keyPrefix: 'Auth' })
   const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
+  const { t } = useTranslation('common')
 
   const schema = yup.object().shape({
-    email: yup.string().required(tError('RequiredField')).matches(emailRegex, t('InvalidEmail')),
-    password: yup.string().required(tError('RequiredField')),
+    email: yup.string().required('Error.RequiredField'),
+    password: yup.string().required('Error.RequiredField'), // to change locale instantly you have to use "t" as close as possible to error place. Here it's JSX error prop.
   })
 
   const [passwordError, setPasswordError] = useState('')
@@ -33,11 +33,11 @@ export const SignInForm = () => {
   const router = useRouter()
 
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormType>({
-    mode: 'onTouched',
+    mode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: {
       email: '',
@@ -68,42 +68,30 @@ export const SignInForm = () => {
     <>
       <Toaster position="top-right" />
       {isLoading && <LinearLoader />}
-      <FormContainer title={t('SignIn')}>
+      <FormContainer title={tAuth('SignIn')}>
         <OAuth />
         <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <Input
-                label={t('Email')}
-                type={InputType.EMAIL}
-                placeholder={t('EnterEmail')}
-                error={errors.email?.message || (emailError as string)}
-                {...field}
-              />
-            )}
+          <Input
+            label={tAuth('Email')}
+            type={InputType.EMAIL}
+            placeholder={tAuth('EnterEmail')}
+            error={t(errors.email?.message || '') || t(emailError)}
+            {...register('email')}
           />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <Input
-                label={t('Password')}
-                type={InputType.PASSWORD}
-                placeholder={t('EnterPassword')}
-                error={errors.password?.message || (passwordError as string)}
-                {...field}
-              />
-            )}
+          <Input
+            label={tAuth('Password')}
+            type={InputType.PASSWORD}
+            placeholder={tAuth('EnterPassword')}
+            error={t(errors.password?.message || '') || t(passwordError)}
+            {...register('password')}
           />
           <Link href="/forgot-password" className={styles.signInForgotText}>
-            {t('ForgotPassword')}
+            {tAuth('ForgotPassword')}
           </Link>
-          <Button size={ButtonSize.STRETCHED}>{t('SignIn')}</Button>
-          <p className={styles.helpText}>{t('DontHaveAccount?')}</p>
+          <Button size={ButtonSize.STRETCHED}>{tAuth('SignIn')}</Button>
+          <p className={styles.helpText}>{tAuth('DontHaveAccount?')}</p>
           <Link href={RoutersPath.signUp} className={styles.link}>
-            <p className={styles.oppositeBtn}>{t('SignUp')}</p>
+            <p className={styles.oppositeBtn}>{tAuth('SignUp')}</p>
           </Link>
         </form>
       </FormContainer>

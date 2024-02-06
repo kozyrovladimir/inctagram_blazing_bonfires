@@ -65,7 +65,20 @@ export const SignUpForm = () => {
         reset()
         setRegistrationSuccess(true)
       })
-      .catch(error => toast.error(error.data.messages[0].message))
+      .catch(error => {
+        const errField = error.data.messages[0].field
+        const errMessage = error.data.messages[0].message
+
+        if (errField === 'userName') {
+          toast.error(t('Error.UsernameAlreadyExist'))
+        } else if (errField === 'email' && errMessage === 'User with this email is already exist') {
+          toast.error(t('Error.EmailIsAlreadyRegistered'))
+        } else if (errField === 'email' && errMessage === 'email must be an email') {
+          toast.error(toast.error(t('Error.EmailValidationError')))
+        } else {
+          toast.error(errMessage)
+        }
+      })
   }
 
   useEffect(() => {
