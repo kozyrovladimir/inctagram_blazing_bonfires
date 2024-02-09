@@ -50,6 +50,7 @@ export const UsersTableListWithPagination = ({
   if (!usersTableData) return null
 
   const handleSetItemsPerPage = (numOfItemsPerPage: number) => {
+    dispatch(setPageNumber(1))
     dispatch(setPageSize(Number(numOfItemsPerPage)))
   }
 
