@@ -16,6 +16,7 @@ export type SelectMenuProps = {
   value?: string
   icon?: ReactNode
   className?: string
+  open?: boolean
 } & ComponentPropsWithoutRef<typeof RSelect.Root>
 
 export const Select = forwardRef<ElementRef<typeof RSelect.Root>, SelectMenuProps>(
@@ -28,6 +29,7 @@ export const Select = forwardRef<ElementRef<typeof RSelect.Root>, SelectMenuProp
       itemsPerPage,
       icon,
       className,
+      open,
       ...rest
     }: SelectMenuProps,
     ref
@@ -42,13 +44,6 @@ export const Select = forwardRef<ElementRef<typeof RSelect.Root>, SelectMenuProp
       setIsOpened(!isOpened)
     }
 
-    const mappedOptions = options.map((el, id) => (
-      <RSelect.Item className={s.item} key={id} value={el}>
-        <RSelect.ItemText>{el}</RSelect.ItemText>
-        <RSelect.ItemIndicator className={s.selected} />
-      </RSelect.Item>
-    ))
-
     const classNames = {
       trigger: clsx(s.trigger, className),
     }
@@ -57,6 +52,7 @@ export const Select = forwardRef<ElementRef<typeof RSelect.Root>, SelectMenuProp
       <div className={s.wrapper}>
         <div className={s.title}>{title}</div>
         <RSelect.Root
+          open={open}
           onOpenChange={toggleIsOpened}
           onValueChange={onChangeCallback}
           {...rest}
@@ -75,9 +71,17 @@ export const Select = forwardRef<ElementRef<typeof RSelect.Root>, SelectMenuProp
               className={s.selectContent}
               collisionPadding={0}
               position={'popper'}
-              side={'top'}
+              side={'bottom'}
             >
-              <RSelect.Viewport className={s.viewport}>{mappedOptions}</RSelect.Viewport>
+              <RSelect.Viewport className={s.viewport}>
+                {' '}
+                {options.map((el, idx) => (
+                  <RSelect.Item className={s.item} key={idx} value={el}>
+                    <RSelect.ItemText>{el}</RSelect.ItemText>
+                    <RSelect.ItemIndicator className={s.selected} />
+                  </RSelect.Item>
+                ))}
+              </RSelect.Viewport>
             </RSelect.Content>
           </RSelect.Portal>
         </RSelect.Root>

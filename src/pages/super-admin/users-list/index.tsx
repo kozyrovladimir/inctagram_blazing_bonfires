@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import s from './usersLists.module.scss'
 
-import { BlockStatus } from '@/__generated__/graphql'
 import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/UsersTableListWithPagination'
 import { handleSearchChange } from '@/pages/super-admin/lib/utils/utils'
 import { selectBlockStatus } from '@/pages/super-admin/modal/selectors/admin-selectors'
@@ -67,7 +66,7 @@ const UsersList = () => {
   )
 }
 
-export type BlockedStatusType = BlockStatus | 'not blocked'
+export type BlockedStatusType = 'Blocked' | 'Not Blocked'
 
 UsersList.getLayout = getAdminLayout
 export default UsersList

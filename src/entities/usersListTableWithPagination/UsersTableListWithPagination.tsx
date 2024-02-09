@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 
 import { useQuery } from '@apollo/client'
-import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { UsersListTable } from '@/entities/usersListTableWithPagination/usersListTable/UsersListTable'
@@ -38,7 +36,7 @@ export const UsersTableListWithPagination = ({
       sortBy: sort?.key,
       sortDirection: sort?.direction,
       searchTerm: searchValue, // searches only by userName. This is handled with local state, not redux.
-      ...(blockStatus === 'blocked' ? { blockStatus: blockStatus } : {}),
+      // ...(blockStatus === 'blocked' ? { blockStatus: blockStatus } : {}),
     },
     context: {
       headers: {
