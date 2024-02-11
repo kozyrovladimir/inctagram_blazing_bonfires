@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import { useMutation } from '@apollo/client'
 import NextImage from 'next/image'
+import { useTranslation } from 'next-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 import s from './BanUserModal.module.scss'
@@ -13,7 +14,7 @@ import { getAdminBasicCredentials } from '@/pages/super-admin/lib/utils/utils'
 import { selectUserBlockReason } from '@/pages/super-admin/modal/selectors/admin-selectors'
 import { setUsersBlockReason } from '@/pages/super-admin/modal/slices/admin-reducer'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
-import { Button, ButtonSize, ButtonTheme, RadixSelect, Text } from '@/shared/ui'
+import { Button, ButtonTheme, Input, InputType, RadixSelect, Text } from '@/shared/ui'
 
 type BanUserModalType = {
   isOpen: boolean
@@ -22,24 +23,33 @@ type BanUserModalType = {
 }
 
 export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
+  const { t } = useTranslation('common')
   const dispatch = useDispatch()
   const banReason = useSelector(selectUserBlockReason)
   const [banUser] = useMutation(BAN_USER)
-
-  // const [unbanUser, { data: isUnbanned }] = useMutation(UNBAN_USER, {
-  //   variables: {
-  //     userId: user.id,
-  //   },
-  //   context: {
-  //     headers: {
-  //       Authorization: `Basic ${getAdminBasicCredentials()}`,
-  //     },
-  //   },
-  // })
+  const [anotherReasonToBan, setAnotherReasonToBan] = useState('')
 
   const handleSetUsersBlockReason = (reasonToBan: string) => {
-    dispatch(setUsersBlockReason(reasonToBan))
+    const anotherResonIsSelected = banReason.startsWith(t('Admin.AnotherReason'))
+
+    if (anotherResonIsSelected) {
+      dispatch(setUsersBlockReason(reasonToBan + ' ' + anotherReasonToBan))
+    } else {
+      dispatch(setUsersBlockReason(reasonToBan))
+    }
   }
+
+  const handleSetAnotherReasonToBan = (e: ChangeEvent<HTMLInputElement>) => {
+    setAnotherReasonToBan(e.target.value)
+    dispatch(setUsersBlockReason(t('Admin.AnotherReason') + ' ' + anotherReasonToBan))
+  }
+
+  useEffect(() => {
+    if (!isOpen) {
+      // Reset the ban reason when the modal is closed
+      dispatch(setUsersBlockReason(t('NotSelected')))
+    }
+  }, [isOpen, dispatch])
 
   const handleBanUser = () => {
     banUser({
@@ -53,7 +63,14 @@ export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
         },
       },
     })
+    setIsOpen(false)
   }
+
+  const banReasons = [
+    t('Admin.BadBehaviour'),
+    t('Admin.AdvertisingPlacement'),
+    t('Admin.AnotherReason'),
+  ]
 
   return (
     <NewPostModal
@@ -82,20 +99,22 @@ export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
               className={s.triggerBtn}
               onChangeOption={handleSetUsersBlockReason}
               options={banReasons}
-              placeholder={'Reason for ban'}
+              placeholder={t('Admin.ReasonForBan')}
             />
           </div>
+          {banReason.startsWith(t('Admin.AnotherReason')) && (
+            <Input
+              placeholder={t('Admin.AddReason')}
+              type={InputType.TEXT}
+              onChange={handleSetAnotherReasonToBan}
+            />
+          )}
           <div className={s.btns}>
-            <Button
-              size={ButtonSize.MIDDLE}
-              theme={ButtonTheme.CLEAR}
-              className={s.button}
-              onClick={() => setIsOpen(false)}
-            >
-              No
+            <Button theme={ButtonTheme.CLEAR} className={s.button} onClick={() => setIsOpen(false)}>
+              {t('No')}
             </Button>
-            <Button size={ButtonSize.MIDDLE} className={s.button} onClick={handleBanUser}>
-              Yes
+            <Button className={s.button} onClick={handleBanUser}>
+              {t('Yes')}
             </Button>
           </div>
         </div>
@@ -103,5 +122,3 @@ export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
     </NewPostModal>
   )
 }
-
-const banReasons = ['Bad behaviour', 'Advertising placement', 'Another reason']

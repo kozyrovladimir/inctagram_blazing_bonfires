@@ -211,6 +211,16 @@
     "SaveDraft": "Сохранить черновик",
     "Close": "Закрыть"
   },
+  "Admin": {
+    "BanInSystem": "Забанить в системе",
+    "AreYouSureYouWantDeleteUser": "Вы уверены, что хотите забанить пользователя",
+    "ReasonForBan": "Причина бана",
+    "BadBehaviour": "Плохое поведение",
+    "AdvertisingPlacement": "Размещение рекламы",
+    "AnotherReason": "Другие причины",
+    "AddReason": "Добавьте причину",
+    "NotSelected": "Не выбрана"
+  },
   "Post": {
     "Yes": "Да",
     "No": "Нет",

@@ -212,6 +212,16 @@
     "NotSelected": "Not selected",
     "Search": "Search"
   },
+  "Admin": {
+    "BanInSystem": "Ban in the system",
+    "AreYouSureYouWantDeleteUser": "Are you sure you want to delete user",
+    "ReasonForBan": "Reason for ban",
+    "BadBehaviour": "Bad behaviour",
+    "AdvertisingPlacement": "Advertising placement",
+    "AnotherReason": "Another reason",
+    "AddReason": "Add reason",
+    "NotSelected": "Not selected"
+  },
   "Post": {
     "Yes": "Yes",
     "No": "No",

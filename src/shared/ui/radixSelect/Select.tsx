@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode, useState } from 'react'
+import React, { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode, useState } from 'react'
 
 import * as RSelect from '@radix-ui/react-select'
 import { clsx } from 'clsx'
@@ -6,6 +6,7 @@ import { clsx } from 'clsx'
 import s from './Select.module.scss'
 
 import { ArrowDownOutline } from '@/shared/assets/icons/arrows/Arrow-down'
+import { Input, InputType } from '@/shared/ui'
 
 export type SelectMenuProps = {
   onChangeOption: (value: any) => void
