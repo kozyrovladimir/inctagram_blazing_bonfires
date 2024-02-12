@@ -212,9 +212,13 @@
     "Close": "Закрыть"
   },
   "Admin": {
-    "BanInSystem": "Забанить в системе",
-    "AreYouSureYouWantDeleteUser": "Вы уверены, что хотите забанить пользователя",
-    "ReasonForBan": "Причина бана",
+    "BanUser": "Заблокировать пользователя",
+    "Unban": "Разблокировать пользователя",
+    "BanInSystem": "Заблокировать в системе",
+    "AreYouSureYouWantToBan": "Вы уверены, что хотите заблокировать пользователя",
+    "AreYouSureYouWantToUnban": "Вы уверены, что хотите разблокировать пользователя",
+    "AreYouSureYouWantDeleteUser": "Вы уверены, что хотите удалить пользователя",
+    "ReasonForBan": "Причина блокировки",
     "BadBehaviour": "Плохое поведение",
     "AdvertisingPlacement": "Размещение рекламы",
     "AnotherReason": "Другие причины",

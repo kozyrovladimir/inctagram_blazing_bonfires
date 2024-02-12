@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import s from './usersLists.module.scss'
 
-import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/UsersTableListWithPagination'
+import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/ui/UsersTableListWithPagination'
 import { handleInputChange } from '@/pages/super-admin/lib/utils/utils'
 import { selectBlockStatus } from '@/pages/super-admin/modal/selectors/admin-selectors'
 import { setBlockStatus } from '@/pages/super-admin/modal/slices/admin-reducer'

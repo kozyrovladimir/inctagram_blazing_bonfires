@@ -76,7 +76,7 @@ export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
     <NewPostModal
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      title={'Ban user'}
+      title={t('Admin.BanUser')}
       right={
         <NextImage
           style={{ cursor: 'pointer' }}
@@ -89,7 +89,7 @@ export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
       <div className={s.modalContentWrapper}>
         <div className={s.textWrapper}>
           <Text className={s.text}>
-            Are you sure you want to ban this user, <b>{user?.userName}</b> ?
+            {t('Admin.AreYouSureYouWantToBan')}, <b>{user?.userName}</b> ?
           </Text>
         </div>
 

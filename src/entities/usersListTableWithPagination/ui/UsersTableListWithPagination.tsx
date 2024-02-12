@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { UsersListTable } from '@/entities/usersListTableWithPagination/usersListTable/UsersListTable'
+import { UsersListTable } from '@/entities/usersListTableWithPagination/ui/usersListTable/UsersListTable'
 import { GET_USERS_LIST } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { getAdminBasicCredentials } from '@/pages/super-admin/lib/utils/utils'
 import {

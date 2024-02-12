@@ -213,7 +213,11 @@
     "Search": "Search"
   },
   "Admin": {
+    "BanUser": "Ban user",
+    "UnbanUser": "Unban user",
     "BanInSystem": "Ban in the system",
+    "AreYouSureYouWantToBan": "Are you sure you want to ban this user",
+    "AreYouSureYouWantToUnban": "Are you sure you want to unban this user",
     "AreYouSureYouWantDeleteUser": "Are you sure you want to delete user",
     "ReasonForBan": "Reason for ban",
     "BadBehaviour": "Bad behaviour",
