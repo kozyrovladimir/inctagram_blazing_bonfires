@@ -7,9 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import s from './usersLists.module.scss'
 
-import { BlockStatus } from '@/__generated__/graphql'
 import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/UsersTableListWithPagination'
-import { handleSearchChange } from '@/pages/super-admin/lib/utils/utils'
+import { handleInputChange } from '@/pages/super-admin/lib/utils/utils'
 import { selectBlockStatus } from '@/pages/super-admin/modal/selectors/admin-selectors'
 import { setBlockStatus } from '@/pages/super-admin/modal/slices/admin-reducer'
 import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
@@ -32,7 +31,7 @@ const UsersList = () => {
   const inputValue = useRef<HTMLInputElement | null>(null)
   const [searchValue, setSearchValue] = useState('')
 
-  const handleSearch = handleSearchChange(setSearchValue, 500)
+  const handleSearch = handleInputChange(setSearchValue, 500)
 
   const handleBlockStatusChange = (blockStatus: BlockedStatusType) => {
     dispatch(setBlockStatus(blockStatus))
@@ -67,7 +66,7 @@ const UsersList = () => {
   )
 }
 
-export type BlockedStatusType = BlockStatus | 'not blocked'
+export type BlockedStatusType = 'Blocked' | 'Not Blocked'
 
 UsersList.getLayout = getAdminLayout
 export default UsersList

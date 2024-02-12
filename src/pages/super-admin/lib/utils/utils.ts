@@ -16,7 +16,7 @@ export function getAdminBasicCredentials() {
  */
 let timeoutId: NodeJS.Timeout
 
-export const handleSearchChange = (setSearchValue: (value: string) => void, delay: number) => {
+export const handleInputChange = (setSearchValue: (value: string) => void, delay: number) => {
   return (e: ChangeEvent<HTMLInputElement>) => {
     // 2. If i add another symbol -> previous timeout is cleared, and new added
     if (timeoutId) {

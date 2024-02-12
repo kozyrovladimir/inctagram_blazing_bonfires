@@ -19,4 +19,4 @@ export { THead, TBody, TRow, THeader, TCell, Table as NewTable } from './_table/
 export { TableSkeleton } from './_table/TableSkeleton/TableSkeleton'
 export { Pagination } from './pagination/Pagination'
 export { usePagination } from './pagination/usePagination'
-export { Select as RadixSelect } from './radixSelect/Select'
+export { Select as RadixSelect } from '@/shared/ui/radixSelect/Select'

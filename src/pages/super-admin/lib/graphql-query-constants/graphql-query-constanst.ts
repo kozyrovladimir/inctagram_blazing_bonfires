@@ -54,8 +54,8 @@ export const USER_FRAGMENT = gql(`
 
 // Query with fragments
 export const GET_USERS_LIST = gql(`
-  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String, $blockStatus: BlockStatus ) {
-  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm, blockStatus: $blockStatus) {
+  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String) {
+  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm) {
     users {
       id,
       userName,
@@ -82,3 +82,15 @@ export const GET_USERS_LIST = gql(`
   }
 }
 `)
+
+export const BAN_USER = gql(`
+  mutation BanUser($banReason: String!, $userId: Int!) {
+  banUser(banReason: $banReason, userId: $userId)
+}
+  `)
+
+export const UNBAN_USER = gql(`
+  mutation UnbanUser($userId: Int!) {
+    unbanUser(userId: $userId)
+}
+  `)

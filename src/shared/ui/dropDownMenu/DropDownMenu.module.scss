@@ -18,8 +18,14 @@
   > div {
     display: flex;
     gap: 5px;
-    align-items: flex-end;
-    margin: 12px;
+    align-items: center;
+
+    height: 40px;
+    padding: 5px;
+
+    &:hover {
+      background-color: var(--color-dark-100);
+    }
 
     > p {
       align-self: flex-end;
@@ -70,6 +76,10 @@
 
   border-radius: 3px;
   outline: none;
+
+  &:hover {
+    background-color: red;
+  }
 }
 
 .DropdownMenuSeparator {
