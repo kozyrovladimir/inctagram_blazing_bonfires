@@ -51,7 +51,8 @@
     "SomethingWentWrong": "Something went wrong",
     "PasswordsMustMatch": "Passwords must match",
     "MinAge": "A user under 13 cannot create a profile.",
-    "TransactionFailed": "Transaction failed, please try later"
+    "TransactionFailed": "Transaction failed, please try later",
+    "Sorry! Page non found!": "Sorry! Page non found!"
   },
   "Auth": {
     "InvalidEmail": "You have entered invalid email",
@@ -265,5 +266,9 @@
       "one": "year ago",
       "other": "years ago"
     }
+  },
+  "Page404": {
+    "Sorry! Page non found!" : "Sorry! Page non found!",
+    "Back to home page" : "Back to home page"
   }
 }
