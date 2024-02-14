@@ -44,6 +44,13 @@ export const Calendar = ({ outsideOnChange, classNameWrap, data }: Props) => {
     t('December'),
   ]
 
+  const onChangeDate = (date: Value) => {
+    const convertedDate = new Date(+JSON.stringify(date))
+
+    setValue(convertedDate)
+    outsideOnChange(convertedDate)
+  }
+
   return (
     <div className={classNameWrap}>
       <DatePicker
@@ -58,17 +65,14 @@ export const Calendar = ({ outsideOnChange, classNameWrap, data }: Props) => {
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
         arrow={false}
         showOtherDays
-        format="MM.DD.YYYY"
+        format="DD.MM.YYYY"
         onOpen={() => {
           setIsOpen(true)
         }}
         onClose={() => setIsOpen(false)}
         // maxDate={minAge}
         placeholder="00.00.00"
-        onChange={date => {
-          setValue(date)
-          outsideOnChange(date)
-        }}
+        onChange={date => onChangeDate(date)}
         weekStartDayIndex={1}
         offsetY={1}
         mapDays={({ date }) => {
