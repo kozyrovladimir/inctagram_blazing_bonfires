@@ -4,6 +4,7 @@ import {
   TypedDocumentNode,
 } from '@graphql-typed-document-node/core'
 import { FragmentDefinitionNode } from 'graphql'
+
 import { Incremental } from './graphql'
 
 export type FragmentType<TDocumentType extends DocumentTypeDecoration<any, any>> =
@@ -15,26 +16,6 @@ export type FragmentType<TDocumentType extends DocumentTypeDecoration<any, any>>
       : never
     : never
 
-// return non-nullable if `fragmentType` is non-nullable
-export function useFragment<TType>(
-  _documentNode: DocumentTypeDecoration<TType, any>,
-  fragmentType: FragmentType<DocumentTypeDecoration<TType, any>>
-): TType
-// return nullable if `fragmentType` is nullable
-export function useFragment<TType>(
-  _documentNode: DocumentTypeDecoration<TType, any>,
-  fragmentType: FragmentType<DocumentTypeDecoration<TType, any>> | null | undefined
-): TType | null | undefined
-// return array of non-nullable if `fragmentType` is array of non-nullable
-export function useFragment<TType>(
-  _documentNode: DocumentTypeDecoration<TType, any>,
-  fragmentType: ReadonlyArray<FragmentType<DocumentTypeDecoration<TType, any>>>
-): ReadonlyArray<TType>
-// return array of nullable if `fragmentType` is array of nullable
-export function useFragment<TType>(
-  _documentNode: DocumentTypeDecoration<TType, any>,
-  fragmentType: ReadonlyArray<FragmentType<DocumentTypeDecoration<TType, any>>> | null | undefined
-): ReadonlyArray<TType> | null | undefined
 export function useFragment<TType>(
   _documentNode: DocumentTypeDecoration<TType, any>,
   fragmentType:
@@ -67,5 +48,6 @@ export function isFragmentReady<TQuery, TFrag>(
   const fragName = fragDef?.name?.value
 
   const fields = (fragName && deferredFields[fragName]) || []
+
   return fields.length > 0 && fields.every(field => data && field in data)
 }
