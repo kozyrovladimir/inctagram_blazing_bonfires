@@ -1,6 +1,9 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react'
 
 import NextImage from 'next/image'
+import { useTranslation } from 'next-i18next'
+
+import s from './CropProvider.module.scss'
 
 import { CanvasFilters } from '@/features/create-post/constants/canvasFilters'
 import { processImageFiles } from '@/features/create-post/utils/processImageFiles'
@@ -68,6 +71,8 @@ type Props = {
 }
 
 const CropProvider: React.FC<Props> = ({ children }) => {
+  const { t } = useTranslation('common')
+
   // состояние модалки (открыта/закрыта)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -78,6 +83,10 @@ const CropProvider: React.FC<Props> = ({ children }) => {
 
   // открытие компонента ImagePublication (Publication) при нажатии кнопки "Select from Computer" (AddPhoto)
   const [isSelectFromComputerOpen, setIsSelectFromComputerOpen] = useState(false)
+
+  const openCreatePostModal = () => {
+    setIsOpen(true)
+  }
 
   // обработка фотографий и запись в массив
   const setPhotoList = (files: FileList) => {
@@ -263,7 +272,10 @@ const CropProvider: React.FC<Props> = ({ children }) => {
         isSelectFromComputerOpen,
       }}
     >
-      <NextImage src={create} alt={''} onClick={() => setIsOpen(true)} />
+      <div className={s.create} onClick={openCreatePostModal}>
+        <NextImage src={create} alt={''} />
+        <p>{t('Create')}</p>
+      </div>
       {children}
     </CropContext.Provider>
   )
