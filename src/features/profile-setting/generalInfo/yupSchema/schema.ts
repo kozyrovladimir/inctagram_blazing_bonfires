@@ -41,14 +41,14 @@ export const schema = ({
       .string()
       .min(1, minCharacters1)
       .max(50, maxCharacters50)
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, startLatterNotSpecial)
+      .matches(/^[A-ZА-Я][a-zа-я]{0,50}$/, startLatterNotSpecial)
       .nullable()
       .required(requiredField),
     lastName: yup
       .string()
       .min(1, minCharacters1)
       .max(50, maxCharacters50)
-      .matches(/^[A-ZА-Я][a-zа-я]{1,50}$/, startLatterNotSpecial)
+      .matches(/^[A-ZА-Я][a-zа-я]{0,50}$/, startLatterNotSpecial)
       .nullable()
       .required(requiredField),
     city: yup
