@@ -29,7 +29,7 @@ export const profileApi = createApi({
             url: `users/profile`,
           }
         },
-        transformResponse: (baseQueryReturnValue: ProfileUserType, meta, arg) => {
+        transformResponse: (baseQueryReturnValue: ProfileUserType) => {
           if (baseQueryReturnValue?.aboutMe === null) {
             baseQueryReturnValue.aboutMe = ''
           }
