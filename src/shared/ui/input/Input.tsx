@@ -14,6 +14,7 @@ import s from './Input.module.scss'
 import { Label } from '@//shared/ui/label/label'
 import { EyeIcon } from '@/shared/assets/icons/eye/eye'
 import { EyeOffIcon } from '@/shared/assets/icons/eye/eyeoff'
+import { Location } from '@/shared/assets/icons/location/location'
 import SearchIcon from '@/shared/assets/icons/search/search'
 import { ErrorMessage } from '@/shared/ui/errorMessage/errorMessage'
 
@@ -94,6 +95,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         {isShowPassword
           ? type === 'password' && <EyeOffIcon className={s.eyeIcon} disabled={disabled} />
           : type === 'password' && <EyeIcon className={s.eyeIcon} disabled={disabled} />}
+        {type === 'location' && <Location className={s.eyeIcon} disabled={disabled} />}
       </button>
       <ErrorMessage className={classes.error} error={error} />
     </div>

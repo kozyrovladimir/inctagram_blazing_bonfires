@@ -74,3 +74,11 @@ export const Error: Story = {
     placeholder: 'Error',
   },
 }
+export const Location: Story = {
+  args: {
+    disabled: false,
+    label: 'Input',
+    placeholder: 'Input',
+    type: InputType.LOCATION,
+  },
+}
