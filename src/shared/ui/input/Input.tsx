@@ -94,7 +94,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       >
         {isShowPassword
           ? type === 'password' && <EyeOffIcon className={s.eyeIcon} disabled={disabled} />
-          : type === 'password' && <EyeIcon className={s.eyeIcon} disabled={disabled} />}
+          : type === 'password' && <EyeIcon className={s.eyeIcon} />}
         {type === 'location' && <Location className={s.eyeIcon} disabled={disabled} />}
       </button>
       <ErrorMessage className={classes.error} error={error} />
