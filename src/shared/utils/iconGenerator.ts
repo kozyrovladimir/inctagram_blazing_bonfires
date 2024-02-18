@@ -1,4 +1,3 @@
-/*
 import { RoutersPath } from '../constants/paths'
 
 import defaultIconDeviceDark from '@/shared/assets/icons/devices/darkIcons/anyDevices.svg'
@@ -49,4 +48,3 @@ export const findPathSVG = (name: string, isCurrent: boolean, theme?: string): s
 
   return file ? file.default.src : defaultIcon
 }
-*/
