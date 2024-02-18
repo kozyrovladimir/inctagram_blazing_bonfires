@@ -1,46 +1,50 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Input } from './Input'
+import { Input, InputType } from '@/shared/ui/input/Input'
 
-const meta: Meta = {
-  title: 'Example/input',
-  component: Input,
-  parameters: {
-    layout: 'centered',
+const meta = {
+  argTypes: {
+    type: {
+      control: { type: 'radio' },
+      options: ['text', 'password', 'search'],
+    },
   },
+  component: Input,
   tags: ['autodocs'],
-}
+  title: 'Components/Input',
+} satisfies Meta<typeof Input>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const DefaultInput: Story = {
+export const Default: Story = {
   args: {
-    label: 'Default input',
-    placeholder: 'Enter your username',
+    disabled: false,
+    label: 'Input',
+    placeholder: 'Input',
+    type: InputType.TEXT,
   },
 }
 
-export const ErroredInput: Story = {
+export const Password: Story = {
   args: {
-    label: 'input with error',
-    error: 'Incorrect value',
+    disabled: false,
+    label: 'Input',
+    placeholder: 'Input',
+    type: InputType.PASSWORD,
   },
 }
-
-export const PasswordInput: Story = {
+export const Search: Story = {
   args: {
-    label: 'Password input',
-    placeholder: 'Enter your password',
-    type: 'password',
-    value: '13421234',
+    disabled: false,
+    placeholder: 'Input search',
+    type: InputType.SEARCH,
   },
 }
-
-export const SearchInput: Story = {
+export const Error: Story = {
   args: {
-    label: 'Search input',
-    type: 'text',
-    placeholder: 'What are you looking for?',
+    disabled: false,
+    error: 'Error',
+    placeholder: 'Error',
   },
 }

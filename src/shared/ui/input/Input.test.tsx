@@ -42,7 +42,7 @@ describe('input component', () => {
     const input = screen.getByRole('textbox')
 
     expect(input).toHaveClass('input')
-    expect(input).toHaveClass('inputSearch')
+    expect(input).toHaveClass('search')
     expect(label).toHaveClass('label')
   })
 })

@@ -36,6 +36,16 @@
 
   .textFieldsContent {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+
+    .textContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
   }
 
   .textareaContent {
