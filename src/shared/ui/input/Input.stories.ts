@@ -34,11 +34,37 @@ export const Password: Story = {
     type: InputType.PASSWORD,
   },
 }
+export const PasswordWithError: Story = {
+  args: {
+    disabled: false,
+    label: 'Input',
+    placeholder: 'Input',
+    type: InputType.PASSWORD,
+    error: 'Error!!!',
+  },
+}
 export const Search: Story = {
   args: {
     disabled: false,
     placeholder: 'Input search',
     type: InputType.SEARCH,
+  },
+}
+export const SearchWithError: Story = {
+  args: {
+    disabled: false,
+    placeholder: 'Input search',
+    type: InputType.SEARCH,
+    error: 'Error!!!',
+  },
+}
+export const SearchWithErrorAndTitle: Story = {
+  args: {
+    disabled: false,
+    placeholder: 'Input search',
+    type: InputType.SEARCH,
+    error: 'Error!!!',
+    label: 'Find all',
   },
 }
 export const Error: Story = {
