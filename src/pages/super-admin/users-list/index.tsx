@@ -45,7 +45,7 @@ const UsersList = () => {
         <Input
           ref={inputValue}
           type={InputType.SEARCH}
-          className={s.search}
+          classNameWrap={s.search}
           placeholder={t('Search')}
           onChange={handleSearch}
         />

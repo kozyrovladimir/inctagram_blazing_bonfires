@@ -210,56 +210,58 @@ export const GeneralInfo = () => {
               />
             </div>
             <div className={styles.textFieldsContent}>
-              <Controller
-                name="userName"
-                control={control}
-                render={({ field: { ref, value, ...args } }) => (
-                  <Input
-                    label={t('UserName')}
-                    type={InputType.TEXT}
-                    placeholder={''}
-                    error={(errors as FieldErrors<ProfileUserType>).userName?.message}
-                    classNameWrap={styles.myCustomLabel}
-                    value={value ?? ''}
-                    {...args}
-                  />
-                )}
-              />
-              <Controller
-                name="firstName"
-                control={control}
-                render={({ field: { ref, value, ...args } }) => (
-                  <Input
-                    label={t('FirstName')}
-                    placeholder={''}
-                    type={InputType.TEXT}
-                    error={(errors as FieldErrors<ProfileUserType>).firstName?.message}
-                    classNameWrap={styles.myCustomLabel}
-                    value={value ?? ''}
-                    {...args}
-                  />
-                )}
-              />
-              <Controller
-                name="lastName"
-                control={control}
-                render={({ field: { ref, value, ...args } }) => (
-                  <Input
-                    label={t('LastName')}
-                    placeholder={''}
-                    type={InputType.TEXT}
-                    error={(errors as FieldErrors<ProfileUserType>).lastName?.message}
-                    classNameWrap={styles.myCustomLabel}
-                    value={value ?? ''}
-                    {...args}
-                  />
-                )}
-              />
+              <div className={styles.textContainer}>
+                <Controller
+                  name="userName"
+                  control={control}
+                  render={({ field: { ref, value, ...args } }) => (
+                    <Input
+                      label={t('UserName')}
+                      type={InputType.TEXT}
+                      placeholder={''}
+                      error={(errors as FieldErrors<ProfileUserType>).userName?.message}
+                      classNameWrap={styles.myCustomLabel}
+                      value={value ?? ''}
+                      {...args}
+                    />
+                  )}
+                />
+                <Controller
+                  name="firstName"
+                  control={control}
+                  render={({ field: { ref, value, ...args } }) => (
+                    <Input
+                      label={t('FirstName')}
+                      placeholder={''}
+                      type={InputType.TEXT}
+                      error={(errors as FieldErrors<ProfileUserType>).firstName?.message}
+                      classNameWrap={styles.myCustomLabel}
+                      value={value ?? ''}
+                      {...args}
+                    />
+                  )}
+                />
+                <Controller
+                  name="lastName"
+                  control={control}
+                  render={({ field: { ref, value, ...args } }) => (
+                    <Input
+                      label={t('LastName')}
+                      placeholder={''}
+                      type={InputType.TEXT}
+                      error={(errors as FieldErrors<ProfileUserType>).lastName?.message}
+                      classNameWrap={styles.myCustomLabel}
+                      value={value ?? ''}
+                      {...args}
+                    />
+                  )}
+                />
+              </div>
               <Controller
                 name="city"
                 control={control}
                 render={({ field: { ref, value, onChange, ...args } }) => (
-                  <>
+                  <div className={styles.city}>
                     <label>{t('City')}</label>
                     <AutocompletionOfCities
                       error={(errors as FieldErrors<ProfileUserType>).city?.message}
@@ -267,7 +269,7 @@ export const GeneralInfo = () => {
                       city={profileData.city || ''}
                       {...args}
                     />
-                  </>
+                  </div>
                 )}
               />
               <Controller

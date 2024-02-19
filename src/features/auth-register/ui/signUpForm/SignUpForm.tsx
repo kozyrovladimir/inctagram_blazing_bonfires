@@ -111,73 +111,75 @@ export const SignUpForm = () => {
           <div className={styles.oAuth}>
             <OAuth />
           </div>
-          <Controller
-            control={control}
-            name="userName"
-            render={({ field, fieldState: { error } }) => (
-              <Input
-                type={InputType.TEXT}
-                label={t('Auth.UserName')}
-                placeholder={t('Auth.EnterName')}
-                error={error && error?.message}
-                classNameWrap={error ? '' : styles.inputUserName}
-                {...field}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="email"
-            render={({ field, fieldState: { error } }) => (
-              <Input
-                label={t('Auth.Email')}
-                placeholder={t('Auth.EnterEmail')}
-                type={InputType.EMAIL}
-                error={error && error?.message}
-                classNameWrap={error ? '' : styles.inputEmail}
-                {...field}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { onChange, onBlur, value, ref }, fieldState: { error } }) => (
-              <Input
-                label={t('Auth.Password')}
-                placeholder={t('Auth.EnterPassword')}
-                type={InputType.PASSWORD}
-                error={error && error?.message}
-                value={value || ''}
-                onChange={onChange}
-                classNameWrap={error ? '' : styles.inputPassword}
-                onBlur={() => {
-                  onBlur()
-                  if (passwordConfirm.length) {
-                    return trigger(['password', 'passwordConfirmation'])
-                  }
-                }}
-                ref={ref}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="passwordConfirmation"
-            render={({ field: { value, onChange, onBlur, ref }, fieldState: { error } }) => (
-              <Input
-                label={t('Auth.PasswordConfirmation')}
-                placeholder={t('Auth.PasswordConfirmation')}
-                type={InputType.PASSWORD}
-                error={error && error?.message}
-                value={value || ''}
-                ref={ref}
-                classNameWrap={styles.inputPasswordConfirm}
-                onChange={onChange}
-                onBlur={onBlur}
-              />
-            )}
-          />
+          <div className={styles.textContainer}>
+            <Controller
+              control={control}
+              name="userName"
+              render={({ field, fieldState: { error } }) => (
+                <Input
+                  type={InputType.TEXT}
+                  label={t('Auth.UserName')}
+                  placeholder={t('Auth.EnterName')}
+                  error={error && error?.message}
+                  classNameWrap={error ? '' : styles.inputUserName}
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="email"
+              render={({ field, fieldState: { error } }) => (
+                <Input
+                  label={t('Auth.Email')}
+                  placeholder={t('Auth.EnterEmail')}
+                  type={InputType.EMAIL}
+                  error={error && error?.message}
+                  classNameWrap={error ? '' : styles.inputEmail}
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange, onBlur, value, ref }, fieldState: { error } }) => (
+                <Input
+                  label={t('Auth.Password')}
+                  placeholder={t('Auth.EnterPassword')}
+                  type={InputType.PASSWORD}
+                  error={error && error?.message}
+                  value={value || ''}
+                  onChange={onChange}
+                  classNameWrap={error ? '' : styles.inputPassword}
+                  onBlur={() => {
+                    onBlur()
+                    if (passwordConfirm.length) {
+                      return trigger(['password', 'passwordConfirmation'])
+                    }
+                  }}
+                  ref={ref}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="passwordConfirmation"
+              render={({ field: { value, onChange, onBlur, ref }, fieldState: { error } }) => (
+                <Input
+                  label={t('Auth.PasswordConfirmation')}
+                  placeholder={t('Auth.PasswordConfirmation')}
+                  type={InputType.PASSWORD}
+                  error={error && error?.message}
+                  value={value || ''}
+                  ref={ref}
+                  classNameWrap={styles.inputPasswordConfirm}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                />
+              )}
+            />
+          </div>
           <div className={styles.agreementContainer}>
             <Controller
               control={control}
