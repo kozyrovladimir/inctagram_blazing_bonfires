@@ -29,6 +29,13 @@ export const profileApi = createApi({
             url: `users/profile`,
           }
         },
+        transformResponse: (baseQueryReturnValue: ProfileUserType) => {
+          if (baseQueryReturnValue?.aboutMe === null) {
+            baseQueryReturnValue.aboutMe = ''
+          }
+
+          return baseQueryReturnValue
+        },
         providesTags: ['dataProfile'],
       }),
       updateProfile: build.mutation<ProfileUserType, ProfileUserType>({
