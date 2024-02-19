@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import s from './usersLists.module.scss'
 
-import { UserBlockStatus } from '@/__generated__/graphql'
 import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/ui/UsersTableListWithPagination'
+import { UserBanModal } from '@/features/user-management'
 import {
   selectBlockStatus,
+  setBanModalOpenStatus,
   setBlockStatus,
+  setSelectedUser,
 } from '@/features/user-management/model/userManagementSlice'
+import { UnbanUserModal } from '@/features/user-management/ui/user-unban-modal/UnbanUserModal'
 import { handleInputChange } from '@/pages/super-admin/lib/utils/utils'
 import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
 import { Input, InputType, RadixSelect } from '@/shared/ui'
@@ -62,6 +65,8 @@ const UsersList = () => {
         </div>
       </div>
       <UsersTableListWithPagination searchValue={searchValue} blockStatus={blockStatus} />
+      <UserBanModal />
+      <UnbanUserModal />
     </div>
   )
 }

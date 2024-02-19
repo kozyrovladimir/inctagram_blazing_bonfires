@@ -71,7 +71,6 @@ export const SideBar = () => {
           </div>
           <div className={style.linkWrapper}>
             <CreatePost />
-            <p>{t('Create')}</p>
           </div>
           <div
             style={router.pathname === RoutersPath.profile ? { color: '#397DF6' } : {}}

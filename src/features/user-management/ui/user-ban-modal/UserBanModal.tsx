@@ -23,20 +23,21 @@ export const UserBanModal = () => {
   const { t } = useTranslation('common')
   const user = useSelector(selectSelectedUser)
   const isOpen = useSelector(selectBanModalOpenStatus)
-  const banReason = useSelector(selectUserBlockReason)
+  const banningReason = useSelector(selectUserBlockReason)
   const handleBanUser = useBanUserMutation()
 
-  const handleSetUsersBlockReason = (reasonToBan: string) => {
-    const anotherReasonIsSelected = banReason.startsWith(t('Admin.AnotherReason'))
+  const handleSetUsersBlockReason = (selectedReasonToBan: string) => {
+    const anotherReasonIsSelected = banningReason.startsWith(t('Admin.AnotherReason'))
 
     if (anotherReasonIsSelected) {
-      dispatch(setUsersBlockReason(reasonToBan + ' ' + banReason))
+      dispatch(setUsersBlockReason(selectedReasonToBan + ' ' + banningReason))
     } else {
-      dispatch(setUsersBlockReason(reasonToBan))
+      dispatch(setUsersBlockReason(selectedReasonToBan))
     }
   }
 
   const handleSetoOtherReasonToBan = (e: ChangeEvent<HTMLInputElement>) => {
+    // add explanation for 'other reason' ban selection
     dispatch(setUsersBlockReason(t('Admin.AnotherReason') + ' ' + e.target.value))
   }
 
@@ -83,7 +84,7 @@ export const UserBanModal = () => {
               placeholder={t('Admin.ReasonForBan')}
             />
           </div>
-          {banReason.startsWith(t('Admin.AnotherReason')) && (
+          {banningReason.startsWith(t('Admin.AnotherReason')) && (
             <Input
               placeholder={t('Admin.AddReason')}
               type={InputType.TEXT}
@@ -101,7 +102,7 @@ export const UserBanModal = () => {
             <Button
               className={s.button}
               onClick={() => {
-                handleBanUser(banReason, user)
+                handleBanUser(banningReason, user)
                 dispatch(setBanModalOpenStatus(false))
               }}
             >

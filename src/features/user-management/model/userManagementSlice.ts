@@ -10,6 +10,7 @@ type UserManagementSInitialStateType = {
   usersBlockReason: string
   selectedUser: User | null
   banModalOpenStatus: boolean
+  unbanModalOpenStatus: boolean
 }
 
 const userManagementSlice = createSlice({
@@ -19,6 +20,7 @@ const userManagementSlice = createSlice({
     usersBlockReason: 'not selected',
     selectedUser: null,
     banModalOpenStatus: false,
+    unbanModalOpenStatus: false,
   },
   reducers: {
     setBlockStatus(state, action: PayloadAction<BlockedStatusType>) {
@@ -33,14 +35,22 @@ const userManagementSlice = createSlice({
     setBanModalOpenStatus(state, action: PayloadAction<boolean>) {
       state.banModalOpenStatus = action.payload
     },
+    setUnbanModalOpenStatus(state, action: PayloadAction<boolean>) {
+      state.unbanModalOpenStatus = action.payload
+    },
     setSelectedUser(state, action: PayloadAction<User | null>) {
       state.selectedUser = action.payload
     },
   },
 })
 
-export const { setBlockStatus, setUsersBlockReason, setBanModalOpenStatus, setSelectedUser } =
-  userManagementSlice.actions
+export const {
+  setBlockStatus,
+  setUsersBlockReason,
+  setBanModalOpenStatus,
+  setUnbanModalOpenStatus,
+  setSelectedUser,
+} = userManagementSlice.actions
 export default userManagementSlice.reducer
 
 export const selectBlockStatus = (state: RootState) => state.userManagement.blockStatus
@@ -48,3 +58,5 @@ export const selectUserBlockReason = (state: RootState) => state.userManagement.
 export const selectSelectedUser = (state: RootState) => state.userManagement.selectedUser
 export const selectBanModalOpenStatus = (state: RootState) =>
   state.userManagement.banModalOpenStatus
+export const selectUnbanModalOpenStatus = (state: RootState) =>
+  state.userManagement.unbanModalOpenStatus

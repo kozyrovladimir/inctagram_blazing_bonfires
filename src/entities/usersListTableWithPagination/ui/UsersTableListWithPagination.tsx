@@ -16,7 +16,7 @@ import { BlockedStatusType } from '@/pages/super-admin/users-list'
 import { Pagination } from '@/shared/ui'
 import { SortType } from '@/shared/ui/_table/Table'
 
-type UsersTableListWithPaginationType = {
+export type UsersTableListWithPaginationType = {
   searchValue: string
   blockStatus: BlockedStatusType | UserBlockStatus
 }

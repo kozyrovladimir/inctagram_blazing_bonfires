@@ -90,7 +90,7 @@
     "ResendVerificationLink": "Resend verification link",
     "PasswordDoNotmatch": "Passwords do not match",
     "CreateNewPassword": "Create new password",
-    "LogOutOfYourAccount": "Are you really want to log out of your account",
+    "LogOutOfYourAccount": "Are you sure you want to log out of your account",
     "EnterEmailForGetInstruction": "Enter your email address and we will send you further instructions",
     "LinkHasBeenSent": "The link has been sent by email. If you don’t receive an email send link again"
   },
@@ -214,7 +214,11 @@
     "Search": "Search"
   },
   "Admin": {
+    "BanUser": "Ban user",
+    "UnbanUser": "Unban user",
     "BanInSystem": "Ban in the system",
+    "AreYouSureYouWantToBan": "Are you sure you want to ban this user",
+    "AreYouSureYouWantToUnban": "Are you sure you want to unban this user",
     "AreYouSureYouWantDeleteUser": "Are you sure you want to delete user",
     "ReasonForBan": "Reason for ban",
     "BadBehaviour": "Bad behaviour",

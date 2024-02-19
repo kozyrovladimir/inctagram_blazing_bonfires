@@ -1,1 +1,1 @@
-export { UserBanModal } from './ui/UserBanModal'
+export { UserBanModal } from './ui/user-ban-modal/UserBanModal'
