@@ -25,6 +25,8 @@ const documents = {
     types.GetUsersDocument,
   '\n  mutation BanUser($banReason: String!, $userId: Int!) {\n  banUser(banReason: $banReason, userId: $userId)\n}\n  ':
     types.BanUserDocument,
+  '\n  mutation UnbanUser($userId: Int!) {\n    unbanUser(userId: $userId)\n}\n  ':
+    types.UnbanUserDocument,
 }
 
 /**
@@ -77,6 +79,12 @@ export function gql(
 export function gql(
   source: '\n  mutation BanUser($banReason: String!, $userId: Int!) {\n  banUser(banReason: $banReason, userId: $userId)\n}\n  '
 ): (typeof documents)['\n  mutation BanUser($banReason: String!, $userId: Int!) {\n  banUser(banReason: $banReason, userId: $userId)\n}\n  ']
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: '\n  mutation UnbanUser($userId: Int!) {\n    unbanUser(userId: $userId)\n}\n  '
+): (typeof documents)['\n  mutation UnbanUser($userId: Int!) {\n    unbanUser(userId: $userId)\n}\n  ']
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {}
