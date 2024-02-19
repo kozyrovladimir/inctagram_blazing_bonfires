@@ -1,25 +1,30 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
 import { useTranslation } from 'next-i18next'
+import { useDispatch } from 'react-redux'
 
 import {
-  Text,
   DropdownMenu,
   NewTable,
   TableSkeleton,
   TBody,
   TCell,
+  Text,
   TRow,
 } from '../../../../shared/ui'
 
 import s from './UsersListTable.module.scss'
 
 import { User } from '@/__generated__/graphql'
+import {
+  setBanModalOpenStatus,
+  setSelectedUser,
+  setUnbanModalOpenStatus,
+} from '@/features/user-management/model/userManagementSlice'
 import { BannedIcon } from '@/shared/assets/icons'
 import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
 import { SortType, TableHeader } from '@/shared/ui/_table/Table'
-import { AdminModals } from '@/widgets/adminModals/AdminModals'
 
 type UsersListTableType = {
   users: User[]
@@ -28,18 +33,14 @@ type UsersListTableType = {
   skeletonRowsNum: number
 }
 
-export type UsersListTableModalTypes = 'BanUser' | 'UnbanUser' | null
-
 export const UsersListTable = ({
   users,
   sort,
   handleSort,
   skeletonRowsNum,
 }: UsersListTableType) => {
+  const dispatch = useDispatch()
   const { t } = useTranslation('common')
-  const [chosenModalTypeToOpen, setChosenModalTypeToOpen] = useState<UsersListTableModalTypes>(null)
-  const [openModal, setOpenModal] = useState(false)
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
   const columns = [
     {
@@ -62,20 +63,18 @@ export const UsersListTable = ({
     },
   ]
 
-  const handleChooseModalToOpen = (user: User, modalType: UsersListTableModalTypes) => {
-    setChosenModalTypeToOpen(modalType)
-    setOpenModal(true)
-    setSelectedUser(user)
+  const openBanModal = (user: User) => {
+    dispatch(setBanModalOpenStatus(true))
+    dispatch(setSelectedUser(user))
+  }
+
+  const openUnbanModal = (user: User) => {
+    dispatch(setUnbanModalOpenStatus(true))
+    dispatch(setSelectedUser(user))
   }
 
   return (
     <>
-      <AdminModals
-        modalType={chosenModalTypeToOpen}
-        selectedUser={selectedUser}
-        setIsOpen={setOpenModal}
-        isOpen={openModal}
-      />
       <NewTable>
         <TableHeader columns={columns} sort={sort} onSort={handleSort} />
         <TBody>
@@ -101,18 +100,14 @@ export const UsersListTable = ({
                         icon + text
                       </RDropdownMenu.Item>
                       <RDropdownMenu.Item
-                        onSelect={e => {
-                          handleChooseModalToOpen(user, 'BanUser')
-                        }}
+                        onSelect={e => openBanModal(user)}
                         className={s.DropdownMenuItem}
                       >
                         <BannedIcon width={20} height={20} />
                         <Text>{t('Admin.BanInSystem')}</Text>
                       </RDropdownMenu.Item>
                       <RDropdownMenu.Item
-                        onSelect={e => {
-                          handleChooseModalToOpen(user, 'UnbanUser')
-                        }}
+                        onSelect={e => openUnbanModal(user)}
                         className={s.DropdownMenuItem}
                       >
                         <ThreeDots />

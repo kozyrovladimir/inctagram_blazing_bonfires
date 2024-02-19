@@ -11,8 +11,6 @@ export const LinearLoader = ({ start = true }) => {
     if (start) {
       ref.current.continuousStart()
     }
-
-    return () => ref.current.clean()
   }, [start])
 
   return (

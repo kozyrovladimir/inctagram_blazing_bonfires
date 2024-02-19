@@ -8,9 +8,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import s from './usersLists.module.scss'
 
 import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/ui/UsersTableListWithPagination'
+import { UserBanModal } from '@/features/user-management'
+import {
+  selectBlockStatus,
+  setBanModalOpenStatus,
+  setBlockStatus,
+  setSelectedUser,
+} from '@/features/user-management/model/userManagementSlice'
+import { UnbanUserModal } from '@/features/user-management/ui/user-unban-modal/UnbanUserModal'
 import { handleInputChange } from '@/pages/super-admin/lib/utils/utils'
-import { selectBlockStatus } from '@/pages/super-admin/modal/selectors/admin-selectors'
-import { setBlockStatus } from '@/pages/super-admin/modal/slices/admin-reducer'
 import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
 import { Input, InputType, RadixSelect } from '@/shared/ui'
 
@@ -45,7 +51,7 @@ const UsersList = () => {
         <Input
           ref={inputValue}
           type={InputType.SEARCH}
-          classNameWrap={s.search}
+          className={s.search}
           placeholder={t('Search')}
           onChange={handleSearch}
         />
@@ -58,10 +64,9 @@ const UsersList = () => {
           />
         </div>
       </div>
-      <UsersTableListWithPagination
-        searchValue={searchValue}
-        blockStatus={blockStatus.toLowerCase() as BlockedStatusType} // we have to lowerCase because the Options we pass to Select are capitalized. Without blockedStatusType typescript would throw error since toLowerCase() creates "not typizated" string
-      />
+      <UsersTableListWithPagination searchValue={searchValue} blockStatus={blockStatus} />
+      <UserBanModal />
+      <UnbanUserModal />
     </div>
   )
 }

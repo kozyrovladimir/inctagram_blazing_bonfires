@@ -5,6 +5,7 @@ import { createWrapper } from 'next-redux-wrapper'
 
 import { authApi, devicesApi, profileApi, publicApi, subscriptionsApi } from '../../../api'
 
+import userManagementSlice from '@/features/user-management/model/userManagementSlice'
 import adminAuthReducer from '@/pages/super-admin/modal/slices/admin-auth-reducer'
 import adminReducer from '@/pages/super-admin/modal/slices/admin-reducer'
 import { authReducer } from '@/shared/api/services/auth/auth.slice'
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   profileSetting: generalInfoReducer,
   admin: adminReducer,
   adminAuth: adminAuthReducer,
+  userManagement: userManagementSlice,
   [authApi.reducerPath]: authApi.reducer,
   [profileApi.reducerPath]: profileApi.reducer,
   [devicesApi.reducerPath]: devicesApi.reducer,

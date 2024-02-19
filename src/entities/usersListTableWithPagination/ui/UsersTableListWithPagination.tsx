@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { UserBlockStatus } from '@/__generated__/graphql'
 import { UsersListTable } from '@/entities/usersListTableWithPagination/ui/usersListTable/UsersListTable'
 import { GET_USERS_LIST } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { getAdminBasicCredentials } from '@/pages/super-admin/lib/utils/utils'
@@ -15,9 +16,9 @@ import { BlockedStatusType } from '@/pages/super-admin/users-list'
 import { Pagination } from '@/shared/ui'
 import { SortType } from '@/shared/ui/_table/Table'
 
-type UsersTableListWithPaginationType = {
+export type UsersTableListWithPaginationType = {
   searchValue: string
-  blockStatus: BlockedStatusType
+  blockStatus: BlockedStatusType | UserBlockStatus
 }
 
 export const UsersTableListWithPagination = ({
@@ -36,7 +37,7 @@ export const UsersTableListWithPagination = ({
       sortBy: sort?.key,
       sortDirection: sort?.direction,
       searchTerm: searchValue, // searches only by userName. This is handled with local state, not redux.
-      // ...(blockStatus === 'blocked' ? { blockStatus: blockStatus } : {}),
+      statusFilter: blockStatus as UserBlockStatus,
     },
     context: {
       headers: {

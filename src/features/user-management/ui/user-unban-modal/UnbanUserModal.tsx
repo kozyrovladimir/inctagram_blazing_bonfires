@@ -3,25 +3,29 @@ import React from 'react'
 import { useMutation } from '@apollo/client'
 import NextImage from 'next/image'
 import { useTranslation } from 'next-i18next'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import s from './UnbanUserModal.module.scss'
 
 import { User } from '@/__generated__/graphql'
 import NewPostModal from '@/features/create-post/ui/newPostModal/NewPostModal'
+import {
+  selectBanModalOpenStatus,
+  selectSelectedUser,
+  selectUnbanModalOpenStatus,
+  setBanModalOpenStatus,
+  setUnbanModalOpenStatus,
+} from '@/features/user-management/model/userManagementSlice'
 import { UNBAN_USER } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
 import { getAdminBasicCredentials } from '@/pages/super-admin/lib/utils/utils'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
 import { Button, ButtonTheme, Text } from '@/shared/ui'
 
-type UnBanUserModalType = {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-  user: User | null
-}
-
-export const UnbanUserModal = ({ isOpen, setIsOpen, user }: UnBanUserModalType) => {
+export const UnbanUserModal = () => {
   const { t } = useTranslation('common')
+  const dispatch = useDispatch()
+  const user = useSelector(selectSelectedUser)
+  const isOpen = useSelector(selectUnbanModalOpenStatus)
   const [unbanUser] = useMutation(UNBAN_USER)
 
   const handleUnbanUser = () => {
@@ -35,20 +39,20 @@ export const UnbanUserModal = ({ isOpen, setIsOpen, user }: UnBanUserModalType) 
         },
       },
     })
-    setIsOpen(false)
+    dispatch(setUnbanModalOpenStatus(false))
   }
 
   return (
     <NewPostModal
       isOpen={isOpen}
-      setIsOpen={setIsOpen}
+      setIsOpen={value => dispatch(setUnbanModalOpenStatus(value))}
       title={t('Admin.UnbanUser')}
       right={
         <NextImage
           style={{ cursor: 'pointer' }}
           src={closeIcon}
           alt={''}
-          onClick={() => setIsOpen(false)}
+          onClick={() => dispatch(setUnbanModalOpenStatus(false))}
         />
       }
     >
@@ -61,7 +65,11 @@ export const UnbanUserModal = ({ isOpen, setIsOpen, user }: UnBanUserModalType) 
 
         <div className={s.btnsAndSelectContainer}>
           <div className={s.btns}>
-            <Button theme={ButtonTheme.CLEAR} className={s.button} onClick={() => setIsOpen(false)}>
+            <Button
+              theme={ButtonTheme.CLEAR}
+              className={s.button}
+              onClick={() => dispatch(setUnbanModalOpenStatus(false))}
+            >
               {t('No')}
             </Button>
             <Button className={s.button} onClick={handleUnbanUser}>

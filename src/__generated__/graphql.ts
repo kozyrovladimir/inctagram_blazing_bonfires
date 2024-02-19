@@ -140,6 +140,14 @@ export type PostOwnerModel = {
   userName: Scalars['String']['output']
 }
 
+export type PostsByUserModel = {
+  __typename?: 'PostsByUserModel'
+  items?: Maybe<Array<ImagePost>>
+  pageSize: Scalars['Int']['output']
+  pagesCount: Scalars['Int']['output']
+  totalCount: Scalars['Int']['output']
+}
+
 export type PostsPaginationModel = {
   __typename?: 'PostsPaginationModel'
   items: Array<Post>
@@ -161,33 +169,25 @@ export type Profile = {
   userName?: Maybe<Scalars['String']['output']>
 }
 
-export type ProfileInfoModel = {
-  __typename?: 'ProfileInfoModel'
-  createdAt: Scalars['DateTime']['output']
-  id: Scalars['Int']['output']
-  payments?: Maybe<Array<Payment>>
-  posts?: Maybe<Array<ImagePost>>
-  profile: Profile
-  userName: Scalars['String']['output']
-}
-
 export type Query = {
   __typename?: 'Query'
-  getAllPayments: PaymentsPaginationModel
-  getPaymentsById: PaymentPaginationModel
+  getPayments: PaymentsPaginationModel
+  getPaymentsByUser: PaymentPaginationModel
   getPosts: PostsPaginationModel
-  getProfileInfo: ProfileInfoModel
+  getPostsByUser: PostsByUserModel
+  getUser: User
   getUsers: UsersPaginationModel
 }
 
-export type QueryGetAllPaymentsArgs = {
+export type QueryGetPaymentsArgs = {
   pageNumber?: InputMaybe<Scalars['Int']['input']>
   pageSize?: InputMaybe<Scalars['Int']['input']>
+  searchTerm?: InputMaybe<Scalars['String']['input']>
   sortBy?: InputMaybe<Scalars['String']['input']>
   sortDirection?: InputMaybe<SortDirection>
 }
 
-export type QueryGetPaymentsByIdArgs = {
+export type QueryGetPaymentsByUserArgs = {
   pageNumber?: InputMaybe<Scalars['Int']['input']>
   pageSize?: InputMaybe<Scalars['Int']['input']>
   sortBy?: InputMaybe<Scalars['String']['input']>
@@ -203,7 +203,12 @@ export type QueryGetPostsArgs = {
   sortDirection?: InputMaybe<SortDirection>
 }
 
-export type QueryGetProfileInfoArgs = {
+export type QueryGetPostsByUserArgs = {
+  endCursorId?: InputMaybe<Scalars['Int']['input']>
+  userId: Scalars['Int']['input']
+}
+
+export type QueryGetUserArgs = {
   userId: Scalars['Int']['input']
 }
 
@@ -213,6 +218,7 @@ export type QueryGetUsersArgs = {
   searchTerm?: InputMaybe<Scalars['String']['input']>
   sortBy?: InputMaybe<Scalars['String']['input']>
   sortDirection?: InputMaybe<SortDirection>
+  statusFilter?: InputMaybe<UserBlockStatus>
 }
 
 export enum SortDirection {
@@ -277,6 +283,11 @@ export type UserBan = {
   reason: Scalars['String']['output']
 }
 
+export enum UserBlockStatus {
+  All = 'ALL',
+  Blocked = 'BLOCKED',
+}
+
 export type UsersPaginationModel = {
   __typename?: 'UsersPaginationModel'
   pagination: PaginationModel
@@ -336,6 +347,7 @@ export type GetUsersQueryVariables = Exact<{
   sortBy?: InputMaybe<Scalars['String']['input']>
   sortDirection?: InputMaybe<SortDirection>
   searchTerm?: InputMaybe<Scalars['String']['input']>
+  statusFilter?: InputMaybe<UserBlockStatus>
 }>
 
 export type GetUsersQuery = {
@@ -625,6 +637,11 @@ export const GetUsersDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'searchTerm' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'statusFilter' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserBlockStatus' } },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -657,6 +674,11 @@ export const GetUsersDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'searchTerm' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'searchTerm' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'statusFilter' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'statusFilter' } },
               },
             ],
             selectionSet: {
