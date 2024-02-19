@@ -4,7 +4,7 @@ import LoadingBar from 'react-top-loading-bar'
 
 import styles from '../Loader.module.scss'
 
-export const LinearLoader = ({ start = true }: any) => {
+export const LinearLoader = ({ start = true }) => {
   let ref = useRef<any>(null)
 
   useEffect(() => {
