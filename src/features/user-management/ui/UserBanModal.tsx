@@ -1,47 +1,43 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 
-import { useMutation } from '@apollo/client'
 import NextImage from 'next/image'
 import { useTranslation } from 'next-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
-import s from './BanUserModal.module.scss'
+import s from './UserBanModal.module.scss'
 
-import { User } from '@/__generated__/graphql'
 import NewPostModal from '@/features/create-post/ui/newPostModal/NewPostModal'
-import { BAN_USER } from '@/pages/super-admin/lib/graphql-query-constants/graphql-query-constanst'
-import { getAdminBasicCredentials } from '@/pages/super-admin/lib/utils/utils'
-import { selectUserBlockReason } from '@/pages/super-admin/modal/selectors/admin-selectors'
-import { setUsersBlockReason } from '@/pages/super-admin/modal/slices/admin-reducer'
+import { useBanUserMutation } from '@/features/user-management/lib/handle-user-ban'
+import {
+  selectBanModalOpenStatus,
+  selectSelectedUser,
+  selectUserBlockReason,
+  setBanModalOpenStatus,
+  setUsersBlockReason,
+} from '@/features/user-management/model/userManagementSlice'
 import closeIcon from '@/shared/assets/icons/icons/closeIcon.svg'
 import { Button, ButtonTheme, Input, InputType, RadixSelect, Text } from '@/shared/ui'
 
-type BanUserModalType = {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-  user: User | null
-}
-
-export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
-  const { t } = useTranslation('common')
+export const UserBanModal = () => {
   const dispatch = useDispatch()
+  const { t } = useTranslation('common')
+  const user = useSelector(selectSelectedUser)
+  const isOpen = useSelector(selectBanModalOpenStatus)
   const banReason = useSelector(selectUserBlockReason)
-  const [banUser] = useMutation(BAN_USER)
-  const [anotherReasonToBan, setAnotherReasonToBan] = useState('')
+  const handleBanUser = useBanUserMutation()
 
   const handleSetUsersBlockReason = (reasonToBan: string) => {
-    const anotherResonIsSelected = banReason.startsWith(t('Admin.AnotherReason'))
+    const anotherReasonIsSelected = banReason.startsWith(t('Admin.AnotherReason'))
 
-    if (anotherResonIsSelected) {
-      dispatch(setUsersBlockReason(reasonToBan + ' ' + anotherReasonToBan))
+    if (anotherReasonIsSelected) {
+      dispatch(setUsersBlockReason(reasonToBan + ' ' + banReason))
     } else {
       dispatch(setUsersBlockReason(reasonToBan))
     }
   }
 
-  const handleSetAnotherReasonToBan = (e: ChangeEvent<HTMLInputElement>) => {
-    setAnotherReasonToBan(e.target.value)
-    dispatch(setUsersBlockReason(t('Admin.AnotherReason') + ' ' + anotherReasonToBan))
+  const handleSetoOtherReasonToBan = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setUsersBlockReason(t('Admin.AnotherReason') + ' ' + e.target.value))
   }
 
   useEffect(() => {
@@ -50,21 +46,6 @@ export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
       dispatch(setUsersBlockReason(t('NotSelected')))
     }
   }, [isOpen, dispatch])
-
-  const handleBanUser = () => {
-    banUser({
-      variables: {
-        banReason,
-        userId: user?.id || 0,
-      },
-      context: {
-        headers: {
-          Authorization: `Basic ${getAdminBasicCredentials()}`,
-        },
-      },
-    })
-    setIsOpen(false)
-  }
 
   const banReasons = [
     t('Admin.BadBehaviour'),
@@ -75,14 +56,14 @@ export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
   return (
     <NewPostModal
       isOpen={isOpen}
-      setIsOpen={setIsOpen}
+      setIsOpen={value => dispatch(setBanModalOpenStatus(value))}
       title={'Ban user'}
       right={
         <NextImage
           style={{ cursor: 'pointer' }}
           src={closeIcon}
           alt={''}
-          onClick={() => setIsOpen(false)}
+          onClick={() => dispatch(setBanModalOpenStatus(false))}
         />
       }
     >
@@ -106,14 +87,24 @@ export const BanUserModal = ({ isOpen, setIsOpen, user }: BanUserModalType) => {
             <Input
               placeholder={t('Admin.AddReason')}
               type={InputType.TEXT}
-              onChange={handleSetAnotherReasonToBan}
+              onChange={handleSetoOtherReasonToBan}
             />
           )}
           <div className={s.btns}>
-            <Button theme={ButtonTheme.CLEAR} className={s.button} onClick={() => setIsOpen(false)}>
+            <Button
+              theme={ButtonTheme.CLEAR}
+              className={s.button}
+              onClick={() => dispatch(setBanModalOpenStatus(false))}
+            >
               {t('No')}
             </Button>
-            <Button className={s.button} onClick={handleBanUser}>
+            <Button
+              className={s.button}
+              onClick={() => {
+                handleBanUser(banReason, user)
+                dispatch(setBanModalOpenStatus(false))
+              }}
+            >
               {t('Yes')}
             </Button>
           </div>

@@ -7,10 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import s from './usersLists.module.scss'
 
-import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/UsersTableListWithPagination'
+import { UserBlockStatus } from '@/__generated__/graphql'
+import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/ui/UsersTableListWithPagination'
+import {
+  selectBlockStatus,
+  setBlockStatus,
+} from '@/features/user-management/model/userManagementSlice'
 import { handleInputChange } from '@/pages/super-admin/lib/utils/utils'
-import { selectBlockStatus } from '@/pages/super-admin/modal/selectors/admin-selectors'
-import { setBlockStatus } from '@/pages/super-admin/modal/slices/admin-reducer'
 import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
 import { Input, InputType, RadixSelect } from '@/shared/ui'
 
@@ -58,10 +61,7 @@ const UsersList = () => {
           />
         </div>
       </div>
-      <UsersTableListWithPagination
-        searchValue={searchValue}
-        blockStatus={blockStatus.toLowerCase() as BlockedStatusType} // we have to lowerCase because the Options we pass to Select are capitalized. Without blockedStatusType typescript would throw error since toLowerCase() creates "not typizated" string
-      />
+      <UsersTableListWithPagination searchValue={searchValue} blockStatus={blockStatus} />
     </div>
   )
 }

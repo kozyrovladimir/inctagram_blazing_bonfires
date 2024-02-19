@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import * as RDropdownMenu from '@radix-ui/react-dropdown-menu'
 import { useTranslation } from 'next-i18next'
+import { useDispatch } from 'react-redux'
 
 import s from './UsersListTable.module.scss'
 
 import { User } from '@/__generated__/graphql'
-import { BanUserModal } from '@/entities/banUserModal'
+import { UserBanModal } from '@/features/user-management'
+import {
+  setBanModalOpenStatus,
+  setSelectedUser,
+} from '@/features/user-management/model/userManagementSlice'
 import { BannedIcon } from '@/shared/assets/icons'
 import { ThreeDots } from '@/shared/assets/icons/threeDots/icon/threeDots'
 import { DropdownMenu, NewTable, TableSkeleton, TBody, TCell, TRow } from '@/shared/ui'
@@ -25,9 +30,13 @@ export const UsersListTable = ({
   handleSort,
   skeletonRowsNum,
 }: UsersListTableType) => {
+  const dispatch = useDispatch()
+  const openModalForUser = (user: User | null) => {
+    dispatch(setBanModalOpenStatus(true))
+    dispatch(setSelectedUser(user))
+  }
+
   const { t } = useTranslation('common', { keyPrefix: 'UserListTable' })
-  const [isBanUserModalOpen, setIsBanUserModalOpen] = useState(false)
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
   const columns = [
     {
@@ -52,11 +61,7 @@ export const UsersListTable = ({
 
   return (
     <>
-      <BanUserModal
-        isOpen={isBanUserModalOpen}
-        setIsOpen={setIsBanUserModalOpen}
-        user={selectedUser}
-      />
+      <UserBanModal />
       <NewTable>
         <TableHeader columns={columns} sort={sort} onSort={handleSort} />
         <TBody>
@@ -82,10 +87,7 @@ export const UsersListTable = ({
                         icon + text
                       </RDropdownMenu.Item>
                       <RDropdownMenu.Item
-                        onSelect={e => {
-                          setIsBanUserModalOpen(true)
-                          setSelectedUser(user)
-                        }}
+                        onSelect={e => openModalForUser(user)}
                         className={s.DropdownMenuItem}
                       >
                         <BannedIcon width={20} height={20} /> Ban in the system

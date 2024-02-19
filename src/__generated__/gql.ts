@@ -21,10 +21,12 @@ const documents = {
     types.ProfileFragmentFragmentDoc,
   '\n  fragment UserFragment on User {\n    id\n    userName\n    email\n    createdAt\n    profile {\n      ...ProfileFragment\n    }\n    userBan {\n       reason\n       createdAt\n    }\n  }\n  \n':
     types.UserFragmentFragmentDoc,
-  '\n  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String) {\n  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm) {\n    users {\n      id,\n      userName,\n      email,\n      createdAt,\n      profile {\n        id, \n        userName,\n        firstName,\n        lastName,\n        city,\n        dateOfBirth,\n        aboutMe, \n        createdAt, \n        avatars {\n        \turl, width, height, fileSize \n        }\n      },\n      userBan {\n        reason, createdAt\n      } \n    },\n    pagination {pagesCount, page, pageSize, totalCount}\n  }\n}\n':
+  '\n  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String, $statusFilter: UserBlockStatus) {\n  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm, statusFilter: $statusFilter) {\n    users {\n      id,\n      userName,\n      email,\n      createdAt,\n      profile {\n        id, \n        userName,\n        firstName,\n        lastName,\n        city,\n        dateOfBirth,\n        aboutMe, \n        createdAt, \n        avatars {\n        \turl, width, height, fileSize \n        }\n      },\n      userBan {\n        reason, createdAt\n      } \n    },\n    pagination {pagesCount, page, pageSize, totalCount}\n  }\n}\n':
     types.GetUsersDocument,
   '\n  mutation BanUser($banReason: String!, $userId: Int!) {\n  banUser(banReason: $banReason, userId: $userId)\n}\n  ':
     types.BanUserDocument,
+  '\n  mutation UnbanUser($userId: Int!) {\n    unbanUser(userId: $userId)\n}\n  ':
+    types.UnbanUserDocument,
 }
 
 /**
@@ -69,14 +71,20 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: '\n  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String) {\n  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm) {\n    users {\n      id,\n      userName,\n      email,\n      createdAt,\n      profile {\n        id, \n        userName,\n        firstName,\n        lastName,\n        city,\n        dateOfBirth,\n        aboutMe, \n        createdAt, \n        avatars {\n        \turl, width, height, fileSize \n        }\n      },\n      userBan {\n        reason, createdAt\n      } \n    },\n    pagination {pagesCount, page, pageSize, totalCount}\n  }\n}\n'
-): (typeof documents)['\n  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String) {\n  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm) {\n    users {\n      id,\n      userName,\n      email,\n      createdAt,\n      profile {\n        id, \n        userName,\n        firstName,\n        lastName,\n        city,\n        dateOfBirth,\n        aboutMe, \n        createdAt, \n        avatars {\n        \turl, width, height, fileSize \n        }\n      },\n      userBan {\n        reason, createdAt\n      } \n    },\n    pagination {pagesCount, page, pageSize, totalCount}\n  }\n}\n']
+  source: '\n  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String, $statusFilter: UserBlockStatus) {\n  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm, statusFilter: $statusFilter) {\n    users {\n      id,\n      userName,\n      email,\n      createdAt,\n      profile {\n        id, \n        userName,\n        firstName,\n        lastName,\n        city,\n        dateOfBirth,\n        aboutMe, \n        createdAt, \n        avatars {\n        \turl, width, height, fileSize \n        }\n      },\n      userBan {\n        reason, createdAt\n      } \n    },\n    pagination {pagesCount, page, pageSize, totalCount}\n  }\n}\n'
+): (typeof documents)['\n  query GetUsers($pageSize: Int, $pageNumber: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String, $statusFilter: UserBlockStatus) {\n  getUsers(pageSize: $pageSize, pageNumber: $pageNumber, sortBy:$sortBy, sortDirection: $sortDirection, searchTerm: $searchTerm, statusFilter: $statusFilter) {\n    users {\n      id,\n      userName,\n      email,\n      createdAt,\n      profile {\n        id, \n        userName,\n        firstName,\n        lastName,\n        city,\n        dateOfBirth,\n        aboutMe, \n        createdAt, \n        avatars {\n        \turl, width, height, fileSize \n        }\n      },\n      userBan {\n        reason, createdAt\n      } \n    },\n    pagination {pagesCount, page, pageSize, totalCount}\n  }\n}\n']
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
   source: '\n  mutation BanUser($banReason: String!, $userId: Int!) {\n  banUser(banReason: $banReason, userId: $userId)\n}\n  '
 ): (typeof documents)['\n  mutation BanUser($banReason: String!, $userId: Int!) {\n  banUser(banReason: $banReason, userId: $userId)\n}\n  ']
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: '\n  mutation UnbanUser($userId: Int!) {\n    unbanUser(userId: $userId)\n}\n  '
+): (typeof documents)['\n  mutation UnbanUser($userId: Int!) {\n    unbanUser(userId: $userId)\n}\n  ']
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {}
