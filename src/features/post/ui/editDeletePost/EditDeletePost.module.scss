@@ -57,13 +57,15 @@
 
   .buttonsContainer {
     display: flex;
-    flex-direction: row;
-    gap: 90px;
-    margin-top: 17px;
+    gap: 25px;
+    justify-content: flex-end;
+
+    width: 100%;
+    margin-top: 15px;
 
     .button {
+      width: 7rem;
       font-size: var(--font-size-s);
-      width: 130px;
     }
   }
 }
