@@ -106,7 +106,7 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
                 )}
               </div>
               <Description {...postData} />
-              <Comment postData={postData} isLoggedIn={isLoggedIn} />
+              <Comment {...postData} />
             </div>
           </div>
         </div>
