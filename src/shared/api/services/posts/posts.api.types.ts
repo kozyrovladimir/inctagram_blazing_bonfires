@@ -7,6 +7,7 @@ export type PostResponseType = {
   createdAt: string
   updatedAt: string
   ownerId: number
+  userName: string
   owner: {
     firstName: string
     lastName: string

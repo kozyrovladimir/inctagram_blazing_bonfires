@@ -7,6 +7,7 @@ import { useTranslation } from 'next-i18next'
 import { useSelector } from 'react-redux'
 
 import { Comment } from '@/entities/postModal/Comment/Comment'
+import { Description } from '@/entities/postModal/Description/Description'
 import styles from '@/entities/postModal/PostModal.module.scss'
 import { EditDeletePost } from '@/features/post/ui/editDeletePost/EditDeletePost'
 import { EditDescriptionPost } from '@/features/post/ui/editDescriptionModal/EditDescriptionPost'
@@ -30,17 +31,14 @@ type Props = {
 
 export const PostModal = ({ postData, togglePostModal, profileData }: Props) => {
   const isLoggedIn = useSelector(selectIsLoggedIn)
-  const {
-    avatarOwner,
-    owner: { firstName, lastName },
-    ownerId,
-  } = postData
+
+  const { avatarOwner, ownerId, userName } = postData
 
   const { t } = useTranslation('common', { keyPrefix: 'Post' })
   const router = useRouter()
   const [isOpenEdit, setIsOpenEdit] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-  const userName = `${firstName} ${lastName}` || t('AnonymousUser')
+  const username = `${userName}` || t('AnonymousUser')
 
   const openEditModal = () => {
     setIsOpenEdit(true)
@@ -68,7 +66,7 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
             <div className={styles.postPhotoContainer}>
               <PostImages postData={postData} />
             </div>
-            <div className={styles.descriptionContainer}>
+            <div className={styles.postBodyContainer}>
               <div className={styles.headerContainer}>
                 <div
                   className={styles.avatarContainer}
@@ -82,7 +80,7 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
                       objectFit="cover"
                     />
                   </div>
-                  <p className={styles.userName}>{userName}</p>
+                  <p className={styles.userName}>{username}</p>
                 </div>
                 {isLoggedIn && postData.ownerId === profileData?.id && (
                   <DropdownMenu triggerIcon={<ThreeDots />}>
@@ -107,6 +105,7 @@ export const PostModal = ({ postData, togglePostModal, profileData }: Props) => 
                   />
                 )}
               </div>
+              <Description {...postData} />
               <Comment postData={postData} isLoggedIn={isLoggedIn} />
             </div>
           </div>
