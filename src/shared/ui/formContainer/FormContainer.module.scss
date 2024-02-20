@@ -1,13 +1,12 @@
 .formContainer {
   display: flex;
   flex-direction: column;
-  gap: 0.8125rem;
   align-items: center;
 
   width: 23.625rem;
   height: max-content;
   margin: 1.5rem auto;
-  padding: 1.5rem;
+  padding: 0 1.5rem 1.5rem 1.5rem;
 
   background-color: #171717;
   border: solid 1px #333;

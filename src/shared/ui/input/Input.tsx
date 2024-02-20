@@ -37,7 +37,7 @@ export type InputProps = {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
-    classNameWrap,
+    className,
     disabled,
     error,
     label,
@@ -54,7 +54,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       error && s.errorMessage,
       error && location === 'relative' && s.marginBottom,
       label && s.marginTop,
-      classNameWrap,
+      className,
       disabled && s.disabled
     ),
     error: clsx(s.error, disabled && s.disabled),
@@ -94,7 +94,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       >
         {isShowPassword
           ? type === 'password' && <EyeOffIcon className={s.eyeIcon} disabled={disabled} />
-          : type === 'password' && <EyeIcon className={s.eyeIcon} />}
+          : type === 'password' && <EyeIcon className={s.eyeIcon} disabled={disabled} />}
         {type === 'location' && <Location className={s.eyeIcon} disabled={disabled} />}
       </button>
       <ErrorMessage className={classes.error} error={error} />
