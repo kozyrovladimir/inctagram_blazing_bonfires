@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import styles from '@/pages/payment/access/Payment.module.scss'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
-import { CircularLoader } from '@/shared/ui/loaders/CircularLoader'
+import { CircularLoader } from '@/shared/ui'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   if (locale === undefined) throw new Error()
@@ -23,10 +23,14 @@ const StripePayment = () => {
   const { query } = router
 
   useEffect(() => {
+    if (router.asPath.endsWith('?error')) {
+      void router.replace(router.asPath.replace('?error', ''), undefined, { shallow: true })
+    }
+
     if (query.success === 'true') {
       router.push(`/profile/account-management?success=true`)
     }
-  }, [query.success])
+  }, [query.success, router.asPath, router])
 
   return (
     <div className={styles.loaderWrapper}>

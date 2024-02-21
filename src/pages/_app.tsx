@@ -1,17 +1,22 @@
 import '../shared/styles/globals.scss'
-import { ReactElement, ReactNode, useEffect } from 'react'
+import { ReactElement, ReactNode } from 'react'
 
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { GetStaticProps } from 'next'
 import type { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
 import { NextPage } from 'next/types'
 import { appWithTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-
-import { StoreProvider } from '../shared/providers/storeProvider'
+import { Provider } from 'react-redux'
 
 import { WithAuth } from '@/shared/hoc/withAuth/WithAuth'
+import { wrapper } from '@/shared/providers/storeProvider/model/store'
+
+const client = new ApolloClient({
+  uri: 'https://inctagram.work/api/v1/graphql',
+  cache: new InMemoryCache(),
+})
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -39,17 +44,22 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
     </WithAuth>
   )
 }
+const TranslateApp = appWithTranslation(App)
 
 function myApp(props: AppProps) {
+  const { store } = wrapper.useWrappedStore({ ...props })
+
   return (
-    <StoreProvider>
+    <ApolloProvider client={client}>
       <GoogleOAuthProvider
         clientId={'617342613759-f3kbvgm8l310fn40vh6qna2pv8u2uccr.apps.googleusercontent.com'}
       >
-        <App {...props} />
+        <Provider store={store}>
+          <TranslateApp {...props} />
+        </Provider>
       </GoogleOAuthProvider>
-    </StoreProvider>
+    </ApolloProvider>
   )
 }
 
-export default appWithTranslation(myApp)
+export default myApp

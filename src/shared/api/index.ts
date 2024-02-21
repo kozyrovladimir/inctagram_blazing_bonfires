@@ -23,6 +23,8 @@ export type {
   NewPasswordType,
 } from './services/auth/auth.api.types'
 
+export * from './services/auth/auth.selectors'
+
 export {
   profileApi,
   useGetProfileUserQuery,
@@ -37,8 +39,8 @@ export type {
 
 export {
   postsApi,
-  useLazyGetPostQuery,
-  useLazyGetUserPostsQuery,
+  useLazyGetPublicPostQuery,
+  useLazyGetPublicUserPostsQuery,
   useDeletePostMutation,
   useUpdatePostMutation,
   useCreatePostMutation,
@@ -46,7 +48,7 @@ export {
 } from './services/posts/posts.api'
 
 export type {
-  PostsResponseType,
+  PostResponseType,
   PostsType,
   ImageDataType,
   ImagesResponse,
@@ -68,4 +70,4 @@ export {
   useCancelAutoRenewalMutation,
 } from './services/subscriptions/subscriptions.api'
 
-export { baseURL } from './services/baseUrl.api'
+export { publicApi } from './services/public/public.api'

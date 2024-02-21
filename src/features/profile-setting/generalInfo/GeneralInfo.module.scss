@@ -1,101 +1,127 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 100%;
-  padding: 0 4rem 1.5rem 1.5rem;
-}
-
-.content {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  label {
-    margin-top: 1.5rem;
+.generalInfoContainer {
+  .container {
     display: flex;
-    color: var(--color-dark-100);
-    font-size: var(--font-size-m);
+    flex-direction: column;
+    align-items: flex-end;
+
+    width: 100%;
+    padding: 0 4rem 1.5rem 1.5rem;
   }
-}
 
-.myCustomLabel:nth-child(-n + 3) label::after {
-  content: '*';
-  color: var(--color-danger-500);
-}
+  .content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
 
-.photoContent {
-  margin: 3rem 3.5rem 1.5rem 0;
-  width: 12rem;
-}
+    width: 100%;
 
-.textFieldsContent {
-  width: 100%;
-}
-.textareaContent {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  textarea {
-    background-color: var(--color-dark-800);
-    resize: none;
+    label {
+      display: flex;
+      margin-top: 1.5rem;
+      font-size: var(--font-size-m);
+      color: var(--color-dark-100);
+    }
   }
-}
 
-.calendar {
-  width: 100%;
-  position: relative;
-}
-.agreementLink {
-  position: relative;
-  z-index: 10;
-  &:link {
+  .myCustomLabel:nth-child(-n + 3) label::after {
+    content: '*';
     color: var(--color-danger-500);
   }
-}
 
-.aboutMeTextarea {
-  width: 100%;
-  background: transparent;
-  border: 1px solid var(--color-dark-300);
-  padding: 10px;
-  resize: vertical;
-  outline: none;
-  &:focus {
-    border-color: var(--color-info-500);
+  .photoContent {
+    width: 12rem;
+    margin: 3rem 3.5rem 1.5rem 0;
   }
-}
 
-.line {
-  width: 100%;
-  height: 1px;
-  margin: 1.5rem 0;
-  background-color: var(--color-dark-300);
-}
+  .textFieldsContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
 
-.button {
-  color: var(--color-light-900);
-  background-color: var(--color-info-900);
-  &:hover {
-    background-color: var(--color-info-700);
+    .textContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
   }
-  &:disabled {
-    background-color: var(--color-info-100);
-    cursor: auto;
-  }
-}
 
-.errorTextarea {
-  font-size: var(--font-size-s);
-  color: var(--color-danger-500);
-  line-height: 24px;
-  position: absolute;
-  bottom: -1.5rem;
-}
-.errorCalendar {
-  font-size: var(--font-size-s);
-  color: var(--color-danger-500);
-  line-height: 24px;
-  position: absolute;
+  .textareaContent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+      resize: none;
+      background-color: var(--color-dark-500);
+    }
+  }
+
+  .calendar {
+    position: relative;
+    width: 100%;
+  }
+
+  .agreementLink {
+    position: relative;
+    z-index: 10;
+
+    &:link {
+      color: var(--color-danger-500);
+    }
+  }
+
+  .aboutMeTextarea {
+    resize: vertical;
+
+    width: 100%;
+    padding: 10px;
+
+    background: transparent;
+    border: 1px solid var(--color-dark-300);
+    outline: none;
+
+    &:focus {
+      border-color: var(--color-info-500);
+    }
+  }
+
+  .line {
+    width: 100%;
+    height: 1px;
+    margin: 1.5rem 0;
+    background-color: var(--color-dark-300);
+  }
+
+  .button {
+    color: var(--color-light-900);
+    background-color: var(--color-info-900);
+
+    &:hover {
+      background-color: var(--color-info-700);
+    }
+
+    &:disabled {
+      cursor: auto;
+      background-color: var(--color-info-100);
+    }
+  }
+
+  .errorTextarea {
+    position: absolute;
+    bottom: -1.5rem;
+
+    font-size: var(--font-size-s);
+    line-height: 24px;
+    color: var(--color-danger-500);
+  }
+
+  .errorCalendar {
+    position: absolute;
+    font-size: var(--font-size-s);
+    line-height: 24px;
+    color: var(--color-danger-500);
+  }
 }

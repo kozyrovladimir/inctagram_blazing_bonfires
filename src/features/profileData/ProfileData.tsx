@@ -6,24 +6,26 @@ import { useTranslation } from 'next-i18next'
 
 import style from './ProfileData.module.scss'
 
+import { ProfileFollowing } from '@/entities/profileFollowing'
 import { ProfileUserType } from '@/shared/api/services/profile/profile.api.types'
 import noImage from '@/shared/assets/icons/avatarProfile/notPhoto.png'
 import { ShortLangs } from '@/shared/types/langSwitcherTypes'
-import { Button } from '@/shared/ui/button/Button'
+import { Button, Text } from '@/shared/ui'
 
 type Props = {
   profileData: ProfileUserType | undefined
 }
 export const ProfileData = ({ profileData }: Props) => {
+  const lastAddedAvatar = profileData?.avatars?.[profileData?.avatars.length - 1]?.url ?? noImage
+
   const {
-    t,
     i18n: { t: tRoot, language },
   } = useTranslation('common', { keyPrefix: 'Profile' })
 
   return (
     <div className={style.headerContainer}>
       <div className={style.avatarContainer}>
-        <Image src={noImage} alt={'avatar'} width={48} height={48} />
+        <Image src={lastAddedAvatar ?? noImage} alt={'avatar'} width={204} height={204} />
       </div>
       <div className={style.profileInfoContainer}>
         <div className={style.profileTitleContainer}>
@@ -36,17 +38,8 @@ export const ProfileData = ({ profileData }: Props) => {
             {tRoot('ProfileSetting')}
           </Button>
         </div>
-        <div className={style.subscribersContainer}>
-          <div>
-            <span className={style.countSubscribers}>2128</span> <br /> {t('Following')}
-          </div>
-          <div>
-            <span className={style.countSubscribers}>2128</span> <br /> {t('Followers')}
-          </div>
-          <div>
-            <span className={style.countSubscribers}>2128</span> <br /> {t('Publications')}
-          </div>
-        </div>
+        <ProfileFollowing amountFollowing={2128} amountFollowers={2128} amountPublications={2128} />
+        <Text size={'regular'}>{profileData?.aboutMe}</Text>
       </div>
     </div>
   )

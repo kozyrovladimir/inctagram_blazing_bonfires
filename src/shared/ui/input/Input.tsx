@@ -1,13 +1,22 @@
-import { ComponentPropsWithoutRef, Ref, forwardRef, useState } from 'react'
+import {
+  ChangeEvent,
+  ComponentPropsWithoutRef,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
 
-import Image from 'next/image'
+import { clsx } from 'clsx'
 
-import styles from './Input.module.scss'
+import s from './Input.module.scss'
 
-import eyeImg from '@/shared/assets/icons/input/eye.svg'
-import searchImg from '@/shared/assets/icons/input/search.svg'
-import location from '@/shared/assets/icons/location/location.svg'
-import { classNames, Mods } from '@/shared/libs/classNames/classNames'
+import { Label } from '@//shared/ui/label/label'
+import { EyeIcon } from '@/shared/assets/icons/eye/eye'
+import { EyeOffIcon } from '@/shared/assets/icons/eye/eyeoff'
+import { Location } from '@/shared/assets/icons/location/location'
+import SearchIcon from '@/shared/assets/icons/search/search'
+import { ErrorMessage } from '@/shared/ui/errorMessage/errorMessage'
 
 export enum InputType {
   SEARCH = 'search',
@@ -17,82 +26,78 @@ export enum InputType {
   TEL = 'tel',
   LOCATION = 'location',
 }
-
-type Props = {
-  ref?: Ref<HTMLInputElement>
+export type InputProps = {
   classNameWrap?: string
-  label: string
-  value?: string
-  disabled?: boolean
-  placeholder: string
   error?: string
-  type: InputType
+  label?: string
+  location?: 'fixed' | 'relative'
   callback?: (value: string) => void
+  type?: InputType
 } & ComponentPropsWithoutRef<'input'>
 
-export const Input = forwardRef<HTMLInputElement, Props>(
-  (
-    { label, classNameWrap, value, placeholder, error, type, callback, onChange, ...restProps },
-    ref
-  ) => {
-    const [passwordInvisible, setPasswordInvisible] = useState<boolean>(true)
-
-    const inputStyles = classNames(styles.input, {
-      [styles.erroredInput]: error,
-      [styles.inputSearch]: type === InputType.SEARCH,
-    } as Mods)
-    const inputStylesWrapper = classNames(styles.wrapper, {}, [classNameWrap ? classNameWrap : ''])
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange?.(e)
-      callback?.(e.currentTarget.value)
-    }
-
-    return (
-      <div className={inputStylesWrapper}>
-        <label className={styles.label}>{label}</label>
-        {type === InputType.SEARCH && (
-          <Image src={searchImg} alt="search" width={15} height={15} className={styles.search} />
-        )}
-        {type === InputType.LOCATION && (
-          <Image src={location} alt="location" width={24} height={24} className={styles.location} />
-        )}
-        <input
-          ref={ref}
-          className={inputStyles}
-          type={
-            // eslint-disable-next-line no-nested-ternary
-            type === InputType.PASSWORD && passwordInvisible
-              ? 'password'
-              : type === InputType.EMAIL
-              ? 'email'
-              : 'text'
-          }
-          value={value}
-          placeholder={placeholder}
-          onChange={handleChange}
-          {...restProps}
-        />
-        {type === InputType.PASSWORD && (
-          <>
-            <Image
-              src={eyeImg}
-              alt="eye"
-              width={24}
-              height={24}
-              className={styles.eye}
-              onClick={() => setPasswordInvisible(!passwordInvisible)}
-            />
-            {passwordInvisible && (
-              <div
-                className={styles.eyeCrossLine}
-                onClick={() => setPasswordInvisible(!passwordInvisible)}
-              ></div>
-            )}
-          </>
-        )}
-        {error && <p className={styles.error}>{error}</p>}
-      </div>
-    )
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const {
+    className,
+    disabled,
+    error,
+    label,
+    location = 'relative',
+    onChange,
+    callback,
+    type = InputType.TEXT,
+    ...rest
+  } = props
+  const [isShowPassword, setIsShowPassword] = useState(false)
+  const classes = {
+    container: clsx(
+      s.inputContainer,
+      error && s.errorMessage,
+      error && location === 'relative' && s.marginBottom,
+      label && s.marginTop,
+      className,
+      disabled && s.disabled
+    ),
+    error: clsx(s.error, disabled && s.disabled),
+    iconButton: clsx(s.iconButton, disabled && s.disabled),
+    inputClassName: clsx(s.input, s[type], error && s.errorMessage),
+    label: clsx(s.label, disabled && s.disabled),
   }
-)
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    onChange?.(e)
+    callback?.(e.target.value)
+  }
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useImperativeHandle(ref, () => inputRef.current!, [])
+
+  return (
+    <div className={classes.container}>
+      <Label className={classes.label} label={label} />
+      <div className={s.searchIcons}>
+        {type === 'search' && <SearchIcon className={s.icon} disabled={disabled} />}
+      </div>
+      <input
+        className={classes.inputClassName}
+        disabled={disabled}
+        id={label}
+        onChange={handleChange}
+        type={isShowPassword || type === 'search' ? 'text' : type}
+        {...rest}
+        ref={inputRef}
+      />
+
+      <button
+        className={classes.iconButton}
+        onClick={() => !disabled && setIsShowPassword(value => !value)}
+        type={'button'}
+      >
+        {isShowPassword
+          ? type === 'password' && <EyeIcon className={s.eyeIcon} disabled={disabled} />
+          : type === 'password' && <EyeOffIcon className={s.eyeIcon} disabled={disabled} />}
+        {type === 'location' && <Location className={s.eyeIcon} disabled={disabled} />}
+      </button>
+      <ErrorMessage className={classes.error} error={error} />
+    </div>
+  )
+})

@@ -1,25 +1,24 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { HYDRATE } from 'next-redux-wrapper'
 
 import { baseURL } from '../baseUrl.api'
 
-import { AvatarsType, BaseUserType, ProfileUserType } from './profile.api.types'
+import { AvatarsType, ProfileUserType } from '@/shared/api'
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
-  baseQuery: fetchBaseQuery({ baseUrl: baseURL, credentials: 'same-origin' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: baseURL,
+    credentials: 'same-origin',
+  }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath]
+    }
+  },
   tagTypes: ['dataProfile'],
   endpoints: build => {
     return {
-      getAuthMe: build.query<BaseUserType, void>({
-        query: () => {
-          return {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
-            },
-            url: 'auth/me',
-          }
-        },
-      }),
       getProfileUser: build.query<ProfileUserType, void>({
         query: () => {
           return {
@@ -29,6 +28,13 @@ export const profileApi = createApi({
             },
             url: `users/profile`,
           }
+        },
+        transformResponse: (baseQueryReturnValue: ProfileUserType) => {
+          if (baseQueryReturnValue?.aboutMe === null) {
+            baseQueryReturnValue.aboutMe = ''
+          }
+
+          return baseQueryReturnValue
         },
         providesTags: ['dataProfile'],
       }),

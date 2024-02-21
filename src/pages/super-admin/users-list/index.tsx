@@ -1,46 +1,77 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 
-import Pagination from '@mui/material/Pagination'
-import Stack from '@mui/material/Stack'
-import Image from 'next/image'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useDispatch, useSelector } from 'react-redux'
 
-import style from './usersLists.module.scss'
+import s from './usersLists.module.scss'
 
-import searchImg from '@/shared/assets/icons/input/search.svg'
-import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
-import { Select } from '@/shared/ui/select/Select'
-import { TableUsersList } from '@/shared/ui/tableUsersList/TableUsersList'
+import { UsersTableListWithPagination } from '@/entities/usersListTableWithPagination/ui/UsersTableListWithPagination'
+import { UserBanModal } from '@/features/user-management'
+import {
+  selectBlockStatus,
+  setBanModalOpenStatus,
+  setBlockStatus,
+  setSelectedUser,
+} from '@/features/user-management/model/userManagementSlice'
+import { UnbanUserModal } from '@/features/user-management/ui/user-unban-modal/UnbanUserModal'
+import { handleInputChange } from '@/pages/super-admin/lib/utils/utils'
+import { getAdminLayout } from '@/shared/layouts/adminLayout/AdminLayout'
+import { Input, InputType, RadixSelect } from '@/shared/ui'
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (locale === undefined) throw new Error()
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, 'common')),
+    },
+  }
+}
 
 const UsersList = () => {
-  const selectOptions = ['Not selected', 'Blocked', 'Not blocked']
-  //const usersPageSelect = ['5', '10', '30', '50', '100']
+  const dispatch = useDispatch()
+  const blockStatus = useSelector(selectBlockStatus)
+
+  const inputValue = useRef<HTMLInputElement | null>(null)
+  const [searchValue, setSearchValue] = useState('')
+
+  const handleSearch = handleInputChange(setSearchValue, 500)
+
+  const handleBlockStatusChange = (blockStatus: BlockedStatusType) => {
+    dispatch(setBlockStatus(blockStatus))
+  }
+  const { t } = useTranslation('common', { keyPrefix: 'UserListTable' })
+  const selectOptions = [t('NotBlocked'), t('Blocked')]
 
   return (
-    <div className={style.root}>
-      <div className={style.searchBlock}>
-        <div className={style.inputWrapper}>
-          <Image src={searchImg} alt="" className={style.searchImg} />
-          <input className={style.inputSearch} placeholder="Search" />
-        </div>
-        <Select options={selectOptions} st={{ width: '234px' }} />
-      </div>
-      <div className={style.tableBlock}>
-        <TableUsersList />
-      </div>
-      <div className={style.paginationBlock}>
-        <Stack spacing={1}>
-          <Pagination
-            count={10}
-            shape="rounded"
-            className={style.pagination}
-            sx={{ '&& .Mui-selected': { background: 'white', color: 'black' } }}
+    <div className={s.usersListPage}>
+      <div className={s.inputAndSelect}>
+        <Input
+          ref={inputValue}
+          type={InputType.SEARCH}
+          className={s.search}
+          placeholder={t('Search')}
+          onChange={handleSearch}
+        />
+        <div className={s.iconsContainer}>
+          <RadixSelect
+            className={s.triggerBtn}
+            onChangeOption={handleBlockStatusChange}
+            options={selectOptions}
+            placeholder={t('NotSelected')}
           />
-        </Stack>
-        <div className={style.paginationText}>Show 100 on page</div>
+        </div>
       </div>
+      <UsersTableListWithPagination searchValue={searchValue} blockStatus={blockStatus} />
+      <UserBanModal />
+      <UnbanUserModal />
     </div>
   )
 }
 
-UsersList.getLayout = getLayout
+export type BlockedStatusType = 'Blocked' | 'Not Blocked'
+
+UsersList.getLayout = getAdminLayout
 export default UsersList

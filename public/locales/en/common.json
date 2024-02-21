@@ -3,6 +3,9 @@
   "Create": "Create",
   "MyProfile": "My Profile",
   "Messenger": "Messenger",
+  "UserList": "User list",
+  "PaymentsList": "Payments list",
+  "PostsList": "Posts list",
   "Search": "Search",
   "Statistics": "Statistics",
   "Favorites": "Favorites",
@@ -26,10 +29,12 @@
     "NetworkError": "Network error",
     "TryAgain": "Error, try again late",
     "ServerNotAvailable": "Error! Server is not available!",
+    "UsernameAlreadyExist": "User with this userName is already exist",
     "NotAuthorization": "You are not authorization, please enter in your account",
     "NotOfflineMode": "Network error. Sorry, offline mode isn&apos;t ready",
     "PasswordIncorrect": "The password is incorrect. Try again please ",
     "EmailNotRegistered": "This email address is not registered. Please register",
+    "EmailIsAlreadyRegistered": "This email address is already been registered. Please use other or login",
     "UserNameValidationError": "Only Latin letters, numbers and \"_\", \"-\"",
     "EmailValidationError": "The email must match the format example@example.com",
     "PasswordValidationError": "Password must contain a-z, A-Z,  ! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~",
@@ -46,9 +51,12 @@
     "SomethingWentWrong": "Something went wrong",
     "PasswordsMustMatch": "Passwords must match",
     "MinAge": "A user under 13 cannot create a profile.",
-    "TransactionFailed": "Transaction failed, please try later"
+    "TransactionFailed": "Transaction failed, please try later",
+    "Sorry! Page non found!": "Sorry! Page non found!"
   },
   "Auth": {
+    "InvalidEmail": "You have entered invalid email",
+    "InvalidCredentials": "You have entered invalid email or password",
     "SignUp": "Sign Up",
     "SignIn": "Sign In",
     "LogOut": "Log Out",
@@ -82,7 +90,7 @@
     "ResendVerificationLink": "Resend verification link",
     "PasswordDoNotmatch": "Passwords do not match",
     "CreateNewPassword": "Create new password",
-    "LogOutOfYourAccount": "Are you really want to log out of your account",
+    "LogOutOfYourAccount": "Are you sure you want to log out of your account",
     "EnterEmailForGetInstruction": "Enter your email address and we will send you further instructions",
     "LinkHasBeenSent": "The link has been sent by email. If you don’t receive an email send link again"
   },
@@ -116,7 +124,7 @@
   },
   "Devices": {
     "ThisDevices": "This devices",
-    "TerminateAllSession": "Terminate all other session",
+    "TerminateAllSession": "Terminate all other sessions",
     "ActiveSessions": "Active sessions",
     "ReallyLogout": "This is your device, do you really want to exit?",
     "AllSessionsTerminated": "All your sessions on other devices are terminated"
@@ -193,7 +201,31 @@
   },
   "TablePagination": {
     "Show": "Show",
-    "OnPage": "on page"
+    "PerPage": "per page"
+  },
+  "UserListTable": {
+    "UserID": "User ID",
+    "Name": "Name",
+    "ProfileLink": "Username",
+    "CreatedAt": "Date added",
+    "NotBlocked": "Not blocked",
+    "Blocked": "Blocked",
+    "NotSelected": "Not selected",
+    "Search": "Search"
+  },
+  "Admin": {
+    "BanUser": "Ban user",
+    "UnbanUser": "Unban user",
+    "BanInSystem": "Ban in the system",
+    "AreYouSureYouWantToBan": "Are you sure you want to ban this user",
+    "AreYouSureYouWantToUnban": "Are you sure you want to unban this user",
+    "AreYouSureYouWantDeleteUser": "Are you sure you want to delete user",
+    "ReasonForBan": "Reason for ban",
+    "BadBehaviour": "Bad behaviour",
+    "AdvertisingPlacement": "Advertising placement",
+    "AnotherReason": "Another reason",
+    "AddReason": "Add reason",
+    "NotSelected": "Not selected"
   },
   "Post": {
     "Yes": "Yes",
@@ -204,8 +236,43 @@
     "Descriptions": "Add publication descriptions",
     "SaveChanges": "Save Changes",
     "Publish": "Publish",
-    "DeleteUserPost": "Are you sure want to delete this post?",
+    "DeleteUserPost": "Are you sure you want to delete this post?",
     "CloseEditPost": "Do you really want to finish editing? If you close the changes you have made will not be saved.",
-    "AddComment": "Add a Comment..."
+    "AddComment": "Add a Comment...",
+    "Answer": "Answer",
+    "Likes": "Likes",
+    "AnonymousUser": "Anonymous User",
+    "SecondsAgo": {
+      "one": "second ago",
+      "other": "seconds ago"
+    },
+    "MinutesAgo": {
+      "one": "minute ago",
+      "other": "minutes ago"
+    },
+    "HoursAgo": {
+      "one": "hour ago",
+      "other": "hours ago"
+    },
+    "DaysAgo": {
+      "one": "day ago",
+      "other": "days ago"
+    },
+    "WeeksAgo": {
+      "one": "week ago",
+      "other": "weeks ago"
+    },
+    "MonthsAgo": {
+      "one": "month ago",
+      "other": "months ago"
+    },
+    "YearsAgo": {
+      "one": "year ago",
+      "other": "years ago"
+    }
+  },
+  "Page404": {
+    "Sorry! Page non found!" : "Sorry! Page non found!",
+    "Back to home page" : "Back to home page"
   }
 }

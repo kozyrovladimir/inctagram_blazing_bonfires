@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 
 import { GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import style from './profile.module.scss'
 
-import { PostModal } from '@/features/post/ui/postModal/PostModal'
+import { PostModal } from '@/entities/postModal/PostModal'
 import { ProfileData } from '@/features/profileData/ProfileData'
+import { PostResponseType } from '@/shared/api'
 import {
-  useLazyGetPostQuery,
-  useLazyGetUserPostsQuery,
+  useLazyGetPublicPostQuery,
+  useLazyGetPublicUserPostsQuery,
 } from '@/shared/api/services/posts/posts.api'
 import { useLazyGetProfileUserQuery } from '@/shared/api/services/profile/profile.api'
 import { getLayout } from '@/shared/layouts/mainLayout/MainLayout'
@@ -29,8 +30,8 @@ const postsAmount = 9
 
 function Profile() {
   const [getProfile, { data: profileData }] = useLazyGetProfileUserQuery()
-  const [getUserPosts, { data: userPost }] = useLazyGetUserPostsQuery()
-  const [getPost, { data: postData }] = useLazyGetPostQuery()
+  const [getUserPosts, { data: userPost }] = useLazyGetPublicUserPostsQuery()
+  const [getPost, { data: postData = {} as PostResponseType }] = useLazyGetPublicPostQuery()
   const [isPostActive, setIsPostActive] = useState(false)
 
   const [pageNumber, setPageNumber] = useState(1)
@@ -77,6 +78,8 @@ function Profile() {
     }
   }
 
+  const togglePostModal = () => setIsPostActive(prevState => !prevState)
+
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler)
 
@@ -90,23 +93,21 @@ function Profile() {
         <div className={style.photoWrapper}>
           {posts.map(p => {
             return (
-              <img
+              <Image
                 key={p.id}
                 src={p?.images[0]?.url}
-                alt={'photo'}
+                alt={'post image'}
                 className={style.photo}
-                onClick={() =>
-                  getPost(p.id)
-                    .unwrap()
-                    .then(() => setIsPostActive(true))
-                }
+                onClick={() => getPost(p.id).unwrap().then(togglePostModal)}
+                width={234}
+                height={228}
               />
             )
           })}
           {isPostActive && (
             <PostModal
               postData={postData}
-              setIsPostActive={setIsPostActive}
+              togglePostModal={togglePostModal}
               profileData={profileData}
             />
           )}

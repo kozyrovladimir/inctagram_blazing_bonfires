@@ -2,14 +2,15 @@ import * as React from 'react'
 import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import * as yup from 'yup'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import styles from './Management.module.scss'
 
+import { AccountType } from '@/entities/accountType'
+import { PaymentButtons } from '@/entities/paymentButtons'
+import { SubscriptionType } from '@/entities/subscriptionType'
 import {
   useCancelAutoRenewalMutation,
   useCreateNewSubscriptionMutation,
@@ -17,47 +18,32 @@ import {
 } from '@/shared/api/services/subscriptions/subscriptions.api'
 import {
   NewSubscriptionType,
-  PaymentType,
   SubscriptionDataType,
-  SubscriptionType,
 } from '@/shared/api/services/subscriptions/subscriptions.api.types'
-import payPal from '@/shared/assets/icons/payments/payPal.svg'
-import stripe from '@/shared/assets/icons/payments/stripe.svg'
+import { paymentSchema } from '@/shared/constants/validation-schema/paymentSchema'
 import { formatDate } from '@/shared/libs/formatDates/formatDates'
-import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
-import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
-import { Modal } from '@/shared/ui/modal/Modal'
-import { RoundCheckbox } from '@/shared/ui/roundCheckbox/RoundCheckbox'
-
-// create new subscription
-const schema = yup.object({
-  typeSubscription: yup.string<SubscriptionType>().required(),
-  paymentType: yup.string<PaymentType>().required(),
-  amount: yup.number().default(1).required(),
-  baseUrl: yup.string().default('http://localhost:3000/').required(),
-})
+import { Checkbox, LinearLoader, Modal } from '@/shared/ui'
 
 export const Management = () => {
   const router = useRouter()
-
-  const {
-    t,
-    i18n: { t: tRoot },
-  } = useTranslation('common', { keyPrefix: 'AccountManagement' })
-  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
-
   const { success } = router.query
 
+  const { t } = useTranslation('common', { keyPrefix: 'AccountManagement' })
+  const { t: tError } = useTranslation('common', { keyPrefix: 'Error' })
+
+  const currentUrl =
+    typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+
   const [subscribed, setSubscribed] = useState(false)
-  const callBackCloseWindow = () => setSubscribed(false)
-
   const [accType, setAccType] = useState('personal')
-
   const [error, setError] = useState(false)
+  const [currentLocalSubs, setCurrentLocalSubs] = useState<SubscriptionDataType[]>([])
+
+  const callBackCloseWindow = () => setSubscribed(false)
   const callBackCloseErrorWindow = () => setError(false)
+  const setAccountType = () => setAccType('personal')
 
   const [cancelAutoRenewal] = useCancelAutoRenewalMutation()
-
   const { data: currentSubscriptions, isLoading: currentSubscriptionsLoading } =
     useGetCurrentSubscriptionsQuery()
 
@@ -67,17 +53,17 @@ export const Management = () => {
     setValue,
     control,
   } = useForm<NewSubscriptionType>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(paymentSchema(currentUrl)),
     defaultValues: { typeSubscription: 'DAY' },
     mode: 'onChange',
   })
 
-  const handleStripePaymentType = () => {
+  const handleStripePayment = () => {
     setValue('paymentType', 'STRIPE')
 
     return handleSubmitSubscriptions(onSubmit as SubmitHandler<NewSubscriptionType>)()
   }
-  const handlePaypalPaymentType = () => {
+  const handlePaypalPayment = () => {
     setValue('paymentType', 'PAYPAL')
 
     return handleSubmitSubscriptions(onSubmit as SubmitHandler<NewSubscriptionType>)()
@@ -103,13 +89,6 @@ export const Management = () => {
       })
   }
 
-  const wrapper =
-    styles.wrapper + ' ' + (currentSubscriptions?.data?.length === 0 ? styles.wrapperTop : '')
-
-  const setAccountType = () => setAccType('personal')
-
-  const [currentLocalSubs, setCurrentLocalSubs] = useState<SubscriptionDataType[]>([])
-
   useEffect(() => {
     currentSubscriptions?.data?.length && setCurrentLocalSubs(currentSubscriptions.data)
   }, [currentSubscriptions]) // don't work with PayPal
@@ -120,6 +99,9 @@ export const Management = () => {
       router.push('/profile/account-management')
     }
   }, [success])
+
+  const wrapper =
+    styles.wrapper + ' ' + (currentSubscriptions?.data?.length === 0 ? styles.wrapperTop : '')
 
   return (
     <>
@@ -135,9 +117,9 @@ export const Management = () => {
           <p>{t('PaymentSuccessful')}</p>
         </Modal>
       )}
-      {/*current subscription*/}
+
       {currentLocalSubs.length! > 0 && (
-        <div className={styles.wrapper} style={{ marginTop: '-30px' }}>
+        <div className={styles.wrapper}>
           <div>
             <h3 className={styles.title}> {t('CurrentSubscription')}:</h3>
             <div className={styles.listWrapper}>
@@ -162,7 +144,7 @@ export const Management = () => {
                 )
               })}
             </div>
-            {/*auto-renewal*/}
+
             <div className={styles.autoRenewalWrapper}>
               <Checkbox
                 onChange={handleHasAutoRenewal}
@@ -174,72 +156,26 @@ export const Management = () => {
           </div>
         </div>
       )}
-      {/*business or personal acc*/}
+
       <div className={wrapper}>
         <div>
           <h3 className={styles.title}>{t('AccountType')}:</h3>
-          <div className={styles.listWrapper}>
-            <RoundCheckbox
-              name={'accType'}
-              onChange={setAccountType}
-              label={<p className={styles.listItem}>{t('Personal')}</p>}
-              checked={accType === 'personal'}
-            />
-            <RoundCheckbox
-              name={'accType'}
-              onChange={() => setAccType('business')}
-              label={<p className={styles.listItem}>{t('Business')}</p>}
-              checked={accType === 'business' || (currentLocalSubs && currentLocalSubs.length > 0)}
-            />
-          </div>
+          <AccountType
+            setAccountType={setAccountType}
+            accType={accType}
+            setAccType={setAccType}
+            currentLocalSubs={currentLocalSubs}
+          />
         </div>
-        {/*due date*/}
+
         {(accType === 'business' || (currentLocalSubs && currentLocalSubs.length > 0)) && (
           <form onSubmit={handleSubmitSubscriptions(onSubmit)}>
             <h3 className={styles.title}>{t('YourSubscriptionCosts')}:</h3>
-            <div className={styles.listWrapper}>
-              <Controller
-                control={control}
-                name="typeSubscription"
-                render={({ field: { onChange, value } }) => (
-                  <>
-                    <RoundCheckbox
-                      key={'day'}
-                      value={'DAY'}
-                      label={<p className={styles.listItem}>{t('$10per1Day')}</p>}
-                      onChange={onChange}
-                      checked={value === 'DAY'}
-                    />
-                    <RoundCheckbox
-                      key={'weekly'}
-                      value={'WEEKLY'}
-                      label={<p className={styles.listItem}>{t('$50per7Days')}</p>}
-                      onChange={onChange}
-                      checked={value === 'WEEKLY'}
-                    />
-                    <RoundCheckbox
-                      key={'monthly'}
-                      value={'MONTHLY'}
-                      label={<p className={styles.listItem}>{t('$100per1month')}</p>}
-                      onChange={onChange}
-                      checked={value === 'MONTHLY'}
-                    />
-                  </>
-                )}
-              />
-            </div>
-            {/*payment method*/}
-            <div className={styles.footerWrapper}>
-              <div className={styles.footer}>
-                <button className={styles.imgWrapper} onClick={handlePaypalPaymentType}>
-                  <Image className={styles.img} src={payPal} alt="payPal icon" />
-                </button>
-                <p>{t('or')}</p>
-                <button className={styles.imgWrapper} onClick={handleStripePaymentType}>
-                  <Image className={styles.img} src={stripe} alt="stripe icon" />
-                </button>
-              </div>
-            </div>
+            <SubscriptionType control={control} />
+            <PaymentButtons
+              paypalHandler={handlePaypalPayment}
+              stripeHandler={handleStripePayment}
+            />
           </form>
         )}
       </div>

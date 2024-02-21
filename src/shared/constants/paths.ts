@@ -1,4 +1,5 @@
 export const enum RoutersPath {
+  home = '/',
   profile = '/profile',
   signIn = '/sign-in',
   signUp = '/sign-up',
@@ -17,9 +18,12 @@ export const enum RoutersPath {
   profileAccountManagement = '/profile/account-management',
   profileMyPayments = '/profile/my-payments',
   folderNextStaticMedia = '/_next/static/media/',
+  superAdmin = '/super-admin',
+  superAdminSignIn = '/super-admin/sign-in',
   superAdminUsersList = '/super-admin/users-list',
   superAdminStatistics = '/super-admin/statistics',
   superAdminPaymentsList = '/super-admin/payments-list',
   superAdminPostsList = '/super-admin/posts-list',
   apiAuthGithubLogin = 'https://inctagram.work/api/v1/auth/github/login',
+  apiAuthGoogleLogin = 'https://inctagram.work/api/v1/auth/google/login',
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { Dialog } from '@headlessui/react'
 
@@ -8,9 +8,9 @@ interface NewPostModalProps {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   title: string
-  left?: React.ReactNode
-  right?: React.ReactNode
-  children: React.ReactNode | any
+  left?: ReactNode
+  right?: ReactNode
+  children: any
 }
 
 const NewPostModal: React.FC<NewPostModalProps> = props => {

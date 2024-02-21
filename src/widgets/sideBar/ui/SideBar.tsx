@@ -19,7 +19,7 @@ import style from './SideBar.module.scss'
 import CreatePost from '@/features/create-post'
 import { Logout } from '@/features/logout/ui/logout/Logout'
 import { RoutersPath } from '@/shared/constants/paths'
-import { ButtonTheme } from '@/shared/ui/button/Button'
+import { ButtonTheme } from '@/shared/ui'
 
 export const SideBar = () => {
   const { t } = useTranslation('common')
@@ -29,13 +29,13 @@ export const SideBar = () => {
   return (
     <aside className={style.sideBarContainer}>
       {mainPath[1] === 'super-admin' ? (
-        <>
+        <div className={style.superAdminContainer}>
           <div
             className={style.linkWrapper}
             onClick={() => router.push(RoutersPath.superAdminUsersList)}
           >
             <Image src={userListImage} alt={''} />
-            {t('User list')}
+            {t('UserList')}
           </div>
           <div
             className={style.linkWrapper}
@@ -49,16 +49,16 @@ export const SideBar = () => {
             onClick={() => router.push(RoutersPath.superAdminPaymentsList)}
           >
             <Image src={paymentsImage} alt={''} />
-            {t('Payments list')}
+            {t('PaymentsList')}
           </div>
           <div
             className={`${style.linkWrapper} ${style.linkWrapperLast}`}
             onClick={() => router.push(RoutersPath.superAdminPostsList)}
           >
             <Image src={postsImage} alt={''} />
-            {t('Posts list')}
+            {t('PostsList')}
           </div>
-        </>
+        </div>
       ) : (
         <>
           <div
@@ -70,9 +70,7 @@ export const SideBar = () => {
             {t('Home')}
           </div>
           <div className={style.linkWrapper}>
-            {/*<Image src={createImage} alt={''} />*/}
             <CreatePost />
-            {t('Create')}
           </div>
           <div
             style={router.pathname === RoutersPath.profile ? { color: '#397DF6' } : {}}

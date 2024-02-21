@@ -18,8 +18,7 @@ import {
 import { ImageDataType } from '@/shared/api/services/posts/posts.api.types'
 import { useGetProfileUserQuery } from '@/shared/api/services/profile/profile.api'
 import backIcon from '@/shared/assets/icons/arrow back/back.svg'
-import { Input, InputType } from '@/shared/ui/input/Input'
-import { LinearLoader } from '@/shared/ui/loaders/LinearLoader'
+import { LinearLoader, Input, InputType } from '@/shared/ui'
 
 export const Publication = () => {
   const { isOpen, setIsOpen, isSelectFromComputerOpen } = useImageCropContext()
@@ -69,7 +68,7 @@ export const Publication = () => {
         createPost(body)
           .unwrap()
           .then(() => {
-            toast.success('Post Created')
+            toast.success('PublicPost Created')
             setIsOpen(!isOpen)
           })
           .catch(error => {
@@ -90,7 +89,7 @@ export const Publication = () => {
     createPost(body)
       .unwrap()
       .then(() => {
-        toast.success('Post Created')
+        toast.success('PublicPost Created')
         localStorage.removeItem('uploadedImages')
         setIsOpen(!isOpen)
       })

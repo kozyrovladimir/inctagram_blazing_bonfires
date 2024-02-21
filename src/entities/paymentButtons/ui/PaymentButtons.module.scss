@@ -1,0 +1,30 @@
+.footerWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.footer {
+  display: flex;
+  gap: 54px;
+  align-items: center;
+}
+
+.imgWrapper {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 96px;
+  height: 64px;
+
+  background-color: var(--color-dark-500);
+  border: 1px solid var(--color-dark-700);
+  border-radius: 2px;
+}
+
+.img {
+  width: auto;
+}

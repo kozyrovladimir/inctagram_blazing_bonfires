@@ -4,17 +4,16 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-import { useMeQuery } from '../../api/services/auth/auth.api'
-
+import { useMeQuery } from '@/shared/api'
 import { RoutersPath } from '@/shared/constants/paths'
 import { ShortLangs } from '@/shared/types/langSwitcherTypes'
-
-// const publicPaths = []
 
 const emailConfirmationPaths = [
   RoutersPath.authExpiredVerificationLink,
   RoutersPath.authRegistrationConfirmation,
 ]
+
+const publicPaths = [RoutersPath.home]
 
 export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
@@ -30,7 +29,7 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
   // }
   const { data, error, isLoading, isError } = useMeQuery()
 
-  if (isError) {
+  if (isError && !publicPaths) {
     // if to use router.push will be infinite rerenders. Instead of it needs to use window.history.pushState to prevent rerenders
 
     let pageUnautorization = RoutersPath.signIn
@@ -53,6 +52,12 @@ export const WithAuth: NextPage<PropsWithChildren> = ({ children }) => {
         break
       case RoutersPath.authExpiredVerificationLink:
         pageUnautorization = RoutersPath.authExpiredVerificationLink
+        break
+      case RoutersPath.profileAccountManagement:
+        pageUnautorization = RoutersPath.profileAccountManagement
+        break
+      case RoutersPath.profileGeneralInformation:
+        pageUnautorization = RoutersPath.profileGeneralInformation
         break
     }
 
