@@ -7,6 +7,7 @@ export type PostResponseType = {
   createdAt: string
   updatedAt: string
   ownerId: number
+  userName: string
   owner: {
     firstName: string
     lastName: string
@@ -68,4 +69,21 @@ export type CreatePostRequest = {
 export type UpdatePostRequestType = {
   postId: number
   body: CreatePostRequest
+}
+
+export type CreatePostCommentRequestType = {
+  postId: number
+  content: string
+}
+
+export type CreatePostCommentResponseType = {
+  id: number
+  postId: number
+  from: {
+    id: number
+    username: string
+    avatars: Array<{}>
+  }
+  content: string
+  createdAt: string
 }

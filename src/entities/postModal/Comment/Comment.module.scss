@@ -1,19 +1,18 @@
 .commentContainerWrapper {
   display: flex;
   flex-direction: column;
-  height: calc(100% - 59px);
 
   .commentContainerInner {
+    overflow-y: scroll;
     display: flex;
     gap: 15px;
     padding: 19px 24px 8px;
-    overflow-y: scroll;
 
     &::-webkit-scrollbar {
       display: none;
     }
 
-    .commentContainer {
+    .descriptionContainer {
       display: flex;
       gap: 12px;
       width: 100%;
@@ -31,32 +30,32 @@
         border-radius: 50px;
       }
 
-      .commentTextAndLikeWrapper {
-        max-width: 385px;
+      .descriptionTextAndLikeWrapper {
         width: 100%;
+        max-width: 385px;
 
-        .commentTextContainer {
+        .descriptionTextContainer {
           display: flex;
           gap: 24px;
           justify-content: space-between;
 
-          .commentText {
+          .descriptionText {
             font-size: var(--font-size-s);
             word-break: break-word;
           }
 
-          .commentTextName {
+          .descriptionTextName {
             font-weight: var(--font-weight-bold);
           }
         }
 
-        .commentInfoContainer {
+        .descriptionInfoContainer {
           display: inline-flex;
           gap: 12px;
           font-size: var(--font-size-xs);
 
-          .commentTime,
-          .commentLikes,
+          .descriptionTime,
+          .descriptionLikes,
           .commentAnswer {
             cursor: pointer;
             color: var(--color-light-900);
@@ -71,9 +70,9 @@
   }
 
   .summaryContainer {
+    margin-top: auto;
     padding: 12px 24px 7px;
     border-top: 1px solid var(--color-dark-100);
-    margin-top: auto;
 
     .actionsContainer {
       display: flex;
@@ -93,9 +92,9 @@
       align-items: center;
 
       .totalLikesCount {
-        color: var(--color-light-100);
         font-size: var(--font-size-s);
         line-height: var(--line-height-m);
+        color: var(--color-light-100);
       }
 
       .totalLikesAvatar {
@@ -124,6 +123,7 @@
 
       .addCommentInput {
         flex-grow: 1;
+
         font-size: var(--font-size-s);
         color: var(--color-light-100);
 
@@ -134,6 +134,7 @@
 
       .addCommentButton {
         cursor: pointer;
+
         font-size: var(--font-size-m);
         font-weight: 600;
         color: var(--color-info-500);

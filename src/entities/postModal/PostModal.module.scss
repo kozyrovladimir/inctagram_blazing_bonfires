@@ -1,6 +1,5 @@
 .postContainer {
   position: fixed;
-  //z-index: 10;
   inset: 0;
 
   display: flex;
@@ -11,10 +10,10 @@
 }
 
 .closeIconContainer {
+  cursor: pointer;
   position: absolute;
   top: -50px;
   right: -80px;
-  cursor: pointer;
 }
 
 .post {
@@ -46,7 +45,9 @@
   object-fit: cover;
 }
 
-.descriptionContainer {
+.postBodyContainer {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 482px;
 
@@ -55,8 +56,7 @@
     align-items: center;
     justify-content: space-between;
 
-    height: 59px;
-    padding: 0 24px;
+    padding: 10px 24px;
 
     border-bottom: 1px solid var(--color-dark-100);
 
@@ -88,9 +88,7 @@
 
 .userName {
   cursor: pointer;
-
   font-size: var(--font-size-m);
   font-weight: 600;
-
   color: var(--color-light-100);
 }

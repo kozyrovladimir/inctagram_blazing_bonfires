@@ -6,6 +6,8 @@ import { baseURL } from '../baseUrl.api'
 import {
   GetAllPostsArgs,
   GetAllPublicPostsResponseType,
+  CreatePostCommentRequestType,
+  CreatePostCommentResponseType,
   GetUserPostsRequestType,
   GetUserPostsResponseType,
   ImagesResponse,
@@ -115,6 +117,19 @@ export const postsApi = createApi({
         },
         invalidatesTags: ['editPost'],
       }),
+      createPostComment: build.query<CreatePostCommentResponseType, CreatePostCommentRequestType>({
+        query: ({ postId, content }) => {
+          return {
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken') as string}`,
+            },
+            url: `posts/${postId}`,
+            body: content,
+          }
+        },
+        // invalidatesTags: ['editPost'],
+      }),
     }
   },
 })
@@ -127,4 +142,5 @@ export const {
   useDeletePostMutation,
   useUpdatePostMutation,
   useGetAllPublicPostsQuery,
+  useCreatePostCommentQuery,
 } = postsApi
